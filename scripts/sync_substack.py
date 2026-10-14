@@ -36,6 +36,16 @@ def iso_date(value):
         return ""
 
 def main():
+    # A verified author-supplied publication export is authoritative.
+    # RSS updates must never erase complete article pages and verified archive metadata.
+    if DEST.exists():
+        try:
+            existing = json.loads(DEST.read_text(encoding="utf-8"))
+        except (ValueError, OSError):
+            existing = {}
+        if existing.get("origin") == "manual-export":
+            print("Author-uploaded published Substack export is canonical; skipping RSS overwrite.")
+            return
     request = Request(FEED, headers={
         "User-Agent": "Mozilla/5.0 (compatible; Moreshwar-Lab/1.0)",
         "Accept": "application/rss+xml,application/xml,text/xml,*/*",

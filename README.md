@@ -102,3 +102,12 @@ sample notebook entries are visibly marked "SAMPLE NOTE". To perform a full
 migration, export your *published* posts from Substack's author dashboard and
 provide the export file (CSV/ZIP). Import only the posts you authorize for
 public display; exclude drafts and subscriber-only content unless intended.
+
+
+## Imported original published Substack articles
+
+The Writing section now contains **22 real, published articles** from the author's Substack export. Each one has its own self-contained, responsive reading page under `articles/`, with original text, permitted formatting, publication date and source attribution. The website searches these entries directly and links to the article pages.
+
+The import deliberately excluded **two unpublished drafts**, the exported subscriber email list, and all delivery/open analytics. It also removed the three machine-written sample articles from the public Writing collection.
+
+`substack-posts.json` is the index. It is marked `origin: manual-export`, which prevents the optional RSS job from overwriting verified author content. To update the archive, import a fresh published-only Substack export; don't upload the raw export ZIP into a public repository.
