@@ -80,3 +80,25 @@ The `SITE_ORIGIN` is the **origin only**, with no `/Moreshwar` path. Use the exa
 ## Project scope
 
 The three essays in demo mode were generated as site editorial examples and are **not attributed as previously published original works**. Technical cases reflect general topics from earlier engineering discussion without inventing outcomes.
+
+## Author's Substack + Instagram
+
+Public profile links are wired into the homepage, About, Writing, Contact and footer:
+- Substack: https://moreshwarpidadi.substack.com/
+- Instagram: https://www.instagram.com/moreshwar_pidadi/
+
+The Writing section loads \`substack-posts.json\` and adds imported article titles,
+dates, excerpts and outbound links to the existing searchable notebook. Substack
+posts are read on Substack; the site does not claim to mirror their full text.
+
+The importer is \`scripts/sync_substack.py\`, run by \`.github/workflows/sync-substack.yml\`
+daily and when dispatched manually. The website is still available if Substack
+blocks RSS access; the archive file is never overwritten with fabricated posts.
+
+**Current limitation (Oct 2026):** Automated access to
+\`https://moreshwarpidadi.substack.com/feed\` returned HTTP 403 in GitHub Actions,
+so the published-article JSON currently contains no imported posts. The
+sample notebook entries are visibly marked "SAMPLE NOTE". To perform a full
+migration, export your *published* posts from Substack's author dashboard and
+provide the export file (CSV/ZIP). Import only the posts you authorize for
+public display; exclude drafts and subscriber-only content unless intended.
