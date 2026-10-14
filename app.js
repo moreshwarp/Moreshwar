@@ -92,11 +92,76 @@ $$('dialog').forEach(d=>{d.addEventListener('click',e=>{if(e.target===d)d.close(
 function openArticle(id){const a=visiblePosts().find(x=>x.id===id);if(!a)return;if(a.source==='Substack'){if(a.page&&/^articles\/[a-z0-9-]+\.html$/.test(a.page)){location.assign(new URL(a.page,document.baseURI).href);return;}const u=safeUrl(a.url);if(u)window.open(u,'_blank','noopener,noreferrer');return;}$('#reader-eyebrow').textContent='THE NOTEBOOK / '+String(a.category).toUpperCase();$('#reader-content').innerHTML=`<h1 id="reader-title">${safe(a.title)}</h1><div class="reader-meta"><span>${safe(friendlyDate(a.date))}</span><span>${safe(a.category)}</span><span>${Number(a.read_time)||Math.max(1,Math.ceil(a.body.split(/\s+/).length/210))} MIN READ</span></div><p class="reader-lede">${safe(a.excerpt)}</p><div class="article-body">${renderMarkdown(a.body)}</div>${safeUrl(a.url)?`<p><a class="text-link" href="${safe(safeUrl(a.url))}" target="_blank" rel="noopener noreferrer">Additional reference ↗</a></p>`:''}<p><a class="text-link" href="#contact" data-feedback="${safe(a.title)}">Send a comment on this article ↗</a></p>`;showModal('reader-dialog');const f=$('[data-feedback]',$('#reader-content'));f?.addEventListener('click',()=>{closeModal('reader-dialog');$('#contact-topic').value='Article feedback';$('#contact-message').value='Regarding: '+a.title+'\n\n';$('#contact-message').focus()});}
 $('#article-list').addEventListener('click',e=>{const b=e.target.closest('[data-read]');if(b)openArticle(b.dataset.read)});
 const projectData={
- 'rich-text':{title:'Engineering rich-text experiences',excerpt:'Editor integrations are never only about an editing toolbar.',body:'## The engineering tension\n\nRich-text editors operate at the boundary between user intent, browser behavior, HTML structure and application state. Angular integrations with a rich-text editor such as Froala create a real question: when should the application take control of formatting, and when should it preserve the editor’s semantics?\n\n## Questions worth testing\n\n- How are links and inline styles represented after editing and saving?\n- Does the same content render consistently across browsers?\n- Can a formatting policy be expressed as pure, testable transformations?\n- What happens during copy/paste from an external document?\n\n## Method\n\nConstruct representative inputs, compare before-and-after DOM representations, reproduce browser-specific discrepancies, and verify accessibility.\n\n## Disclosure\n\nThis case study describes a technical problem area explored in prior engineering discussions. It intentionally makes no claims about proprietary implementation details or quantitative project impact.'},
- 'sanitization':{title:'Safe HTML at the rendering boundary',excerpt:'A sanitizer is a policy, not a convenience flag.',body:'## The issue\n\nSometimes a product has a reason to preserve inline formatting, links, and tables. That does not justify indiscriminately trusting HTML.\n\n## A defensible approach\n\nDefine an explicit allowlist for elements, attributes and URL schemes. Apply a reputable sanitization implementation and verify behavior against adversarial input. Treat any framework bypass API as a deliberate trust escalation, not as sanitization.\n\n## Proposed test cases\n\n- Valid and invalid link URLs.\n- Inline styling with safe and unsafe property combinations.\n- Nested HTML from editor paste operations.\n- Text direction, accessibility and browser differences.\n\n## Status\n\nTechnical exploration, not an audited security solution.'},
- 'architecture':{title:'Reasoning about frontend architecture',excerpt:'What changes when an application grows beyond the team that built its first version?',body:'## Scaling the reasoning, not only the code\n\nIn large interfaces, architectural pressure often comes from coordination: data ownership, boundaries, error recovery, deployment cadence, accessibility, and performance budgets.\n\n## Questions that matter\n\n- Which contracts are stable enough to become modules?\n- Which abstractions reduce total complexity rather than just relocate it?\n- Can teams test and deploy independently?\n- Which metrics indicate improvements for users?\n\n## A useful research habit\n\nRecord the expected trade-off before changing an architecture, then compare the measured result against that expectation.\n\nThese are generalized engineering notes. No client-sensitive code or results are published.'}
+  "frontend": {
+    "label": "FRONTEND ENGINEERING · ENGINEERING PRACTICE",
+    "title": "Frontend engineering, beyond pixels",
+    "excerpt": "Angular, TypeScript, and editor integrations force precision about what the browser is actually doing.",
+    "body": "## Where I have explored engineering problems\n\nRich-text editing is a good example of a deceptively complex feature: what looks like formatting involves the DOM, CSS, state synchronization, browser behavior and content safety. I have examined Angular and Froala integration questions, link styling, rendered HTML and sanitization decisions.\n\n## The questions that matter\n\n- When should a UI preserve editor-generated structure, and when should it transform it?\n- How do we avoid browser-dependent rendering bugs?\n- Which component boundaries keep application state understandable?\n- Can a change be tested with reproducible DOM fixtures rather than visual guesswork?\n\n## Engineering philosophy\n\nTreat every interactive surface as a system with contracts, failure modes, and measurable behavior. No confidential client implementation or unsupported project metrics are presented here.\n\n**Tools discussed:** Angular, TypeScript, Froala, HTML, CSS, DOM APIs."
+  },
+  "machine-learning": {
+    "label": "AI / MACHINE LEARNING · ACTIVE STUDY",
+    "title": "AI & machine learning, from first principles",
+    "excerpt": "A learning and research direction focused on understanding models, data, and evaluation rather than merely calling an API.",
+    "body": "## Research questions I am pursuing\n\nWhat does a model actually learn? What assumptions are embedded in the data? Can I reproduce its results and explain why it fails?\n\n## A rigorous learning route\n\n1. Strengthen linear algebra, probability, optimization, and statistics.\n2. Implement baseline algorithms in Python and compare with established libraries.\n3. Separate training, validation, and test data, and explain leakage risks.\n4. Track reproducibility, error analysis, robustness, and resource cost.\n5. Gradually explore ML systems: batching, inference latency, memory, and throughput.\n\n## Tools in my learning stack\n\nPython, NumPy, pandas, scikit-learn and PyTorch are technologies I'm developing understanding of. The curve on this card is **illustrative**, not a claimed experimental result.\n\n**Status:** Ongoing study and experimentation; not presented as a published ML system."
+  },
+  "react": {
+    "label": "REACT & UI ARCHITECTURE · TECHNICAL FOCUS",
+    "title": "React, component architecture & UX",
+    "excerpt": "The hard part is not rendering a component; it is managing change across the system.",
+    "body": "## Questions behind a good component architecture\n\n- Where should state live, and what is truly derived state?\n- How do contracts between components limit coupling?\n- How can navigation, data loading and errors stay accessible and predictable?\n- What happens on slow phones, intermittent networks or assistive technologies?\n\n## How I'd approach a design\n\nBuild a small slice, define interaction states, test keyboard navigation, measure the critical path and expand only where a change is justified.\n\n**Technology focus:** React, JavaScript, TypeScript, accessible design systems and modern browser APIs.\n\n**Status:** Technology exploration; no unverified production outcomes claimed."
+  },
+  "backend": {
+    "label": "BACKEND & API DESIGN · EXPLORATION",
+    "title": "Backend services & API design",
+    "excerpt": "The contract between a browser and a service deserves the same care as the interface itself.",
+    "body": "## Questions at the backend boundary\n\nWhat should a service promise? How do we validate requests, isolate failures and observe latency without exposing sensitive data?\n\n## Technologies I am exploring\n\n- **Go:** concurrency primitives, predictable server behavior, interfaces and tests.\n- **Node.js:** asynchronous I/O, API middleware, validation and error handling.\n- **SQL:** data models, indexes and transaction boundaries.\n- **REST:** explicit contracts, idempotency and versioning.\n\n## A practical learning method\n\nImplement a small service in two different languages, design a load test, compare metrics and write down the limitations of the experiment.\n\n**Status:** Learning and technical exploration, not a claim of a deployed commercial backend."
+  },
+  "sanitization": {
+    "label": "APPLICATION SECURITY · ENGINEERING CASE",
+    "title": "Secure rendering & HTML semantics",
+    "excerpt": "Display fidelity is valuable, but it never justifies elevating untrusted HTML to trusted content.",
+    "body": "## The trust boundary\n\nRich-text content can carry markup, styles and URLs. If that markup reaches a browser unvalidated, apparently harmless rendering decisions can become security vulnerabilities.\n\n## Questions worth testing\n\n- Which tags, attributes, CSS declarations and URL protocols are actually needed?\n- How should Angular's sanitization model be applied without blanket trust bypasses?\n- What should happen to unsafe links, nested editor markup and pasted content?\n- Can transformations preserve semantics and accessibility?\n\n## Defensible process\n\nSpecify a documented policy, use a reviewed sanitizer, build adversarial fixtures and validate both browser behavior and safety expectations.\n\n**Status:** Engineering problem explored in technical discussions; not an audited security implementation."
+  },
+  "systems": {
+    "label": "OPERATING / DISTRIBUTED SYSTEMS · RESEARCH DIRECTION",
+    "title": "Operating systems & distributed computing",
+    "excerpt": "The deeper question: what makes software correct and reliable when resources and machines can fail?",
+    "body": "## Questions that motivate me\n\nHow do scheduling and contention shape observed performance? What does consistency mean when messages may be delayed? Which correctness guarantees survive crashes and retries?\n\n## Foundations I want to master\n\n- **Operating systems:** processes, virtual memory, synchronization, scheduling and filesystems.\n- **Distributed systems:** replication, coordination, failure models, consensus and observability.\n- **Systems programming:** C, C++, Linux, sockets, profiling and careful benchmarking.\n- **Research methods:** paper reading, reproduction, mathematical reasoning and reporting negative results.\n\n## Why this matters\n\nUnderstanding mechanisms below the interface makes better engineering judgments possible above it.\n\n**Status:** Future research direction and active learning, not evidence of completed research papers."
+  }
 };
-$$('[data-project]').forEach(b=>b.addEventListener('click',()=>{const d=projectData[b.dataset.project];$('#project-content').innerHTML=`<h1 id="project-title">${safe(d.title)}</h1><p class="reader-lede">${safe(d.excerpt)}</p><div class="article-body">${renderMarkdown(d.body)}</div>`;showModal('project-dialog')}));
+
+const workFilterButtons = $$('[data-work-filter]');
+const workCards = $$('[data-work-track]');
+function setWorkFilter(track) {
+ const allowed = new Set(['all','frontend','ai','backend','systems']);
+ if (!allowed.has(track)) track = 'all';
+ let shown = 0;
+ workCards.forEach(card => {
+   const visible = track === 'all' || card.dataset.workTrack === track;
+   card.hidden = !visible;
+   if (visible) shown++;
+ });
+ workFilterButtons.forEach(button => {
+   const active = button.dataset.workFilter === track;
+   button.classList.toggle('active', active);
+   button.setAttribute('aria-pressed', String(active));
+ });
+ const label = {all:'ALL DOMAINS',frontend:'FRONTEND',ai:'AI / ML',backend:'BACKEND',systems:'SYSTEMS'}[track];
+ const result = $('#work-results');
+ if (result) result.innerHTML = 'SHOWING ' + String(shown).padStart(2,'0') + ' / ' + label + ' <span>· SELECT A CARD TO EXPLORE</span>';
+}
+workFilterButtons.forEach(button => button.addEventListener('click', () => setWorkFilter(button.dataset.workFilter)));
+$$('[data-project]').forEach(button => button.addEventListener('click', () => {
+ const item = projectData[button.dataset.project];
+ if (!item) return;
+ $('#project-content').innerHTML =
+   '<span class="modal-track-label mono">'+safe(item.label)+'</span>'+
+   '<h1 id="project-title">'+safe(item.title)+'</h1>'+
+   '<p class="reader-lede">'+safe(item.excerpt)+'</p>'+
+   '<div class="article-body">'+renderMarkdown(item.body)+'</div>';
+ showModal('project-dialog');
+}));
+setWorkFilter('all');
 const research={systems:{index:'R / 00 — CENTRAL QUESTION',title:'How do complex systems remain understandable?',text:'The intersection of abstractions, implementation, failures, and observable behavior. I want to understand systems by studying their mechanisms and testing their assumptions.',tags:['Reliability','Correctness','Performance']},os:{index:'R / 01 — OPERATING SYSTEMS',title:'What really happens when programs compete for resources?',text:'Scheduling, virtual memory, isolation, concurrency, synchronization, and the runtime behavior underlying every application.',tags:['Scheduling','Concurrency','Memory']},distributed:{index:'R / 02 — DISTRIBUTED SYSTEMS',title:'What can we promise when machines can fail?',text:'Coordination, fault tolerance, consistency models, replication, recovery, and the boundaries of what a networked system can guarantee.',tags:['Consistency','Replication','Faults']},compilers:{index:'R / 03 — COMPILERS',title:'How do abstractions become machine behavior?',text:'Language implementation, code generation, optimization, and the trade-offs made between expressiveness, correctness, and speed.',tags:['Optimization','Semantics','Runtimes']},ml:{index:'R / 04 — ML SYSTEMS',title:'What does it take to make learning systems efficient and reliable?',text:'Understanding machine learning from mathematics and implementation, with an interest in training infrastructure, inference, evaluation and systems performance.',tags:['Python','ML','Inference']}};
 function selectResearch(k){const r=research[k];if(!r)return;state.activeResearch=k;$('#research-index').textContent=r.index;$('#research-heading').textContent=r.title;$('#research-description').textContent=r.text;$('#research-keywords').innerHTML=r.tags.map(x=>`<span>${safe(x)}</span>`).join('');$('.research-progress span').style.width=({systems:64,os:35,distributed:48,compilers:62,ml:80}[k])+'%';$$('.rnode').forEach(n=>n.classList.toggle('active',n.dataset.r===k))}
 $$('.rnode').forEach(node=>{node.setAttribute('tabindex','0');node.setAttribute('role','button');node.setAttribute('aria-label','Explore '+node.dataset.r+' research');node.addEventListener('click',()=>selectResearch(node.dataset.r));node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectResearch(node.dataset.r)}})});selectResearch('systems');
