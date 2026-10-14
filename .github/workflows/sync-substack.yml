@@ -1,0 +1,35 @@
+name: Sync published Substack articles
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 4 * * *'
+  push:
+    paths:
+      - 'scripts/sync_substack.py'
+      - '.github/workflows/sync-substack.yml'
+permissions:
+  contents: write
+concurrency:
+  group: substack-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Import public Substack feed
+        run: python3 scripts/sync_substack.py
+      - name: Commit published article index
+        run: |
+          if git diff --quiet -- substack-posts.json; then
+            echo 'No changes to published articles.'
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add substack-posts.json
+            git commit -m 'Update public Substack articles'
+            git push
+          fi
