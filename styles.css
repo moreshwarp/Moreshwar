@@ -18,3 +18,20 @@
 .contact-socials{margin-top:5px}
 .contact-socials .text-link{margin-top:16px!important}
 @media(max-width:700px){.hero-social{margin-top:22px;gap:10px 15px;font-size:11px}.writing-source{padding:18px;align-items:flex-start}.writing-source .text-link{font-size:12px}.about-socials,.contact-socials{gap:10px 18px}}
+
+
+/* Readable, server-rendered archive links: functional even without JavaScript. */
+.published-archive{margin:26px 0 32px;background:#101f2b;border:1px solid #35505a;border-radius:14px;overflow:hidden}
+.published-archive summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:65px;padding:19px 24px;list-style:none;color:#dff2f0;transition:background .2s ease}
+.published-archive summary::-webkit-details-marker{display:none}
+.published-archive summary:hover,.published-archive[open] summary{background:#1b3540}
+.published-archive summary:focus-visible,.published-archive-list a:focus-visible{outline:2px solid #a8dfd4;outline-offset:-4px}
+.published-archive-title{font:600 clamp(14px,2vw,18px) var(--display);letter-spacing:-.025em}
+.published-archive summary .micro{color:var(--mint);white-space:nowrap}
+.published-archive-list{padding:0 23px 18px;margin:0;list-style:none}
+.published-archive-list li{border-top:1px solid #2b4450}
+.published-archive-list a{display:grid;grid-template-columns:40px 1fr 115px;gap:14px;align-items:center;padding:15px 0;color:#dfedef;text-decoration:none;font:500 14px var(--display);line-height:1.4;transition:color .15s}
+.published-archive-list a:hover{color:var(--mint)}
+.published-archive-list .mono{font-size:10px;color:#a3bbc4;letter-spacing:.035em}
+.published-archive-list .mono:last-child{text-align:right}
+@media(max-width:650px){.published-archive summary{padding:18px;align-items:flex-start;flex-direction:column}.published-archive-list{padding:0 17px 12px}.published-archive-list a{grid-template-columns:25px 1fr;gap:6px 10px}.published-archive-list .mono:last-child{grid-column:2;text-align:left}}
