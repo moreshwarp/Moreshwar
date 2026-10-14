@@ -7,6 +7,7 @@ from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
 import xml.etree.ElementTree as ET
 
 FEED = "https://moreshwarpidadi.substack.com/feed"
@@ -39,8 +40,13 @@ def main():
         "User-Agent": "Mozilla/5.0 (compatible; Moreshwar-Lab/1.0)",
         "Accept": "application/rss+xml,application/xml,text/xml,*/*",
     })
-    with urlopen(request, timeout=40) as response:
-        xml = response.read(5_000_000)
+    try:
+        with urlopen(request, timeout=40) as response:
+            xml = response.read(5_000_000)
+    except (HTTPError, URLError) as exc:
+        print(f"Substack public RSS is unavailable ({exc}); keeping last-known archive. "
+              "For the full collection, upload an export of your own published posts.")
+        return
     root = ET.fromstring(xml)
     items = root.findall("./channel/item")
     if not items:
