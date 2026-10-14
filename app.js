@@ -21,7 +21,25 @@ const seedBooks=[
  {id:'book-3',title:'The Feynman Lectures on Physics',author:'Richard Feynman, Robert Leighton & Matthew Sands',kind:'Book',topic:'Scientific reasoning',notes:'An inspiration for reasoning from physical principles and asking clearer questions.',url:'https://www.feynmanlectures.caltech.edu/',published:true,seed:true},
  {id:'book-4',title:'The Art of Computer Programming',author:'Donald E. Knuth',kind:'Book',topic:'Algorithms',notes:'Suggested deep reference on algorithms and mathematical analysis.',url:'https://www-cs-faculty.stanford.edu/~knuth/taocp.html',published:true,seed:true}
 ];
-let posts = [...seedPosts], books = [...seedBooks], substackPosts = [], client = null, session = null, isAdmin = false;
+// Render the verified, exported Substack archive immediately, even when JSON is cached or temporarily unavailable.
+function normalizePublishedArticles(data) {
+ if (!Array.isArray(data?.posts)) return [];
+ return data.posts.filter(p => p && typeof p.title === 'string' && typeof p.id === 'string' && typeof p.page === 'string' && /^articles\/[a-z0-9-]+\.html$/.test(p.page)).map(p => ({
+   id:p.id, title:p.title, excerpt:String(p.excerpt||''), date:String(p.date||''),
+   category:'Substack', status:'published', source:'Substack', page:p.page,
+   body:'', read_time:Number(p.read_time)||1
+ }));
+}
+function embeddedPublishedArticles() {
+ try {
+   const el = document.getElementById('published-article-index');
+   return el ? normalizePublishedArticles(JSON.parse(el.textContent)) : [];
+ } catch(error) {
+   console.warn('Embedded article index was not readable', error);
+   return [];
+ }
+}
+let posts = [...seedPosts], books = [...seedBooks], substackPosts = embeddedPublishedArticles(), client = null, session = null, isAdmin = false;
 const visiblePosts = () => [...substackPosts, ...posts];
 async function loadSubstack() {
  const status = $('#substack-sync-status');
@@ -30,16 +48,13 @@ async function loadSubstack() {
   if(!response.ok) throw new Error('The published article index could not be loaded.');
   const data = await response.json();
   if(!Array.isArray(data.posts)) throw new Error('Invalid published article index.');
-  substackPosts = data.posts.filter(p => p && typeof p.title === 'string' && typeof p.id === 'string' && typeof p.page === 'string' && /^articles\/[a-z0-9-]+\.html$/.test(p.page)).map(p=>({
-    id:p.id, title:p.title, excerpt:String(p.excerpt||''), date:String(p.date||''),
-    category:'Substack', status:'published', source:'Substack', page:p.page,
-    body:'', read_time:Number(p.read_time)||1
-  }));
+  const verified = normalizePublishedArticles(data);
+  if(verified.length) substackPosts = verified;
   if(status)status.textContent = substackPosts.length ?
    `${substackPosts.length} original published articles imported from my Substack archive. Open an article to read it here.` :
    'The published collection is currently empty.';
   renderPosts();
- }catch(error){console.error('Article archive unavailable',error);if(status)status.textContent='The archive could not be loaded. Visit my Substack publication in the meantime.'}
+ }catch(error){console.warn('Live article archive temporarily unavailable; using embedded index',error);if(status)status.textContent=substackPosts.length?`${substackPosts.length} original published articles are available below.`:'The archive could not be loaded. Visit my Substack publication in the meantime.';renderPosts();}
 }
 const state = {articleTerm:'',articleCategory:'all',bookTerm:'',bookKind:'all',activeResearch:'systems',editorTab:'post'};
 let observed = null;
