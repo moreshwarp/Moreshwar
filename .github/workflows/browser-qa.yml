@@ -1,0 +1,39 @@
+name: Mobile and Theme Browser QA
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright browser
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run static site server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/moreshwar-http.log 2>&1 &
+          echo $! > /tmp/moreshwar-http.pid
+          for i in $(seq 1 25); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Test actual browser geometry and theme flows
+        run: node tests/browser.cjs
+      - name: Save visual QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: research-portfolio-browser-qa
+          path: browser-artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
