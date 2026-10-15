@@ -296,5 +296,82 @@ $('#post-editor').addEventListener('submit',async e=>{e.preventDefault();const d
 $('#book-editor').addEventListener('submit',async e=>{e.preventDefault();const doc={title:$('#edit-book-title').value.trim(),author:$('#edit-book-author').value.trim(),kind:$('#edit-book-kind').value,topic:$('#edit-book-topic').value.trim(),url:safeUrl($('#edit-book-url').value.trim())||null,notes:$('#edit-book-notes').value.trim(),published:$('#edit-book-published').checked};const id=$('#edit-book-id').value;if(!doc.title)return announce($('#book-editor-status'),'Add a title.','error');if(isAdmin&&client){if(id&&!String(id).startsWith('book-'))doc.id=id;const {error}=await client.from('references').upsert(doc,{onConflict:'id'});if(error)return announce($('#book-editor-status'),error.message,'error');await loadAdminRecords();announce($('#book-editor-status'),'Reference saved.','success')}else{const next={...doc,id:id||crypto.randomUUID()};local.books=local.books.filter(x=>x.id!==next.id);local.books.push(next);storeLocal();books=[...seedBooks,...local.books.filter(x=>x.published)];renderBooks();announce($('#book-editor-status'),'Reference saved on this device only.','success')}renderAdminEntries();$('#edit-book-id').value=''});
 $('#export-local').addEventListener('click',()=>{const payload={version:5,exported:new Date().toISOString(),posts:isAdmin?posts:local.posts,books:isAdmin?books:local.books};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='moreshwar-editor-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);announce($('#backup-status'),'Backup exported.','success')});
 $('#import-local').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>1024*1024)throw Error('File too large (1 MB maximum).');const data=JSON.parse(await f.text());if(!Array.isArray(data.posts)||!Array.isArray(data.books))throw Error('Unsupported backup format.');local={posts:data.posts.filter(x=>x&&typeof x.title==='string'&&typeof x.body==='string').slice(0,200).map(x=>({...x,id:crypto.randomUUID()})),books:data.books.filter(x=>x&&typeof x.title==='string').slice(0,300).map(x=>({...x,id:crypto.randomUUID()}))};storeLocal();if(!isAdmin){posts=[...seedPosts,...local.posts.filter(x=>x.status==='published')];books=[...seedBooks,...local.books.filter(x=>x.published)];renderPosts();renderBooks()}announce($('#backup-status'),'Imported as local drafts. Review entries before publishing.','success')}catch(err){announce($('#backup-status'),err.message,'error')}});
-$('#contact-form').addEventListener('submit',async e=>{e.preventDefault();const form=$('#contact-form'),name=$('#contact-name').value.trim(),email=$('#contact-email').value.trim(),message=$('#contact-message').value.trim(),topic=$('#contact-topic').value;const status=$('#contact-status'),btn=$('#contact-submit');if(!form.checkValidity()||name.length<2||message.length<10){form.reportValidity();return announce(status,'Please provide a valid name, email, and message (at least 10 characters).','error')}if($('#company-website').value)return announce(status,'Could not send message.','error');if(!client){return announce(status,'Secure email delivery is not configured yet. Please use the linked GitHub profile to contact me.','error')}btn.disabled=true;btn.textContent='Sending…';try{const {error,data}=await client.functions.invoke('contact',{body:{name,email,topic,message,company_website:''}});if(error)throw error; if(!data?.ok)throw Error(data?.error||'Delivery not confirmed.');announce(status,'Message delivered to my inbox. Thank you.','success');form.reset()}catch(err){announce(status,'Message could not be delivered. Please try again later.','error');console.error(err)}finally{btn.disabled=false;btn.innerHTML='Send transmission <span>↗</span>'}});
+// Contact mail is submitted to FormSubmit from this static GitHub Pages site.
+// The mailbox owner must confirm FormSubmit's first activation email before delivery is enabled.
+// Until that happens, never claim a message reached the inbox.
+const contactForm = $('#contact-form');
+const contactName = $('#contact-name');
+const contactEmail = $('#contact-email');
+const contactMessage = $('#contact-message');
+const contactStatus = $('#contact-status');
+const contactButton = $('#contact-submit');
+const messageCount = $('#contact-message-count');
+const mailFallback = $('#contact-email-backup');
+const recipient = 'moreshwarpidadi@gmail.com';
+const contactEndpoint = 'https://formsubmit.co/ajax/' + recipient;
+function updateMessageCount() {
+ const count=contactMessage.value.length;
+ if(messageCount)messageCount.textContent=count+' / 5000 characters';
+ if(count>0 && contactMessage.validity.valid && contactStatus.classList.contains('error')) {
+   announce(contactStatus,'Your message looks ready. Press Send transmission when you are ready.');
+ }
+}
+contactMessage.addEventListener('input',updateMessageCount);
+[contactName,contactEmail].forEach(field=>field.addEventListener('input',()=>{
+ if(contactStatus.classList.contains('error') && field.validity.valid)announce(contactStatus,'Ready when you are.');
+}));
+updateMessageCount();
+contactForm.addEventListener('submit',async e=>{
+ e.preventDefault();
+ const name=contactName.value.trim(),email=contactEmail.value.trim(),
+   message=contactMessage.value.trim(),topic=$('#contact-topic').value;
+ mailFallback.hidden=true;
+ contactForm.classList.remove('contact-invalid');
+ // The honeypot is invisible to legitimate visitors. Discard bot-like submissions.
+ if($('#company-website').value.trim())return announce(contactStatus,'Unable to process this message.','error');
+ if(name.length<2){contactName.focus();return announce(contactStatus,'Please enter your name.','error')}
+ if(!contactEmail.validity.valid || !email){contactEmail.focus();return announce(contactStatus,'Please enter a valid email address.','error')}
+ if(message.length<2){contactMessage.focus();contactForm.classList.add('contact-invalid');return announce(contactStatus,'Please write a message—even a short one is fine.','error')}
+ if(!contactForm.checkValidity()){contactForm.reportValidity();return announce(contactStatus,'Please check the highlighted fields.','error')}
+ const previousLabel=contactButton.innerHTML;
+ contactButton.disabled=true;
+ contactButton.textContent='Transmitting…';
+ announce(contactStatus,'Sending securely. Please wait…');
+ try{
+  const timeout=new AbortController();
+  const timer=setTimeout(()=>timeout.abort(),20000);
+  let response;
+  try{
+   response=await fetch(contactEndpoint,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    signal:timeout.signal,
+    body:JSON.stringify({
+     name,email,topic,message,
+     _subject:'Moreshwar / Lab — '+topic,
+     _template:'table',
+     _honey:'',
+     source:location.href
+    })
+   });
+  }finally{clearTimeout(timer)}
+  const data=await response.json().catch(()=>null);
+  if(!response.ok||!data||data.success===false||data.success==='false')
+    throw Error((data&&data.message)||'The email service could not confirm receipt.');
+  // The service accepted the message; inbox delivery cannot be asserted until verification.
+  announce(contactStatus,'Message accepted by the email service. If my inbox is awaiting first-time activation, delivery will start after confirmation.','success');
+  contactForm.reset();
+  updateMessageCount();
+ }catch(err){
+  console.warn('Contact submission not confirmed',err);
+  announce(contactStatus,'Delivery could not be confirmed. You can open your email app instead.','error');
+  const subject='Moreshwar / Lab — '+topic;
+  const body='From: '+name+' ('+email+')\n\n'+message;
+  mailFallback.href='mailto:'+recipient+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  mailFallback.hidden=false;
+ }finally{
+  contactButton.disabled=false;
+  contactButton.innerHTML=previousLabel;
+ }
+});
 renderPosts();renderBooks();loadSubstack();initBackend();
