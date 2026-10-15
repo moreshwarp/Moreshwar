@@ -111,3 +111,32 @@ The Writing section now contains **22 real, published articles** from the author
 The import deliberately excluded **two unpublished drafts**, the exported subscriber email list, and all delivery/open analytics. It also removed the three machine-written sample articles from the public Writing collection.
 
 `substack-posts.json` is the index. It is marked `origin: manual-export`, which prevents the optional RSS job from overwriting verified author content. To update the archive, import a fresh published-only Substack export; don't upload the raw export ZIP into a public repository.
+
+
+## Interactive systems lab (October 2026)
+
+This website contains three **working, in-browser educational models**, rather
+than promotional project mockups:
+- **Tail exposure:** the idealized independent fan-out model `1-(1-p)^n`.
+- **Queueing:** the M/M/1 stationary mean response-time formula with overload handling.
+- **Two-replica state:** a manual delivery model illustrating stale reads.
+
+The models are didactic abstractions, **not recorded engineering benchmarks**,
+production traces, or completed scientific experiments. The source is in
+`lab.js`, visuals in `lab.css`, and controls are semantic HTML in `index.html`.
+
+### New systems writing
+
+Three long-form educational articles are included in `articles/fieldnote-*.html`.
+They are attributed to **Moreshwar Pidadi with an explicit AI-assisted editorial
+draft disclosure**. They are not peer-reviewed, do not claim novel results, and
+should be personally reviewed and revised by the named author before treating
+them as independently authored scholarship:
+
+1. Why the Slowest Request Can Dominate a Fast System.
+2. What a Stale Read Teaches Us About Distributed Systems.
+3. Why Queues Make Fast Systems Feel Slow.
+
+Their references include Lamport's 1978 logical-clock paper, Dean and Barroso's
+2013 tail-latency analysis, OSTEP, Google SRE, and Kleppmann's distributed-systems
+text. The 22 Substack originals remain separate and preserved.

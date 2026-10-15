@@ -172,57 +172,6 @@ How do scheduling and contention shape observed performance? What does consisten
 
 Systems thinking is where engineering becomes scientific: define the mechanism, test the assumptions, and observe the consequences.`}
 };
-const demoData={
-  "nn-visualizer":{label:"DEMO PROJECT · AI / ML",title:"Neural Network Loss Explorer",excerpt:"A demo concept for making model training more visual and intuitive.",body:`## Demo concept
-
-A compact interactive interface where a visitor can:
-
-- compare loss curves across runs,
-- scrub through training epochs,
-- inspect evaluation snapshots,
-- and understand how metrics move together.
-
-## Why it works on a portfolio
-
-It turns AI/ML from a buzzword into an explainable visual story.`},
-  "frontend-lab":{label:"DEMO PROJECT · FRONTEND",title:"Rich Text Behavior Lab",excerpt:"A controlled interface for testing real-world formatting, rendering, and sanitization edge cases.",body:`## Demo concept
-
-A split-screen sandbox:
-
-- left side: editing input,
-- right side: sanitized output,
-- plus warnings, DOM diffs, and safe/unsafe transformations.
-
-## Why it matters
-
-This is the kind of demo that shows product thinking, frontend depth, and security awareness together.`},
-  "latency-observatory":{label:"DEMO PROJECT · BACKEND",title:"API Latency Observatory",excerpt:"A simulation-first dashboard for understanding request journeys and bottlenecks.",body:`## Demo concept
-
-Visualize the lifecycle of a request:
-
-1. client request,
-2. gateway or service hop,
-3. database work,
-4. cache or retry behavior,
-5. end-to-end latency budget.
-
-## Why it feels scientific
-
-It frames performance as measurement, not mythology.`},
-  "systems-simulator":{label:"DEMO PROJECT · SYSTEMS",title:"Distributed Systems Simulator",excerpt:"A conceptual interactive that makes replication and failure recovery easier to understand.",body:`## Demo concept
-
-Use a node graph and failure controls to simulate:
-
-- leader failure,
-- replica lag,
-- election,
-- consistency trade-offs,
-- and recovery behavior.
-
-## Portfolio value
-
-It shows that systems curiosity can be translated into visual communication.`}
-};
 const workFilterButtons = $$('[data-work-filter]');
 const workCards = $$('[data-work-track]');
 function setWorkFilter(track) {
@@ -253,7 +202,7 @@ function openProjectLike(item){
 }
 workFilterButtons.forEach(button => button.addEventListener('click', () => setWorkFilter(button.dataset.workFilter)));
 $$('[data-project]').forEach(button => button.addEventListener('click', () => openProjectLike(projectData[button.dataset.project])));
-$$('[data-demo]').forEach(button => button.addEventListener('click', () => openProjectLike(demoData[button.dataset.demo])));
+
 setWorkFilter('all');
 const research={systems:{index:'R / 00 — CENTRAL QUESTION',title:'How do complex systems remain understandable?',text:'The intersection of abstractions, implementation, failures, and observable behavior. I want to understand systems by studying their mechanisms and testing their assumptions.',tags:['Reliability','Correctness','Performance']},os:{index:'R / 01 — OPERATING SYSTEMS',title:'What really happens when programs compete for resources?',text:'Scheduling, virtual memory, isolation, concurrency, synchronization, and the runtime behavior underlying every application.',tags:['Scheduling','Concurrency','Memory']},distributed:{index:'R / 02 — DISTRIBUTED SYSTEMS',title:'What can we promise when machines can fail?',text:'Coordination, fault tolerance, consistency models, replication, recovery, and the boundaries of what a networked system can guarantee.',tags:['Consistency','Replication','Faults']},compilers:{index:'R / 03 — COMPILERS',title:'How do abstractions become machine behavior?',text:'Language implementation, code generation, optimization, and the trade-offs made between expressiveness, correctness, and speed.',tags:['Optimization','Semantics','Runtimes']},ml:{index:'R / 04 — ML SYSTEMS',title:'What does it take to make learning systems efficient and reliable?',text:'Understanding machine learning from mathematics and implementation, with an interest in training infrastructure, inference, evaluation and systems performance.',tags:['Python','ML','Inference']}};
 function selectResearch(k){const r=research[k];if(!r)return;state.activeResearch=k;$('#research-index').textContent=r.index;$('#research-heading').textContent=r.title;$('#research-description').textContent=r.text;$('#research-keywords').innerHTML=r.tags.map(x=>`<span>${safe(x)}</span>`).join('');$('.research-progress span').style.width=({systems:64,os:35,distributed:48,compilers:62,ml:80}[k])+'%';$$('.rnode').forEach(n=>n.classList.toggle('active',n.dataset.r===k))}
