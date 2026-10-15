@@ -150,3 +150,18 @@ body.reduce-motion .ml-curve{stroke-dashoffset:0}
 @media(prefers-reduced-motion:reduce){.ml-curve,.ml-endpoint,.ml-beacon,.ui-float,.ui-float-second,.api-connector:after,.network-signal{animation:none!important}.ml-curve{stroke-dashoffset:0!important}}body.reduce-motion .ml-curve{stroke-dashoffset:0}
 
 
+
+
+/* Contact channel: clear inline guidance, subtle states and accessible fallback. */
+.contact-message-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:8px 16px;flex-wrap:wrap;margin-top:3px;color:#90abb8;font:10px/1.65 var(--mono)}
+.contact-message-meta #contact-message-count{color:#a4cfcb;white-space:nowrap;font-variant-numeric:tabular-nums}
+.contact-service-note{font:10px/1.6 var(--mono);color:#839ca6;margin:9px 0 0;letter-spacing:.005em}
+.contact-section .contact-service-note{font:10px/1.6 var(--mono);color:#839ca6;margin:9px 0 0;max-width:none}
+.contact-email-backup{display:inline-flex;align-items:center;min-height:34px;font:500 11px var(--mono);color:#b3ecd8;margin-top:8px;text-underline-offset:4px}
+.contact-email-backup[hidden]{display:none!important}
+.contact-form .contact-invalid textarea,.contact-invalid #contact-message{border-color:#f3b1ad}
+#contact-submit:disabled{opacity:.72;cursor:wait}
+.contact-panel .form-status{margin-top:14px;line-height:1.75;font-size:12px;max-width:none}
+.contact-panel .form-status.error{color:#ffb3b3}
+.contact-panel .form-status.success{color:#8ff3d6}
+@media(max-width:570px){.contact-message-meta{font-size:9px}.contact-panel .form-status{font-size:11px}}
