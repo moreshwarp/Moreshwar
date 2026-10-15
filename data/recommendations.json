@@ -1,0 +1,362 @@
+[
+  {
+    "universe": "science",
+    "kind": "Movie",
+    "title": "Interstellar",
+    "creator": "Christopher Nolan",
+    "note": "A visual invitation to wonder about space, gravity and scientific questions.",
+    "url": "https://en.wikipedia.org/wiki/Interstellar_(film)",
+    "approved": false
+  },
+  {
+    "universe": "science",
+    "kind": "Book",
+    "title": "Surely You're Joking, Mr. Feynman!",
+    "creator": "Richard Feynman",
+    "note": "Curiosity, experiments and the pleasure of asking unexpected questions.",
+    "url": "https://en.wikipedia.org/wiki/Surely_You%27re_Joking,_Mr._Feynman!",
+    "approved": false
+  },
+  {
+    "universe": "science",
+    "kind": "Article",
+    "title": "The Tail at Scale",
+    "creator": "Jeffrey Dean & Luiz André Barroso",
+    "note": "A foundational systems-paper perspective on latency under fan-out.",
+    "url": "https://research.google/pubs/the-tail-at-scale/",
+    "approved": false
+  },
+  {
+    "universe": "science",
+    "kind": "YouTube",
+    "title": "3Blue1Brown — Neural networks",
+    "creator": "3Blue1Brown",
+    "note": "Visual explanations of learning, optimization and mathematical structure.",
+    "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+    "approved": false
+  },
+  {
+    "universe": "hero",
+    "kind": "Movie",
+    "title": "Iron Man",
+    "creator": "Marvel Studios",
+    "note": "Technology, iteration and responsibility through a fictional engineering lens.",
+    "url": "https://en.wikipedia.org/wiki/Iron_Man_(2008_film)",
+    "approved": false
+  },
+  {
+    "universe": "hero",
+    "kind": "Book",
+    "title": "The Design of Everyday Things",
+    "creator": "Don Norman",
+    "note": "Design constraints and feedback are where real technical heroics begin.",
+    "url": "https://en.wikipedia.org/wiki/The_Design_of_Everyday_Things",
+    "approved": false
+  },
+  {
+    "universe": "hero",
+    "kind": "Article",
+    "title": "How Complex Systems Fail",
+    "creator": "Richard I. Cook",
+    "note": "When every system can fail, design for resilience instead of perfection.",
+    "url": "https://how.complexsystems.fail/",
+    "approved": false
+  },
+  {
+    "universe": "hero",
+    "kind": "YouTube",
+    "title": "MIT 6.S191 — Deep learning lectures",
+    "creator": "MIT",
+    "note": "An accessible path from creative ideas to understandable machine learning.",
+    "url": "https://www.youtube.com/results?search_query=MIT+6.S191+deep+learning+lectures",
+    "approved": false
+  },
+  {
+    "universe": "noir",
+    "kind": "Movie",
+    "title": "The Dark Knight",
+    "creator": "Christopher Nolan",
+    "note": "Ethics, competing choices and a distinctly investigative visual language.",
+    "url": "https://en.wikipedia.org/wiki/The_Dark_Knight",
+    "approved": false
+  },
+  {
+    "universe": "noir",
+    "kind": "Book",
+    "title": "The Art of Computer Programming",
+    "creator": "Donald E. Knuth",
+    "note": "The detective work of algorithms: proving the mechanism rather than guessing.",
+    "url": "https://www-cs-faculty.stanford.edu/~knuth/taocp.html",
+    "approved": false
+  },
+  {
+    "universe": "noir",
+    "kind": "Article",
+    "title": "Time, Clocks, and the Ordering of Events in a Distributed System",
+    "creator": "Leslie Lamport",
+    "note": "Reasoning about what happened before what in a system of partial information.",
+    "url": "https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/",
+    "approved": false
+  },
+  {
+    "universe": "noir",
+    "kind": "YouTube",
+    "title": "Computerphile — security and systems",
+    "creator": "Computerphile",
+    "note": "Follow careful explanations of problems that hide beneath interfaces.",
+    "url": "https://www.youtube.com/results?search_query=Computerphile+computer+security+systems",
+    "approved": false
+  },
+  {
+    "universe": "quantum",
+    "kind": "Movie",
+    "title": "The Imitation Game",
+    "creator": "Morten Tyldum",
+    "note": "Mathematics, research history and the human dimension of computation.",
+    "url": "https://en.wikipedia.org/wiki/The_Imitation_Game",
+    "approved": false
+  },
+  {
+    "universe": "quantum",
+    "kind": "Book",
+    "title": "The Feynman Lectures on Physics",
+    "creator": "Richard Feynman et al.",
+    "note": "A first-principles way of approaching hard physical questions.",
+    "url": "https://www.feynmanlectures.caltech.edu/",
+    "approved": false
+  },
+  {
+    "universe": "quantum",
+    "kind": "Article",
+    "title": "Time, Clocks, and the Ordering of Events",
+    "creator": "Leslie Lamport",
+    "note": "A surprising connection between time and computing.",
+    "url": "https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/",
+    "approved": false
+  },
+  {
+    "universe": "quantum",
+    "kind": "YouTube",
+    "title": "3Blue1Brown — Essence of linear algebra",
+    "creator": "3Blue1Brown",
+    "note": "Mathematical intuition for the curious learner.",
+    "url": "https://www.youtube.com/results?search_query=3blue1brown+essence+of+linear+algebra",
+    "approved": false
+  },
+  {
+    "universe": "shinobi",
+    "kind": "Movie",
+    "title": "The Boy and the Beast",
+    "creator": "Mamoru Hosoda",
+    "note": "Learning from mentors, persistence and building a disciplined craft.",
+    "url": "https://en.wikipedia.org/wiki/The_Boy_and_the_Beast",
+    "approved": false
+  },
+  {
+    "universe": "shinobi",
+    "kind": "Book",
+    "title": "Deep Work",
+    "creator": "Cal Newport",
+    "note": "Sustained attention as a practical engineering advantage.",
+    "url": "https://calnewport.com/deep-work-rules-for-focused-success-in-a-distracted-world/",
+    "approved": false
+  },
+  {
+    "universe": "shinobi",
+    "kind": "Article",
+    "title": "The Tail at Scale",
+    "creator": "Dean & Barroso",
+    "note": "Precision matters more than appearances when a system is under pressure.",
+    "url": "https://research.google/pubs/the-tail-at-scale/",
+    "approved": false
+  },
+  {
+    "universe": "shinobi",
+    "kind": "YouTube",
+    "title": "MIT 6.5840 — Distributed Systems",
+    "creator": "MIT",
+    "note": "Practice consistent reasoning about coordination and failures.",
+    "url": "https://www.youtube.com/results?search_query=MIT+6.5840+distributed+systems+lectures",
+    "approved": false
+  },
+  {
+    "universe": "bureau",
+    "kind": "Movie",
+    "title": "The Adjustment Bureau",
+    "creator": "George Nolfi",
+    "note": "Choices, constraints and the structures behind apparent freedom.",
+    "url": "https://en.wikipedia.org/wiki/The_Adjustment_Bureau",
+    "approved": false
+  },
+  {
+    "universe": "bureau",
+    "kind": "Book",
+    "title": "Designing Data-Intensive Applications",
+    "creator": "Martin Kleppmann",
+    "note": "How invisible software decisions affect visible outcomes.",
+    "url": "https://dataintensive.net/",
+    "approved": false
+  },
+  {
+    "universe": "bureau",
+    "kind": "Article",
+    "title": "How Complex Systems Fail",
+    "creator": "Richard I. Cook",
+    "note": "Limits of control and prediction in interconnected systems.",
+    "url": "https://how.complexsystems.fail/",
+    "approved": false
+  },
+  {
+    "universe": "bureau",
+    "kind": "YouTube",
+    "title": "Computerphile — distributed systems",
+    "creator": "Computerphile",
+    "note": "A guided exploration of hidden decisions in computing.",
+    "url": "https://www.youtube.com/results?search_query=Computerphile+distributed+systems",
+    "approved": false
+  },
+  {
+    "universe": "nature",
+    "kind": "Movie",
+    "title": "My Octopus Teacher",
+    "creator": "Pippa Ehrlich & James Reed",
+    "note": "Observation, adaptation and surprising intelligence in natural systems.",
+    "url": "https://en.wikipedia.org/wiki/My_Octopus_Teacher",
+    "approved": false
+  },
+  {
+    "universe": "nature",
+    "kind": "Book",
+    "title": "The Selfish Gene",
+    "creator": "Richard Dawkins",
+    "note": "A well-known lens on evolution and emergent systems.",
+    "url": "https://en.wikipedia.org/wiki/The_Selfish_Gene",
+    "approved": false
+  },
+  {
+    "universe": "nature",
+    "kind": "Article",
+    "title": "How Complex Systems Fail",
+    "creator": "Richard I. Cook",
+    "note": "Thinking about adaptation, change and resilience.",
+    "url": "https://how.complexsystems.fail/",
+    "approved": false
+  },
+  {
+    "universe": "nature",
+    "kind": "YouTube",
+    "title": "Veritasium — science and complexity",
+    "creator": "Veritasium",
+    "note": "Thought-provoking explorations of physical mechanisms.",
+    "url": "https://www.youtube.com/results?search_query=Veritasium+complexity+science",
+    "approved": false
+  },
+  {
+    "universe": "terminal",
+    "kind": "Movie",
+    "title": "The Matrix",
+    "creator": "The Wachowskis",
+    "note": "A playful gateway to simulation, identity and computer-system imagination.",
+    "url": "https://en.wikipedia.org/wiki/The_Matrix",
+    "approved": false
+  },
+  {
+    "universe": "terminal",
+    "kind": "Book",
+    "title": "Operating Systems: Three Easy Pieces",
+    "creator": "Arpaci-Dusseau & Arpaci-Dusseau",
+    "note": "Freely available, rigorous material on OS foundations.",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+    "approved": false
+  },
+  {
+    "universe": "terminal",
+    "kind": "Article",
+    "title": "Addressing Cascading Failures",
+    "creator": "Google SRE",
+    "note": "Why practical systems engineering needs backpressure and restraint.",
+    "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+    "approved": false
+  },
+  {
+    "universe": "terminal",
+    "kind": "YouTube",
+    "title": "Computerphile — operating systems",
+    "creator": "Computerphile",
+    "note": "Videos about the internals behind a command prompt.",
+    "url": "https://www.youtube.com/results?search_query=Computerphile+operating+systems",
+    "approved": false
+  },
+  {
+    "universe": "circuit",
+    "kind": "Movie",
+    "title": "The Imitation Game",
+    "creator": "Morten Tyldum",
+    "note": "Algorithms and computation seen through a historical story.",
+    "url": "https://en.wikipedia.org/wiki/The_Imitation_Game",
+    "approved": false
+  },
+  {
+    "universe": "circuit",
+    "kind": "Book",
+    "title": "Code: The Hidden Language of Computer Hardware and Software",
+    "creator": "Charles Petzold",
+    "note": "A step-by-step path from circuits toward computation.",
+    "url": "https://en.wikipedia.org/wiki/Code:_The_Hidden_Language_of_Computer_Hardware_and_Software",
+    "approved": false
+  },
+  {
+    "universe": "circuit",
+    "kind": "Article",
+    "title": "The Tail at Scale",
+    "creator": "Dean & Barroso",
+    "note": "From individual components to collective system behavior.",
+    "url": "https://research.google/pubs/the-tail-at-scale/",
+    "approved": false
+  },
+  {
+    "universe": "circuit",
+    "kind": "YouTube",
+    "title": "Ben Eater — how computers work",
+    "creator": "Ben Eater",
+    "note": "Careful demonstrations of architecture at the circuit level.",
+    "url": "https://www.youtube.com/results?search_query=Ben+Eater+how+computers+work",
+    "approved": false
+  },
+  {
+    "universe": "arcade",
+    "kind": "Movie",
+    "title": "Ready Player One",
+    "creator": "Steven Spielberg",
+    "note": "Playfulness, digital worlds and computing imagination.",
+    "url": "https://en.wikipedia.org/wiki/Ready_Player_One_(film)",
+    "approved": false
+  },
+  {
+    "universe": "arcade",
+    "kind": "Book",
+    "title": "The Pragmatic Programmer",
+    "creator": "Andrew Hunt & David Thomas",
+    "note": "Practical experiments and craft in software development.",
+    "url": "https://en.wikipedia.org/wiki/The_Pragmatic_Programmer",
+    "approved": false
+  },
+  {
+    "universe": "arcade",
+    "kind": "Article",
+    "title": "Addressing Cascading Failures",
+    "creator": "Google SRE",
+    "note": "Even game-like simulations need robust systems underneath.",
+    "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+    "approved": false
+  },
+  {
+    "universe": "arcade",
+    "kind": "YouTube",
+    "title": "Sebastian Lague — Coding Adventures",
+    "creator": "Sebastian Lague",
+    "note": "Creative coding and visually intuitive simulations.",
+    "url": "https://www.youtube.com/results?search_query=Sebastian+Lague+Coding+Adventures",
+    "approved": false
+  }
+]

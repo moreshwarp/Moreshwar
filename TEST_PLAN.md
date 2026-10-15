@@ -1,164 +1,94 @@
-# Moreshwar / Lab — QA, Test Plan & Project Walkthrough
+# Moreshwar / Lab — Current Use Cases, Test Cases and Acceptance Criteria
 
-## Project objective
+Release: **owner-controlled publisher architecture** (supersedes older visitor-selectable themes and local-only editors).
+Public URL: **https://moreshwarp.github.io/Moreshwar/**
 
-A publicly hosted, responsive academic-engineering portfolio that demonstrates systems thinking with interactive models and original reading notes, preserves imported publications, curates references, and receives visitor enquiries through a third-party email service.
+## System boundaries
 
-### Modules under test
-- Homepage, research atlas, and three interactive systems models
-- Writing collection: 22 imported Substack articles + three clearly disclosed AI-assisted systems drafts
-- Book / paper / article / course catalog, search and filters
-- Contact interface: semantic HTML validation, prompts, preview, native POST, FormSubmit redirect, fallback email link
-- GitHub Pages deployment at the case-sensitive path **/Moreshwar/**
+1. Public GitHub Pages: **read-only** HTML/CSS/JS, scientific simulations, essay archive, curated recommendations, comment previews.
+2. GitHub-authorized Pages CMS: owner/editor UI; GitHub repository permissions gate writes.
+3. GitHub Actions: takes approved Markdown in \`content/posts\`, theme in \`data/site-settings.json\`, and curated items in \`data/recommendations.json\`; generates \`_site\` HTML.
+4. GitHub Issues: comments, reactions, identity and moderation for article discussions.
+5. FormSubmit: external provider for contact email; delivery needs separate activation.
 
-## Automated regression suite
+**Security boundary:** never rely on an invisible public editor button, client-side admin password, localStorage permission, or browser source obfuscation. GitHub controls write permissions. Public GitHub repository source, including unpublished Markdown drafts, is readable.
 
-Command: \`node --test tests/site.test.cjs\`
+## Test environment and commands
 
-GitHub Actions workflow: \`.github/workflows/quality.yml\` (runs on pushes and pull requests to main). No extra npm dependencies. The suite verifies page structure, JS validation, required publication content, category coverage, cross-module paths and motion accessibility.
+- Node 22; \`node --test tests/*.test.cjs\` for automated unit/structural checks.
+- GitHub Actions \`Portfolio quality checks\` on pushes and pull requests.
+- GitHub Actions \`Mobile and Theme Browser QA\` runs Chromium at real phone/tablet/desktop widths.
+- \`Deploy Moreshwar / Lab\` creates and publishes the actual GitHub Pages artifact.
 
-## Manual acceptance cases
+## Use cases and detailed acceptance scenarios
 
-| ID | Scenario | Action | Expected result | Verification |
+| ID | Actor | Action or condition | Expected outcome | Test method |
 |---|---|---|---|---|
-| UI-01 | Desktop navigation | Open root and use Work, Research, Writing, Library | Anchor navigation works; no clipped sections | Manual |
-| UI-02 | Mobile navigation | Open at width 390px; navigate and rotate | No horizontal overflow; menu functional | Manual |
-| UI-03 | Reduced motion | Enable OS reduced-motion setting | Animated effects pause or stop without hiding content | Manual |
-| LAB-01 | Tail fan-out | Change dependencies 1 → 48 | Probability follows \`1 - (1-p)^n\` | Math + manual |
-| LAB-02 | Tail slow probability | Set 1% then 30% | Probability increases for fixed n | Math + manual |
-| LAB-03 | Queue model | Set arrival 10 with service 20 | Expected mean response = 100 ms | Math + manual |
-| LAB-04 | Queue overload | Set arrival 21 with service 20 | UI explicitly says no stationary finite mean | Math + manual |
-| LAB-05 | Replica staleness | Write on A twice before deliver | B remains behind; lag visible | Manual |
-| LAB-06 | Partition | Pause link, write, try deliver | Delivery unavailable while partitioned | Manual |
-| LAB-07 | Recovery | Restore link and deliver | Replica catches up; status in sync | Manual |
-| LIB-01 | Paper filter | Select Papers | Real suggested papers display, not empty state | Manual |
-| LIB-02 | Course filter | Select Courses | Curated course entries display | Manual |
-| LIB-03 | No-match search | Search nonsense phrase | Styled empty panel offers reset | Manual |
-| LIB-04 | Reset search | Click Explore all references | Filters and search reset to all | Manual |
-| WR-01 | Original posts | Open Writing | All 22 original Substack posts present | Automated |
-| WR-02 | Reading page | Open an imported article | Full article opens at relative path | Manual |
-| WR-03 | Systems draft | Open one of three new research notes | Clearly discloses AI assistance and model limitations | Automated + manual |
-| FORM-01 | Valid submission | Fill name, valid email and message | Native POST navigates to FormSubmit (not AJAX) | Automated structure + manual |
-| FORM-02 | Invalid name | Enter one character | Browser prevents submission, field feedback visible | Unit + manual |
-| FORM-03 | Invalid email | Enter a malformed address | Browser prevents submission | Unit + manual |
-| FORM-04 | Short message | Enter two-character message | Validation accepts the message | Unit + manual |
-| FORM-05 | Topic prompts | Click Research idea | Topic and sample draft populate; message is editable | Manual |
-| FORM-06 | Provider activation | First submit to unactivated email | Provider requires owner to verify delivery in Gmail | E2E pending activation |
-| FORM-07 | Confirmation | Submit after activation and service acceptance | Provider redirects to \`message-received.html\` | E2E pending activation |
-| FORM-08 | Gmail inbox | Send a real test, then search recipient Gmail | Received notification includes name, email, topic, message | E2E pending activation |
-| FORM-09 | Email backup | Click direct email alternative | System mail application opens with recipient prefilled | Manual |
-| SEC-01 | Escaping | Enter markup in name/message | It appears as untrusted text in native form submission, not innerHTML | Code review |
-| SEC-02 | Spam field | Fill honeypot automatically as a bot | Provider can block spam-like submissions | Provider behavior (not locally verified) |
-| SEC-03 | No secrets | Inspect public JavaScript and HTML | No Gmail password or Resend secret in client source | Automated/code review |
-| PERF-01 | Page responsiveness | Inspect desktop and mobile network performance | Site readable before Three.js effect, no expensive blocking page load | Manual profiling |
+| PUB-01 | Visitor | Open homepage | Published research homepage is visible; no editor, admin sign-in or theme-changing controls | Browser automated |
+| PUB-02 | Visitor | Open narrow phone at 320px | Navigation and scientific diagram stay inside viewport | Browser automated |
+| PUB-03 | Visitor | Open at 360, 390, 430, 768, 1024, 1440px | No horizontal page overflow; Current Lens remains readable | Browser automated |
+| PUB-04 | Visitor | Switch Systems, AI/ML, Frontend lenses | Technical focus explanation changes; public theme does not | Browser automated |
+| PUB-05 | Visitor | Set old localStorage theme then reload | Owner's saved theme still applies | Browser automated |
+| PUB-06 | Visitor | Navigate to any of 25 existing essays | Same owner-defined brightness/theme applies | Browser automated + manual sampling |
+| PUB-07 | Visitor | Enable reduced motion | Moving decoration stops; content remains readable | CSS test + manual |
+| PUB-08 | Visitor | Use search, Work, Research, Writing, Library, Picks | Navigation anchors and content remain functional | Manual |
+| AUTH-01 | Visitor | Look for admin editor on website | No public admin editor or CMS login is present | Automated |
+| AUTH-02 | Visitor | Attempt to publish using only browser DevTools | No writable client-side endpoint or GitHub credential exposed | Code review |
+| AUTH-03 | Visitor | Try to change appearance via URL or localStorage | Public theme remains owner-published | Browser automated |
+| AUTH-04 | Owner | Sign in to Pages CMS using GitHub | Repo appears only after owner authorizes Pages CMS App | Manual external-provider setup |
+| AUTH-05 | Owner | Open editor from authorized Pages CMS | Rich-text fields load for markdown posts | Manual CMS acceptance |
+| AUTH-06 | Unauthorized GitHub user | Attempt write to repository | GitHub denies commit/publish due missing permission | Manual GitHub permission check |
+| AUTH-07 | Owner | Change global universe to noir and save | GitHub Action deploys noir across homepage and essays | Manual owner release test |
+| AUTH-08 | Owner | Change brightness to light | Same published light theme displays for every visitor | Manual owner release test |
+| AUTH-09 | Owner | Select a theme not in whitelist | Build rejects invalid appearance rather than deploy unsafe JS | Unit test |
+| CMS-01 | Owner | Create an unpublished Markdown article | Entry is excluded from hosted Pages and homepage | Unit/build test |
+| CMS-02 | Owner | Save an unpublished article | File exists in public GitHub source; owner is warned it is not confidential | Documentation/manual |
+| CMS-03 | Owner | Set published true and commit | GitHub Pages generates \`articles/notes-*.html\` | Manual end-to-end release test |
+| CMS-04 | Owner | Write headings/lists/bold/code/links | Renderer emits readable semantic HTML | Unit |
+| CMS-05 | Owner | Insert a Markdown image | Allowlisted HTTP(S) or site media image renders responsively | Unit + manual |
+| CMS-06 | Owner | Insert raw script/HTML | Renderer escapes content; script never executes | Unit |
+| CMS-07 | Owner | Use javascript: links | Renderer rejects unsafe link | Unit |
+| CMS-08 | Owner | Publish a new article | Article appears in “New from the Editorial Notebook” | Manual end-to-end |
+| CMS-09 | Owner | Publish twice with same filename | Same generated page updates without duplicates | Build logic review/manual |
+| CMS-10 | Owner | Change title/date/summary | New metadata renders without replacing original Substack articles | Manual |
+| CMS-11 | Owner | Edit source Markdown from GitHub | The same publishing workflow runs without requiring CMS UI | Manual |
+| CMS-12 | Owner | Submit invalid frontmatter | Invalid settings/build do not reach production | Unit/action |
+| READER-01 | Visitor | Read any of 22 imported Substack posts | Complete article page preserved | Automated count |
+| READER-02 | Visitor | Open three AI-assisted fieldnotes | Disclosures are preserved | Automated + manual |
+| READER-03 | Visitor | Open a new published owner article | Title/byline/date and formatted article body appear | Manual end-to-end |
+| FEED-01 | Visitor | Open imported article | Dedicated Github Issue thread is linked | Automated |
+| FEED-02 | Visitor | View an article with existing comments | Latest public comments appear safely on site | Mocked browser integration |
+| FEED-03 | Visitor | Click Like on GitHub | Correct article issue opens for authenticated reaction | Browser automated |
+| FEED-04 | Visitor | Click Write a comment | Correct article issue opens; GitHub login is required to submit | Browser automated/manual |
+| FEED-05 | Visitor | Refresh after a reaction | GitHub-backed count refreshes (subject to API caching) | Manual external service |
+| FEED-06 | Visitor | GitHub API rate-limited/offline | Site shows fallback explanation and working issue link | Code review/manual |
+| FEED-07 | Visitor | Comment contains script-like HTML | Embedded comment uses textContent; no script execution | Browser automated |
+| FEED-08 | Owner | Publish new article | Issue is created once; subsequent deploy reuses it | GitHub Actions logic/manual |
+| FEED-09 | Owner | Moderate a thread | Github Issue moderation applies publicly | Manual |
+| FEED-10 | User | Try to like without GitHub sign-in | GitHub requests login; no fake local-only like is counted | Manual |
+| PICKS-01 | Visitor | Open Picks under Science Lab | One Movie, Book, Article and YouTube lead display | Unit/build/browser |
+| PICKS-02 | Owner | Select different universe and deploy | Published four-pick selection matches owner's theme | Unit/manually change |
+| PICKS-03 | Owner | Leave approved false | Card says Curated Lead, not personally recommended | Automated |
+| PICKS-04 | Owner | Set approved true after personal review | Card says Personally Recommended | Unit |
+| PICKS-05 | Visitor | Follow YouTube/item card | Trusted HTTPS destination opens in new tab | Unit |
+| PICKS-06 | Owner | Enter javascript: recommendation URL | Unsafe card link is dropped | Unit |
+| MOBILE-01 | Visitor | Mobile portrait at 320–430px | Home, lens status, Picks, cards, discussions fit screen | Chromium QA |
+| MOBILE-02 | Visitor | Tablet 768px | Cards reflow correctly and navigation remains usable | Chromium QA |
+| MOBILE-03 | Visitor | Desktop at 1440px | Scientific imagery and recommendation grid balance across columns | Chromium QA + visual review |
+| CONTACT-01 | Visitor | Valid enquiry | Normal browser POST to FormSubmit | Existing automated tests |
+| CONTACT-02 | Visitor | Invalid email | Input validation blocks submission | Existing automated tests |
+| CONTACT-03 | Owner | Complete FormSubmit activation, receive email | Gmail inbox contains message and reply address | Manual; activation outstanding |
+| DEPLOY-01 | CI | Push content/appearance change to main | Static build and Pages deployment complete | GitHub Actions |
+| DEPLOY-02 | CI | Execute \`node --test tests/*.test.cjs\` | All tests pass | GitHub Actions |
+| DEPLOY-03 | CI | Execute browser QA | Screenshots and geometry pass on configured viewports | GitHub Actions |
+| DEPLOY-04 | CI | Try to publish while renderer fails | Deployment fails rather than ship broken pages | Build exception guard |
+| DEPLOY-05 | QA | Compare public URL after deployment | New artifacts visible after refresh and unchanged URL case | Manual |
 
-## End-to-end email prerequisites — important
+### Scope and known limitations
 
-GitHub Pages cannot itself receive form data or deliver Gmail messages. This project uses FormSubmit, a separate third-party processor. The recipient **must activate the form by confirming the provider's email**. Live delivery cannot be guaranteed from static-code or unit tests, and the provider's redirect only proves processing of the form submission, not receipt in Gmail. The website never publishes visitors' private messages publicly.
-
-Until activation is confirmed, consider the contact feature **partially configured**, not production-verified. Form submissions share personally supplied name, reply email, and message with FormSubmit; the site tells visitors this before sending. Prefer a first-party backend when stronger delivery guarantees, spam controls, retention policies or an owner-managed message dashboard are needed.
-
-## Demo / technical walkthrough
-
-1. Show the interactive Research Atlas and distinguish engineering practice from active learning.
-2. Use Tail Lab to demonstrate the independence-based probability model.
-3. Use Queueing Lab to discuss utilization and model breakdown at saturation.
-4. Use Replica Lab to illustrate stale reads without claiming the simulation implements consensus.
-5. Navigate from experiments to the three explanatory AI-assisted research notes and references.
-6. Open original Substack archive and curated research library.
-7. Demonstrate form field validation and provider redirect **without exposing test visitor information on screen**.
-8. Open GitHub Actions to show passing unit checks and the successful Pages deployment.
-
-## Release checklist
-
-- Automated tests pass.
-- GitHub Pages custom workflow succeeds.
-- Navigate to \`https://moreshwarp.github.io/Moreshwar/\`; note the repository path is case-sensitive.
-- Verify sample articles and the library categories are still present.
-- Do not claim Gmail delivery until an actual recipient mailbox test succeeds.
-- Do not present the educational labs as recorded performance benchmarks or the AI-assisted notes as peer-reviewed publications.
-
-
-## Visual Research Interface v6 — use cases and acceptance matrix
-
-The home page has a built-in SVG research visualization that must work without WebGL, external CDNs, JavaScript, or network calls. The left column of the Engineering Atlas contains an illustrative architecture map. Neither graphic claims benchmark data.
-
-| ID | Use case or test | Procedure | Expected result | Automation |
-|---|---|---|---|---|
-| VIS-01 | Hero no-overlap, desktop | Open homepage at 1920×1080, 1440×900, 1280×800 | Headline and figure remain distinct, both have breathing room; no horizontal overflow | Static layout rule + manual visual |
-| VIS-02 | Hero tablet | Width 960–1200px | Figure still visible and headline does not obscure it | CSS coverage + manual |
-| VIS-03 | Hero mobile | Width 390px and 320px | Graphic stacks below copy; tabs accessible and content scrollable | CSS coverage + manual |
-| VIS-04 | Offline / no WebGL | Block all CDN scripts and disable WebGL | SVG figure is still visible because it is HTML markup | Automated structural check + manual |
-| VIS-05 | Scientific diagram modes | Click Systems, AI/ML and Frontend tabs | Figure focus label and active state change | Simulated JS interaction |
-| VIS-06 | Keyboard figure controls | Tab to a lens, press left/right arrow | Next/previous lens activates and receives focus | Simulated JS interaction |
-| VIS-07 | Stop motion | Enable OS reduced motion; use site's motion toggle | Pulsing/rotation animations stop, SVG labels remain visible | CSS checks + manual |
-| VIS-08 | Hidden tab | Switch browser tab away from site | Diagram animation pauses when document is hidden | Unit + manual |
-| ATLAS-01 | No blank header | Scroll to Engineering Atlas | Left architecture graphic balances right title block | Automated structural + visual |
-| ATLAS-02 | Technology filters | Choose Frontend, AI/ML, Backend, Systems | Only matching cards appear; count/ARIA update | Existing JavaScript + manual |
-| ATLAS-03 | Card details | Click each domain | Modal opens with topic-specific engineering explanation | Manual |
-| THEME-01 | System preference light | Clear saved theme, set OS light, refresh | Site loads light and theme button offers Dark | Pure unit + manual |
-| THEME-02 | System preference dark | Clear saved theme, set OS dark, refresh | Site loads dark and theme button offers Light | Pure unit + manual |
-| THEME-03 | Manual toggle | Press theme button | Color scheme, label, ARIA state and browser chrome color update | Simulated JS unit + manual |
-| THEME-04 | Persist across navigation | Pick light, open an article and return | Both article and homepage remain light | Static coverage + manual |
-| THEME-05 | Article theme coverage | Open each of 22 imported posts and 3 fieldnotes | All 25 pages offer a theme toggle and legible colors | Automated |
-| THEME-06 | Keyboard & focus | Navigate to theme control with Tab | Visible focus indicator; Enter/Space changes theme | Native button + manual |
-| THEME-07 | Light-mode legibility | Inspect work cards, library, contact, dialogs, footer | Text/background colors remain readable; links distinguishable | Manual visual |
-| THEME-08 | Theme without storage | Block localStorage and load page | No crash; theme defaults safely | Pure unit + manual |
-| PRESERVE-01 | Articles untouched | Open published archive and count article URLs | All 22 Substack articles remain linked | Automated |
-| PRESERVE-02 | Research labs untouched | Run latency, queue and replica models | Existing three models still interactive | Automated presence + manual |
-| PRESERVE-03 | Contact + library | Open and use both sections | Forms and reference filters still function | Existing automated checks + manual |
-| DEPLOY-01 | Correct GitHub Pages artifact | Inspect deploy workflow | New CSS and JS, existing assets and all articles included | Automated |
-| DEPLOY-02 | Full automated suite | Run \`node --test tests/*.test.cjs\` | 0 failures; all suites green | GitHub Actions |
-| DEPLOY-03 | Publish | Watch GitHub Actions Pages workflow | GitHub reports successful deployment | GitHub Actions |
-| DEPLOY-04 | Public URL | Visit \`https://moreshwarp.github.io/Moreshwar/\` in fresh browser | Correct main content and toggle assets load | Manual public browser |
-
-This is a static research portfolio. The scientific images are diagrams of technical interests, **not real observed telemetry**. Light and dark preference is stored only in local browser storage. Email delivery is still a separate service that needs its own activation and an end-to-end inbox test.
-
-
-## Theme Studio and mobile repair — October 2026
-
-The visual redesign is **not** evidence of official Marvel, DC, Big Bang Theory, Naruto or Adjustment Bureau affiliation: the visual themes are original abstract design inspirations using no franchise art or proprietary logos.
-
-### Mandatory device/layout test matrix
-
-| Case | Device or viewport | Steps | Expected outcome |
-|---|---|---|---|
-| MOB-01 | 320 × 640 Android | Open homepage, scroll to scientific graphic | No horizontal scroll; full instrument SVG, Current Lens label and description visible |
-| MOB-02 | 360 × 800 Android | Switch through Systems/AI/Frontend | No clipping in SVG, focus text or tab buttons |
-| MOB-03 | 390 × 844 Android | Toggle light/dark then cycle all modes | Labels wrap naturally and all buttons remain tappable |
-| MOB-04 | 430 × 932 Android | Long content test | No content goes off-screen when scientific text changes |
-| MOB-05 | 768 × 1024 tablet | Scroll through hero and engineering atlas | Responsive layout maintains visible graphic and panels |
-| MOB-06 | 1024 × 768 landscape | Open Theme Studio | Dialog can scroll and close; no accidental horizontal overflow |
-| MOB-07 | 1440 × 900 desktop | Open scientific graphic | SVG remains centered with readable status, no overlay collisions |
-
-### Theme interactions, accessibility, persistence
-
-| Case | Steps | Expected outcome | Automation |
-|---|---|---|---|
-| THEME-09 | Desktop, click ✧ Themes in header | Native modal opens with 10 cards | Structural + manual |
-| THEME-10 | Mobile, open navigation then Theme Studio | Theme picker opens without crowding narrow header | CSS rules + manual |
-| THEME-11 | Pick **Science Lab** | Original teal/scientific atmosphere | JS simulated + manual |
-| THEME-12 | Pick **Hero Protocol** | Scarlet/gold comic-cinema palette, no franchise art | JS simulated + manual |
-| THEME-13 | Pick **Midnight Detective** | Dark blue/noir graphic atmosphere | CSS + manual |
-| THEME-14 | Pick **Quantum Banter** | Physics-inspired lavender/cyan atmosphere | CSS + manual |
-| THEME-15 | Pick **Shinobi Code** | Warm copper/scroll atmosphere | CSS + manual |
-| THEME-16 | Pick **The Hidden Bureau** | Muted bronze/doorway atmosphere | CSS + manual |
-| THEME-17 | Pick **Natural Systems** | Organic green palette | CSS + manual |
-| THEME-18 | Pick **Hacker Terminal** | Phosphor green terminal palette | CSS + manual |
-| THEME-19 | Pick **Computer Science** | Blue technical circuit palette | CSS + manual |
-| THEME-20 | Pick **Retro Simulation** | Retro neon/arcade palette | CSS + manual |
-| THEME-21 | Change theme, reload and open a fieldnote | Palette choice persists across pages, text remains readable | JS + CSS + manual |
-| THEME-22 | In Theme Studio, select Light then Dark | Brightness changes independently of selected universe | JS + manual |
-| THEME-23 | Escape, click close, or click backdrop | Dialog closes and focus returns to launch button | Native dialog + manual |
-| THEME-24 | Use keyboard only | Button is focusable, active selection announced via \`aria-pressed\` | Static + manual |
-| THEME-25 | Force invalid localStorage theme value | Safe fallback to Science Lab | Pure unit |
-| THEME-26 | Block localStorage | Theme Studio does not crash and allows session-only appearance | Code review + manual |
-| THEME-27 | OS reduce-motion enabled | No moving diagrams or transitions required to understand content | CSS + manual |
-| THEME-28 | Two themes × two brightness choices | Color/contrast remains usable in all combinations | Manual contrast inspection |
-| REG-01 | Navigate Writing | All 22 real Substack posts and 3 disclosed educational drafts remain | Automated |
-| REG-02 | Use Systems Labs | Original 3 interactive experiments still respond to inputs | Automated presence + manual |
-| REG-03 | Contact and Library | Existing form, filters and reset work | Automated + manual |
-
-**CI:** \`node --test tests/*.test.cjs\` runs \`tests/universe.test.cjs\` plus the existing site and visual tests. Runtime browser dimensions and actual paint are manual acceptance checks; JavaScript/DOM mocking is not equivalent to screenshot regression testing.
-
-**Release gate:** GitHub quality workflow must pass and the custom Pages workflow must complete successfully. If screenshots reveal residual clipping on a particular device, capture the viewport and adjust \`mobile-fix.css\` before considering that device validated.
+- The third-party rich-text editor requires the owner to **connect Pages CMS** and grant GitHub repository access. This is a user-authorization step, not something committed code can bypass.
+- No public page contains a functional private admin login. GitHub write permissions protect content changes.
+- **Drafts in this public GitHub repository are not confidential**, even if not hosted.
+- Reader reactions/comments are genuinely stored in GitHub Issues. Visitors sign into GitHub to write; the website displays the discussion and tallies. Fully inline anonymous comments require a separately deployed backend and moderation system.
+- The current 40 movie/book/article/video records are **curated leads**, not verified personal recommendations until approved by the owner.
+- The contact email provider remains separate and must be tested after activation.

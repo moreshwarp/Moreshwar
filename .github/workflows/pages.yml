@@ -7,6 +7,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
 concurrency:
   group: pages
   cancel-in-progress: true
@@ -22,10 +23,16 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css universe.js theme.js visual.js reader-theme.css config.js substack-posts.json message-received.html _site/
-          cp assets/favicon.svg _site/assets/
+          cp index.html styles.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
+          cp -R assets/. _site/assets/
           cp -R articles _site/
           touch _site/.nojekyll
+      - name: Open new reader discussions (GitHub Issues)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/sync-feedback.cjs _site
+      - name: Build owner-published articles, recommendations and theme
+        run: node scripts/build-content.cjs _site
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact

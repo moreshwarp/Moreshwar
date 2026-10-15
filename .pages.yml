@@ -1,0 +1,116 @@
+media:
+  input: assets/editorial
+  output: /Moreshwar/assets/editorial
+  rename: safe
+
+content:
+  - name: essays
+    label: Research essays & blog posts
+    type: collection
+    path: content/posts
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{title}.md"
+    view:
+      fields: [title, date, published, category]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Article title
+        type: string
+        required: true
+      - name: description
+        label: Summary / subtitle
+        type: text
+        required: true
+      - name: date
+        label: Publication date
+        type: date
+        required: true
+      - name: category
+        label: Category
+        type: select
+        options:
+          values: [Systems, Engineering, AI / ML, Ideas, Reading, Research]
+      - name: published
+        label: Publish publicly?
+        type: boolean
+        description: Keep off until the article is ready for readers.
+      - name: body
+        label: Full article — rich text
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+  - name: appearance
+    label: Site appearance — OWNER CONTROLLED
+    type: file
+    path: data/site-settings.json
+    format: json
+    fields:
+      - name: theme
+        label: Public universe
+        type: select
+        options:
+          values:
+            - { name: science, label: The Science Lab }
+            - { name: hero, label: Hero Protocol }
+            - { name: noir, label: Midnight Detective }
+            - { name: quantum, label: Quantum Banter }
+            - { name: shinobi, label: Shinobi Code }
+            - { name: bureau, label: The Hidden Bureau }
+            - { name: nature, label: Natural Systems }
+            - { name: terminal, label: Hacker Terminal }
+            - { name: circuit, label: Computer Science }
+            - { name: arcade, label: Retro Simulation }
+      - name: brightness
+        label: Public brightness
+        type: select
+        options:
+          values: [dark, light]
+      - name: siteTitle
+        label: Site label
+        type: string
+      - name: recommendationsHeading
+        label: Recommendations heading
+        type: string
+      - name: recommendationsIntro
+        label: Recommendations intro
+        type: text
+  - name: picks
+    label: Theme-based recommendations
+    type: file
+    path: data/recommendations.json
+    format: json
+    list: true
+    fields:
+      - name: universe
+        label: Universe
+        type: select
+        options:
+          values: [science, hero, noir, quantum, shinobi, bureau, nature, terminal, circuit, arcade]
+      - name: kind
+        label: Media type
+        type: select
+        options:
+          values: [Movie, Book, Article, YouTube]
+      - name: title
+        type: string
+        required: true
+      - name: creator
+        label: Creator / source
+        type: string
+      - name: note
+        label: Why this matters
+        type: text
+      - name: url
+        label: Public link
+        type: string
+      - name: approved
+        label: Personally recommended by Moreshwar?
+        type: boolean
+        description: Only turn on after personally reviewing this recommendation.

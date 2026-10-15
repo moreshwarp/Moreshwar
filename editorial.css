@@ -1,0 +1,52 @@
+/* Long-form editor-published article layout */
+:root{--editorial-ink:#d9eaf0;--editorial-muted:#a5bfca}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.84;color:var(--editorial-ink);background:radial-gradient(circle at 50% -130px,#163743,#0b1722 50%,#080d14)}
+.shell{width:min(100% - 40px,850px);margin:auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0;border-bottom:1px solid #3a5b67}
+.top .brand{font:700 21px 'Space Grotesk',sans-serif;color:#eaf9f3;text-decoration:none}
+.top .brand span{color:#81e8cf}
+.top nav{display:flex;gap:19px;flex-wrap:wrap}
+.top nav a{color:#a8c9d1;font:11px 'DM Mono',monospace;text-decoration:none}
+.editorial-heading{padding:75px 0 42px;border-bottom:1px solid #34515d}
+.editorial-kicker{font:11px 'DM Mono',monospace;letter-spacing:.13em;color:#8ae7d1}
+.editorial-heading h1{font:600 clamp(43px,7vw,73px)/1.08 'Space Grotesk',sans-serif;letter-spacing:-.075em;margin:20px 0 26px;color:#f3fffa}
+.editorial-summary{font:18px/1.7 'DM Sans',sans-serif;color:#b2cbd2;max-width:700px}
+.editorial-byline{display:flex;flex-wrap:wrap;gap:13px 20px;margin-top:29px;font:11px 'DM Mono',monospace;color:#a2b9c1}
+.editorial-byline strong{color:#99e7d2}
+.editorial-article{padding:34px 0 46px;max-width:780px;overflow-wrap:anywhere}
+.editorial-article p{margin:20px 0;color:#cadde2}
+.editorial-article :is(h1,h2,h3,h4){font-family:'Space Grotesk',sans-serif;line-height:1.2;letter-spacing:-.04em;color:#eefaf5;margin:42px 0 16px}
+.editorial-article h1{font-size:35px}.editorial-article h2{font-size:30px}.editorial-article h3{font-size:23px}.editorial-article h4{font-size:19px}
+.editorial-article strong{color:#f2fff9}
+.editorial-article :is(ul,ol){padding-left:24px;color:#c6dce0}
+.editorial-article li{margin:9px 0}
+.editorial-article code{padding:2px 6px;background:#17323c;color:#97f7d8;border-radius:3px;font:13px 'DM Mono',monospace}
+.editorial-article pre{background:#101f2b;border:1px solid #355761;padding:18px;border-radius:9px;overflow-x:auto}
+.editorial-article pre code{padding:0;background:transparent;color:#e0f4ee}
+.editorial-article blockquote{padding:17px 24px;margin:27px 0;border-left:3px solid #7be7cc;background:#102a31;color:#b8d3d7}
+.editorial-article img{display:block;max-width:100%;height:auto;border-radius:10px}
+.editorial-article figure{margin:30px 0}
+.editorial-article a,.editorial-back a{color:#9cebd6;text-underline-offset:4px}
+.editorial-article hr{border:0;border-top:1px solid #3a5865;margin:36px 0}
+.editorial-back{border-top:1px solid #304d5b;padding:25px 0 35px;font:11px 'DM Mono',monospace}
+:root[data-theme="light"]{--editorial-ink:#163b45;--editorial-muted:#456776;color-scheme:light}
+:root[data-theme="light"] body{background:#f6fafb;color:#1b3d47}
+:root[data-theme="light"] .top{border-color:#cbdde1}
+:root[data-theme="light"] .top .brand{color:#21434d}
+:root[data-theme="light"] .top nav a{color:#285e66}
+:root[data-theme="light"] .editorial-heading{border-color:#c4d8dc}
+:root[data-theme="light"] .editorial-heading h1{color:#173d47}
+:root[data-theme="light"] .editorial-heading .editorial-summary{color:#476773}
+:root[data-theme="light"] .editorial-byline{color:#587580}
+:root[data-theme="light"] .editorial-byline strong{color:#126c60}
+:root[data-theme="light"] .editorial-article p,:root[data-theme="light"] .editorial-article li{color:#385c66}
+:root[data-theme="light"] .editorial-article :is(h1,h2,h3,h4){color:#173943}
+:root[data-theme="light"] .editorial-article strong{color:#1c3e48}
+:root[data-theme="light"] .editorial-article code{background:#e2eff1;color:#186a65}
+:root[data-theme="light"] .editorial-article pre{background:#e9f4f5;border-color:#c4dbe0}
+:root[data-theme="light"] .editorial-article pre code{color:#234651}
+:root[data-theme="light"] .editorial-article blockquote{background:#e8f4f2;border-color:#288879;color:#365760}
+:root[data-theme="light"] .editorial-article a,:root[data-theme="light"] .editorial-back a{color:#116c61}
+:root[data-theme="light"] .editorial-back{border-color:#cbdde0}
+@media(max-width:600px){.shell{width:min(100% - 32px,850px)}.top nav{gap:10px}.top nav a{font-size:10px}.editorial-heading{padding:48px 0 29px}.editorial-summary{font-size:16px}.editorial-article h2{font-size:25px}}

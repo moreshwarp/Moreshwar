@@ -18,9 +18,16 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
+      - name: Prepare published fixture
+        run: |
+          mkdir -p _site/assets
+          cp index.html styles.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
+          cp -R assets/. _site/assets/
+          cp -R articles _site/
+          node scripts/build-content.cjs _site
       - name: Run static site server
         run: |
-          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/moreshwar-http.log 2>&1 &
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory _site > /tmp/moreshwar-http.log 2>&1 &
           echo $! > /tmp/moreshwar-http.pid
           for i in $(seq 1 25); do
             if curl -fsS http://127.0.0.1:4173/ > /dev/null; then exit 0; fi

@@ -23,6 +23,8 @@ jobs:
           node --check contact.js
           node --check lab.js
           node --check visual.js
-          node --check theme.js
+          node --check scripts/build-content.cjs
+          node --check scripts/sync-feedback.cjs
+          node --check reader-feedback.js
       - name: Run zero-dependency regression tests
         run: node --test tests/*.test.cjs
