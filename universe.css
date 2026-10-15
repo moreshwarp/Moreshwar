@@ -137,8 +137,8 @@ html[data-universe] #universe-instrument-tag{font-weight:500;color:var(--world-i
 .mobile-theme-entry{display:block;width:100%;text-align:left;border:1px solid var(--world-border);border-radius:8px;
   background:var(--world-panel);color:var(--world-ink);padding:15px;font:12px var(--mono)}
 /* keep header within 360px, reserve the additional palette button for mobile drawer */
-@media(max-width:1050px){.universe-trigger{display:none}}
-@media(min-width:1051px){.mobile-theme-entry{display:none}}
+@media(max-width:820px){.universe-trigger{display:none}}
+@media(min-width:821px){.mobile-theme-entry{display:none}}
 /* Native dialog gives focus containment and keyboard Escape behavior. */
 .theme-studio{border:1px solid #415766;border-radius:17px;background:#0c1723;
   color:#e7f3f5;padding:0;width:min(1100px,calc(100vw - 32px));
@@ -241,3 +241,22 @@ html[data-universe] #universe-instrument-tag{font-weight:500;color:var(--world-i
  .universe-trigger,.universe-card,.instrument-svg{transition:none!important}
  .universe-card-orbit{animation:none!important}
 }
+
+/* Convenient second entry point in the scientific illustration. */
+.instrument-theme-shortcut{display:inline-flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap;
+ border:1px solid var(--world-border);background:color-mix(in srgb,var(--world-panel) 88%,transparent);
+ color:var(--world-ink);padding:9px 12px;min-height:36px;border-radius:7px;cursor:pointer;
+ font:10px var(--mono);transition:background .2s,border-color .2s}
+.instrument-theme-shortcut:hover{background:var(--world-tint);border-color:var(--world-ink)}
+.instrument-theme-shortcut:focus-visible{outline:2px solid var(--world-ink);outline-offset:3px}
+.instrument-theme-shortcut span:first-child{font-size:18px}
+.mobile-theme-entry{grid-column:1/-1;min-height:48px;white-space:normal}
+@media(max-width:960px){
+ .instrument-bottom{flex-wrap:wrap}
+ .instrument-theme-shortcut{width:100%;min-height:42px;font-size:11px}
+}
+@media(max-width:820px){
+ .nav-actions{gap:8px}
+ .mobile-menu .mobile-theme-entry{grid-column:1/-1;margin:12px 0 0}
+}
+@media(prefers-reduced-motion:reduce){.instrument-theme-shortcut{transition:none}}

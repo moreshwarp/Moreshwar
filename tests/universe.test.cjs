@@ -30,6 +30,7 @@ test('every theme has an accessible chooser button and uniquely styled preview',
  assert.match(html,/id="theme-studio-close"/);
  assert.match(html,/id="universe-trigger"/);
  assert.match(html,/id="universe-mobile-trigger"/);
+ assert.match(html,/id="universe-instrument-trigger"/);
  assert.match(css,/\.theme-studio::backdrop/);
  for(const key of universeIDs){
   assert.ok(Object.hasOwn(UNIVERSES,key));
@@ -62,8 +63,8 @@ test('the mobile repair explicitly stacks the two overflowing siblings',()=>{
  assert.match(fix,/overflow-wrap:anywhere/);
 });
 test('theme control does not add a fifth icon to cramped mobile header',()=>{
- assert.match(css,/@media\(max-width:1050px\)\{\.universe-trigger\{display:none\}\}/);
- assert.match(css,/@media\(min-width:1051px\)\{\.mobile-theme-entry\{display:none\}\}/);
+ assert.match(css,/@media\(max-width:820px\)\{\.universe-trigger\{display:none\}\}/);
+ assert.match(css,/@media\(min-width:821px\)\{\.mobile-theme-entry\{display:none\}\}/);
 });
 test('all original writing and interactive labs survive the redesign',()=>{
  assert.equal((html.match(/<li><a href="articles\//g)||[]).length,22);

@@ -30,7 +30,7 @@
  const label=doc.getElementById('universe-current-label');
  const tag=doc.getElementById('universe-instrument-tag');
  const eyebrow=doc.getElementById('universe-eyebrow');
- const triggers=[doc.getElementById('universe-trigger'),doc.getElementById('universe-mobile-trigger')].filter(Boolean);
+ const triggers=[doc.getElementById('universe-trigger'),doc.getElementById('universe-mobile-trigger'),doc.getElementById('universe-instrument-trigger')].filter(Boolean);
  const choices=[...doc.querySelectorAll('[data-universe-select]')];
  const modes=[...doc.querySelectorAll('[data-brightness]')];
  let previousTrigger=null;
