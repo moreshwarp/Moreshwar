@@ -62,6 +62,7 @@ async function geometry(page) {
       assert.ok(b.x>=d.visual.x-tolerance && b.right<=d.visual.right+tolerance,'tab '+i+' outside card '+JSON.stringify(d));
     }
     if(w===390 || w===1440){
+      await page.waitForTimeout(1150); // Let reveal transitions finish before the screenshot.
       await page.screenshot({path:path.join(artifacts,'hero-'+w+'.png'),fullPage:false});
       await page.locator('.hero-visual.computational-visual').screenshot({path:path.join(artifacts,'instrument-'+w+'.png')});
     }
@@ -77,12 +78,40 @@ async function geometry(page) {
    await page.locator('#universe-instrument-trigger').click();
    assert.ok(await page.locator('#theme-studio').isVisible(),'Theme Studio did not open');
    assert.equal(await page.locator('[data-universe-select]').count(),10);
+   await page.locator('#theme-studio').screenshot({path:path.join(artifacts,'theme-studio-dark.png')});
    await page.locator('[data-universe-select="hero"]').click();
    assert.equal(await page.locator('html').getAttribute('data-universe'),'hero');
    assert.ok(!(await page.locator('#theme-studio').isVisible()),'Theme Studio did not close on selection');
    await page.locator('#universe-instrument-trigger').click();
    await page.locator('[data-brightness="light"]').click();
    assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+
+   // Check visible text on the actual rendered light dialog and light theme card.
+   const contrast = await page.evaluate(() => {
+     const parse = value => value.match(/[\d.]+/g).slice(0,3).map(Number);
+     const relativeLuma = rgb => {
+       const ch=rgb.map(c=>{const v=c/255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4)});
+       return ch[0]*0.2126+ch[1]*0.7152+ch[2]*0.0722;
+     };
+     const ratio = (one,two)=>{
+       const a=relativeLuma(parse(one)),b=relativeLuma(parse(two));
+       return (Math.max(a,b)+0.05)/(Math.min(a,b)+0.05);
+     };
+     const dialog=document.querySelector('#theme-studio');
+     const card=dialog.querySelector('.universe-card');
+     const rootBg=getComputedStyle(dialog).backgroundColor;
+     const cardBg=getComputedStyle(card).backgroundColor;
+     const paragraph=getComputedStyle(dialog.querySelector('.theme-studio-header p')).color;
+     const label=getComputedStyle(dialog.querySelector('.theme-studio-overline')).color;
+     const cardDescription=getComputedStyle(card.querySelector('.universe-card-desc')).color;
+     return {paragraph:ratio(paragraph,rootBg),label:ratio(label,rootBg),
+       cardDescription:ratio(cardDescription,cardBg),rootBg,cardBg};
+   });
+   assert.ok(contrast.paragraph>=4.5,'Theme Studio light description below WCAG AA: '+JSON.stringify(contrast));
+   assert.ok(contrast.label>=4.5,'Theme Studio light label below WCAG AA: '+JSON.stringify(contrast));
+   assert.ok(contrast.cardDescription>=4.5,'Theme Studio light card text below WCAG AA: '+JSON.stringify(contrast));
+   await page.locator('#theme-studio').screenshot({path:path.join(artifacts,'theme-studio-light.png')});
+
    await page.locator('#theme-studio-close').click();
    await page.reload({waitUntil:'domcontentloaded'});
    assert.equal(await page.locator('html').getAttribute('data-theme'),'light','brightness not persisted');

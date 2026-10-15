@@ -272,3 +272,55 @@ html[data-universe][data-theme="light"] .universe-trigger{
 html[data-universe][data-theme="light"] .universe-trigger:hover{
   background:#eff7f6;border-color:var(--world-light-accent)
 }
+
+
+/* Theme Studio follows light mode consistently: no pale body text on a white dialog. */
+html[data-theme="light"] dialog.theme-studio{
+  background:#f2f7f9;color:#1b3945;border-color:#b9d1da;
+  box-shadow:0 34px 100px #123b4c38
+}
+html[data-theme="light"] .theme-studio-header h2{color:#173642}
+html[data-theme="light"] .theme-studio-header h2 span{color:#18786b}
+html[data-theme="light"] .theme-studio-header p{color:#415e6d}
+html[data-theme="light"] :is(.theme-studio-overline,.theme-studio-label,.theme-current-kicker){
+  color:#216a64
+}
+html[data-theme="light"] .theme-studio-close{
+  color:#173f4c;border-color:#b4cbd4;background:#fff
+}
+html[data-theme="light"] .theme-studio-close:hover{border-color:#248b7a;background:#e8f5f0}
+html[data-theme="light"] .theme-studio-toolbar{border-color:#c3d7dc}
+html[data-theme="light"] .theme-studio-modes{border-color:#bdd1d8;background:#fff}
+html[data-theme="light"] .theme-studio-modes button{color:#3b5b68}
+html[data-theme="light"] .theme-studio-modes button[aria-pressed="true"]{
+  background:#176e64;color:#fff
+}
+html[data-theme="light"] .universe-card{
+  background:linear-gradient(145deg,#fff,#f0f7f8);background-color:#fff;color:#183844;border-color:#c5dbe1;
+  box-shadow:inset 0 1px 0 #fff
+}
+html[data-theme="light"] .universe-card:hover{
+  border-color:#329d87;box-shadow:0 12px 30px #25655c19
+}
+html[data-theme="light"] .universe-card.active{
+  border-color:#14796e;box-shadow:inset 0 0 0 1px #14796e,0 12px 30px #25655c19
+}
+html[data-theme="light"] .universe-card-tag{color:#4d6975}
+html[data-theme="light"] .universe-card-title{color:#1c3947}
+html[data-theme="light"] .universe-card-desc{color:#435e6c}
+html[data-theme="light"] .universe-card-select{
+  color:#126f62;border-color:#d0e1e5
+}
+html[data-theme="light"] .universe-card.active .universe-card-select{color:#096456}
+html[data-theme="light"] .theme-studio-footer{
+  background:#fff;border-color:#bdd3d9
+}
+html[data-theme="light"] .theme-studio-footer strong{color:#21434e}
+html[data-theme="light"] .theme-studio-footer p{color:#4b6875}
+html[data-theme="light"] .universe-reset{
+  background:#edf6f3;color:#1b605b;border-color:#a6cfc5
+}
+html[data-theme="light"] .universe-reset:hover{
+  background:#e1f1e9;border-color:#218e7c
+}
+html[data-theme="light"] .theme-studio-shell{scrollbar-color:#a4bbc4 transparent}
