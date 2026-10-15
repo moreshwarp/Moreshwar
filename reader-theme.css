@@ -1,0 +1,52 @@
+/* Shared reading-page themes — imported Substack articles and systems fieldnotes */
+.reader-theme-toggle{display:inline-flex;align-items:center;gap:7px;
+ border:1px solid #3f626b;border-radius:999px;background:#142733;color:#dcf2ed;
+ padding:8px 12px;cursor:pointer;font:11px "DM Mono",monospace;white-space:nowrap}
+.reader-theme-toggle:hover{background:#23505a;border-color:#8cead1}
+.reader-theme-toggle .theme-toggle-icon{font-size:16px;color:#a8f0d6;line-height:1}
+.reader-theme-toggle:focus-visible{outline:2px solid #8cead1;outline-offset:4px}
+/* Where possible, preserve article content and typography while recoloring semantic elements. */
+:root[data-theme="light"]{
+ color-scheme:light;--bg:#f6fafb;--panel:#fff;--line:#c9d9e1;
+ --text:#193440;--ink:#193440;--muted:#486673;--mint:#126e64}
+:root[data-theme="light"] body{
+ background:#f6fafb;background-image:radial-gradient(ellipse at 70% -140px,#deeeec,transparent 68%);
+ color:#193440}
+:root[data-theme="light"] a{color:#0c7267}
+:root[data-theme="light"] a:hover{color:#16554d}
+:root[data-theme="light"] :is(.site-nav,.top,.meta,.hero,.site-footer,.end){border-color:#cedfe3;color:#294d59}
+:root[data-theme="light"] .brand{color:#1c3642}
+:root[data-theme="light"] .brand span{color:#11796b}
+:root[data-theme="light"] .nav-links a{color:#2e5e67}
+:root[data-theme="light"] .nav-links a:hover{color:#0b7769}
+:root[data-theme="light"] :is(.lede,.dek){color:#476574}
+:root[data-theme="light"] :is(.meta,.meta span,.site-footer,.end p){color:#5d7783}
+:root[data-theme="light"] .body{color:#2b4b59}
+:root[data-theme="light"] :is(.body h1,.body h2,.body h3,.body h4){color:#14343e}
+:root[data-theme="light"] :is(.body strong,article strong){color:#183641}
+:root[data-theme="light"] article p,:root[data-theme="light"] article .lead,:root[data-theme="light"] article :is(ul,ol){color:#334e5a}
+:root[data-theme="light"] .body blockquote{background:#eaf5f3;color:#2a5660;border-color:#69b5a3}
+:root[data-theme="light"] .body code{background:#e6f1f3;color:#194d54}
+:root[data-theme="light"] .body pre{background:#e7f0f4;border-color:#c4dce2}
+:root[data-theme="light"] .body pre code{background:transparent}
+:root[data-theme="light"] .body figcaption{color:#557580}
+:root[data-theme="light"] .article-end p{color:#526c79}
+:root[data-theme="light"] .article-end a,:root[data-theme="light"] .more a{background:#fff;border-color:#b4d3d8;color:#176b63}
+:root[data-theme="light"] .article-end a:hover,:root[data-theme="light"] .more a:hover{background:#e6f5f1}
+:root[data-theme="light"] .notice{background:#e3f3ed;border-color:#a0d3c4;color:#28534b}
+:root[data-theme="light"] .notice strong{color:#10695d}
+:root[data-theme="light"] article .formula{background:#eaf4f6;border-color:#b6d5d9}
+:root[data-theme="light"] .formula span{color:#0d7567}
+:root[data-theme="light"] .formula small{color:#587986}
+:root[data-theme="light"] .field-note{background:#e9f4f2;border-color:#178271}
+:root[data-theme="light"] .field-note strong{color:#0b685e}
+:root[data-theme="light"] .field-note p{color:#3b5d63}
+:root[data-theme="light"] .trace{background:#fff;border-color:#bfdae1}
+:root[data-theme="light"] .trace div{border-color:#d9e7ea}
+:root[data-theme="light"] .trace strong{color:#27505a}
+:root[data-theme="light"] .trace small{color:#55737d}
+:root[data-theme="light"] .reader-theme-toggle{background:#fff;border-color:#abc8ce;color:#1f4c55}
+:root[data-theme="light"] .reader-theme-toggle .theme-toggle-icon{color:#126f64}
+:root[data-theme="light"] .reader-theme-toggle:hover{background:#e7f5f0;border-color:#5fb39f}
+@media(max-width:650px){.reader-theme-toggle{min-width:40px;justify-content:center;padding:6px 9px}.reader-theme-toggle .theme-toggle-text{display:none}}
+@media(prefers-reduced-motion:reduce){.reader-theme-toggle{transition:none}}

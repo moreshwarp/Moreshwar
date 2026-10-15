@@ -153,3 +153,11 @@ Run automated regression checks locally with `node --test tests/site.test.cjs`. 
 ### GitHub Pages URL
 
 The project path is case-sensitive: `https://moreshwarp.github.io/Moreshwar/` is the canonical project URL. Removing the trailing slash from the browser address normally redirects back to the trailing-slash form. Changing to a lowercase `/moreshwar/` would require the repository owner to rename the repo; that is not implemented here.
+
+## Scientific visual interface and themes (October 2026)
+
+The home page uses a **native SVG research instrument** and a separate **engineering architecture map**. They render even without WebGL, Three.js, JavaScript, or third-party visualization CDNs. The instrument offers three accessible, keyboard-navigable presentation lenses: Systems, AI/ML, and Frontend. These are conceptual illustrations, not experimental telemetry.
+
+The site supports user-selectable **light and dark themes**. Theme choice is stored locally under `moreshwar-theme-v1`; without a saved choice, it follows the operating system. The toggle updates accessible button labels and the browser theme-color meta tag. All **25 individual articles** also include the shared reader themes and a corresponding toggle. Reduced-motion preferences and the site's motion switch pause ornamental animations without hiding information.
+
+The main presentation is in `visual-theme.css`, its interaction logic in `visual.js`, theme persistence in `theme.js`, and article presentation in `reader-theme.css`. Unit and simulated-event tests are in `tests/visual.test.cjs`; the visual/manual acceptance matrix is in `TEST_PLAN.md`. Run the complete suite with `node --test tests/*.test.cjs`.

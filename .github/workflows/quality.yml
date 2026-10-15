@@ -22,5 +22,7 @@ jobs:
           node --check app.js
           node --check contact.js
           node --check lab.js
+          node --check visual.js
+          node --check theme.js
       - name: Run zero-dependency regression tests
-        run: node --test tests/site.test.cjs
+        run: node --test tests/*.test.cjs
