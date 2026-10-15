@@ -16,6 +16,10 @@
  const doc=root.document;
  if(!doc)return;
  const store=getSafeStorage();
+ // Reader pages retain the selected visual universe without needing the chooser dialog.
+ const currentUniverse=(()=>{try{return store?.getItem('moreshwar-universe-v1')}catch{return null}})();
+ const allowedUniverse=new Set(['science','hero','noir','quantum','shinobi','bureau','nature','terminal','circuit','arcade']);
+ doc.documentElement.dataset.universe=allowedUniverse.has(currentUniverse)?currentUniverse:'science';
  const colorScheme=root.matchMedia?root.matchMedia('(prefers-color-scheme: light)'):null;
  const readStored=()=>{try{return store?.getItem(KEY)}catch{return null}};
  const applyTheme=(theme,{persist=false}={})=>{

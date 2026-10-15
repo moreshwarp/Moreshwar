@@ -113,3 +113,52 @@ The home page has a built-in SVG research visualization that must work without W
 | DEPLOY-04 | Public URL | Visit \`https://moreshwarp.github.io/Moreshwar/\` in fresh browser | Correct main content and toggle assets load | Manual public browser |
 
 This is a static research portfolio. The scientific images are diagrams of technical interests, **not real observed telemetry**. Light and dark preference is stored only in local browser storage. Email delivery is still a separate service that needs its own activation and an end-to-end inbox test.
+
+
+## Theme Studio and mobile repair — October 2026
+
+The visual redesign is **not** evidence of official Marvel, DC, Big Bang Theory, Naruto or Adjustment Bureau affiliation: the visual themes are original abstract design inspirations using no franchise art or proprietary logos.
+
+### Mandatory device/layout test matrix
+
+| Case | Device or viewport | Steps | Expected outcome |
+|---|---|---|---|
+| MOB-01 | 320 × 640 Android | Open homepage, scroll to scientific graphic | No horizontal scroll; full instrument SVG, Current Lens label and description visible |
+| MOB-02 | 360 × 800 Android | Switch through Systems/AI/Frontend | No clipping in SVG, focus text or tab buttons |
+| MOB-03 | 390 × 844 Android | Toggle light/dark then cycle all modes | Labels wrap naturally and all buttons remain tappable |
+| MOB-04 | 430 × 932 Android | Long content test | No content goes off-screen when scientific text changes |
+| MOB-05 | 768 × 1024 tablet | Scroll through hero and engineering atlas | Responsive layout maintains visible graphic and panels |
+| MOB-06 | 1024 × 768 landscape | Open Theme Studio | Dialog can scroll and close; no accidental horizontal overflow |
+| MOB-07 | 1440 × 900 desktop | Open scientific graphic | SVG remains centered with readable status, no overlay collisions |
+
+### Theme interactions, accessibility, persistence
+
+| Case | Steps | Expected outcome | Automation |
+|---|---|---|---|
+| THEME-09 | Desktop, click ✧ Themes in header | Native modal opens with 10 cards | Structural + manual |
+| THEME-10 | Mobile, open navigation then Theme Studio | Theme picker opens without crowding narrow header | CSS rules + manual |
+| THEME-11 | Pick **Science Lab** | Original teal/scientific atmosphere | JS simulated + manual |
+| THEME-12 | Pick **Hero Protocol** | Scarlet/gold comic-cinema palette, no franchise art | JS simulated + manual |
+| THEME-13 | Pick **Midnight Detective** | Dark blue/noir graphic atmosphere | CSS + manual |
+| THEME-14 | Pick **Quantum Banter** | Physics-inspired lavender/cyan atmosphere | CSS + manual |
+| THEME-15 | Pick **Shinobi Code** | Warm copper/scroll atmosphere | CSS + manual |
+| THEME-16 | Pick **The Hidden Bureau** | Muted bronze/doorway atmosphere | CSS + manual |
+| THEME-17 | Pick **Natural Systems** | Organic green palette | CSS + manual |
+| THEME-18 | Pick **Hacker Terminal** | Phosphor green terminal palette | CSS + manual |
+| THEME-19 | Pick **Computer Science** | Blue technical circuit palette | CSS + manual |
+| THEME-20 | Pick **Retro Simulation** | Retro neon/arcade palette | CSS + manual |
+| THEME-21 | Change theme, reload and open a fieldnote | Palette choice persists across pages, text remains readable | JS + CSS + manual |
+| THEME-22 | In Theme Studio, select Light then Dark | Brightness changes independently of selected universe | JS + manual |
+| THEME-23 | Escape, click close, or click backdrop | Dialog closes and focus returns to launch button | Native dialog + manual |
+| THEME-24 | Use keyboard only | Button is focusable, active selection announced via \`aria-pressed\` | Static + manual |
+| THEME-25 | Force invalid localStorage theme value | Safe fallback to Science Lab | Pure unit |
+| THEME-26 | Block localStorage | Theme Studio does not crash and allows session-only appearance | Code review + manual |
+| THEME-27 | OS reduce-motion enabled | No moving diagrams or transitions required to understand content | CSS + manual |
+| THEME-28 | Two themes × two brightness choices | Color/contrast remains usable in all combinations | Manual contrast inspection |
+| REG-01 | Navigate Writing | All 22 real Substack posts and 3 disclosed educational drafts remain | Automated |
+| REG-02 | Use Systems Labs | Original 3 interactive experiments still respond to inputs | Automated presence + manual |
+| REG-03 | Contact and Library | Existing form, filters and reset work | Automated + manual |
+
+**CI:** \`node --test tests/*.test.cjs\` runs \`tests/universe.test.cjs\` plus the existing site and visual tests. Runtime browser dimensions and actual paint are manual acceptance checks; JavaScript/DOM mocking is not equivalent to screenshot regression testing.
+
+**Release gate:** GitHub quality workflow must pass and the custom Pages workflow must complete successfully. If screenshots reveal residual clipping on a particular device, capture the viewport and adjust \`mobile-fix.css\` before considering that device validated.

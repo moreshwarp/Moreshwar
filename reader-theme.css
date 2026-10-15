@@ -1,3 +1,4 @@
+@import url("./universe.css?v=universe-studio-20261015");
 /* Shared reading-page themes — imported Substack articles and systems fieldnotes */
 .reader-theme-toggle{display:inline-flex;align-items:center;gap:7px;
  border:1px solid #3f626b;border-radius:999px;background:#142733;color:#dcf2ed;
@@ -50,3 +51,14 @@
 :root[data-theme="light"] .reader-theme-toggle:hover{background:#e7f5f0;border-color:#5fb39f}
 @media(max-width:650px){.reader-theme-toggle{min-width:40px;justify-content:center;padding:6px 9px}.reader-theme-toggle .theme-toggle-text{display:none}}
 @media(prefers-reduced-motion:reduce){.reader-theme-toggle{transition:none}}
+
+/* The selected visual universe also affects the accent on reader pages.
+   Dark/light contrast follows the existing article appearance settings. */
+html[data-universe] .reader-theme-toggle{border-color:var(--world-border);}
+html[data-universe] .reader-theme-toggle .theme-toggle-icon{color:var(--world-ink);}
+html[data-universe] .brand span{color:var(--world-ink);}
+html[data-universe] .eyebrow,html[data-universe] .mini,html[data-universe] .stamp{color:var(--world-ink);}
+html[data-universe] :is(.site-nav,.top){border-color:var(--world-border);}
+html[data-universe]:not([data-theme="light"]) .formula span{color:var(--world-ink);}
+html[data-universe][data-theme="light"] .reader-theme-toggle .theme-toggle-icon{color:var(--world-light-accent);}
+html[data-universe][data-theme="light"] .brand span{color:var(--world-light-accent);}

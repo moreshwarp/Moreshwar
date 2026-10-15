@@ -161,3 +161,30 @@ The home page uses a **native SVG research instrument** and a separate **enginee
 The site supports user-selectable **light and dark themes**. Theme choice is stored locally under `moreshwar-theme-v1`; without a saved choice, it follows the operating system. The toggle updates accessible button labels and the browser theme-color meta tag. All **25 individual articles** also include the shared reader themes and a corresponding toggle. Reduced-motion preferences and the site's motion switch pause ornamental animations without hiding information.
 
 The main presentation is in `visual-theme.css`, its interaction logic in `visual.js`, theme persistence in `theme.js`, and article presentation in `reader-theme.css`. Unit and simulated-event tests are in `tests/visual.test.cjs`; the visual/manual acceptance matrix is in `TEST_PLAN.md`. Run the complete suite with `node --test tests/*.test.cjs`.
+
+
+## Theme Studio — visual universes (October 2026)
+
+The main homepage offers a Theme Studio with ten *independent, original* visual approaches:
+- **Science Lab** — physics and laboratory instrumentation (default)
+- **Hero Protocol** — comic-cinema palette (Marvel-inspired, unofficial)
+- **Midnight Detective** — graphic-novel noir (DC-inspired, unofficial)
+- **Quantum Banter** — physicist sitcom curiosity (The Big Bang Theory-inspired, unofficial)
+- **Shinobi Code** — discipline, scrolls and momentum (Naruto-inspired, unofficial)
+- **The Hidden Bureau** — choices, doors and geometry (The Adjustment Bureau-inspired, unofficial)
+- **Natural Systems** — biological forms and forests
+- **Hacker Terminal** — monochrome command-line culture
+- **Computer Science** — circuitry, algorithms and computational graphs
+- **Retro Simulation** — games and colorful digital systems
+
+Theme cards are original CSS/SVG-style abstractions and typography, **not franchise characters, logos, screenshots, fonts or affiliated branded themes**. A visitor can select a visual universe and independently choose light or dark brightness. The choice is kept in localStorage as \`moreshwar-universe-v1\` and \`moreshwar-theme-v1\`.
+
+The mobile header remains compact: the desktop Theme Studio launcher becomes a full-width control in the mobile navigation menu instead of adding an extra icon to the narrow navigation bar.
+
+### Mobile SVG repair
+
+A separate first release fixed the broken research graphic reported from the phone: below 960px the SVG and **Current Lens** status are stacked vertically, the text wraps, and the three selection tabs fill a safe three-column row. See \`mobile-fix.css\`. Unlike before, the focus status is not a sibling competing for the same flex row as the diagram.
+
+The second release adds \`universe.css\` and \`universe.js\` for theme selection; updated \`theme.js\` propagates the saved selection to all 25 article-reading pages, while \`reader-theme.css\` imports the visual palette. Run automated checks with \`node --test tests/*.test.cjs\`.
+
+The primary path remains \`https://moreshwarp.github.io/Moreshwar/\` and the 22 Substack posts and three educational fieldnotes remain unchanged.
