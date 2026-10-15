@@ -260,3 +260,15 @@ html[data-universe] #universe-instrument-tag{font-weight:500;color:var(--world-i
  .mobile-menu .mobile-theme-entry{grid-column:1/-1;margin:12px 0 0}
 }
 @media(prefers-reduced-motion:reduce){.instrument-theme-shortcut{transition:none}}
+
+/* Light mode needs darker theme-specific accents for readable text on pale backgrounds. */
+html[data-universe][data-theme="light"] :is(
+  .lab-eyebrow,.fieldnotes-eyebrow,.theme-studio-label,.atlas-map-caption,
+  .section-kicker,.lab-suite-footer b
+){color:var(--world-light-accent)}
+html[data-universe][data-theme="light"] .universe-trigger{
+  background:#fff;color:var(--world-light-accent);border-color:color-mix(in srgb,var(--world-light-accent) 35%,white)
+}
+html[data-universe][data-theme="light"] .universe-trigger:hover{
+  background:#eff7f6;border-color:var(--world-light-accent)
+}

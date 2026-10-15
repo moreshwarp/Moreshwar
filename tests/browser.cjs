@@ -23,7 +23,11 @@ async function geometry(page) {
   const svg=document.querySelector('.instrument-svg').getBoundingClientRect();
   const focus=document.querySelector('.instrument-focus').getBoundingClientRect();
   const tabs=[...document.querySelectorAll('.instrument-tab')].map(b=>{const r=b.getBoundingClientRect();return {x:r.x,right:r.right,top:r.top,bottom:r.bottom}});
-  return {width:innerWidth,scrollWidth:document.documentElement.scrollWidth,visual:{x:vis.x,right:vis.right,width:vis.width,top:vis.top,bottom:vis.bottom},svg:{x:svg.x,right:svg.right,width:svg.width},focus:{x:focus.x,right:focus.right,width:focus.width,top:focus.top,bottom:focus.bottom},tabs};
+  const header=document.querySelector('.nav-inner');
+  const headerRect=header.getBoundingClientRect();
+  const navElements=[header.querySelector('.brand'),...header.querySelectorAll('.nav-actions > :not([style*="display: none"])')].filter(e=>getComputedStyle(e).display!=='none').map(e=>{const r=e.getBoundingClientRect();return {x:r.x,right:r.right}});
+
+  return {width:innerWidth,scrollWidth:document.documentElement.scrollWidth,header:{x:headerRect.x,right:headerRect.right,elements:navElements},visual:{x:vis.x,right:vis.right,width:vis.width,top:vis.top,bottom:vis.bottom},svg:{x:svg.x,right:svg.right,width:svg.width,bottom:svg.bottom},focus:{x:focus.x,right:focus.right,width:focus.width,top:focus.top,bottom:focus.bottom},tabs};
  });
 }
 (async () => {
@@ -45,8 +49,14 @@ async function geometry(page) {
     assert.ok(d.focus.width>=130,'focus status collapsed '+JSON.stringify(d));
     assert.ok(d.focus.bottom<=d.visual.bottom+tolerance,'focus status extends past visual card '+JSON.stringify(d));
     if(w<=960){
-      assert.ok(d.focus.top>=d.svg.width*(475/540)-tolerance+d.svg.x*0-300,
-        'focus positioning appears anomalous '+JSON.stringify(d));
+      assert.ok(d.focus.top>=d.svg.bottom-tolerance,
+        'status overlaps the SVG at a stacked viewport '+JSON.stringify(d));
+    }
+    if(w<=430){
+      for(const [i,n] of d.header.elements.entries()){
+        assert.ok(n.x>=-tolerance && n.right<=w+tolerance,
+          'header control '+i+' clipped at '+w+'px '+JSON.stringify(d.header));
+      }
     }
     for(const [i,b] of d.tabs.entries()){
       assert.ok(b.x>=d.visual.x-tolerance && b.right<=d.visual.right+tolerance,'tab '+i+' outside card '+JSON.stringify(d));

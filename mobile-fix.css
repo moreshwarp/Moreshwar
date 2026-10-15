@@ -49,3 +49,15 @@
   .instrument-tab{font-size:10px!important;min-height:43px;padding:7px 2px!important}
   .instrument-head{letter-spacing:.02em}
 }
+
+/* Ultra-compact phone navigation: reserve room for brand, contrast, search, and menu. */
+@media(max-width:360px){
+ .nav-inner{gap:5px!important}
+ .nav-inner .brand{gap:7px;min-width:0}
+ .nav-inner .brand-mark{font-size:31px}
+ .nav-inner .brand-label{font-size:9px;letter-spacing:.02em;white-space:nowrap}
+ .nav-inner .nav-actions{gap:3px}
+ .nav-inner .nav-actions .icon-button{padding:4px;font-size:20px}
+ .nav-inner .theme-toggle{padding:6px 8px;min-width:35px}
+ .nav-inner .menu-trigger{min-width:30px;justify-content:center}
+}
