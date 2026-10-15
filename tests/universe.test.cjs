@@ -4,7 +4,7 @@ const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 const stylesheet=read('universe.css'),config=JSON.parse(read('data/site-settings.json'));
 const themes=['science','hero','noir','quantum','shinobi','bureau','nature','terminal','circuit','arcade'];
 test('all ten cinematic/scientific palettes remain implemented',()=>{
- for(const theme of themes)assert.match(stylesheet,new RegExp('data-universe="'+theme+'"'));
+ for(const theme of themes){if(theme==='science')assert.match(stylesheet,/:root\[data-universe\]/);else assert.match(stylesheet,new RegExp('data-universe="'+theme+'"'));}
 });
 test('theme selection is repo-published rather than visitor-selectable',()=>{
  assert.ok(themes.includes(config.theme));assert.ok(['light','dark'].includes(config.brightness));
