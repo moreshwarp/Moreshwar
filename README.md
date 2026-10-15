@@ -8,7 +8,7 @@ A mobile-first, interactive personal engineering and research portfolio. It is a
 - **Interactive art:** Three.js WebGL point-cloud, loaded progressively from a pinned CDN version, paused while offscreen and excluded on small/reduced-motion devices.
 - **Content:** Supabase Postgres + Row Level Security; post and reference CRUD for a specifically authorized admin, public read of published entries.
 - **Auth:** Supabase Auth email magic link for admin, no passwords in front-end source.
-- **Email:** Supabase Edge Function uses the Resend API with server-side secrets and IP-hash hourly rate limiting. Visitors do not need accounts to contact you.
+- **Email:** the current visitor form makes a native POST to FormSubmit, with Gmail verification required before inbox notifications are operational. Visitors have a direct email-app fallback. A Supabase Edge Function/Resend implementation is an alternative not enabled in this deployment.
 - **Hosting:** GitHub Actions → GitHub Pages (once you enable GitHub Pages for the repository).
 
 ## Try it locally
@@ -140,3 +140,16 @@ them as independently authored scholarship:
 Their references include Lamport's 1978 logical-clock paper, Dean and Barroso's
 2013 tail-latency analysis, OSTEP, Google SRE, and Kleppmann's distributed-systems
 text. The 22 Substack originals remain separate and preserved.
+
+
+## Contact console, library and tests — October 2026
+
+The new contact interface uses progressive enhancement and a **native browser POST** to FormSubmit. There are no client-side mail credentials or Gmail OAuth tokens. FormSubmit must be activated by the recipient through a verification email before end-to-end delivery can be considered working. Successful provider redirection leads to `message-received.html`, which explicitly avoids guaranteeing Gmail receipt. Visitors may always use the email-app fallback. The public client source contains the forwarding recipient address, so it is not treated as secret.
+
+The Books, Papers, Articles and Courses filters now each have suggested references (not claims of having completed those books or courses). Search/no-result states include a navigable reset panel. UI-specific styling is in `experience.css` and contact validation/progressive enhancement in `contact.js`.
+
+Run automated regression checks locally with `node --test tests/site.test.cjs`. GitHub Actions invokes these checks through `.github/workflows/quality.yml`. The full manual test matrix, technical walkthrough and prerequisite acceptance conditions are documented in [`TEST_PLAN.md`](TEST_PLAN.md).
+
+### GitHub Pages URL
+
+The project path is case-sensitive: `https://moreshwarp.github.io/Moreshwar/` is the canonical project URL. Removing the trailing slash from the browser address normally redirects back to the trailing-slash form. Changing to a lowercase `/moreshwar/` would require the repository owner to rename the repo; that is not implemented here.

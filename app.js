@@ -19,7 +19,15 @@ const seedBooks=[
  {id:'book-1',title:'Designing Data-Intensive Applications',author:'Martin Kleppmann',kind:'Book',topic:'Distributed systems',notes:'Suggested foundational reference on data models, replication and consistency.',url:'https://dataintensive.net/',published:true,seed:true},
  {id:'book-2',title:'Operating Systems: Three Easy Pieces',author:'Remzi H. Arpaci-Dusseau & Andrea C. Arpaci-Dusseau',kind:'Book',topic:'Operating systems',notes:'Suggested free learning resource for virtualization, concurrency and persistence.',url:'https://pages.cs.wisc.edu/~remzi/OSTEP/',published:true,seed:true},
  {id:'book-3',title:'The Feynman Lectures on Physics',author:'Richard Feynman, Robert Leighton & Matthew Sands',kind:'Book',topic:'Scientific reasoning',notes:'An inspiration for reasoning from physical principles and asking clearer questions.',url:'https://www.feynmanlectures.caltech.edu/',published:true,seed:true},
- {id:'book-4',title:'The Art of Computer Programming',author:'Donald E. Knuth',kind:'Book',topic:'Algorithms',notes:'Suggested deep reference on algorithms and mathematical analysis.',url:'https://www-cs-faculty.stanford.edu/~knuth/taocp.html',published:true,seed:true}
+ {id:'book-4',title:'The Art of Computer Programming',author:'Donald E. Knuth',kind:'Book',topic:'Algorithms',notes:'Suggested deep reference on algorithms and mathematical analysis.',url:'https://www-cs-faculty.stanford.edu/~knuth/taocp.html',published:true,seed:true},
+ {"id":"paper-tail","title":"The Tail at Scale","author":"Jeffrey Dean & Luiz André Barroso","kind":"Paper","topic":"Performance engineering","notes":"A foundational explanation of tail latency in large-scale services. Suggested paper, not a claimed publication.","url":"https://research.google/pubs/the-tail-at-scale/","published":true,"seed":true},
+ {"id":"paper-clock","title":"Time, Clocks, and the Ordering of Events","author":"Leslie Lamport","kind":"Paper","topic":"Distributed systems","notes":"Foundational logical-clocks paper for causal reasoning about distributed events.","url":"https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/","published":true,"seed":true},
+ {"id":"paper-mapreduce","title":"MapReduce: Simplified Data Processing on Large Clusters","author":"Jeffrey Dean & Sanjay Ghemawat","kind":"Paper","topic":"Data processing","notes":"A classic system design for scalable batch computation. Suggested research reading.","url":"https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/","published":true,"seed":true},
+ {"id":"article-failure","title":"How Complex Systems Fail","author":"Richard I. Cook","kind":"Article","topic":"Reliability","notes":"An accessible lens for thinking about failures, operational surprises, and system design.","url":"https://how.complexsystems.fail/","published":true,"seed":true},
+ {"id":"article-sre","title":"Addressing Cascading Failures","author":"Google SRE","kind":"Article","topic":"Systems reliability","notes":"A practical treatment of overload, request queues, and downstream failure propagation.","url":"https://sre.google/sre-book/addressing-cascading-failures/","published":true,"seed":true},
+ {"id":"course-ml","title":"MIT 6.S191: Introduction to Deep Learning","author":"MIT","kind":"Course","topic":"AI and machine learning","notes":"Public lecture materials for learning neural networks and modern deep learning concepts.","url":"https://introtodeeplearning.com/","published":true,"seed":true},
+ {"id":"course-dist","title":"MIT 6.5840: Distributed Systems","author":"MIT","kind":"Course","topic":"Distributed systems","notes":"Course lectures and laboratories about replication, consistency and failure handling.","url":"https://pdos.csail.mit.edu/6.824/","published":true,"seed":true},
+ {"id":"course-net","title":"Stanford CS144: Introduction to Computer Networking","author":"Stanford","kind":"Course","topic":"Networking","notes":"Public material about network architecture and implementation.","url":"https://cs144.github.io/","published":true,"seed":true}
 ];
 // Render the verified, exported Substack archive immediately, even when JSON is cached or temporarily unavailable.
 function normalizePublishedArticles(data) {
@@ -83,8 +91,19 @@ function renderPosts(){
 }
 function renderBooks(){
  const shown=books.filter(b=>b.published!==false&&(!state.bookTerm||`${b.title} ${b.author} ${b.topic} ${b.notes}`.toLowerCase().includes(state.bookTerm))&&(state.bookKind==='all'||b.kind===state.bookKind));
- $('#book-grid').innerHTML=shown.map((b,i)=>`<article class="book-card"><div class="book-cover" style="--book-shade:${['#24475b','#4a496e','#3b5556','#4e414e','#3d5862'][i%5]}"><span class="book-glyph">${safe(String(b.title||'?').charAt(0))}</span></div><span class="mono">${safe(b.kind.toUpperCase())} / ${safe(b.topic||'REFERENCE')}</span><h3>${safe(b.title)}</h3><p>${safe(b.author||'Author to add')}</p><p class="book-notes">${safe(b.notes||'Notes to be added.')}</p>${safeUrl(b.url)?`<a href="${safe(safeUrl(b.url))}" target="_blank" rel="noopener noreferrer">SOURCE ↗</a>`:''}</article>`).join('')||'<p class="empty-state">No matching references found.</p>';
+ $('#book-grid').innerHTML=shown.length?shown.map((b,i)=>`<article class="book-card"><div class="book-cover" style="--book-shade:${['#24475b','#4a496e','#3b5556','#4e414e','#3d5862'][i%5]}"><span class="book-glyph">${safe(String(b.title||'?').charAt(0))}</span></div><span class="mono">${safe(b.kind.toUpperCase())} / ${safe(b.topic||'REFERENCE')}</span><h3>${safe(b.title)}</h3><p>${safe(b.author||'Author to add')}</p><p class="book-notes">${safe(b.notes||'Notes to be added.')}</p>${safeUrl(b.url)?`<a href="${safe(safeUrl(b.url))}" target="_blank" rel="noopener noreferrer">OPEN REFERENCE ↗</a>`:''}</article>`).join(''):
+  `<section class="library-empty-panel"><div class="empty-copy"><span class="mono">CURATION / SEARCH RESULTS</span><h3>Nothing on this shelf yet.</h3><p>Your search or filter returned no references. Try a different question or return to the full collection of reading suggestions.</p><button type="button" data-library-reset="true">Explore all references ↗</button></div><div class="library-empty-visual" aria-hidden="true"><div><b>01</b><span>QUESTION / FORMULATED</span></div><div><b>02</b><span>SEARCH / CONTINUING</span></div><div><b>03</b><span>REFERENCE / NEXT</span></div></div></section>`;
+ const count=document.getElementById('library-count');
+ if(count)count.textContent=shown.length+' / '+books.filter(b=>b.published!==false).length+' SUGGESTED REFERENCES';
 }
+$('#book-grid').addEventListener('click',e=>{
+ const button=e.target.closest('[data-library-reset]');
+ if(!button)return;
+ state.bookKind='all';state.bookTerm='';
+ $('#library-search').value='';
+ $$('[data-book-filter]').forEach(b=>{const selected=b.dataset.bookFilter==='all';b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
+ renderBooks();
+});
 function showModal(id){const el=$('#'+id);if(!el.open){el.showModal();document.body.classList.add('modal-open')}}
 function closeModal(id){const el=$('#'+id);if(el.open)el.close();document.body.classList.remove('modal-open')}
 $$('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
@@ -248,79 +267,5 @@ $('#import-local').addEventListener('change',async e=>{const f=e.target.files[0]
 // Contact mail is submitted to FormSubmit from this static GitHub Pages site.
 // The mailbox owner must confirm FormSubmit's first activation email before delivery is enabled.
 // Until that happens, never claim a message reached the inbox.
-const contactForm = $('#contact-form');
-const contactName = $('#contact-name');
-const contactEmail = $('#contact-email');
-const contactMessage = $('#contact-message');
-const contactStatus = $('#contact-status');
-const contactButton = $('#contact-submit');
-const messageCount = $('#contact-message-count');
-const mailFallback = $('#contact-email-backup');
-const recipient = 'moreshwarpidadi@gmail.com';
-const contactEndpoint = 'https://formsubmit.co/ajax/' + recipient;
-function updateMessageCount() {
- const count=contactMessage.value.length;
- if(messageCount)messageCount.textContent=count+' / 5000 characters';
- if(count>0 && contactMessage.validity.valid && contactStatus.classList.contains('error')) {
-   announce(contactStatus,'Your message looks ready. Press Send transmission when you are ready.');
- }
-}
-contactMessage.addEventListener('input',updateMessageCount);
-[contactName,contactEmail].forEach(field=>field.addEventListener('input',()=>{
- if(contactStatus.classList.contains('error') && field.validity.valid)announce(contactStatus,'Ready when you are.');
-}));
-updateMessageCount();
-contactForm.addEventListener('submit',async e=>{
- e.preventDefault();
- const name=contactName.value.trim(),email=contactEmail.value.trim(),
-   message=contactMessage.value.trim(),topic=$('#contact-topic').value;
- mailFallback.hidden=true;
- contactForm.classList.remove('contact-invalid');
- // The honeypot is invisible to legitimate visitors. Discard bot-like submissions.
- if($('#company-website').value.trim())return announce(contactStatus,'Unable to process this message.','error');
- if(name.length<2){contactName.focus();return announce(contactStatus,'Please enter your name.','error')}
- if(!contactEmail.validity.valid || !email){contactEmail.focus();return announce(contactStatus,'Please enter a valid email address.','error')}
- if(message.length<2){contactMessage.focus();contactForm.classList.add('contact-invalid');return announce(contactStatus,'Please write a message—even a short one is fine.','error')}
- if(!contactForm.checkValidity()){contactForm.reportValidity();return announce(contactStatus,'Please check the highlighted fields.','error')}
- const previousLabel=contactButton.innerHTML;
- contactButton.disabled=true;
- contactButton.textContent='Transmitting…';
- announce(contactStatus,'Sending securely. Please wait…');
- try{
-  const timeout=new AbortController();
-  const timer=setTimeout(()=>timeout.abort(),20000);
-  let response;
-  try{
-   response=await fetch(contactEndpoint,{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Accept':'application/json'},
-    signal:timeout.signal,
-    body:JSON.stringify({
-     name,email,topic,message,
-     _subject:'Moreshwar / Lab — '+topic,
-     _template:'table',
-     _honey:'',
-     source:location.href
-    })
-   });
-  }finally{clearTimeout(timer)}
-  const data=await response.json().catch(()=>null);
-  if(!response.ok||!data||data.success===false||data.success==='false')
-    throw Error((data&&data.message)||'The email service could not confirm receipt.');
-  // The service accepted the message; inbox delivery cannot be asserted until verification.
-  announce(contactStatus,'Message accepted by the email service. If my inbox is awaiting first-time activation, delivery will start after confirmation.','success');
-  contactForm.reset();
-  updateMessageCount();
- }catch(err){
-  console.warn('Contact submission not confirmed',err);
-  announce(contactStatus,'Delivery could not be confirmed. You can open your email app instead.','error');
-  const subject='Moreshwar / Lab — '+topic;
-  const body='From: '+name+' ('+email+')\n\n'+message;
-  mailFallback.href='mailto:'+recipient+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
-  mailFallback.hidden=false;
- }finally{
-  contactButton.disabled=false;
-  contactButton.innerHTML=previousLabel;
- }
-});
+
 renderPosts();renderBooks();loadSubstack();initBackend();

@@ -22,7 +22,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css app.js lab.css lab.js config.js substack-posts.json _site/
+          cp index.html styles.css app.js lab.css lab.js experience.css contact.js config.js substack-posts.json message-received.html _site/
           cp assets/favicon.svg _site/assets/
           cp -R articles _site/
           touch _site/.nojekyll
