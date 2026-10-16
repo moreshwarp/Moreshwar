@@ -85,6 +85,30 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    assert.ok(geometry.left>=-3&&geometry.right<=geometry.width+3&&geometry.scroll<=geometry.width+3,'Inquiry overflows mobile viewport '+JSON.stringify(geometry));
    await ctx.close();
   });
+  await check('Science & Ideas: verified English listening, rotating ideas and source-linked Nobel stories',async()=>{
+   const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
+   const page=await ctx.newPage();
+   await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   await page.locator('#science-ideas').scrollIntoViewIfNeeded();
+   await page.waitForFunction(()=>document.getElementById('science-load-status')?.textContent.includes('Curated source-linked'),null,{timeout:12000});
+   assert.equal(await page.locator('.science-pod').count(),8);
+   assert.equal(await page.locator('.nobel-portrait').count(),3);
+   assert.equal(await page.locator('.nobel-sources a').count(),6);
+   const before=await page.locator('#idea-person').innerText();
+   await page.locator('#idea-next').click();
+   assert.notEqual(await page.locator('#idea-person').innerText(),before);
+   await page.locator('[data-listen-region="India"]').click();
+   assert.equal(await page.locator('.science-pod').count(),3);
+   assert.equal(await page.locator('[data-listen-region="India"]').getAttribute('aria-pressed'),'true');
+   await page.locator('[data-listen-region="All"]').click();
+   assert.equal(await page.locator('.science-pod').count(),8);
+   await page.locator('.nobel-education').first().locator('summary').click();
+   assert.ok(await page.locator('.nobel-education').first().getAttribute('open')!==null);
+   const bounds=await page.evaluate(()=>{const r=document.getElementById('science-ideas').getBoundingClientRect();return {left:r.left,right:r.right,width:innerWidth,scroll:document.documentElement.scrollWidth}});
+   assert.ok(bounds.left>=-3&&bounds.right<=bounds.width+3&&bounds.scroll<=bounds.width+3,'Science Ideas overflows on mobile '+JSON.stringify(bounds));
+   await page.locator('#science-ideas').screenshot({path:path.join(outputs,'science-ideas-mobile.png')});
+   await ctx.close();
+  });
   await check('Article reactions/comments display safely in current owner theme',async()=>{
    const ctx=await browser.newContext({viewport:{width:430,height:900}});
    const page=await ctx.newPage();

@@ -100,3 +100,11 @@ Your screenshot showed the unprocessed repository HTML where publishing markers 
 5. Open https://moreshwarp.github.io/Moreshwar/ and hard-refresh the page.
 
 A default fallback is now included in \`index.html\` so the page also displays readable content if the repository's raw HTML is served directly. However **new articles and edited themes require GitHub Actions as the Pages source** to update reliably.
+
+## Managing the Science & Ideas shelf
+
+The public page includes an English science listening directory, a daily rotating thinker-inspired idea, and source-checked 2026 Nobel science stories. Content is version-controlled in `data/science-cabinet.json`. Only GitHub collaborators with write permission may update it.
+
+Edit the [catalog in GitHub](https://github.com/moreshwarp/Moreshwar/edit/main/data/science-cabinet.json): `podcasts` stores the show, publisher, region, URL, reason and critical-thinking prompt; `thoughts` stores original paraphrases with source URLs (never unverified verbatim quotes); `nobel` stores confirmed awards, education-specific source links and clear stories. Change `reviewedOn` only when sources have actually been checked. The client rotates an idea every UTC day, with a Next button, without network tracking. Podcast and Nobel facts are manually verified, not live syndicated feeds.
+
+Science checks live in `tests/science-ideas.test.cjs`; the browser workflow validates idea rotation, India filtering, Nobel source panels and narrow mobile rendering.

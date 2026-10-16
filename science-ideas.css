@@ -1,0 +1,85 @@
+/* Science & Ideas — English listening, idea rotation and science Nobel learning */
+.science-ideas{position:relative;isolation:isolate;overflow:hidden;border-top:1px solid #284d59;border-bottom:1px solid #284d59;background:radial-gradient(ellipse at 90% 5%,#184c4b65,transparent 42%),#09151f}
+.science-ideas::before{content:"";pointer-events:none;position:absolute;inset:0;opacity:.22;background-image:linear-gradient(#66bca90c 1px,transparent 1px),linear-gradient(90deg,#66bca90c 1px,transparent 1px);background-size:50px 50px;z-index:-1}
+.science-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,.65fr);align-items:end;gap:22px;margin-bottom:32px}
+.science-kicker,.science-mono{font:10px/1.7 var(--mono,monospace);letter-spacing:.1em;color:#90e9d0}
+.science-head h2{font:600 clamp(39px,5.8vw,80px)/1.06 var(--display,sans-serif);letter-spacing:-.072em;margin:12px 0}
+.science-head h2 span{color:var(--world-ink,#8ce9d0)}
+.science-head p{font:15px/1.75 var(--sans,Arial,sans-serif);color:#b9d0d9;max-width:640px;margin:0}
+.science-head-aside{border-left:1px solid #45707a;padding-left:23px;max-width:340px}
+.science-head-aside strong{display:block;font:500 19px/1.35 var(--display,sans-serif);color:#ddf7ed;letter-spacing:-.035em;margin:8px 0}
+.science-head-aside p{font-size:12px;line-height:1.7}
+.science-idea{display:grid;grid-template-columns:minmax(0,.83fr) minmax(0,1.17fr);border:1px solid #427078;border-radius:14px;background:linear-gradient(115deg,#102a33,#13353c);overflow:hidden;box-shadow:0 20px 60px #0003}
+.science-idea-left{position:relative;padding:28px;border-right:1px solid #3e6870;display:flex;flex-direction:column;justify-content:space-between;min-height:245px}
+.science-idea-left::after{content:"◎";font:180px/1 var(--display,sans-serif);position:absolute;right:-6px;bottom:-40px;opacity:.06;pointer-events:none;color:#bcffe2}
+.science-idea-left h3{font:600 clamp(28px,3vw,43px)/1.09 var(--display,sans-serif);letter-spacing:-.06em;max-width:390px;margin:14px 0;color:#e9fff4}
+.science-idea-left p{font:12px/1.7 var(--sans,Arial,sans-serif);color:#accad0;max-width:340px}
+.science-idea-right{padding:28px 31px;display:flex;flex-direction:column;justify-content:center;gap:15px}
+.science-idea-right blockquote{font:500 clamp(19px,2.5vw,31px)/1.37 var(--display,sans-serif);letter-spacing:-.04em;color:#eefcf4;margin:0}
+.science-idea-attribution{font:11px var(--mono,monospace);color:#9cebd4}
+.science-idea-question{color:#bad2da;font:13px/1.75 var(--sans,Arial,sans-serif);border-left:2px solid #8ce4c6;padding-left:15px}
+.science-idea-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.science-idea-actions a,.science-idea-actions button{border:1px solid #6caea4;border-radius:7px;padding:10px 13px;min-height:42px;background:#153743;color:#bafce5;font:11px var(--mono,monospace);cursor:pointer;text-decoration:none}
+.science-idea-actions button:hover,.science-idea-actions a:hover{background:#24545a;border-color:#bafce5}
+.science-catalogue-head{margin:65px 0 20px;display:flex;align-items:end;justify-content:space-between;gap:15px}
+.science-catalogue-head h3{font:600 clamp(28px,3.5vw,49px)/1.1 var(--display,sans-serif);letter-spacing:-.057em;margin:10px 0;color:#eafff7}
+.science-catalogue-head p{color:#b2cbd0;margin:0;font:13px/1.7 var(--sans,Arial,sans-serif);max-width:590px}
+.science-podcast-filter{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.science-podcast-filter button{border:1px solid #47737d;background:#102b35;color:#b6d6d8;border-radius:999px;padding:9px 14px;font:11px var(--mono,monospace);min-height:39px;cursor:pointer}
+.science-podcast-filter button.active,.science-podcast-filter button[aria-pressed="true"]{background:var(--world-ink,#92ecd1);border-color:var(--world-ink,#92ecd1);color:#0c2630}
+.science-podcast-filter button:focus-visible,.science-idea-actions button:focus-visible{outline:2px solid #aff6e1;outline-offset:3px}
+.science-podcasts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.science-pod{display:flex;flex-direction:column;gap:11px;min-width:0;min-height:240px;padding:21px;border:1px solid #3c626d;border-radius:12px;text-decoration:none;color:#e9f6f1;background:radial-gradient(circle at 90% -10%,#234a4e,#10212f 65%);transition:transform .2s,border-color .2s}
+.science-pod:hover{transform:translateY(-4px);border-color:#a2f2d8}
+.science-pod[hidden]{display:none}
+.science-pod-top{display:flex;justify-content:space-between;align-items:center;gap:7px}
+.science-pod-region,.science-pod-credit,.science-pod-question{font:9px/1.6 var(--mono,monospace);color:#9edcca}
+.science-pod-icon{font:19px var(--display,sans-serif);color:#a9e8cf}
+.science-pod-title{font:600 22px/1.2 var(--display,sans-serif);letter-spacing:-.045em;color:#f1fff6}
+.science-pod-credit{color:#9cbcc4}
+.science-pod-why{font:12px/1.7 var(--sans,Arial,sans-serif);color:#b5cbd3;margin:0}
+.science-pod-question{margin-top:auto;padding-top:12px;border-top:1px solid #375b63;color:#a5d7d3}
+.science-daily-listen{display:inline-block;margin-top:17px;color:#a1f5d6;font:11px/1.7 var(--mono,monospace);text-decoration:underline;text-underline-offset:4px}
+.science-nobel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.nobel-portrait{border:1px solid #486873;border-radius:12px;padding:22px;background:linear-gradient(153deg,#142c38,#111f2a);display:flex;flex-direction:column;gap:15px;min-width:0}
+.nobel-card-head{display:flex;justify-content:space-between;gap:10px}
+.nobel-number{color:#a5e6d5}
+.nobel-people{font:600 15px/1.4 var(--display,sans-serif);color:#a4e8d9}
+.nobel-story-title{font:600 clamp(22px,2.4vw,33px)/1.14 var(--display,sans-serif);color:#edfff5;letter-spacing:-.055em;margin:0}
+.nobel-story-body,.nobel-education p{font:13px/1.73 var(--sans,Arial,sans-serif);color:#bfd0d9;margin:0}
+.nobel-takeaway{padding:16px;background:#1a3b42;border-left:2px solid #a0f4d9;border-radius:4px}
+.nobel-takeaway p{font:13px/1.6 var(--sans,Arial,sans-serif);color:#e5f6ed;margin:7px 0 0}
+.nobel-education{border-top:1px solid #3d606b;padding-top:13px}
+.nobel-education summary{cursor:pointer;color:#c5e8dd;font:11px/1.6 var(--mono,monospace)}
+.nobel-education p{margin-top:11px}
+.nobel-sources{display:flex;gap:9px;flex-wrap:wrap;margin-top:auto}
+.nobel-sources a{font:10px/1.6 var(--mono,monospace);color:#a6ead8;text-underline-offset:3px}
+.science-footer{margin:21px 0 0;font:10px/1.8 var(--mono,monospace);color:#a7c3c8}
+:root[data-theme="light"] .science-ideas{background:#f0f8f8;border-color:#c7dce1}
+:root[data-theme="light"] .science-head h2,:root[data-theme="light"] .science-catalogue-head h3{color:#1e444f}
+:root[data-theme="light"] .science-head p,:root[data-theme="light"] .science-catalogue-head p{color:#476b76}
+:root[data-theme="light"] .science-head-aside{border-color:#a5c9c6}
+:root[data-theme="light"] .science-head-aside strong{color:#245660}
+:root[data-theme="light"] .science-mono,:root[data-theme="light"] .science-kicker{color:#166e63}
+:root[data-theme="light"] .science-idea{background:#fff;border-color:#b9d5d8}
+:root[data-theme="light"] .science-idea-left{border-color:#cee0e2}
+:root[data-theme="light"] .science-idea-left h3,:root[data-theme="light"] .science-idea-right blockquote{color:#1e444e}
+:root[data-theme="light"] .science-idea-left p,:root[data-theme="light"] .science-idea-question{color:#486b75}
+:root[data-theme="light"] .science-idea-attribution{color:#127566}
+:root[data-theme="light"] .science-idea-actions a,:root[data-theme="light"] .science-idea-actions button{background:#f3faf9;color:#146b60;border-color:#9bc9be}
+:root[data-theme="light"] .science-podcast-filter button{background:#fff;color:#36616b;border-color:#aecad2}
+:root[data-theme="light"] .science-podcast-filter button.active{background:#146d62;color:#fff}
+:root[data-theme="light"] .science-pod,:root[data-theme="light"] .nobel-portrait{background:#fff;border-color:#bfd7db}
+:root[data-theme="light"] .science-pod-title,:root[data-theme="light"] .nobel-story-title{color:#18424c}
+:root[data-theme="light"] .science-pod-credit,:root[data-theme="light"] .science-pod-why,:root[data-theme="light"] .nobel-story-body,:root[data-theme="light"] .nobel-education p{color:#476670}
+:root[data-theme="light"] .science-pod-region,:root[data-theme="light"] .science-pod-question,:root[data-theme="light"] .nobel-people,:root[data-theme="light"] .nobel-sources a{color:#167267}
+:root[data-theme="light"] .science-pod-question{border-color:#cee1e3}
+:root[data-theme="light"] .nobel-takeaway{background:#e9f5f2}
+:root[data-theme="light"] .nobel-takeaway p{color:#28515a}
+:root[data-theme="light"] .nobel-education{border-color:#c4d9df}
+:root[data-theme="light"] .nobel-education summary{color:#215f5f}
+:root[data-theme="light"] .science-footer{color:#50717c}
+@media(max-width:1100px){.science-podcasts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:880px){.science-head,.science-idea{grid-template-columns:1fr}.science-head-aside{border-left:0;border-top:1px solid #497078;padding:16px 0 0;max-width:100%}.science-idea-left{border-right:0;border-bottom:1px solid #47727b;min-height:0}.science-nobel{grid-template-columns:1fr}}
+@media(max-width:540px){.science-podcasts{grid-template-columns:1fr}.science-head{gap:13px}.science-catalogue-head{margin-top:43px}.science-idea-left,.science-idea-right{padding:22px}.science-catalogue-head{align-items:start;flex-direction:column}.nobel-portrait{padding:19px}}
+@media(prefers-reduced-motion:reduce){.science-pod{transition:none}}

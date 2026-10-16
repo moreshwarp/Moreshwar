@@ -78,3 +78,9 @@ The homepage's [Inquiry Engine](https://moreshwarp.github.io/Moreshwar/#inquiry)
 The first protocol includes a **live probability calculator** for the mathematical model \(P(\geq1\text{ slow downstream})=1-(1-p)^n\), assuming independent requests. It is *not* production telemetry or a latency benchmark. All results are calculated in the visitor's browser; no data is uploaded. Source: \`inquiry.js\`, \`inquiry.css\`; rigorous limitations: [RESEARCH_METHOD.md](RESEARCH_METHOD.md). Unit tests include probability bounds and falsification/label checks; the Chromium workflow tests mobile interaction and rendering.
 
 The Inquiry Engine is deliberately a **research starting point**, not a fictional project portfolio or peer-reviewed result. The goal is to build a body of evidence over time.
+
+## Science & Ideas (2026)
+
+The public `#science-ideas` section offers a verified, English-language listening shelf covering the US, India and Google DeepMind, plus 8 rotating thinker-inspired *paraphrased* insights and 3 Nobel 2026 science stories with educational backgrounds. Every item links to a source. Source data lives in `data/science-cabinet.json`; the client script `science-ideas.js` rotates the daily thought and supports region filtering, while `science-ideas.css` renders responsive cards. Original fallback HTML is included to keep the material visible if JSON loading fails. `reviewedOn` identifies when facts were last checked, not a live Nobel update.
+
+Podcasts and story choices are curated leads, not claims of personal relationships or achievements. Where training details belong to one co-laureate, that distinction is explicit.

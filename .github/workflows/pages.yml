@@ -23,9 +23,11 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
+          cp index.html styles.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
           cp -R assets/. _site/assets/
           cp -R articles _site/
+          mkdir -p _site/data
+          cp data/science-cabinet.json _site/data/science-cabinet.json
           touch _site/.nojekyll
       - name: Open new reader discussions (GitHub Issues)
         env:

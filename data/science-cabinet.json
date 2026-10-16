@@ -1,0 +1,186 @@
+{
+  "reviewedOn": "2026-10-16",
+  "language": "English",
+  "summary": "A source-led library of useful voices, questions and scientific discovery. Podcast episodes and laureate biographies are not endorsements or claims of personal friendship.",
+  "podcasts": [
+    {
+      "id": "deepmind",
+      "title": "Google DeepMind: The Podcast",
+      "region": "Global",
+      "kind": "AI & Research",
+      "origin": "Google DeepMind · Hannah Fry",
+      "url": "https://deepmind.google/the-podcast/",
+      "why": "What happens when algorithms become scientific instruments?",
+      "question": "Which claim can you trace to a paper or benchmark?"
+    },
+    {
+      "id": "lex",
+      "title": "Lex Fridman × Sam Altman",
+      "region": "USA",
+      "kind": "AI & Research",
+      "origin": "Lex Fridman Podcast · Episode 367",
+      "url": "https://lexfridman.com/sam-altman",
+      "why": "Understand the opportunities and unanswered questions around advanced AI.",
+      "question": "Which predictions were testable, and which remained speculation?"
+    },
+    {
+      "id": "quanta",
+      "title": "The Joy of Why",
+      "region": "USA",
+      "kind": "Physics & Math",
+      "origin": "Quanta Magazine · Steven Strogatz & Janna Levin",
+      "url": "https://www.quantamagazine.org/podcasts/",
+      "why": "Conversations driven by the beauty of hard, unanswered scientific questions.",
+      "question": "What simple explanation would you try to falsify?"
+    },
+    {
+      "id": "quantapod",
+      "title": "The Quanta Podcast",
+      "region": "USA",
+      "kind": "Physics & Math",
+      "origin": "Quanta Magazine",
+      "url": "https://www.quantamagazine.org/podcasts/",
+      "why": "Follow research in mathematics, computation and the physical sciences.",
+      "question": "What evidence distinguishes a surprising idea from an established result?"
+    },
+    {
+      "id": "iisc",
+      "title": "IISc Research Conversations",
+      "region": "India",
+      "kind": "Indian Science",
+      "origin": "Indian Institute of Science · Office of Communications",
+      "url": "https://open.spotify.com/show/5BmF5cVL67KhNe5bEE7RSY",
+      "why": "Research conversations and outreach from a leading Indian scientific institution.",
+      "question": "Which lab method would you want to observe in person?"
+    },
+    {
+      "id": "seen",
+      "title": "The Seen and the Unseen",
+      "region": "India",
+      "kind": "Ideas & Society",
+      "origin": "Amit Varma",
+      "url": "https://seenunseen.in/about/",
+      "why": "Long-form inquiry into hidden consequences, history and public ideas.",
+      "question": "What unintended consequence might a seemingly good design produce?"
+    },
+    {
+      "id": "purescience",
+      "title": "Pure Science",
+      "region": "India",
+      "kind": "Indian Science",
+      "origin": "ThePrint · science explainers (video series)",
+      "url": "https://theprint.in/category/science/",
+      "why": "An India-grounded science video series and reporting archive; not an audio-only podcast.",
+      "question": "Can you trace the headline to the underlying experiment?"
+    },
+    {
+      "id": "huberman",
+      "title": "Huberman Lab",
+      "region": "USA",
+      "kind": "Neuroscience",
+      "origin": "Andrew Huberman",
+      "url": "https://www.hubermanlab.com/podcast",
+      "why": "Long-form explanations of neuroscience and scientific research, with primary-source checking encouraged.",
+      "question": "Which claim is supported by randomized evidence rather than anecdotes?"
+    }
+  ],
+  "thoughts": [
+    {
+      "person": "Richard Feynman",
+      "domain": "Physics",
+      "idea": "The strongest understanding is the one you can explain plainly and then test.",
+      "prompt": "Explain a technical idea in three sentences. Where could your explanation fail?",
+      "url": "https://www.feynmanlectures.caltech.edu/"
+    },
+    {
+      "person": "Karl Popper",
+      "domain": "Philosophy of science",
+      "idea": "Make the claim precise enough that evidence might prove it wrong.",
+      "prompt": "What observation would force you to abandon your favorite hypothesis?",
+      "url": "https://plato.stanford.edu/entries/popper/"
+    },
+    {
+      "person": "Leslie Lamport",
+      "domain": "Computer science",
+      "idea": "In a distributed system, an apparently simple event can have a complicated order.",
+      "prompt": "Can two independent observers agree on which message happened first?",
+      "url": "https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/"
+    },
+    {
+      "person": "Marie Curie",
+      "domain": "Chemistry & physics",
+      "idea": "Persistent experiments matter more than a dramatic first guess.",
+      "prompt": "What would you measure for months instead of judging in one afternoon?",
+      "url": "https://www.nobelprize.org/prizes/physics/1903/marie-curie/facts/"
+    },
+    {
+      "person": "B. R. Ambedkar",
+      "domain": "Philosophy & education",
+      "idea": "Education can give people the ability to challenge inherited assumptions.",
+      "prompt": "Whose access to learning could you improve with the software you build?",
+      "url": "https://www.britannica.com/biography/Bhimrao-Ramji-Ambedkar"
+    },
+    {
+      "person": "Srinivasa Ramanujan",
+      "domain": "Mathematics",
+      "idea": "Unexpected patterns are invitations to seek a proof, not substitutes for one.",
+      "prompt": "Can you derive why a pattern appears rather than merely plot it?",
+      "url": "https://mathshistory.st-andrews.ac.uk/Biographies/Ramanujan/"
+    },
+    {
+      "person": "Francis Halzen",
+      "domain": "Astroparticle physics",
+      "idea": "An ambitious scientific instrument begins as a testable engineering possibility.",
+      "prompt": "What is the smallest experiment that could validate your larger idea?",
+      "url": "https://icecube.wisc.edu/news/awards/2025/12/prof-francis-halzen-honored-with-the-2026-aps-medal/"
+    },
+    {
+      "person": "J. C. Bose",
+      "domain": "Physics & invention",
+      "idea": "Crossing disciplines can expose mechanisms that a narrow viewpoint overlooks.",
+      "prompt": "Which tool from biology could help answer a computing question?",
+      "url": "https://www.britannica.com/biography/Jagadish-Chandra-Bose"
+    }
+  ],
+  "nobel": [
+    {
+      "year": 2026,
+      "field": "Physics",
+      "people": "Francis Halzen",
+      "heading": "A telescope made from Antarctic ice",
+      "education": "Earned a master's degree and a PhD at the University of Louvain (now KU Leuven), Belgium.",
+      "story": "He helped pursue an unlikely idea: the clear ice deep below the South Pole might detect particles arriving from distant space. A vast instrument became a new way to study the universe.",
+      "lesson": "Start by testing whether an unusual material or environment can become a scientific instrument.",
+      "award": "2026 Nobel Prize in Physics",
+      "verified": "2026-10-16",
+      "awardUrl": "https://news.fnal.gov/2026/10/nobel-prize-in-physics-awarded-to-francis-halzen-for-groundbreaking-neutrino-research/",
+      "educationUrl": "https://www.physics.wisc.edu/directory/halzen-francis/"
+    },
+    {
+      "year": 2026,
+      "field": "Chemistry",
+      "people": "Henri B. Kagan & Kenso Soai",
+      "heading": "Why do molecules have a preferred handedness?",
+      "education": "Kenso Soai completed chemistry degrees at the University of Tokyo, earning his doctorate in 1979. This education note is about Soai, not Kagan.",
+      "story": "Their work explored how chemical reactions favor one mirror-image form of a molecule. Soai's research on self-amplifying reactions offers an especially striking example of how a small difference can grow.",
+      "lesson": "Small asymmetries can have large effects. Ask what mechanism amplifies them.",
+      "award": "2026 Nobel Prize in Chemistry",
+      "verified": "2026-10-16",
+      "awardUrl": "https://www.nature.com/articles/d41586-026-03093-0",
+      "educationUrl": "https://www.s.u-tokyo.ac.jp/en/info/11252/"
+    },
+    {
+      "year": 2026,
+      "field": "Physiology or Medicine",
+      "people": "Karl Deisseroth, Peter Hegemann & Georg Nagel",
+      "heading": "A way to ask neurons questions using light",
+      "education": "Karl Deisseroth studied biochemical sciences at Harvard and earned a neuroscience PhD and medical degree at Stanford. This education note is about Deisseroth, not his co-laureates.",
+      "story": "Research on light-sensitive proteins helped scientists develop optogenetics. With it, they could study the roles of particular nerve cells by controlling their activity with light.",
+      "lesson": "A basic discovery in one organism can help create powerful tools in another field.",
+      "award": "2026 Nobel Prize in Physiology or Medicine",
+      "verified": "2026-10-16",
+      "awardUrl": "https://www.nsf.gov/science-matters/nsf-supported-researchers-honored-2026-nobel-prizes",
+      "educationUrl": "https://bioengineering.stanford.edu/people/karl-deisseroth"
+    }
+  ]
+}
