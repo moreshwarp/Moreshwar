@@ -47,6 +47,14 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
    assert.equal(await page.locator('html').getAttribute('data-universe'),'science');
    assert.equal(await page.locator('.pick-card').count(),4);
+   // Real painted acceptance for the screenshot discrepancy: no empty Curiosity Index.
+   const picks=page.locator('#picks');
+   await picks.scrollIntoViewIfNeeded();
+   assert.equal(await page.locator('#picks-title').innerText(),'An intellectual field guide.');
+   assert.ok((await page.locator('.picks-section .pick-card').first().innerText()).includes('The Imitation Game'));
+   assert.equal(await page.locator('.curation-bridge-links a').count(),3);
+   await picks.screenshot({path:path.join(outputs,'personalized-curiosity-index-mobile.png')});
+
    await page.locator('[data-instrument-mode="ai"]').click();
    assert.equal(await page.locator('#instrument-focus-title').innerText(),'MACHINE LEARNING');
    await page.locator('#menu-trigger').click();
