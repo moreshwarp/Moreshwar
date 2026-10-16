@@ -1,0 +1,2 @@
+/* Repository-source fallback. The Pages Actions build regenerates this from data/site-settings.json. */
+(function(){var s={theme:"science",brightness:"dark"};document.documentElement.dataset.theme=s.brightness;document.documentElement.dataset.universe=s.theme;document.documentElement.style.colorScheme=s.brightness;var meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=s.brightness==="light"?"#f5f9fb":"#080d14";})();

@@ -2,37 +2,37 @@
   {
     "universe": "science",
     "kind": "Movie",
-    "title": "Interstellar",
-    "creator": "Christopher Nolan",
-    "note": "A visual invitation to wonder about space, gravity and scientific questions.",
-    "url": "https://en.wikipedia.org/wiki/Interstellar_(film)",
+    "title": "The Imitation Game",
+    "creator": "Morten Tyldum · 2014",
+    "note": "Computation, mathematical ideas, persistence and the human history behind modern computing.",
+    "url": "https://en.wikipedia.org/wiki/The_Imitation_Game",
     "approved": false
   },
   {
     "universe": "science",
     "kind": "Book",
-    "title": "Surely You're Joking, Mr. Feynman!",
-    "creator": "Richard Feynman",
-    "note": "Curiosity, experiments and the pleasure of asking unexpected questions.",
-    "url": "https://en.wikipedia.org/wiki/Surely_You%27re_Joking,_Mr._Feynman!",
+    "title": "Designing Data-Intensive Applications",
+    "creator": "Martin Kleppmann",
+    "note": "A rigorous way to understand storage, replication, distributed data and real engineering trade-offs.",
+    "url": "https://dataintensive.net/",
     "approved": false
   },
   {
     "universe": "science",
     "kind": "Article",
-    "title": "The Tail at Scale",
-    "creator": "Jeffrey Dean & Luiz André Barroso",
-    "note": "A foundational systems-paper perspective on latency under fan-out.",
-    "url": "https://research.google/pubs/the-tail-at-scale/",
+    "title": "Time, Clocks, and the Ordering of Events",
+    "creator": "Leslie Lamport · 1978",
+    "note": "The foundational paper behind a question I keep returning to: what does 'before' mean in a distributed system?",
+    "url": "https://www.microsoft.com/en-us/research/publication/time-clocks-ordering-events-distributed-system/",
     "approved": false
   },
   {
     "universe": "science",
     "kind": "YouTube",
-    "title": "3Blue1Brown — Neural networks",
-    "creator": "3Blue1Brown",
-    "note": "Visual explanations of learning, optimization and mathematical structure.",
-    "url": "https://www.youtube.com/watch?v=aircAruvnKk",
+    "title": "MIT Distributed Systems Lectures",
+    "creator": "MIT 6.5840",
+    "note": "Explore practical distributed systems design, failures, replication and consistency through lectures.",
+    "url": "https://www.youtube.com/results?search_query=MIT+6.5840+distributed+systems+lectures",
     "approved": false
   },
   {

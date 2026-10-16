@@ -60,3 +60,7 @@ Imported Substack articles remain identified as such and retain their original a
 ## Release notes
 
 Previous prototype documentation described visitor-selectable themes and a local draft popup. These have been retired. The current site intentionally has one **publisher-owned appearance** and a separate **GitHub-authorized editing process**. See [ADMIN_GUIDE.md](ADMIN_GUIDE.md) for the updated process.
+
+## GitHub Pages source mode
+
+**Use Settings → Pages → Source: GitHub Actions**, not Deploy from a branch. The source HTML now has complete fallback editorial content to avoid empty sections, but the real CMS publishing pipeline requires the custom build in `.github/workflows/pages.yml`. See [ADMIN_GUIDE.md](ADMIN_GUIDE.md).

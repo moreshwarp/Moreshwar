@@ -100,3 +100,19 @@ test('the publishing build preserves 25 legacy articles and excludes draft Markd
   assert.doesNotMatch(config,/localStorage/);
  }finally{fs.rmSync(directory,{recursive:true,force:true})}
 });
+
+// Raw repository HTML must remain readable even if GitHub Pages accidentally serves the main branch.
+test('unprocessed source has no empty Curiosity Index placeholders',()=>{
+  const index=read('index.html');
+  for(const text of ['An intellectual field guide.','The Imitation Game','Designing Data-Intensive Applications','MIT Distributed Systems Lectures','The research thread'.toUpperCase()]){
+    assert.ok(index.toUpperCase().includes(text.toUpperCase()),'Missing fallback '+text);
+  }
+  assert.doesNotMatch(index,/<!--PICK_HEADING-->|<!--PICK_INTRO-->|<!--THEME_PICKS-->|<!--CURRENT_UNIVERSE-->/);
+});
+test('publishing build still has paired replacement anchors',()=>{
+  const index=read('index.html');
+  for(const key of ['PICK_HEADING','PICK_INTRO','THEME_PICKS','CURRENT_UNIVERSE','PUBLISHED_POSTS']){
+    assert.ok(index.includes('<!--'+key+'_BEGIN-->'));
+    assert.ok(index.includes('<!--'+key+'_END-->'));
+  }
+});

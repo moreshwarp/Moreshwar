@@ -87,3 +87,16 @@ See \`TEST_PLAN.md\` for a complete acceptance matrix.
 - GitHub issues and their reactions require visitors to sign in to GitHub to interact.
 
 Do not call these independent external services verified until their real first-use tests succeed.
+
+
+## Important GitHub Pages source setting (avoids empty Curiosity Index)
+
+Your screenshot showed the unprocessed repository HTML where publishing markers had not been replaced. GitHub Pages should run the repository's **custom deployment workflow**, not GitHub's separate branch/Jekyll build.
+
+1. Open https://github.com/moreshwarp/Moreshwar/settings/pages
+2. Under **Build and deployment → Source**, choose **GitHub Actions** (not **Deploy from a branch**).
+3. The custom workflow **Deploy Moreshwar / Lab** already exists at \`.github/workflows/pages.yml\` and automatically runs on main.
+4. Open https://github.com/moreshwarp/Moreshwar/actions/workflows/pages.yml and make sure the most recent run succeeds.
+5. Open https://moreshwarp.github.io/Moreshwar/ and hard-refresh the page.
+
+A default fallback is now included in \`index.html\` so the page also displays readable content if the repository's raw HTML is served directly. However **new articles and edited themes require GitHub Actions as the Pages source** to update reliably.

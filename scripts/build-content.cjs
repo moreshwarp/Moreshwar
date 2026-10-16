@@ -164,7 +164,7 @@ function build(outPath){
   esc(a.meta.date||'')+' · '+esc(a.meta.category||'Research')+'</span><strong>'+esc(a.meta.title)+'</strong><p>'+
   esc(a.meta.description||'')+'</p><span class="fresh-essay-read">READ ARTICLE ↗</span></a>').join('\n');
  const pieces={
-  PUBLISHED_POSTS:'<div class="fresh-essay-grid">'+(cards||'<p class="fresh-essay-placeholder">Original essays will appear here when published from the owner’s editorial studio.</p>')+'</div>',
+  PUBLISHED_POSTS:'<div class="fresh-essay-grid">'+(cards||`<div class="fresh-essay-grid"><a class="fresh-essay" href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html"><span class="fresh-essay-date">DISTRIBUTED SYSTEMS · ORIGINAL WRITING</span><strong>Leslie Lamport: The ideas behind computers working together</strong><p>My published exploration of logical clocks, coordination, and how distributed systems make sense of time.</p><span class="fresh-essay-read">READ ORIGINAL ARTICLE ↗</span></a><a class="fresh-essay" href="articles/165015680-scryer-netflixs-predictive-auto-scaling-engine-82db2049ca47.html"><span class="fresh-essay-date">SYSTEMS ENGINEERING · ORIGINAL WRITING</span><strong>Inside Scryer: Netflix's predictive autoscaling</strong><p>A look at the infrastructure questions behind streaming reliability, prediction, and scale.</p><span class="fresh-essay-read">READ ORIGINAL ARTICLE ↗</span></a></div>`)+'</div>',
   THEME_PICKS:'<div class="pick-grid">'+recommendations.filter(x=>x.universe===settings.theme).map(pickCard).join('\n')+'</div>',
   CURRENT_UNIVERSE:esc(settings.theme),
   PICK_HEADING:esc(settings.recommendationsHeading),
@@ -172,9 +172,11 @@ function build(outPath){
  };
  let index=fs.readFileSync(path.join(out,'index.html'),'utf8');
  for(const [name,html] of Object.entries(pieces)){
-  const token='<!--'+name+'-->';
-  if(!index.includes(token))throw Error('Missing build marker '+token);
-  index=index.replace(token,html);
+  const start='<!--'+name+'_BEGIN-->',end='<!--'+name+'_END-->';
+  const a=index.indexOf(start),z=index.indexOf(end);
+  if(a<0||z<a||index.indexOf(start,a+1)!==-1||index.indexOf(end,z+1)!==-1)
+    throw Error('Missing or repeated build markers '+name);
+  index=index.slice(0,a+start.length)+html+index.slice(z);
  }
  fs.writeFileSync(path.join(out,'index.html'),index);
  console.log('Published',published.length,'new articles; preserved',existing.length,'legacy readers; appearance',settings.theme,settings.brightness);
