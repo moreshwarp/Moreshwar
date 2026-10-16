@@ -77,12 +77,12 @@
    const summary=el('summary','','Education / path to discovery');
    details.append(summary,el('p','',item.education));
    const sources=el('div','nobel-sources');
-   sources.append(outLink('Official Nobel announcement ↗',item.awardUrl),outLink('Education source ↗',item.educationUrl));
+   sources.append(outLink('Awarding institution source ↗',item.awardUrl),outLink('Education source ↗',item.educationUrl));
    article.append(header,name,title,text,lesson,details,sources);
    target.append(article);
   }
   const d=get('science-reviewed');
-  if(d)d.textContent='Research checked: '+data.reviewedOn+' · Primary-source links included';
+  if(d)d.textContent='Research checked: '+data.reviewedOn+' · Awarding-institution and education sources';
  }
  async function init(){
   try{

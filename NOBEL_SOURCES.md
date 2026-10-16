@@ -1,18 +1,19 @@
 # Nobel Science Source Policy
 
-Reviewed: 2026-10-16
+Reviewed: 2026-10-17
 
-The Science & Ideas Nobel cards distinguish two types of evidence:
+**What a link proves matters.** The three 2026 Science & Ideas stories distinguish:
 
-1. **Award evidence:** The official Nobel Prize press release for the relevant year and field. It establishes the recipient and reason for the prize.
-2. **Education evidence:** An institutional biography of the specifically named scientist. A shared prize does not imply that all laureates studied at the same institution.
+1. **Award evidence:** reporting from the institution responsible for the award. For Physics and Chemistry, the Royal Swedish Academy of Sciences publishes its own dated official press releases. For Physiology or Medicine, Karolinska Institutet publishes a dated, institution-authored account of the Nobel Assembly's award. The latter is an institutional news report, **not** the Nobel Assembly's original press release.
+2. **Education evidence:** a separate institutional biography or university announcement for the named individual. A co-award does not mean the recipients studied together.
+3. **Learning interpretation:** short stories and takeaways are educational summaries, not Nobel Committee quotations, experimental data or claims of the owner's work.
 
-2026 official announcement pages:
+## Verified awarding-institution sources
 
-- Physics: https://www.nobelprize.org/prizes/physics/2026/press-release/
-- Chemistry: https://www.nobelprize.org/prizes/chemistry/2026/press-release/
-- Physiology or Medicine: https://www.nobelprize.org/prizes/medicine/2026/press-release/
+- **Physics (6 October 2026):** https://www.kva.se/en/news/the-nobel-prize-in-physics-2026/ — Royal Swedish Academy of Sciences official press release.
+- **Chemistry (7 October 2026):** https://www.kva.se/en/news/the-nobel-prize-in-chemistry-2026/ — Royal Swedish Academy of Sciences official press release; also lists Soai's PhD in 1979.
+- **Physiology or Medicine (6 October 2026, updated 8 October):** https://news.ki.se/the-discovery-sheds-light-on-the-brains-mysteries-there-is-a-before-and-an-after — Karolinska Institutet institutional reporting on the 5 October award, including the three laureates' education.
 
-The content is maintained in `data/science-cabinet.json`, and the homepage includes a static fallback. Keep both in sync. The automated test `tests/nobel-official-sources.test.cjs` checks that award links in the data and homepage agree.
+The official NobelPrize.org 2026 press-release URLs were not independently retrievable during the review, so this update **does not label untested URLs as verified**. The above three awarding-institution pages were retrievable and checked against laureate names, category and discovery. The external links are curated, not a real-time Nobel feed.
 
-Update the review date only after checking sources. These links are not a real-time Nobel news feed.
+The catalog is in `data/science-cabinet.json` and the homepage has static fallback cards. Keep both in sync. The regression test `tests/nobel-official-sources.test.cjs` checks the three source URLs and labels in both the fallback and the JavaScript rendering. Update `reviewedOn` only after checking the sources again.

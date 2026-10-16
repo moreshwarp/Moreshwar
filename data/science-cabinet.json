@@ -1,5 +1,5 @@
 {
-  "reviewedOn": "2026-10-16",
+  "reviewedOn": "2026-10-17",
   "language": "English",
   "summary": "A source-led library of useful voices, questions and scientific discovery. Podcast episodes and laureate biographies are not endorsements or claims of personal friendship.",
   "podcasts": [
@@ -152,8 +152,8 @@
       "story": "He helped pursue an unlikely idea: the clear ice deep below the South Pole might detect particles arriving from distant space. A vast instrument became a new way to study the universe.",
       "lesson": "Start by testing whether an unusual material or environment can become a scientific instrument.",
       "award": "2026 Nobel Prize in Physics",
-      "verified": "2026-10-16",
-      "awardUrl": "https://www.nobelprize.org/prizes/physics/2026/press-release/",
+      "verified": "2026-10-17",
+      "awardUrl": "https://www.kva.se/en/news/the-nobel-prize-in-physics-2026/",
       "educationUrl": "https://www.physics.wisc.edu/directory/halzen-francis/"
     },
     {
@@ -165,8 +165,8 @@
       "story": "Their work explored how chemical reactions favor one mirror-image form of a molecule. Soai's research on self-amplifying reactions offers an especially striking example of how a small difference can grow.",
       "lesson": "Small asymmetries can have large effects. Ask what mechanism amplifies them.",
       "award": "2026 Nobel Prize in Chemistry",
-      "verified": "2026-10-16",
-      "awardUrl": "https://www.nobelprize.org/prizes/chemistry/2026/press-release/",
+      "verified": "2026-10-17",
+      "awardUrl": "https://www.kva.se/en/news/the-nobel-prize-in-chemistry-2026/",
       "educationUrl": "https://www.s.u-tokyo.ac.jp/en/info/11252/"
     },
     {
@@ -178,8 +178,8 @@
       "story": "Research on light-sensitive proteins helped scientists develop optogenetics. With it, they could study the roles of particular nerve cells by controlling their activity with light.",
       "lesson": "A basic discovery in one organism can help create powerful tools in another field.",
       "award": "2026 Nobel Prize in Physiology or Medicine",
-      "verified": "2026-10-16",
-      "awardUrl": "https://www.nobelprize.org/prizes/medicine/2026/press-release/",
+      "verified": "2026-10-17",
+      "awardUrl": "https://news.ki.se/the-discovery-sheds-light-on-the-brains-mysteries-there-is-a-before-and-an-after",
       "educationUrl": "https://bioengineering.stanford.edu/people/karl-deisseroth"
     }
   ]
