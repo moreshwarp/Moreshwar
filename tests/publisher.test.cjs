@@ -87,7 +87,7 @@ test('the publishing build preserves 25 legacy articles and excludes draft Markd
   assert.equal(result.legacy,25);
   assert.equal(result.published.length,0);
   const html=fs.readFileSync(path.join(directory,'index.html'),'utf8');
-  assert.match(html,/Curiosity has a watchlist/);
+  assert.match(html,/An intellectual field guide\./);
   assert.match(html,/Interstellar/);
   assert.doesNotMatch(html,/<!--THEME_PICKS-->/);
   assert.equal((html.match(/<li><a href="articles\//g)||[]).length,22);
