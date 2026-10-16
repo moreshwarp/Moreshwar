@@ -77,7 +77,7 @@
    const summary=el('summary','','Education / path to discovery');
    details.append(summary,el('p','',item.education));
    const sources=el('div','nobel-sources');
-   sources.append(outLink('Prize / discovery ↗',item.awardUrl),outLink('Education source ↗',item.educationUrl));
+   sources.append(outLink('Official Nobel announcement ↗',item.awardUrl),outLink('Education source ↗',item.educationUrl));
    article.append(header,name,title,text,lesson,details,sources);
    target.append(article);
   }
