@@ -92,3 +92,25 @@ Public URL: **https://moreshwarp.github.io/Moreshwar/**
 - Reader reactions/comments are genuinely stored in GitHub Issues. Visitors sign into GitHub to write; the website displays the discussion and tallies. Fully inline anonymous comments require a separately deployed backend and moderation system.
 - The current 40 movie/book/article/video records are **curated leads**, not verified personal recommendations until approved by the owner.
 - The contact email provider remains separate and must be tested after activation.
+
+
+## Inquiry Engine — systems-research practice
+
+| ID | Scenario | Acceptance criterion | Evidence |
+|---|---|---|---|
+| INQ-01 | Open \`#inquiry\` on desktop and mobile | Four focusable question cards and structured selected protocol render | Chromium |
+| INQ-02 | Default probability n=8, p=.05 | Shows 33.7% for \`1-(1-p)^n\` | Unit + Chromium |
+| INQ-03 | Increase fan-out to 16 calls, p=.05 | Computed probability increases to 56.0%; bar and live result update | Unit + Chromium |
+| INQ-04 | Increase per-call slow rate with n constant | Computed probability cannot decrease | Unit |
+| INQ-05 | Invalid fan-out or p outside 0..1 | Math helper throws instead of returning misleading output | Unit |
+| INQ-06 | Select Consistency / ML / Editor protocols | Hypothesis, counterexample, next step and link change; calculator hides | Chromium |
+| INQ-07 | Return to fan-out protocol | Calculator is visible; controls still functional | Chromium |
+| INQ-08 | Keyboard navigation | Tab focuses all investigation cards; Enter/Space selects | Native buttons + manual |
+| INQ-09 | Enable light-mode owner theme | Labels, active states and slider contrast remain readable | CSS + manual |
+| INQ-10 | Narrow phone 320/390px | No horizontal overflow; question cards stack and detailed protocol fits | Browser + CSS |
+| INQ-11 | User misinterprets calculation as measured p99 | Clear "analytical model", independent assumptions, and not-telemetry disclosure; method document clarifies distinction | Unit + review |
+| INQ-12 | User asks to reproduce next-step experiment | RESEARCH_METHOD.md explains seed, baseline, methods and limitations without claiming runs | Documentation review |
+| INQ-13 | Publish changed source | \`inquiry.css\` and \`inquiry.js\` copied into Pages artifact | Static checks + CI |
+| INQ-14 | Future scheduled improvement cycle | One meaningful, reversible, tested, evidenced improvement per run or a grounded blocker; not blind commits | Scheduled report review |
+
+Do not count illustrative probabilities as performed benchmarks or assertions about measured production latencies.

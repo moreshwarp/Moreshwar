@@ -63,6 +63,28 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    await page.screenshot({path:path.join(outputs,'owner-published-home-mobile.png')});
    await ctx.close();
   });
+  await check('Inquiry Engine displays falsifiable questions and computes fan-out risk',async()=>{
+   const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+   const page=await ctx.newPage();
+   await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   await page.locator('#inquiry').scrollIntoViewIfNeeded();
+   assert.equal(await page.locator('[data-inquiry]').count(),4);
+   assert.equal(await page.locator('#inquiry-risk').innerText(),'33.7%');
+   await page.locator('#inquiry-services').evaluate(el=>{el.value='16';el.dispatchEvent(new Event('input',{bubbles:true}))});
+   assert.equal(await page.locator('#inquiry-services-value').innerText(),'16');
+   assert.equal(await page.locator('#inquiry-risk').innerText(),'56.0%');
+   await page.locator('[data-inquiry="consistency"]').click();
+   assert.ok(await page.locator('#inquiry-simulator').isHidden());
+   assert.match(await page.locator('#inquiry-falsifier').innerText(),/leader/);
+   await page.locator('[data-inquiry="learning"]').click();
+   assert.match(await page.locator('#inquiry-next').innerText(),/public dataset/);
+   await page.locator('[data-inquiry="latency"]').click();
+   assert.ok(await page.locator('#inquiry-simulator').isVisible());
+   await page.locator('#inquiry').screenshot({path:path.join(outputs,'inquiry-engine-mobile.png')});
+   const geometry=await page.evaluate(()=>{const r=document.getElementById('inquiry').getBoundingClientRect();return {left:r.left,right:r.right,scroll:document.documentElement.scrollWidth,width:innerWidth}});
+   assert.ok(geometry.left>=-3&&geometry.right<=geometry.width+3&&geometry.scroll<=geometry.width+3,'Inquiry overflows mobile viewport '+JSON.stringify(geometry));
+   await ctx.close();
+  });
   await check('Article reactions/comments display safely in current owner theme',async()=>{
    const ctx=await browser.newContext({viewport:{width:430,height:900}});
    const page=await ctx.newPage();
@@ -95,5 +117,5 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   });
  }finally{await browser.close()}
  if(errors.length){console.error(errors.length+' browser checks failed:\n'+errors.join('\n'));process.exitCode=1}
- else console.log('All '+(sizes.length+3)+' real Chromium browser checks passed.');
+ else console.log('All '+(sizes.length+4)+' real Chromium browser checks passed.');
 })().catch(e=>{console.error(e);process.exitCode=1});

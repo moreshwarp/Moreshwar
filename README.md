@@ -64,3 +64,17 @@ Previous prototype documentation described visitor-selectable themes and a local
 ## GitHub Pages source mode
 
 **Use Settings → Pages → Source: GitHub Actions**, not Deploy from a branch. The source HTML now has complete fallback editorial content to avoid empty sections, but the real CMS publishing pipeline requires the custom build in `.github/workflows/pages.yml`. See [ADMIN_GUIDE.md](ADMIN_GUIDE.md).
+
+
+## Inquiry Engine — first executable research exercise
+
+The homepage's [Inquiry Engine](https://moreshwarp.github.io/Moreshwar/#inquiry) offers four transparent investigation protocols around fan-out/tail latency, consistency after failover, machine-learning evaluation, and safe rich-text rendering. Each protocol displays:
+
+- a question and falsifiable hypothesis;
+- a limitation or counterexample that could weaken it;
+- the next concrete, verifiable experiment;
+- a relevant existing essay or credible public technical reference.
+
+The first protocol includes a **live probability calculator** for the mathematical model \(P(\geq1\text{ slow downstream})=1-(1-p)^n\), assuming independent requests. It is *not* production telemetry or a latency benchmark. All results are calculated in the visitor's browser; no data is uploaded. Source: \`inquiry.js\`, \`inquiry.css\`; rigorous limitations: [RESEARCH_METHOD.md](RESEARCH_METHOD.md). Unit tests include probability bounds and falsification/label checks; the Chromium workflow tests mobile interaction and rendering.
+
+The Inquiry Engine is deliberately a **research starting point**, not a fictional project portfolio or peer-reviewed result. The goal is to build a body of evidence over time.

@@ -26,5 +26,6 @@ jobs:
           node --check scripts/build-content.cjs
           node --check scripts/sync-feedback.cjs
           node --check reader-feedback.js
+          node --check inquiry.js
       - name: Run zero-dependency regression tests
         run: node --test tests/*.test.cjs
