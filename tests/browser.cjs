@@ -109,6 +109,39 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    await page.locator('#science-ideas').screenshot({path:path.join(outputs,'science-ideas-mobile.png')});
    await ctx.close();
   });
+  for(const width of [320,390,768,1440]){
+   await check('Currently Reading editorial at '+width+'px',async()=>{
+    const ctx=await browser.newContext({viewport:{width,height:850},deviceScaleFactor:1,isMobile:width<=430,hasTouch:width<=430,reducedMotion:'reduce'});
+    try{
+     const page=await ctx.newPage();
+     await page.goto(BASE,{waitUntil:'domcontentloaded',timeout:45000});
+     const card=page.locator('#library .current-reading');
+     await card.scrollIntoViewIfNeeded();
+     assert.equal(await card.count(),1);
+     assert.equal(await card.locator('h3').innerText(),'The Almanack of Naval Ravikant');
+     assert.match(await card.locator('img').getAttribute('alt'),/Cover of The Almanack of Naval Ravikant/);
+     assert.match(await card.locator('img').getAttribute('src'),/^https:\/\/d28hgpri8am2if\.cloudfront\.net\//);
+     assert.equal(await card.locator('a[target="_blank"][rel="noopener noreferrer"]').count(),3);
+     const geometry=await page.evaluate(()=>{
+      const rect=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return {left:r.left,right:r.right,width:r.width}};
+      const card=document.querySelector('.current-reading');
+      const links=[...card.querySelectorAll('.current-reading__links a')];
+      return {viewport:innerWidth,scroll:document.documentElement.scrollWidth,card:rect('.current-reading'),cover:rect('.current-reading__cover'),
+       columns:getComputedStyle(card).gridTemplateColumns.split(' ').length,
+       linkHeights:links.map(x=>x.getBoundingClientRect().height)};
+     });
+     assert.ok(geometry.scroll<=width+3,'Horizontal page overflow '+JSON.stringify(geometry));
+     assert.ok(geometry.card.left>=-3&&geometry.card.right<=width+3,'Reading card outside viewport '+JSON.stringify(geometry));
+     assert.ok(geometry.cover.left>=geometry.card.left-3&&geometry.cover.right<=geometry.card.right+3,'Cover outside card '+JSON.stringify(geometry));
+     assert.equal(geometry.columns,width<=700?1:2,'Unexpected grid columns '+JSON.stringify(geometry));
+     assert.ok(geometry.linkHeights.every(h=>h>=43),'Links too small for touch '+JSON.stringify(geometry));
+     await card.locator('.current-reading__links a').first().focus();
+     const focus=await card.locator('.current-reading__links a').first().evaluate(el=>getComputedStyle(el).outlineStyle);
+     assert.notEqual(focus,'none','Keyboard focus outline is missing');
+     if(width===390||width===1440)await card.screenshot({path:path.join(outputs,'currently-reading-'+width+'.png')});
+    }finally{await ctx.close()}
+   });
+  }
   await check('Article reactions/comments display safely in current owner theme',async()=>{
    const ctx=await browser.newContext({viewport:{width:430,height:900}});
    const page=await ctx.newPage();
@@ -141,5 +174,5 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   });
  }finally{await browser.close()}
  if(errors.length){console.error(errors.length+' browser checks failed:\n'+errors.join('\n'));process.exitCode=1}
- else console.log('All '+(sizes.length+4)+' real Chromium browser checks passed.');
+ else console.log('All '+(sizes.length+8)+' real Chromium browser checks passed.');
 })().catch(e=>{console.error(e);process.exitCode=1});
