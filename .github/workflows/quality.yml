@@ -1,7 +1,7 @@
 name: Portfolio quality checks
 on:
   push:
-    branches: [main]
+    branches: [main, science-nobel-official-sources-20261016]
   pull_request:
     branches: [main]
   workflow_dispatch:
