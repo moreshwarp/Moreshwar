@@ -50,7 +50,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    // Real painted acceptance for the screenshot discrepancy: no empty Curiosity Index.
    const picks=page.locator('#picks');
    await picks.scrollIntoViewIfNeeded();
-   assert.equal(await page.locator('#picks-title').innerText(),'An intellectual field guide.');
+   assert.equal(await page.locator('#picks-title').textContent(),'An intellectual field guide.');
    assert.ok((await page.locator('.picks-section .pick-card').first().innerText()).includes('The Imitation Game'));
    assert.equal(await page.locator('.curation-bridge-links a').count(),3);
    await picks.screenshot({path:path.join(outputs,'personalized-curiosity-index-mobile.png')});
@@ -207,11 +207,11 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    await page.locator('.directory-grid a[href="#library"]').click();await page.waitForURL('**/#library');
    assert.ok(await page.locator('.current-reading').isVisible());await ctx.close();
   });
-  for(const width of [390,1440])await check('Journal appearance and project exploration at '+width+'px',async()=>{
+  for(const width of [390,1440])await check('Technical studio appearance and project exploration at '+width+'px',async()=>{
    const ctx=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
    const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'networkidle'});
    const design=await page.evaluate(()=>({background:getComputedStyle(document.body).backgroundColor,font:getComputedStyle(document.querySelector('h1')).fontFamily,columns:getComputedStyle(document.getElementById('project-grid')).gridTemplateColumns.split(' ').length}));
-   assert.equal(design.background,'rgb(245, 242, 233)');assert.match(design.font,/Georgia/);assert.equal(design.columns,width<650?1:2);
+   assert.equal(design.background,'rgb(241, 240, 232)');assert.match(design.font,/Arial/);assert.equal(await page.locator('.studio-core').count(),1);assert.equal(await page.locator('.hero-title').evaluate(el=>getComputedStyle(el).textTransform),'uppercase');assert.equal(design.columns,width<650?1:2);
    await page.locator('[data-work-filter="ai"]').click();assert.equal(await page.locator('.project-card:visible').count(),1);
    await page.locator('[data-project="machine-learning"]').click();assert.ok(await page.locator('#project-dialog').isVisible());assert.ok((await page.locator('#project-content').innerText()).length>100);
    await page.keyboard.press('Escape');assert.ok(await page.locator('#project-dialog').isHidden());
