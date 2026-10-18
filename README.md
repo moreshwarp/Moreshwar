@@ -84,3 +84,18 @@ The Inquiry Engine is deliberately a **research starting point**, not a fictiona
 The public `#science-ideas` section offers a verified, English-language listening shelf covering the US, India and Google DeepMind, plus 8 rotating thinker-inspired *paraphrased* insights and 3 Nobel 2026 science stories with educational backgrounds. Every item links to a source. Source data lives in `data/science-cabinet.json`; the client script `science-ideas.js` rotates the daily thought and supports region filtering, while `science-ideas.css` renders responsive cards. Original fallback HTML is included to keep the material visible if JSON loading fails. `reviewedOn` identifies when facts were last checked, not a live Nobel update.
 
 Podcasts and story choices are curated leads, not claims of personal relationships or achievements. Where training details belong to one co-laureate, that distinction is explicit.
+
+### Research discovery pipeline (Python + Go)
+
+Python builds `data/research-catalog.json` from published essays and curated podcast sources. Drafts are excluded, article paths must resolve inside `articles/`, and source links must use HTTPS. The browser's discovery panel searches this generated catalog locally; there is no visitor tracking or server requirement.
+
+Go provides an independent publication guard for catalog counts, duplicate IDs, local article existence, path traversal, symlink escape and unsafe source URLs. Pages runs the guard against the prepared publishing directory before uploading it. No third-party Python or Go packages are required.
+
+```sh
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 scripts/build_catalog.py
+go test ./...
+go run ./tools/catalogcheck .
+```
+
+For a publishing fixture, pass `--output _site/data/research-catalog.json` to the Python builder and `_site` to the Go guard. Keep the generated catalog out of source control; edit the original posts and curated source data.

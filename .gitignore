@@ -4,3 +4,6 @@
 node_modules/
 .DS_Store
 *.log
+__pycache__/
+data/research-catalog.json
+browser-artifacts/

@@ -222,6 +222,18 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    await page.locator('[data-close="search-dialog"]').click();
    await page.screenshot({path:path.join(outputs,'journal-projects-'+width+'.png')});await ctx.close();
   });
+  for(const width of [320,1440])await check('Research discovery search and filters at '+width+'px',async()=>{
+   const ctx=await browser.newContext({viewport:{width,height:900}});const page=await ctx.newPage();
+   await page.goto(BASE,{waitUntil:'load'});const section=page.locator('[data-discovery]');
+   await section.locator('input').waitFor({state:'visible'});await page.waitForFunction(()=>!document.querySelector('[data-discovery] input').disabled);
+   assert.equal(await section.locator('.discovery-card').count(),6);
+   await section.locator('select').selectOption('Podcast');assert.match(await section.locator('[role=status]').textContent(),/8 results/);
+   await section.locator('input').fill('DeepMind');assert.equal(await section.locator('.discovery-card').count(),1);assert.match(await section.locator('h3').textContent(),/DeepMind/);
+   await section.locator('input').fill('no-matching-research-xyz');assert.equal(await section.locator('.discovery-card').count(),0);assert.match(await section.locator('[role=status]').textContent(),/No matches/);
+   await section.locator('input').fill('');await section.locator('select').selectOption('Essay');assert.equal(await section.locator('.discovery-card').count(),6);
+   assert.ok(await section.locator('.discovery-card').first().getAttribute('href').then(x=>x.includes('/articles/')));
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+3));await ctx.close();
+  });
   await check('No uncaught browser errors for core homepage',async()=>{
    const ctx=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});
    const page=await ctx.newPage();const errs=[];

@@ -35,7 +35,7 @@
   <script type="module" src="app.js?v=contact-console-20261015"></script>
 <link rel="stylesheet" href="design-system.css?v=20261018">
 <link rel="stylesheet" href="redesign.css?v=technical-studio-20261018">
-</head>
+<link rel="stylesheet" href="discovery.css?v=20261018"><script defer src="discovery.js?v=20261018"></script></head>
 <body class="lab-edition">
   <a class="skip-link" href="#content">Skip to content</a>
   <div class="grain" aria-hidden="true"></div>
@@ -43,10 +43,10 @@
   <header class="nav" id="top">
     <div class="nav-inner shell">
       <a class="brand" href="#home" aria-label="Moreshwar, home"><span class="brand-mark">m<span class="brand-dot">.</span></span><span class="brand-label">MORESHWAR<span class="brand-label-second"> / LAB</span></span></a>
-      <nav class="desktop-nav" aria-label="Primary navigation"><a href="#start-here">Explore</a><a href="#story-of-the-day">Latest story</a><a href="#writing">Writing</a><a href="#library">Library</a><a href="#science-ideas">Science</a><a href="#about">About</a></nav>
+      <nav class="desktop-nav" aria-label="Primary navigation"><a href="#discovery">Discover</a><a href="#story-of-the-day">Latest story</a><a href="#writing">Writing</a><a href="#library">Library</a><a href="#science-ideas">Science</a><a href="#about">About</a></nav>
       <div class="nav-actions"><button id="search-trigger" class="icon-button search-trigger" aria-label="Open search" title="Search (Ctrl+K)">⌕ <span class="key">⌘ K</span></button><a class="pill-button nav-contact" href="#contact">Let's talk <span aria-hidden="true">↗</span></a><button id="menu-trigger" class="icon-button menu-trigger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation">☰</button></div>
     </div>
-    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden><a href="#start-here">Start here</a><a href="#story-of-the-day">Latest story</a><a href="#work">Work</a><a href="#research">Research</a><a href="#inquiry">Inquiry</a><a href="#writing">Writing</a><a href="#library">Library</a><a href="#picks">Picks</a><a href="#science-ideas">Science & Ideas</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden><a href="#discovery">Discover</a><a href="#start-here">Start here</a><a href="#story-of-the-day">Latest story</a><a href="#work">Work</a><a href="#research">Research</a><a href="#inquiry">Inquiry</a><a href="#writing">Writing</a><a href="#library">Library</a><a href="#picks">Picks</a><a href="#science-ideas">Science & Ideas</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
   </header>
   <main id="content">
     <section class="hero shell" id="home" aria-label="Introduction">
@@ -94,6 +94,10 @@
 <a href="#library"><span class="mono">03 / STUDY</span><h3>The reading desk <span aria-hidden="true">↗</span></h3><p>The Naval Almanack, research papers, and references for deeper study.</p><span class="directory-action">Browse the library →</span></a>
 <a href="#science-ideas"><span class="mono">04 / DISCOVER</span><h3>Science &amp; conversation <span aria-hidden="true">↗</span></h3><p>Source-linked Nobel stories, scientific ideas, and podcasts to listen to.</p><span class="directory-action">Explore science &amp; ideas →</span></a>
 </nav><p class="directory-note">Looking for the research direction? <a href="#research">Research interests</a> · <a href="#inquiry">Open questions</a> · <a href="#picks">Personal picks</a></p></section>
+<section class="discovery-section shell" id="discovery" aria-labelledby="discovery-heading" data-discovery>
+<div class="discovery-heading"><div><p class="discovery-meta">THE RESEARCH INDEX / READ · LISTEN · QUESTION</p><h2 id="discovery-heading">Follow your<br><em>next question.</em></h2></div><p>Original essays and carefully chosen conversations. Find a thread worth pulling, then go straight to the work.</p></div>
+<div class="discovery-toolbar"><label>Search the collection<input type="search" placeholder="Try systems, writing, AI…" disabled></label><label>Format<select disabled><option value="All">All formats</option><option value="Essay">Essays</option><option value="Podcast">Podcasts</option></select></label><p role="status" aria-live="polite">Loading the research index…</p></div>
+<div class="discovery-grid" data-results></div><div class="discovery-links"><a href="#writing">All original writing ↗</a><a href="#science-ideas">Science &amp; ideas ↗</a></div><noscript><p>Explore the full <a href="#writing">writing collection</a> and <a href="#science-ideas">science sources</a> below.</p></noscript></section>
 <!--STORY_OF_DAY_BEGIN--><section class="section" id="story-of-the-day"><div class="shell"><h2>Story of the Day</h2><p>Source-linked stories from science and engineering. <a href="stories.html">Browse the dated archive →</a></p></div></section><!--STORY_OF_DAY_END-->
     <section class="section surface-1 work-section" id="work"><div class="shell">
       <div class="section-top reveal atlas-intro">

@@ -20,10 +20,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.2'
       - name: Prepare site
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
+          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
           cp -R assets/. _site/assets/
           cp -R articles _site/
           mkdir -p _site/data
@@ -35,6 +38,10 @@ jobs:
         run: node scripts/sync-feedback.cjs _site
       - name: Build owner-published articles, recommendations and theme
         run: node scripts/build-content.cjs _site
+      - name: Build and validate discovery catalog
+        run: |
+          python3 scripts/build_catalog.py --output _site/data/research-catalog.json
+          go run ./tools/catalogcheck _site
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact

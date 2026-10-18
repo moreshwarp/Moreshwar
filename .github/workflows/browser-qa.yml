@@ -23,12 +23,13 @@ jobs:
       - name: Prepare published fixture
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
+          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
           cp -R assets/. _site/assets/
           cp -R articles _site/
           mkdir -p _site/data
           cp data/science-cabinet.json _site/data/science-cabinet.json
           node scripts/build-content.cjs _site
+          python3 scripts/build_catalog.py --output _site/data/research-catalog.json
       - name: Run static site server
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 --directory _site > /tmp/moreshwar-http.log 2>&1 &

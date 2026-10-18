@@ -29,3 +29,12 @@ jobs:
           node --check inquiry.js
       - name: Run zero-dependency regression tests
         run: node --test tests/*.test.cjs
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.2'
+      - name: Verify Python catalog and Go integrity guard
+        run: |
+          python3 -m unittest discover -s tests -p 'test_*.py'
+          python3 scripts/build_catalog.py
+          go test ./...
+          go run ./tools/catalogcheck .
