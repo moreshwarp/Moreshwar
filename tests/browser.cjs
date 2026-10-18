@@ -14,7 +14,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    await check('Responsive scientific card at '+width+'px',async()=>{
     const ctx=await browser.newContext({viewport:{width,height:850},deviceScaleFactor:1,isMobile:width<=430,hasTouch:width<=430});
     const page=await ctx.newPage();
-    await page.goto(BASE,{waitUntil:'domcontentloaded',timeout:45000});
+    await page.goto(BASE,{waitUntil:'load',timeout:45000});
     const visual=page.locator('.computational-visual');
     await visual.scrollIntoViewIfNeeded();
     const r=await page.evaluate(()=>{
@@ -37,20 +37,20 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   await check('Publisher-selected theme cannot be changed by visitors',async()=>{
    const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
    const page=await ctx.newPage();
-   await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   await page.goto(BASE,{waitUntil:'load'});
    assert.equal(await page.locator('html').getAttribute('data-universe'),'science');
    assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
    for(const selector of ['#theme-toggle','#universe-trigger','#theme-studio','#admin-entry','#admin-dialog','#universe-mobile-trigger','#universe-instrument-trigger'])
     assert.equal(await page.locator(selector).count(),0,'Public control found: '+selector);
    await page.evaluate(()=>{localStorage.setItem('moreshwar-theme-v1','dark');localStorage.setItem('moreshwar-universe-v1','arcade')});
-   await page.reload({waitUntil:'domcontentloaded'});
+   await page.reload({waitUntil:'load'});
    assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
    assert.equal(await page.locator('html').getAttribute('data-universe'),'science');
    assert.equal(await page.locator('.pick-card').count(),4);
    // Real painted acceptance for the screenshot discrepancy: no empty Curiosity Index.
    const picks=page.locator('#picks');
    await picks.scrollIntoViewIfNeeded();
-   assert.equal(await page.locator('#picks-title').innerText(),'An intellectual field guide.');
+   assert.equal(await page.locator('#picks-title').textContent(),'An intellectual field guide.');
    assert.ok((await page.locator('.picks-section .pick-card').first().innerText()).includes('The Imitation Game'));
    assert.equal(await page.locator('.curation-bridge-links a').count(),3);
    await picks.screenshot({path:path.join(outputs,'personalized-curiosity-index-mobile.png')});
@@ -66,7 +66,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   await check('Inquiry Engine displays falsifiable questions and computes fan-out risk',async()=>{
    const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
    const page=await ctx.newPage();
-   await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   await page.goto(BASE,{waitUntil:'load'});
    await page.locator('#inquiry').scrollIntoViewIfNeeded();
    assert.equal(await page.locator('[data-inquiry]').count(),4);
    assert.equal(await page.locator('#inquiry-risk').innerText(),'33.7%');
@@ -88,7 +88,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   await check('Science & Ideas: verified English listening, rotating ideas and source-linked Nobel stories',async()=>{
    const ctx=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
    const page=await ctx.newPage();
-   await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   await page.goto(BASE,{waitUntil:'load'});
    await page.locator('#science-ideas').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>document.getElementById('science-load-status')?.textContent.includes('Curated source-linked'),null,{timeout:12000});
    assert.equal(await page.locator('.science-pod').count(),8);
@@ -114,7 +114,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
     const ctx=await browser.newContext({viewport:{width,height:850},deviceScaleFactor:1,isMobile:width<=430,hasTouch:width<=430,reducedMotion:'reduce'});
     try{
      const page=await ctx.newPage();
-     await page.goto(BASE,{waitUntil:'domcontentloaded',timeout:45000});
+     await page.goto(BASE,{waitUntil:'load',timeout:45000});
      const card=page.locator('#library .current-reading');
      await card.scrollIntoViewIfNeeded();
      assert.equal(await card.count(),1);
@@ -152,7 +152,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
       {number:27,state:'open',comments:1,reactions:{'+1':2,heart:1}};
     await route.fulfill({status:200,contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(data)});
    });
-   await page.goto(BASE+'articles/fieldnote-tail-latency.html',{waitUntil:'domcontentloaded'});
+   await page.goto(BASE+'articles/fieldnote-tail-latency.html',{waitUntil:'load'});
    assert.equal(await page.locator('html').getAttribute('data-universe'),'science');
    const feedback=page.locator('[data-reader-feedback]');
    await feedback.scrollIntoViewIfNeeded();
@@ -166,7 +166,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   });
   for(const width of [320,390,768,1440])await check('Dated story and archive at '+width+'px',async()=>{
    const ctx=await browser.newContext({viewport:{width,height:850},javaScriptEnabled:false,reducedMotion:"reduce"});
-   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'load'});
    const story=page.locator('#story-of-the-day');await story.scrollIntoViewIfNeeded();
    assert.equal(await story.locator('time').getAttribute('datetime'),'2026-10-18');
    assert.equal(await story.locator('a[target="_blank"]').count(),2);
@@ -180,7 +180,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   });
   for(const width of [320,390,768,1440])await check('Field guide navigation and accessible targets at '+width+'px',async()=>{
    const ctx=await browser.newContext({viewport:{width,height:850},reducedMotion:'reduce'});
-   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'load'});
    const guide=page.locator('#start-here');await guide.scrollIntoViewIfNeeded();
    assert.equal(await guide.locator('.directory-grid>a').count(),4);
    const result=await guide.evaluate(el=>({
@@ -203,15 +203,15 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   });
   await check('Field guide works without JavaScript',async()=>{
    const ctx=await browser.newContext({viewport:{width:390,height:844},javaScriptEnabled:false});
-   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'load'});
    await page.locator('.directory-grid a[href="#library"]').click();await page.waitForURL('**/#library');
    assert.ok(await page.locator('.current-reading').isVisible());await ctx.close();
   });
-  for(const width of [390,1440])await check('Journal appearance and project exploration at '+width+'px',async()=>{
+  for(const width of [390,1440])await check('Technical studio appearance and project exploration at '+width+'px',async()=>{
    const ctx=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
    const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'networkidle'});
    const design=await page.evaluate(()=>({background:getComputedStyle(document.body).backgroundColor,font:getComputedStyle(document.querySelector('h1')).fontFamily,columns:getComputedStyle(document.getElementById('project-grid')).gridTemplateColumns.split(' ').length}));
-   assert.equal(design.background,'rgb(245, 242, 233)');assert.match(design.font,/Georgia/);assert.equal(design.columns,width<650?1:2);
+   assert.equal(design.background,'rgb(241, 240, 232)');assert.match(design.font,/Arial/);assert.equal(await page.locator('.studio-core').count(),1);assert.equal(await page.locator('.hero-title').evaluate(el=>getComputedStyle(el).textTransform),'uppercase');assert.equal(design.columns,width<650?1:2);
    await page.locator('[data-work-filter="ai"]').click();assert.equal(await page.locator('.project-card:visible').count(),1);
    await page.locator('[data-project="machine-learning"]').click();assert.ok(await page.locator('#project-dialog').isVisible());assert.ok((await page.locator('#project-content').innerText()).length>100);
    await page.keyboard.press('Escape');assert.ok(await page.locator('#project-dialog').isHidden());
@@ -226,7 +226,7 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    const ctx=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});
    const page=await ctx.newPage();const errs=[];
    page.on('pageerror',error=>errs.push(error.message));
-   await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   await page.goto(BASE,{waitUntil:'load'});
    await page.waitForTimeout(1000);
    assert.deepEqual(errs,[]);await ctx.close();
   });
