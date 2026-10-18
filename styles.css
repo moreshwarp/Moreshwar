@@ -197,3 +197,37 @@ body.reduce-motion .ml-curve{stroke-dashoffset:0}
 .daily-story p{line-height:1.75;margin:16px 0}.daily-story ul{padding-left:22px}.daily-story li{margin:12px 0}
 .daily-story blockquote{margin:24px 0;padding-left:18px;border-left:3px solid currentColor}
 .daily-story a:focus-visible,#story-of-the-day a:focus-visible{outline:3px solid currentColor;outline-offset:5px}
+
+/* Lab field guide: semantic links work without scripting or stored visitor state. */
+.lab-directory{padding-block:56px;scroll-margin-top:96px}
+.directory-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:24px}
+.directory-kicker{font-size:11px;letter-spacing:.1em;color:#a4efda;margin:0 0 12px}
+.directory-heading h2{font:600 clamp(28px,4vw,44px)/1.15 var(--display);letter-spacing:-.04em;margin:0}
+.directory-heading>p{max-width:32ch;color:#b5c9d1;font-size:15px;margin:0}
+.directory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#38545e;border:1px solid #38545e;border-radius:16px;overflow:hidden}
+.directory-grid>a{display:flex;flex-direction:column;min-width:0;padding:26px 22px;background:#10232d;color:#edf7f5;transition:background .15s}
+.directory-grid>a:hover{background:#193741}
+.directory-grid>a:focus-visible{outline:3px solid #a4efda;outline-offset:-5px}
+.directory-grid .mono{font-size:11px;letter-spacing:.04em;color:#a4efda}
+.directory-grid h3{font:600 23px/1.25 var(--display);letter-spacing:-.025em;margin:20px 0 12px}
+.directory-grid h3 span{color:#a4efda}
+.directory-grid p{font-size:14px;line-height:1.75;color:#bdd0d7;margin:0 0 24px}
+.directory-action{font-size:13px;font-weight:600;color:#a4efda;margin-top:auto;padding-top:16px;border-top:1px solid #38545e}
+.directory-note{font-size:14px;line-height:1.9;color:#b5c9d1;margin:20px 0 0}
+.directory-note a{text-decoration:underline;text-underline-offset:4px;display:inline-block;min-height:44px;padding-block:8px}
+html body #story-of-the-day{padding-block:56px;background:#101f29;border-block:1px solid #38545e}
+#story-of-the-day>.shell{max-width:1000px}
+#story-of-the-day h2{font:600 clamp(28px,4vw,44px)/1.2 var(--display);letter-spacing:-.04em}
+#story-of-the-day>.shell>p{max-width:70ch;color:#bdd0d7}
+#story-of-the-day .daily-story{background:#132b35;border:1px solid #42616a;padding:clamp(22px,4vw,44px);border-radius:14px;margin:28px 0}
+#story-of-the-day .daily-story h3{max-width:30ch;font-size:clamp(25px,3vw,36px);line-height:1.25}
+#story-of-the-day .daily-story p{max-width:72ch;font-size:16px;line-height:1.85}
+#story-of-the-day a{display:inline-block;min-height:44px;padding-block:9px;text-decoration:underline;text-underline-offset:4px}
+html body .desktop-nav{gap:20px}
+html body .desktop-nav a{min-height:44px;display:flex;align-items:center}
+.mobile-menu[hidden]{display:none!important}
+.mobile-menu{max-height:calc(100dvh - 80px);overflow-y:auto}
+html body .mobile-menu a{min-height:44px;display:flex;align-items:center}
+@media(max-width:1100px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.lab-directory{padding-block:36px}.directory-heading{display:block}.directory-heading>p{margin-top:16px}.directory-grid{grid-template-columns:1fr}.directory-grid>a{padding:22px}.directory-grid h3{margin-top:12px}.directory-grid p{margin-bottom:16px}html body #story-of-the-day{padding-block:36px}}
+@media(prefers-reduced-motion:reduce){.directory-grid>a{transition:none}}
