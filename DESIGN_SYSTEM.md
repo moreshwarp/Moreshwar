@@ -21,3 +21,7 @@ Explore is the entry directory; latest story and the dated source-linked archive
 ## Extending and verifying
 
 Add semantic tokens here before introducing new surface colors. Keep article prose at readable width, allow wrapping and preserve browser zoom. Run `node --test tests/*.test.cjs`, publish a fixture with `scripts/build-content.cjs`, then run `tests/browser.cjs`. Inspect reading and archive pages at 320px and desktop, keyboard focus, reduced motion and automated accessibility. Automated checks are not a complete accessibility conformance audit.
+
+## Discovery edition
+
+The discovery edition adds generous section spacing, rounded reading cards, a two-column introduction and a soft green research instrument panel. Existing paper, charcoal and red remain the base; deep green (#214c3e) identifies discovery actions, with light green (#e6e9de) grouping the search controls. On narrow screens, the introduction, instrument and results stack in reading order. The discovery search has explicit labels, announces result counts, handles empty and network-error states, and retains writing/science links without JavaScript. Python and Go are publication tools; visitors need only a browser.

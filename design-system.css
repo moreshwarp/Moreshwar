@@ -3,6 +3,7 @@
  --lab-bg:#f1f0e8; --lab-surface:#fffdf7; --lab-subtle:#e9e5d9;
  --lab-ink:#222c2b; --lab-muted:#57615c; --lab-border:#b7bcae;
  --lab-accent:#bd2e16; --lab-accent-hover:#9e2713; --lab-focus:#3759a4;
+ --lab-discovery:#214c3e; --lab-discovery-surface:#e6e9de;
  --lab-inverse:#252a25; --lab-on-inverse:#f1f0e8;
  --lab-font:Arial,Helvetica,sans-serif; --lab-mono:'DM Mono',ui-monospace,monospace;
  --lab-text-sm:.875rem; --lab-text-base:1rem; --lab-text-lead:1.125rem;
