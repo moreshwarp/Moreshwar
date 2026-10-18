@@ -1,0 +1,28 @@
+/* Moreshwar Research Lab: semantic foundations shared by discovery and reading. */
+:root {
+ --lab-bg:#f1f0e8; --lab-surface:#fffdf7; --lab-subtle:#e9e5d9;
+ --lab-ink:#222c2b; --lab-muted:#57615c; --lab-border:#b7bcae;
+ --lab-accent:#bd2e16; --lab-accent-hover:#9e2713; --lab-focus:#3759a4;
+ --lab-inverse:#252a25; --lab-on-inverse:#f1f0e8;
+ --lab-font:Arial,Helvetica,sans-serif; --lab-mono:'DM Mono',ui-monospace,monospace;
+ --lab-text-sm:.875rem; --lab-text-base:1rem; --lab-text-lead:1.125rem;
+ --lab-space-1:.25rem; --lab-space-2:.5rem; --lab-space-3:.75rem;
+ --lab-space-4:1rem; --lab-space-6:1.5rem; --lab-space-8:2rem;
+ --lab-space-12:3rem; --lab-space-16:4rem;
+ --lab-radius:3px; --lab-reading:72ch; --lab-target:44px;
+ --lab-duration:160ms;
+}
+html {scroll-padding-top:100px}
+:is(a,button,input,textarea,select,summary):focus-visible {
+ outline:3px solid var(--lab-focus);outline-offset:4px;
+}
+button:disabled,input:disabled,textarea:disabled {cursor:not-allowed;opacity:.6}
+[aria-invalid="true"] {border:2px solid var(--lab-accent)}
+@media(prefers-reduced-motion:reduce) {
+ html {scroll-behavior:auto!important}
+ *,*::before,*::after {animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+@media(forced-colors:active) {
+ :is(a,button,input,textarea,select,summary):focus-visible {outline:3px solid Highlight}
+ [aria-pressed="true"],[aria-selected="true"] {border:2px solid Highlight}
+}

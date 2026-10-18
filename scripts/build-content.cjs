@@ -103,7 +103,7 @@ function decorate(html,issue){
  s=s.replace(/<script defer src="\.\.\/reader-feedback\.js[^"]*"><\/script>/g,'');
  s=s.replace(/<section class="reader-community"[\s\S]*?<\/section>/g,'');
  if(!s.includes('</head>')||!s.includes('</main>')||!s.includes('</body>'))throw Error('Invalid article HTML');
- s=s.replace('</head>','<script src="../site-settings.js"></script><link rel="stylesheet" href="../reader-feedback.css?v=publisher-20261015"></head>');
+ s=s.replace('</head>','<link rel="stylesheet" href="../design-system.css?v=20261018"><link rel="stylesheet" href="../research-reader.css?v=20261018"><script src="../site-settings.js"></script><link rel="stylesheet" href="../reader-feedback.css?v=publisher-20261015"></head>');
  s=s.replace('</main>',community(issue)+'</main>');
  s=s.replace('</body>','<script defer src="../reader-feedback.js?v=publisher-20261015"></script></body>');
  return s;
