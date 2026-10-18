@@ -8,7 +8,7 @@ const sizes=[320,360,390,430,768,1024,1440];
 const errors=[];
 async function check(title,run){try{await run();console.log('PASS '+title)}catch(error){console.error('FAIL '+title+': '+error.message);errors.push(title+': '+error.message)}}
 (async()=>{
- const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+ const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),args:['--no-sandbox']});
  try {
   for(const width of sizes){
    await check('Responsive scientific card at '+width+'px',async()=>{
@@ -164,6 +164,20 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    await feedback.screenshot({path:path.join(outputs,'reader-comments-mobile.png')});
    await ctx.close();
   });
+  for(const width of [320,390,768,1440])await check('Dated story and archive at '+width+'px',async()=>{
+   const ctx=await browser.newContext({viewport:{width,height:850},javaScriptEnabled:false,reducedMotion:"reduce"});
+   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   const story=page.locator('#story-of-the-day');await story.scrollIntoViewIfNeeded();
+   assert.equal(await story.locator('time').getAttribute('datetime'),'2026-10-18');
+   assert.equal(await story.locator('a[target="_blank"]').count(),2);
+   const box=await story.locator('article').boundingBox();assert.ok(box.x>=0&&box.x+box.width<=width+3);
+   await story.locator('a[href="stories.html"]').click();await page.waitForURL('**/stories.html');
+   await page.locator('nav a').first().click();assert.ok(page.url().endsWith('#story-2026-10-18'));
+   assert.ok(await page.locator('#story-2026-10-18').isVisible());
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+3));
+   if(width===390)await page.screenshot({path:path.join(outputs,'story-archive-mobile.png'),fullPage:true});
+   await page.locator('a[href="index.html#story-of-the-day"]').click();await page.waitForURL('**/index.html#story-of-the-day');await ctx.close();
+  });
   await check('No uncaught browser errors for core homepage',async()=>{
    const ctx=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});
    const page=await ctx.newPage();const errs=[];
@@ -174,5 +188,5 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
   });
  }finally{await browser.close()}
  if(errors.length){console.error(errors.length+' browser checks failed:\n'+errors.join('\n'));process.exitCode=1}
- else console.log('All '+(sizes.length+8)+' real Chromium browser checks passed.');
+ else console.log('All real Chromium browser checks passed.');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -190,3 +190,10 @@ body.reduce-motion .ml-curve{stroke-dashoffset:0}
 @media(max-width:700px){.current-reading{grid-template-columns:minmax(0,1fr);gap:25px}.current-reading__visual>a{width:min(60%,205px)}.current-reading__content h3{font-size:clamp(29px,7vw,43px)}.current-reading__links a{width:100%}}
 @media(max-width:360px){.current-reading{padding:17px}.current-reading__visual>a{width:min(66%,180px)}}
 @media(prefers-reduced-motion:reduce){.current-reading__visual>a,.current-reading__links a{transition:none}.current-reading__visual>a:hover{transform:none}}
+
+/* Source-linked editorial stories share the published palette. */
+.daily-story{border:1px solid currentColor;border-radius:16px;padding:clamp(18px,4vw,36px);margin:24px 0;max-width:850px;overflow-wrap:anywhere}
+.daily-story h3{font-size:clamp(23px,4vw,36px);line-height:1.2;margin:16px 0}
+.daily-story p{line-height:1.75;margin:16px 0}.daily-story ul{padding-left:22px}.daily-story li{margin:12px 0}
+.daily-story blockquote{margin:24px 0;padding-left:18px;border-left:3px solid currentColor}
+.daily-story a:focus-visible,#story-of-the-day a:focus-visible{outline:3px solid currentColor;outline-offset:5px}

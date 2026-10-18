@@ -114,3 +114,24 @@ content:
         label: Personally recommended by Moreshwar?
         type: boolean
         description: Only turn on after personally reviewing this recommendation.
+
+  - name: stories
+    label: Story of the Day — reviewed archive
+    type: file
+    path: data/stories.json
+    format: json
+    list: true
+    fields:
+      - { name: date, label: Editorial date (one story per day), type: date, required: true }
+      - { name: title, type: string, required: true }
+      - { name: summary, type: text, required: true }
+      - { name: body, type: text, required: true }
+      - { name: question, label: Editorial investigation prompt, type: text, required: true }
+      - { name: reviewedOn, label: Source review date, type: date, required: true }
+      - name: sources
+        type: object
+        list: true
+        fields:
+          - { name: label, type: string, required: true }
+          - { name: url, label: Primary source HTTPS URL, type: string, required: true }
+      - { name: published, label: Publish reviewed story?, type: boolean }

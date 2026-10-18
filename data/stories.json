@@ -1,0 +1,21 @@
+[
+  {
+    "date": "2026-10-18",
+    "title": "The Web began with a problem of sharing knowledge",
+    "published": true,
+    "reviewedOn": "2026-10-18",
+    "summary": "Tim Berners-Lee invented the World Wide Web at CERN in 1989. In 1993, CERN made the software freely available.",
+    "body": "The initial problem was practical: scientists needed to share information across computers and institutions. Berners-Lee proposed an internet-based hypertext system in 1989. CERN made the Web software available on a royalty-free basis on 30 April 1993.",
+    "question": "What information in your own work is difficult to connect, and what would make it easier to share?",
+    "sources": [
+      {
+        "label": "CERN \u2014 The birth of the Web",
+        "url": "https://home.cern/science/computing/the-birth-of-the-web/"
+      },
+      {
+        "label": "CERN \u2014 A short history of the Web",
+        "url": "https://home.cern/science/computing/the-birth-of-the-web/short-history-web/"
+      }
+    ]
+  }
+]

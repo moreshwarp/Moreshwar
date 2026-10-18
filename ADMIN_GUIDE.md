@@ -108,3 +108,9 @@ The public page includes an English science listening directory, a daily rotatin
 Edit the [catalog in GitHub](https://github.com/moreshwarp/Moreshwar/edit/main/data/science-cabinet.json): `podcasts` stores the show, publisher, region, URL, reason and critical-thinking prompt; `thoughts` stores original paraphrases with source URLs (never unverified verbatim quotes); `nobel` stores confirmed awards, education-specific source links and clear stories. Change `reviewedOn` only when sources have actually been checked. The client rotates an idea every UTC day, with a Next button, without network tracking. Podcast and Nobel facts are manually verified, not live syndicated feeds.
 
 Science checks live in `tests/science-ideas.test.cjs`; the browser workflow validates idea rotation, India filtering, Nobel source panels and narrow mobile rendering.
+
+## Story of the Day and dated archive
+
+Edit **Story of the Day — reviewed archive** in Pages CMS or `data/stories.json`. Each entry has a unique editorial date, title, summary, plain-text body, investigation question, source review date, HTTPS source links, and a `published` switch. Verify all factual statements against the linked primary sources before publishing. The AI-assisted disclosure is displayed on each story. Dates describe curation, not the historical event.
+
+Only explicitly published entries dated on or before the build day in Asia/Kolkata appear. Future entries become visible on the next deployment on or after their date; no automatic daily publishing is promised. The latest reviewed entry remains featured, with its actual date. `stories.html` retains all eligible entries with stable `#story-YYYY-MM-DD` links. No public editing controls or new external service is involved. Public-repository drafts remain readable on GitHub. Invalid published entries stop the build rather than silently dropping sources.
