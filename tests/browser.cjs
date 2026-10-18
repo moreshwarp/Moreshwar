@@ -39,12 +39,12 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    const page=await ctx.newPage();
    await page.goto(BASE,{waitUntil:'domcontentloaded'});
    assert.equal(await page.locator('html').getAttribute('data-universe'),'science');
-   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+   assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
    for(const selector of ['#theme-toggle','#universe-trigger','#theme-studio','#admin-entry','#admin-dialog','#universe-mobile-trigger','#universe-instrument-trigger'])
     assert.equal(await page.locator(selector).count(),0,'Public control found: '+selector);
-   await page.evaluate(()=>{localStorage.setItem('moreshwar-theme-v1','light');localStorage.setItem('moreshwar-universe-v1','arcade')});
+   await page.evaluate(()=>{localStorage.setItem('moreshwar-theme-v1','dark');localStorage.setItem('moreshwar-universe-v1','arcade')});
    await page.reload({waitUntil:'domcontentloaded'});
-   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
+   assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
    assert.equal(await page.locator('html').getAttribute('data-universe'),'science');
    assert.equal(await page.locator('.pick-card').count(),4);
    // Real painted acceptance for the screenshot discrepancy: no empty Curiosity Index.
@@ -206,6 +206,21 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'domcontentloaded'});
    await page.locator('.directory-grid a[href="#library"]').click();await page.waitForURL('**/#library');
    assert.ok(await page.locator('.current-reading').isVisible());await ctx.close();
+  });
+  for(const width of [390,1440])await check('Journal appearance and project exploration at '+width+'px',async()=>{
+   const ctx=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
+   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'networkidle'});
+   const design=await page.evaluate(()=>({background:getComputedStyle(document.body).backgroundColor,font:getComputedStyle(document.querySelector('h1')).fontFamily,columns:getComputedStyle(document.getElementById('project-grid')).gridTemplateColumns.split(' ').length}));
+   assert.equal(design.background,'rgb(245, 242, 233)');assert.match(design.font,/Georgia/);assert.equal(design.columns,width<650?1:2);
+   await page.locator('[data-work-filter="ai"]').click();assert.equal(await page.locator('.project-card:visible').count(),1);
+   await page.locator('[data-project="machine-learning"]').click();assert.ok(await page.locator('#project-dialog').isVisible());assert.ok((await page.locator('#project-content').innerText()).length>100);
+   await page.keyboard.press('Escape');assert.ok(await page.locator('#project-dialog').isHidden());
+   await page.locator('[data-work-filter="all"]').click();assert.equal(await page.locator('.project-card:visible').count(),6);
+   await page.locator('#search-trigger').click();await page.locator('#global-search').fill('Lamport');
+   assert.ok(await page.locator('.global-entry').count()>0);
+   assert.equal(await page.locator('.global-entry').first().evaluate(el=>getComputedStyle(el).color),'rgb(87, 97, 92)');
+   await page.locator('[data-close="search-dialog"]').click();
+   await page.screenshot({path:path.join(outputs,'journal-projects-'+width+'.png')});await ctx.close();
   });
   await check('No uncaught browser errors for core homepage',async()=>{
    const ctx=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});
