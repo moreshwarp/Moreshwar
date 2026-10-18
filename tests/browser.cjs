@@ -178,6 +178,35 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    if(width===390)await page.screenshot({path:path.join(outputs,'story-archive-mobile.png'),fullPage:true});
    await page.locator('a[href="index.html#story-of-the-day"]').click();await page.waitForURL('**/index.html#story-of-the-day');await ctx.close();
   });
+  for(const width of [320,390,768,1440])await check('Field guide navigation and accessible targets at '+width+'px',async()=>{
+   const ctx=await browser.newContext({viewport:{width,height:850},reducedMotion:'reduce'});
+   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   const guide=page.locator('#start-here');await guide.scrollIntoViewIfNeeded();
+   assert.equal(await guide.locator('.directory-grid>a').count(),4);
+   const result=await guide.evaluate(el=>({
+    targets:[...el.querySelectorAll('a')].map(a=>({exists:!!document.querySelector(a.getAttribute('href')),height:a.getBoundingClientRect().height})),
+    width:innerWidth,scroll:document.documentElement.scrollWidth,
+    precedes:!!(el.compareDocumentPosition(document.getElementById('story-of-the-day'))&Node.DOCUMENT_POSITION_FOLLOWING)
+   }));
+   assert.ok(result.targets.every(t=>t.exists&&t.height>=44));assert.ok(result.scroll<=width+3);assert.ok(result.precedes);
+   const first=guide.locator('.directory-grid>a').first();await first.focus();
+   assert.notEqual(await first.evaluate(el=>getComputedStyle(el).outlineStyle),'none');
+   if(width<=390){
+    await page.locator('#menu-trigger').click();await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#menu-trigger').getAttribute('aria-expanded'),'false');
+    assert.ok(await page.locator('#menu-trigger').evaluate(el=>el===document.activeElement));
+    await page.locator('#menu-trigger').click();await page.locator('#mobile-menu a[href="#start-here"]').click();
+    assert.ok(await page.locator('#mobile-menu').isHidden());assert.ok(await guide.evaluate(el=>el===document.activeElement));
+   }
+   if(width===390||width===1440)await guide.screenshot({path:path.join(outputs,'field-guide-'+width+'.png')});
+   await ctx.close();
+  });
+  await check('Field guide works without JavaScript',async()=>{
+   const ctx=await browser.newContext({viewport:{width:390,height:844},javaScriptEnabled:false});
+   const page=await ctx.newPage();await page.goto(BASE,{waitUntil:'domcontentloaded'});
+   await page.locator('.directory-grid a[href="#library"]').click();await page.waitForURL('**/#library');
+   assert.ok(await page.locator('.current-reading').isVisible());await ctx.close();
+  });
   await check('No uncaught browser errors for core homepage',async()=>{
    const ctx=await browser.newContext({viewport:{width:375,height:812},reducedMotion:'reduce'});
    const page=await ctx.newPage();const errs=[];
