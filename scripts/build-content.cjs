@@ -179,6 +179,7 @@ function build(outPath){
   index=index.slice(0,a+start.length)+html+index.slice(z);
  }
  fs.writeFileSync(path.join(out,'index.html'),index);
+ require('./build-stories.cjs').buildStories(out);
  console.log('Published',published.length,'new articles; preserved',existing.length,'legacy readers; appearance',settings.theme,settings.brightness);
  return {published:published.map(x=>x.key),legacy:existing.length,theme:settings.theme,brightness:settings.brightness};
 }
