@@ -164,3 +164,7 @@ html[data-universe][data-theme] body.lab-edition .reader-inner{background:#fffdf
 html[data-universe][data-theme] body.lab-edition .reader-inner :is(h1,h2,h3,h4,strong){color:#222c2b}
 html[data-universe][data-theme] body.lab-edition .reader-inner :is(p,li,blockquote){color:#57615c}
 html[data-universe][data-theme] body.lab-edition .reader-inner a{color:#87331d}
+html[data-universe][data-theme] body.lab-edition :is(.global-entry,.global-empty,.search-foot){color:#57615c}
+html[data-universe][data-theme] body.lab-edition .global-entry:hover{background:#ebe7dc;color:#222c2b}
+html[data-universe][data-theme] body.lab-edition .global-entry small{color:#87331d}
+html[data-universe][data-theme] body.lab-edition #global-search{color:#222c2b}

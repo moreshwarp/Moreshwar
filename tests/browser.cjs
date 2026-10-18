@@ -216,6 +216,10 @@ async function check(title,run){try{await run();console.log('PASS '+title)}catch
    await page.locator('[data-project="machine-learning"]').click();assert.ok(await page.locator('#project-dialog').isVisible());assert.ok((await page.locator('#project-content').innerText()).length>100);
    await page.keyboard.press('Escape');assert.ok(await page.locator('#project-dialog').isHidden());
    await page.locator('[data-work-filter="all"]').click();assert.equal(await page.locator('.project-card:visible').count(),6);
+   await page.locator('#search-trigger').click();await page.locator('#global-search').fill('Lamport');
+   assert.ok(await page.locator('.global-entry').count()>0);
+   assert.equal(await page.locator('.global-entry').first().evaluate(el=>getComputedStyle(el).color),'rgb(87, 97, 92)');
+   await page.locator('[data-close="search-dialog"]').click();
    await page.screenshot({path:path.join(outputs,'journal-projects-'+width+'.png')});await ctx.close();
   });
   await check('No uncaught browser errors for core homepage',async()=>{
