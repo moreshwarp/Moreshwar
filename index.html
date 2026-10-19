@@ -89,6 +89,45 @@ body.lab-edition .compact-tools span{margin-right:auto;font-size:.8rem;color:#4b
 body.lab-edition #home{padding-top:3rem!important}
 @media(max-width:850px){body.lab-edition .rev-chapter{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.lab-edition .reboot-intro .shell{grid-template-columns:1fr!important}body.lab-edition .reboot-intro .reboot-figure{display:none!important}}
 @media(max-width:520px){body.lab-edition .reboot-intro h2{font-size:clamp(2.6rem,11vw,4.2rem)!important}body.lab-edition .rev-chapter{gap:.5rem!important;padding:1rem 1rem 1.5rem!important}body.lab-edition .rev-chapter a{min-height:110px!important;padding:.75rem!important}body.lab-edition .rev-chapter strong{font-size:1rem!important}body.lab-edition .compact-tools{padding:0 1rem}body.lab-edition .compact-tools span{width:100%}}
+</style><style id="product-first-ux">
+/* Focused discovery interface: keep every original section in the DOM, show only selected workspace. */
+body.lab-edition{font-family:"DM Sans",Arial,sans-serif!important}
+body.lab-edition .reboot-intro{padding:1.7rem 0 .65rem!important}
+body.lab-edition .reboot-intro .reboot-figure{display:none!important}
+body.lab-edition .reboot-intro .shell{display:block!important;max-width:1180px}
+body.lab-edition .reboot-intro h2{font-size:clamp(2.4rem,5vw,4.2rem)!important;line-height:1.05!important;margin:.5rem 0!important}
+body.lab-edition .reboot-intro p{max-width:780px!important;font-size:.95rem!important}
+body.lab-edition .reboot-intro .reboot-links{display:none!important}
+body.lab-edition .rev-chapter{padding-bottom:.5rem!important}
+body.lab-edition .rev-chapter a{min-height:98px!important;padding:.85rem!important}
+body.lab-edition .rev-chapter a small{display:none}
+body.lab-edition .rev-chapter a strong{font-size:1rem!important}
+body.lab-edition .compact-tools{margin-bottom:1rem!important}
+body.lab-edition .workspace-shell{max-width:1250px;margin:0 auto 1rem;padding:0 1.5rem}
+body.lab-edition .workspace-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;border-top:1px solid #d3d9d0;padding-top:1rem}
+body.lab-edition .workspace-toolbar .workspace-label{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#526657;margin-right:.4rem}
+body.lab-edition .workspace-tab{background:#f6f7f2;border:1px solid #d3d9d0;color:#25382e;border-radius:8px;padding:.62rem .85rem;cursor:pointer;font:600 .84rem "DM Sans",sans-serif}
+body.lab-edition .workspace-tab[aria-selected=true]{background:#213c30;color:white;border-color:#213c30}
+body.lab-edition .workspace-status{font-size:.76rem;color:#53665b;margin:.55rem 0 0}
+body.lab-edition.workspace-ready main>section:not(.reboot-intro),body.lab-edition.workspace-ready main>nav:not(.rev-chapter){display:none!important}
+body.lab-edition.workspace-ready main>section.workspace-visible{display:block!important}
+body.lab-edition.workspace-ready main>section#systems-lab.workspace-visible{display:block!important}
+body.lab-edition.workspace-ready main>section#home{display:none!important}
+body.lab-edition.workspace-ready main>section#start-here{display:none!important}
+body.lab-edition.workspace-ready main>section#discovery{display:none!important}
+body.lab-edition.workspace-ready main>section#work{display:none!important}
+body.lab-edition.workspace-ready main>section#research{display:none!important}
+body.lab-edition.workspace-ready main>section#inquiry{display:none!important}
+body.lab-edition.workspace-ready main>section#fresh-writing{display:none!important}
+body.lab-edition.workspace-ready main>section#picks{display:none!important}
+body.lab-edition.workspace-ready main>section#about{display:none!important}
+body.lab-edition.workspace-ready main>section#contact{display:none!important}
+body.lab-edition.workspace-ready main>section#story-of-the-day.workspace-visible,body.lab-edition.workspace-ready main>section#writing.workspace-visible,body.lab-edition.workspace-ready main>section#library.workspace-visible,body.lab-edition.workspace-ready main>section#science-ideas.workspace-visible{display:block!important}
+body.lab-edition.workspace-ready .workspace-visible{scroll-margin-top:90px}
+body.lab-edition.workspace-ready main>section.workspace-visible{padding-top:1rem!important}
+body.lab-edition.workspace-ready main>section.workspace-visible .section-head{margin-top:0!important}
+body.lab-edition.workspace-ready main>nav.rev-chapter{display:grid!important}
+@media(max-width:600px){body.lab-edition .workspace-shell{padding:0 1rem}body.lab-edition .workspace-tab{flex:1 1 auto}body.lab-edition .rev-chapter a{min-height:88px!important}body.lab-edition .reboot-intro h2{font-size:2.7rem!important}}
 </style></head>
 <body class="lab-edition">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -103,7 +142,7 @@ body.lab-edition #home{padding-top:3rem!important}
     <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden><a href="#discovery">Discover</a><a href="#start-here">Start here</a><a href="#story-of-the-day">Latest story</a><a href="#work">Work</a><a href="#research">Research</a><a href="#inquiry">Inquiry</a><a href="#writing">Writing</a><a href="#library">Library</a><a href="#picks">Picks</a><a href="#science-ideas">Science & Ideas</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
   </header>
   <main id="content"><section class="reboot-intro" aria-labelledby="reboot-heading"><div class="shell"><div><span class="reboot-kicker">Moreshwar Research Lab / Independent inquiry</span><h2 id="reboot-heading">Stay<br><em>curious.</em></h2><p>A laboratory for questions, systems, reading, and ideas worth testing. Explore a living archive of research notes and experiments.</p><div class="reboot-links"><a href="#writing">Read the field notes ↗</a><a href="#systems-lab">Explore experiments ↗</a><a href="studio.html">Visit the design studio ↗</a></div></div><div class="reboot-figure" role="img" aria-label="Concentric rings around a question mark"><span>?</span><small>QUESTION → TEST → REVISE</small></div></div></section><nav class="rev-chapter" aria-label="Explore research lab collections"><a href="#story-of-the-day"><span>01 / LEARN</span><strong>Stories worth<br>thinking about</strong><small>Read the latest story ↗</small></a><a href="#writing"><span>02 / WRITE</span><strong>Ideas in<br>progress</strong><small>Explore essays ↗</small></a><a href="#library"><span>03 / READ</span><strong>The living<br>bookshelf</strong><small>Browse the library ↗</small></a><a href="#systems-lab"><span>04 / BUILD</span><strong>Systems &amp;<br>experiments</strong><small>Enter the lab ↗</small></a></nav><div class="compact-tools" aria-label="Quick site actions"><span>Find what matters. Skip the long scroll.</span><button type="button" onclick="document.getElementById('search-trigger')?.click()">⌕ Search everything</button><a href="#story-of-the-day">Latest story ↗</a><a href="#library">Books ↗</a><a href="#science-ideas">Science ↗</a></div>
-    <section class="hero shell" id="home" aria-label="Introduction">
+    <div class="workspace-shell" id="workspace-switcher"><div class="workspace-toolbar" role="tablist" aria-label="Choose what to explore"><span class="workspace-label">Explore</span><button class="workspace-tab" role="tab" aria-selected="true" aria-controls="story-of-the-day" data-workspace="story-of-the-day">Latest story</button><button class="workspace-tab" role="tab" aria-selected="false" aria-controls="writing" data-workspace="writing">Essays</button><button class="workspace-tab" role="tab" aria-selected="false" aria-controls="library" data-workspace="library">Books</button><button class="workspace-tab" role="tab" aria-selected="false" aria-controls="systems-lab" data-workspace="systems-lab">Experiments</button><button class="workspace-tab" role="tab" aria-selected="false" aria-controls="science-ideas" data-workspace="science-ideas">Science</button><button class="workspace-tab" role="tab" aria-selected="false" aria-controls="all" data-workspace="all">View everything</button></div><p class="workspace-status" id="workspace-status" role="status">Showing the latest story. Choose a topic to explore without scrolling through every section.</p></div><section class="hero shell" id="home" aria-label="Introduction">
       <div class="hero-copy">
         <div class="eyebrow reveal"><span class="live-dot"></span> <span id="universe-eyebrow">PERSONAL RESEARCH LABORATORY <span class="eyebrow-divider">/</span> CODE · SYSTEMS · SCIENTIFIC CURIOSITY</span></div>
         <h1 class="hero-title reveal">A working lab for<br/><span class="gradient-type">curious minds.</span></h1>
@@ -523,5 +562,7 @@ body.lab-edition #home{padding-top:3rem!important}
   <dialog id="project-dialog" class="modal project-modal" aria-labelledby="project-title"><div class="modal-top"><span class="mono micro">ENGINEERING CASE STUDY</span><button type="button" class="modal-close" data-close="project-dialog" aria-label="Close case study">✕</button></div><article class="reader-inner" id="project-content"></article></dialog>
   <dialog id="search-dialog" class="modal search-modal" aria-label="Quick search"><div class="search-modal-input"><span>⌕</span><input id="global-search" type="search" placeholder="Search writing, books, pages..." aria-label="Site search"/><button type="button" class="modal-close" data-close="search-dialog" aria-label="Close search">ESC</button></div><div id="global-results" class="global-results"></div><div class="search-foot mono micro">TIP: CTRL / ⌘ + K TO OPEN</div></dialog>
   <!-- Editorial controls are NOT served on the public site. GitHub authentication protects content writes. -->
-</body>
+<script id="product-first-navigation">
+(function(){function init(){var buttons=[...document.querySelectorAll('[data-workspace]')],sections=[...document.querySelectorAll('main > section')],body=document.body,status=document.getElementById('workspace-status');if(!buttons.length)return;function activate(id,scroll){var all=id==='all';body.classList.toggle('workspace-ready',!all);sections.forEach(function(section){section.classList.toggle('workspace-visible',section.id===id)});buttons.forEach(function(button){button.setAttribute('aria-selected',String(button.dataset.workspace===id))});if(status)status.textContent=all?'All sections are visible. Choose a topic to focus the page.':'Showing '+(buttons.find(function(b){return b.dataset.workspace===id})?.textContent||'selected topic')+'. Switch topics above without a long scroll.';if(scroll){document.getElementById('workspace-switcher')?.scrollIntoView({behavior:'instant',block:'start'})}}buttons.forEach(function(button){button.addEventListener('click',function(){activate(button.dataset.workspace,true)})});document.querySelectorAll('a[href^="#"]').forEach(function(link){link.addEventListener('click',function(){var id=decodeURIComponent(link.getAttribute('href').slice(1));if(!id)return;var target=document.getElementById(id);if(!target)return;var section=target.closest('main > section');if(section&&section.id&&!section.classList.contains('reboot-intro')){var known=buttons.some(function(b){return b.dataset.workspace===section.id});activate(known?section.id:'all',false)}})});activate('story-of-the-day',false);if(location.hash){var target=document.getElementById(decodeURIComponent(location.hash.slice(1)));var section=target?.closest('main > section');if(section){activate(buttons.some(function(b){return b.dataset.workspace===section.id})?section.id:'all',false)}}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();
+</script></body>
 </html>
