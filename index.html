@@ -65,6 +65,30 @@ body.lab-edition #home{border-top:1px solid #d7d8cc}
 @media(max-width:850px){body.lab-edition .rev-chapter{grid-template-columns:repeat(2,minmax(0,1fr))}body.lab-edition .reboot-intro .reboot-figure{min-height:280px!important}}
 @media(max-width:520px){body.lab-edition .rev-chapter{grid-template-columns:1fr}body.lab-edition .rev-chapter a{min-height:120px}body.lab-edition .reboot-intro h2{font-size:clamp(4.5rem,17vw,7rem)!important}}
 @media(prefers-reduced-motion:reduce){body.lab-edition .reboot-intro *,body.lab-edition .rev-chapter *{transition:none!important}}
+</style><style id="compact-ux-redesign">
+body.lab-edition{font-family:"DM Sans",system-ui,sans-serif!important}
+body.lab-edition .nav{position:sticky;top:0;z-index:100}
+body.lab-edition .reboot-intro{padding:clamp(2rem,4vw,3.5rem) 0 1rem!important}
+body.lab-edition .reboot-intro .shell{grid-template-columns:minmax(0,1fr) 170px!important;gap:2rem!important}
+body.lab-edition .reboot-intro h2{font-family:"DM Sans",system-ui,sans-serif!important;font-size:clamp(2.8rem,6vw,5.5rem)!important;letter-spacing:-.06em!important;line-height:1!important;margin:.6rem 0 .9rem!important;font-weight:700!important}
+body.lab-edition .reboot-intro h2 br{display:none}
+body.lab-edition .reboot-intro h2 em{font-style:normal!important}
+body.lab-edition .reboot-intro p{font-size:1rem!important;line-height:1.55!important}
+body.lab-edition .reboot-intro .reboot-figure{min-height:160px!important;aspect-ratio:1;border-radius:16px!important}
+body.lab-edition .reboot-intro .reboot-figure span{font-size:6rem!important}
+body.lab-edition .reboot-intro .reboot-links{margin-top:1rem!important;gap:.6rem!important}
+body.lab-edition .reboot-intro .reboot-links a{font-size:.8rem!important;padding:.5rem .8rem!important;border-radius:6px}
+body.lab-edition .rev-chapter{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:.6rem!important;background:transparent!important;padding:1rem 1.5rem 1.5rem!important}
+body.lab-edition .rev-chapter a{border:1px solid #d4d9ce;border-radius:12px;min-height:130px!important;padding:1rem!important;gap:.6rem}
+body.lab-edition .rev-chapter strong{font:700 clamp(1rem,1.4vw,1.3rem)/1.2 "DM Sans",system-ui,sans-serif!important}
+body.lab-edition .rev-chapter strong br{display:none}
+body.lab-edition .compact-tools{max-width:1250px;margin:0 auto 1.5rem;padding:0 1.5rem;display:flex;align-items:center;gap:.65rem;flex-wrap:wrap}
+body.lab-edition .compact-tools a,body.lab-edition .compact-tools button{font:600 .8rem "DM Sans",sans-serif;background:#e9eee7;color:#17271f;border:1px solid #cbd6cb;border-radius:8px;padding:.7rem 1rem;text-decoration:none;cursor:pointer}
+body.lab-edition .compact-tools button{background:#193d2f;color:white}
+body.lab-edition .compact-tools span{margin-right:auto;font-size:.8rem;color:#4b5e50}
+body.lab-edition #home{padding-top:3rem!important}
+@media(max-width:850px){body.lab-edition .rev-chapter{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.lab-edition .reboot-intro .shell{grid-template-columns:1fr!important}body.lab-edition .reboot-intro .reboot-figure{display:none!important}}
+@media(max-width:520px){body.lab-edition .reboot-intro h2{font-size:clamp(2.6rem,11vw,4.2rem)!important}body.lab-edition .rev-chapter{gap:.5rem!important;padding:1rem 1rem 1.5rem!important}body.lab-edition .rev-chapter a{min-height:110px!important;padding:.75rem!important}body.lab-edition .rev-chapter strong{font-size:1rem!important}body.lab-edition .compact-tools{padding:0 1rem}body.lab-edition .compact-tools span{width:100%}}
 </style></head>
 <body class="lab-edition">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -78,7 +102,7 @@ body.lab-edition #home{border-top:1px solid #d7d8cc}
     </div>
     <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation" hidden><a href="#discovery">Discover</a><a href="#start-here">Start here</a><a href="#story-of-the-day">Latest story</a><a href="#work">Work</a><a href="#research">Research</a><a href="#inquiry">Inquiry</a><a href="#writing">Writing</a><a href="#library">Library</a><a href="#picks">Picks</a><a href="#science-ideas">Science & Ideas</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
   </header>
-  <main id="content"><section class="reboot-intro" aria-labelledby="reboot-heading"><div class="shell"><div><span class="reboot-kicker">Moreshwar Research Lab / Independent inquiry</span><h2 id="reboot-heading">Stay<br><em>curious.</em></h2><p>A laboratory for questions, systems, reading, and ideas worth testing. Explore a living archive of research notes and experiments.</p><div class="reboot-links"><a href="#writing">Read the field notes ↗</a><a href="#systems-lab">Explore experiments ↗</a><a href="studio.html">Visit the design studio ↗</a></div></div><div class="reboot-figure" role="img" aria-label="Concentric rings around a question mark"><span>?</span><small>QUESTION → TEST → REVISE</small></div></div></section><nav class="rev-chapter" aria-label="Explore research lab collections"><a href="#story-of-the-day"><span>01 / LEARN</span><strong>Stories worth<br>thinking about</strong><small>Read the latest story ↗</small></a><a href="#writing"><span>02 / WRITE</span><strong>Ideas in<br>progress</strong><small>Explore essays ↗</small></a><a href="#library"><span>03 / READ</span><strong>The living<br>bookshelf</strong><small>Browse the library ↗</small></a><a href="#systems-lab"><span>04 / BUILD</span><strong>Systems &amp;<br>experiments</strong><small>Enter the lab ↗</small></a></nav>
+  <main id="content"><section class="reboot-intro" aria-labelledby="reboot-heading"><div class="shell"><div><span class="reboot-kicker">Moreshwar Research Lab / Independent inquiry</span><h2 id="reboot-heading">Stay<br><em>curious.</em></h2><p>A laboratory for questions, systems, reading, and ideas worth testing. Explore a living archive of research notes and experiments.</p><div class="reboot-links"><a href="#writing">Read the field notes ↗</a><a href="#systems-lab">Explore experiments ↗</a><a href="studio.html">Visit the design studio ↗</a></div></div><div class="reboot-figure" role="img" aria-label="Concentric rings around a question mark"><span>?</span><small>QUESTION → TEST → REVISE</small></div></div></section><nav class="rev-chapter" aria-label="Explore research lab collections"><a href="#story-of-the-day"><span>01 / LEARN</span><strong>Stories worth<br>thinking about</strong><small>Read the latest story ↗</small></a><a href="#writing"><span>02 / WRITE</span><strong>Ideas in<br>progress</strong><small>Explore essays ↗</small></a><a href="#library"><span>03 / READ</span><strong>The living<br>bookshelf</strong><small>Browse the library ↗</small></a><a href="#systems-lab"><span>04 / BUILD</span><strong>Systems &amp;<br>experiments</strong><small>Enter the lab ↗</small></a></nav><div class="compact-tools" aria-label="Quick site actions"><span>Find what matters. Skip the long scroll.</span><button type="button" onclick="document.getElementById('search-trigger')?.click()">⌕ Search everything</button><a href="#story-of-the-day">Latest story ↗</a><a href="#library">Books ↗</a><a href="#science-ideas">Science ↗</a></div>
     <section class="hero shell" id="home" aria-label="Introduction">
       <div class="hero-copy">
         <div class="eyebrow reveal"><span class="live-dot"></span> <span id="universe-eyebrow">PERSONAL RESEARCH LABORATORY <span class="eyebrow-divider">/</span> CODE · SYSTEMS · SCIENTIFIC CURIOSITY</span></div>
