@@ -56,3 +56,23 @@ img,svg{max-width:100%}
 @media(max-width:850px){.mrl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mrl-nav{gap:12px}}
 @media(max-width:600px){:root{--gutter:16px}.mrl-header-inner{min-height:56px}.mrl-nav{gap:10px}.mrl-nav a{font-size:12px}.mrl-display{font-size:clamp(40px,12vw,60px)}.mrl-intro{padding:24px 0 20px}.mrl-grid{grid-template-columns:1fr;gap:10px}.mrl-card{min-height:130px;padding:16px}.mrl-section{padding:24px 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mrl-card{transition:none}}
+
+/* Review-only bridge for legacy magazine and archive components.
+   Higher specificity keeps the shared compact rhythm consistent while
+   page-local styles are incrementally migrated into reusable components. */
+body .intro{padding-top:26px;padding-bottom:20px}
+body .intro h1{font-family:var(--font-editorial);font-size:clamp(48px,6.4vw,90px)}
+body .hero-art{aspect-ratio:1.45}
+body .topics{padding-top:12px;padding-bottom:30px}
+body .topic-art{height:120px}
+body .story{min-height:168px;padding:17px}
+body .article{min-height:160px}
+body .search-box{max-height:78vh;overflow:auto}
+@media(max-width:600px){
+  body .intro{padding-top:20px;padding-bottom:18px}
+  body .intro h1{font-size:clamp(42px,10vw,62px)}
+  body .hero-art{aspect-ratio:2.65}
+  body .topic-art{height:80px}
+  body .story{min-height:136px;padding:15px}
+  body .article{min-height:140px}
+}
