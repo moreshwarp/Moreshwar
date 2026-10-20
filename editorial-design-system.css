@@ -76,3 +76,19 @@ body .search-box{max-height:78vh;overflow:auto}
   body .story{min-height:136px;padding:15px}
   body .article{min-height:140px}
 }
+
+/* Shared review typography and compact mobile archive discovery. */
+body .section-head h2,body .story h2,body .article h3,body .feature-copy h3{font-family:var(--font-editorial)}
+body .story h2{font-size:clamp(19px,2vw,23px);line-height:1.2;margin:10px 0}
+body .story p{line-height:1.45;margin-bottom:12px}
+body .story:hover{border-color:var(--ink)}
+body .tools :is(input,select){border-radius:var(--radius)}
+@media(max-width:600px){
+  body .story{min-height:0;padding:14px 16px}
+  body .story h2{font-size:20px;margin:8px 0}
+  body .story p{margin-bottom:9px}
+  body .grid{gap:8px;padding-bottom:28px}
+  body .tools{gap:8px;padding:12px 0}
+  body .tools input{min-height:44px}
+  body .intro p{line-height:1.5}
+}
