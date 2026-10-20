@@ -243,3 +243,22 @@ body.lab-edition :is(section[id],nav[id]){scroll-margin-top:76px}
   body.lab-edition .compact-tools{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
 }
 @media(prefers-reduced-motion:reduce){body.lab-edition .rev-chapter{scroll-snap-type:none}}
+
+/* PR #39: magazine preview uses the same compact editorial rhythm as the archive.
+   Original SVG artwork and all existing links remain untouched. */
+body:has(.topic-grid) .intro{padding-block:clamp(22px,3vw,38px);gap:clamp(18px,3vw,36px)}
+body:has(.topic-grid) .intro h1{font-family:var(--font-editorial);font-size:clamp(42px,5.5vw,78px);margin-block:12px;line-height:1.02}
+body:has(.topic-grid) .intro p{line-height:1.55;margin-block:10px}
+body:has(.topic-grid) .hero-art{aspect-ratio:1.65;border-color:var(--line);background:var(--soft)}
+body:has(.topic-grid) .topics{padding-block:24px}
+body:has(.topic-grid) .featured{padding-block:28px}
+body:has(.topic-grid) .topic{border-color:var(--line);background:var(--surface)}
+body:has(.topic-grid) .topic-info{padding:12px 15px}
+body:has(.topic-grid) :is(#topics,#stories,#essays){scroll-margin-top:78px}
+@media(max-width:600px){
+  body:has(.topic-grid) .intro{padding-block:18px;gap:14px}
+  body:has(.topic-grid) .intro h1{font-size:clamp(40px,10.5vw,58px)}
+  body:has(.topic-grid) .hero-art{aspect-ratio:2.8}
+  body:has(.topic-grid) .topics{padding-block:16px 24px}
+  body:has(.topic-grid) .featured{padding-block:22px}
+}
