@@ -91,7 +91,42 @@ body .tools :is(input,select){border-radius:var(--radius)}
   body .tools{gap:8px;padding:12px 0}
   body .tools input{min-height:44px}
   body .intro p{line-height:1.5}
+  /* Magazine: four illustrated topics become a one-row swipeable index.
+     Preserve original SVGs, links, focus outlines and comfortable targets. */
+  body .topics .topic-grid{
+    display:grid;
+    grid-auto-flow:column;
+    grid-auto-columns:minmax(172px,68vw);
+    grid-template-columns:none;
+    gap:var(--space-2);
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    scroll-padding-inline:var(--space-2);
+    padding:var(--space-1) var(--space-2) var(--space-3);
+    scrollbar-width:thin;
+    -webkit-overflow-scrolling:touch;
+  }
+  body .topics .topic{min-width:0;scroll-snap-align:start;border-radius:var(--radius)}
+  body .topics .topic-art{height:76px}
+  body .topics .topic-info{min-height:44px;padding:var(--space-2) var(--space-3)}
+  body .topics .topic-info b{font:600 var(--step-sm)/1.2 var(--font-ui)}
+  body .topics{padding-bottom:var(--space-3)}
+  /* Archive: search is full-width; year filter and result count share a row. */
+  body .tools:has(#q):has(#year){
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    gap:var(--space-2);
+    align-items:center;
+    padding:var(--space-3) 0;
+  }
+  body .tools label[for="q"]{grid-column:1/-1}
+  body .tools #q{grid-column:1/-1;min-width:0;max-width:none;width:100%}
+  body .tools label[for="year"]{grid-column:1}
+  body .tools #year{grid-column:2;min-width:0;width:100%}
+  body .tools .count{grid-column:3;white-space:nowrap;margin-left:0}
 }
+@media(prefers-reduced-motion:reduce){body .topics .topic-grid{scroll-snap-type:none}}
 
 /* Homepage migration bridge: review branch only. Existing homepage sections and JS remain untouched. */
 body.lab-edition{--rev-ink:var(--ink);--rev-cream:var(--paper);--rev-accent:var(--ink);background:var(--paper)!important;color:var(--ink)!important;font-family:var(--font-ui)!important}
