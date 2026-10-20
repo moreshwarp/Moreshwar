@@ -1,0 +1,57 @@
+/* Moreshwar Research Lab · Review-only shared editorial design system.
+   Approved direction: monochrome, low-scroll, accessible magazine hierarchy.
+   Apply across preview pages only after each page has been reviewed. */
+:root{
+  color-scheme:light;
+  --paper:#fafaf8;--surface:#ffffff;--ink:#151515;--muted:#656565;
+  --soft:#f0f0ed;--line:#d9d9d5;--focus:#444444;
+  --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  --font-editorial:Georgia,"Times New Roman",serif;
+  --step-xs:.75rem;--step-sm:.875rem;--step-base:1rem;--step-lg:1.25rem;
+  --space-1:.5rem;--space-2:.75rem;--space-3:1rem;--space-4:1.5rem;
+  --space-5:2rem;--space-6:3rem;--radius:2px;
+  --max-width:1160px;--gutter:24px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:var(--step-base)/1.55 var(--font-ui)}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+:where(a,button,input,select):focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+button,input,select{font:inherit}
+button{cursor:pointer}
+img,svg{max-width:100%}
+.mrl-container{width:min(var(--max-width),calc(100% - 2*var(--gutter)));margin-inline:auto}
+.mrl-review-banner{background:var(--ink);color:#fff;text-align:center;font-size:var(--step-xs);letter-spacing:.06em;padding:8px 12px}
+.mrl-header{position:sticky;top:0;z-index:10;background:rgba(250,250,248,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.mrl-header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:60px}
+.mrl-brand{font-size:19px;font-weight:760;letter-spacing:-.06em;line-height:1.1}
+.mrl-brand small{display:block;font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.mrl-nav{display:flex;align-items:center;gap:22px;font-size:13px}
+.mrl-nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
+.mrl-eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.mrl-display{font:400 clamp(42px,6vw,76px)/1.02 var(--font-editorial);letter-spacing:-.055em;margin:10px 0 12px}
+.mrl-heading{font:400 clamp(27px,3.2vw,42px)/1.12 var(--font-editorial);letter-spacing:-.04em;margin:0}
+.mrl-intro{padding:30px 0 24px;border-bottom:1px solid var(--line)}
+.mrl-intro p{max-width:65ch;color:var(--muted);margin:0}
+.mrl-section{padding:30px 0;border-bottom:1px solid var(--line)}
+.mrl-section-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:16px}
+.mrl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.mrl-card{display:flex;flex-direction:column;min-width:0;min-height:170px;padding:19px;background:var(--surface);border:1px solid var(--line);transition:transform .18s}
+.mrl-card:hover{transform:translateY(-2px);text-decoration:none}
+.mrl-card h3{font:400 23px/1.18 var(--font-editorial);letter-spacing:-.03em;margin:12px 0}
+.mrl-card p{font-size:13px;color:var(--muted);margin:0 0 14px}
+.mrl-card .mrl-card-foot{margin-top:auto;font-size:12px;font-weight:650}
+.mrl-button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 17px;background:var(--ink);color:#fff;border:1px solid var(--ink);border-radius:24px;font-size:13px;font-weight:650}
+.mrl-button:hover{background:#333;color:#fff;text-decoration:none}
+.mrl-button-secondary{background:transparent;color:var(--ink)}
+.mrl-button-secondary:hover{background:var(--soft);color:var(--ink)}
+.mrl-field{width:100%;min-height:44px;padding:10px 13px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.mrl-reading{max-width:70ch;font-size:clamp(16px,1.5vw,18px);line-height:1.75}
+.mrl-reading p{margin:0 0 1.3em}
+.mrl-footer{padding:24px 0 36px;color:var(--muted);font-size:12px}
+.mrl-skip{position:fixed;top:-100px;left:12px;padding:10px;background:var(--ink);color:#fff;z-index:50}
+.mrl-skip:focus{top:12px}
+@media(max-width:850px){.mrl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mrl-nav{gap:12px}}
+@media(max-width:600px){:root{--gutter:16px}.mrl-header-inner{min-height:56px}.mrl-nav{gap:10px}.mrl-nav a{font-size:12px}.mrl-display{font-size:clamp(40px,12vw,60px)}.mrl-intro{padding:24px 0 20px}.mrl-grid{grid-template-columns:1fr;gap:10px}.mrl-card{min-height:130px;padding:16px}.mrl-section{padding:24px 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mrl-card{transition:none}}
