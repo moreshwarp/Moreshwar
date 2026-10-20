@@ -159,3 +159,21 @@ body.lab-edition #start-here .directory-grid p,body.lab-edition #start-here .dir
   body .story h2{font-size:19px}
   body .story p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 }
+
+/* Compact editorial masthead: keep every introduction and link, but prevent
+   the secondary welcome section from consuming another full viewport. */
+body.lab-edition .reboot-intro{padding:12px 0!important}
+body.lab-edition .reboot-intro .shell{gap:12px!important}
+body.lab-edition .reboot-intro h2{font-size:clamp(29px,3.2vw,42px)!important;line-height:1.04!important;margin:5px 0!important}
+body.lab-edition .reboot-intro p{font-size:14px!important;line-height:1.4!important;margin:5px 0!important;max-width:58ch!important}
+body.lab-edition .reboot-intro .reboot-links{margin-top:10px!important;gap:8px!important}
+body.lab-edition .reboot-intro .reboot-links a{padding:8px 11px!important;font-size:12px!important;line-height:1.2!important}
+body.lab-edition .rev-chapter{padding-block:8px!important}
+body.lab-edition .rev-chapter a{min-height:78px!important;padding:10px 12px!important}
+body.lab-edition .compact-tools{margin-block:0!important}
+@media(max-width:600px){
+  body.lab-edition .reboot-intro{padding:10px 0!important}
+  body.lab-edition .reboot-intro h2{font-size:clamp(27px,8vw,36px)!important}
+  body.lab-edition .reboot-intro .reboot-links a{min-height:40px;display:inline-flex;align-items:center}
+  body.lab-edition .rev-chapter a{min-height:72px!important;padding:10px!important}
+}
