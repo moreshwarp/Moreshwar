@@ -191,8 +191,10 @@ body.lab-edition #start-here .directory-grid p,body.lab-edition #start-here .dir
   body .tools{gap:8px}
   body .tools label{font-size:12px}
   body .tools select{min-height:44px}
-  body .story h2{font-size:19px}
-  body .story p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .grid .story{min-height:0;padding:14px 16px;gap:0}
+  .grid .story h2{font-size:19px;line-height:1.2;margin:7px 0 6px}
+  .grid .story p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0 0 10px}
+  .grid .story span{margin-top:auto}
 }
 
 /* Compact editorial masthead: keep every introduction and link, but prevent
