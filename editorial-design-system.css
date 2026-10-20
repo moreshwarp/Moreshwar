@@ -177,3 +177,34 @@ body.lab-edition .compact-tools{margin-block:0!important}
   body.lab-edition .reboot-intro .reboot-links a{min-height:40px;display:inline-flex;align-items:center}
   body.lab-edition .rev-chapter a{min-height:72px!important;padding:10px!important}
 }
+
+/* Review-only mobile discovery: one swipeable editorial index instead of
+   four stacked chapter tiles. Native links remain keyboard accessible. */
+body.lab-edition :is(section[id],nav[id]){scroll-margin-top:76px}
+@media(max-width:600px){
+  body.lab-edition .rev-chapter{
+    display:grid!important;
+    grid-auto-flow:column!important;
+    grid-auto-columns:minmax(168px,64vw)!important;
+    grid-template-columns:none!important;
+    gap:10px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    scroll-padding-inline:16px;
+    padding:10px 16px 16px!important;
+    scrollbar-width:thin;
+    -webkit-overflow-scrolling:touch;
+  }
+  body.lab-edition .rev-chapter a{
+    min-width:0!important;
+    min-height:96px!important;
+    padding:12px!important;
+    scroll-snap-align:start;
+  }
+  body.lab-edition .rev-chapter a strong{font-size:clamp(17px,4.7vw,21px)!important}
+  body.lab-edition .rev-chapter a small{display:block!important;font-size:11px!important}
+  body.lab-edition .compact-tools{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+}
+@media(prefers-reduced-motion:reduce){body.lab-edition .rev-chapter{scroll-snap-type:none}}
