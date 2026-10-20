@@ -118,3 +118,44 @@ body.lab-edition .workspace-toolbar{border-color:var(--line)!important}
 body.lab-edition .workspace-status{color:var(--muted)!important}
 body.lab-edition a:focus-visible,body.lab-edition button:focus-visible{outline:3px solid var(--focus)!important;outline-offset:3px!important}
 @media(max-width:600px){body.lab-edition .reboot-intro{padding:18px 0 10px!important}body.lab-edition .reboot-intro h2{font-size:clamp(35px,10vw,48px)!important}body.lab-edition .rev-chapter{gap:8px!important;padding:10px 16px 14px!important}body.lab-edition .rev-chapter a{min-height:88px!important;padding:12px!important}body.lab-edition .rev-chapter strong{font-size:18px!important}}
+
+
+/* PR #39: second homepage hero and research directory share the magazine rhythm.
+   Keep the original interactive research instrument, article content, and controls. */
+body.lab-edition #home.hero{min-height:0!important;padding-block:clamp(20px,3.5vw,42px)!important;gap:clamp(16px,2.5vw,30px)!important;background:var(--paper)!important;color:var(--ink)!important}
+body.lab-edition #home .hero-title{font-family:var(--font-editorial)!important;font-size:clamp(34px,4.5vw,64px)!important;line-height:1.05!important;letter-spacing:-.05em!important;margin-block:12px!important;color:var(--ink)!important}
+body.lab-edition #home .gradient-type{background:none!important;color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important}
+body.lab-edition #home .hero-lede{font-size:clamp(14px,1.4vw,17px)!important;line-height:1.55!important;color:var(--muted)!important;max-width:62ch!important}
+body.lab-edition #home .hero-buttons{margin-block:16px!important;gap:10px!important}
+body.lab-edition #home .hero-buttons .button{border-radius:var(--radius)!important;box-shadow:none!important}
+body.lab-edition #home .hero-buttons .button-primary{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}
+body.lab-edition #home .hero-buttons .button-quiet{background:var(--surface)!important;color:var(--ink)!important;border:1px solid var(--line)!important}
+body.lab-edition #home .hero-metrics{margin-block:14px!important;gap:12px!important}
+body.lab-edition #home .hero-metrics small,body.lab-edition #home .hero-footnote,body.lab-edition #home .eyebrow{color:var(--muted)!important}
+body.lab-edition #home .hero-visual{filter:grayscale(1);border:1px solid var(--line)!important;box-shadow:none!important}
+body.lab-edition #home .instrument-svg{max-height:270px}
+body.lab-edition #start-here.lab-directory{padding-block:clamp(20px,3vw,36px)!important;background:var(--paper)!important;color:var(--ink)!important}
+body.lab-edition #start-here .directory-heading{margin-bottom:16px!important;gap:12px!important}
+body.lab-edition #start-here .directory-heading h2{font-family:var(--font-editorial)!important;font-weight:400!important;letter-spacing:-.04em!important;color:var(--ink)!important}
+body.lab-edition #start-here .directory-grid{gap:12px!important}
+body.lab-edition #start-here .directory-grid>a{background:var(--surface)!important;color:var(--ink)!important;border:1px solid var(--line)!important;border-radius:var(--radius)!important;box-shadow:none!important;padding:18px!important}
+body.lab-edition #start-here .directory-grid>a:hover{background:var(--soft)!important;border-color:var(--ink)!important;transform:none!important}
+body.lab-edition #start-here .directory-grid h3{font-family:var(--font-editorial)!important;color:var(--ink)!important}
+body.lab-edition #start-here .directory-grid p,body.lab-edition #start-here .directory-kicker{color:var(--muted)!important}
+@media(max-width:600px){
+  body.lab-edition #home.hero{padding-block:18px!important;gap:16px!important}
+  body.lab-edition #home .hero-title{font-size:clamp(34px,9vw,47px)!important;margin-block:8px!important}
+  body.lab-edition #home .hero-lede{font-size:14px!important}
+  body.lab-edition #home .hero-buttons{margin-block:12px!important}
+  body.lab-edition #home .instrument-svg{max-height:190px}
+  body.lab-edition #start-here.lab-directory{padding-block:18px!important}
+  body.lab-edition #start-here .directory-grid>a{padding:14px!important}
+}
+/* Archive controls remain legible and compact on narrow screens. */
+@media(max-width:560px){
+  body .tools{gap:8px}
+  body .tools label{font-size:12px}
+  body .tools select{min-height:44px}
+  body .story h2{font-size:19px}
+  body .story p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}
