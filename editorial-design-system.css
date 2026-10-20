@@ -92,3 +92,29 @@ body .tools :is(input,select){border-radius:var(--radius)}
   body .tools input{min-height:44px}
   body .intro p{line-height:1.5}
 }
+
+/* Homepage migration bridge: review branch only. Existing homepage sections and JS remain untouched. */
+body.lab-edition{--rev-ink:var(--ink);--rev-cream:var(--paper);--rev-accent:var(--ink);background:var(--paper)!important;color:var(--ink)!important;font-family:var(--font-ui)!important}
+body.lab-edition .nav{background:rgba(250,250,248,.97)!important;border-bottom:1px solid var(--line)!important}
+body.lab-edition .nav .brand,body.lab-edition .nav .brand-label,body.lab-edition .nav .brand-mark,body.lab-edition .nav .desktop-nav a{color:var(--ink)!important}
+body.lab-edition .nav .brand-dot{color:var(--ink)!important}
+body.lab-edition .nav .nav-contact{background:var(--ink)!important;color:#fff!important}
+body.lab-edition .reboot-intro{background:var(--paper)!important;padding:clamp(20px,3vw,34px) 0 14px!important;border-bottom:1px solid var(--line)!important}
+body.lab-edition .reboot-intro h2{font-family:var(--font-editorial)!important;font-size:clamp(38px,5vw,68px)!important;font-weight:400!important;line-height:1.03!important;color:var(--ink)!important;letter-spacing:-.055em!important;margin:10px 0!important}
+body.lab-edition .reboot-intro h2 em{color:var(--ink)!important;font-style:normal!important}
+body.lab-edition .reboot-intro .reboot-kicker{color:var(--muted)!important}
+body.lab-edition .reboot-intro p{color:var(--muted)!important;line-height:1.5!important}
+body.lab-edition .reboot-intro .reboot-figure{display:none!important}
+body.lab-edition .reboot-intro .reboot-links a{color:var(--ink)!important;border:1px solid var(--line)!important;border-radius:var(--radius)!important;background:var(--surface)!important}
+body.lab-edition .reboot-intro .reboot-links a:hover{background:var(--soft)!important}
+body.lab-edition .rev-chapter{gap:10px!important;padding:12px 16px 16px!important}
+body.lab-edition .rev-chapter a{min-height:98px!important;padding:14px!important;background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:var(--radius)!important;box-shadow:none!important;color:var(--ink)!important}
+body.lab-edition .rev-chapter a:hover{background:var(--soft)!important;box-shadow:none!important}
+body.lab-edition .rev-chapter strong{font-family:var(--font-editorial)!important;font-size:clamp(17px,1.8vw,22px)!important;font-weight:400!important;color:var(--ink)!important}
+body.lab-edition .rev-chapter span,body.lab-edition .rev-chapter small{color:var(--muted)!important}
+body.lab-edition .compact-tools button,body.lab-edition .workspace-tab[aria-selected=true]{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
+body.lab-edition .compact-tools a,body.lab-edition .workspace-tab{background:var(--surface)!important;border-color:var(--line)!important;color:var(--ink)!important;border-radius:var(--radius)!important}
+body.lab-edition .workspace-toolbar{border-color:var(--line)!important}
+body.lab-edition .workspace-status{color:var(--muted)!important}
+body.lab-edition a:focus-visible,body.lab-edition button:focus-visible{outline:3px solid var(--focus)!important;outline-offset:3px!important}
+@media(max-width:600px){body.lab-edition .reboot-intro{padding:18px 0 10px!important}body.lab-edition .reboot-intro h2{font-size:clamp(35px,10vw,48px)!important}body.lab-edition .rev-chapter{gap:8px!important;padding:10px 16px 14px!important}body.lab-edition .rev-chapter a{min-height:88px!important;padding:12px!important}body.lab-edition .rev-chapter strong{font-size:18px!important}}
