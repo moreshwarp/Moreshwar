@@ -1,0 +1,15 @@
+/* Unified editorial identity — scoped across journal, studio and archive. */
+:root{--mrl-ink:#17191c;--mrl-muted:#5e6268;--mrl-paper:#faf9f6;--mrl-line:#dddcd7;--mrl-accent:#1e4668}
+html{scroll-behavior:smooth}
+body{background:var(--mrl-paper);color:var(--mrl-ink);-webkit-font-smoothing:antialiased}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #346eaa;outline-offset:3px}
+body .mrl-header,body .top{border-bottom:1px solid var(--mrl-line)}
+body .mrl-brand,body .brand{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.045em}
+body .mrl-nav a,body .nav a{transition:opacity .16s}
+body .mrl-nav a:hover,body .nav a:hover{opacity:.6}
+body .story,body .topic,body .article{border-color:var(--mrl-line)}
+body .story h2,body .article h3{overflow-wrap:anywhere}
+body .mrl-review-banner,body .review{display:none!important}
+body .mrl-nav a,body .nav a{min-height:40px;display:inline-flex;align-items:center}
+@media(max-width:650px){body .mrl-header-inner,body .top-inner{gap:12px}body .mrl-nav{display:flex;flex-wrap:wrap;gap:8px 14px}body .mrl-nav a{font-size:12px}body .intro h1{overflow-wrap:break-word}body .wrap,body .shell{max-width:100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body *{transition:none!important}}
