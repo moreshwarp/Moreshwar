@@ -22,8 +22,9 @@ function buildStories(out,today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/
  const fragment='<section class="section" id="story-of-the-day" aria-labelledby="daily-story-heading"><div class="shell"><h2 id="daily-story-heading">Story of the Day</h2><p>Source-linked stories from science and engineering. Curated when reviewed; the latest entry stays visible between updates.</p>'+(latest?card(latest):'<p>No reviewed story has been published yet.</p>')+'<p><a href="stories.html">Browse the dated story archive →</a></p></div></section>';
  const file=path.join(out,'index.html');let html=fs.readFileSync(file,'utf8');
  const pattern=/<!--STORY_OF_DAY_BEGIN-->[\s\S]*?<!--STORY_OF_DAY_END-->/;
- if(!pattern.test(html))throw Error('Missing Story of the Day markers');
- html=html.replace(pattern,'<!--STORY_OF_DAY_BEGIN-->'+fragment+'<!--STORY_OF_DAY_END-->');fs.writeFileSync(file,html);
+ if(pattern.test(html)){
+  html=html.replace(pattern,'<!--STORY_OF_DAY_BEGIN-->'+fragment+'<!--STORY_OF_DAY_END-->');fs.writeFileSync(file,html);
+ }else console.log('Journal homepage: story archive generated without legacy homepage insertion');
  const archive='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Story archive — Moreshwar / Lab</title><meta name="description" content="Dated, source-linked science and engineering stories."><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="design-system.css?v=20261018"><link rel="stylesheet" href="research-reader.css?v=20261018"><style>html{scroll-behavior:auto}</style><script src="site-settings.js"></script></head><body><main class="shell section"><p><a href="index.html#story-of-the-day">← Back to the Lab</a></p><h1>Story archive</h1><p>Dates identify curated entries, not the historical events. Each entry preserves its own sources and review date.</p><nav aria-label="Stories by date">'+stories.map(s=>'<p><a href="#story-'+esc(s.date)+'">'+esc(s.date)+' — '+esc(s.title)+'</a></p>').join('')+'</nav>'+(stories.map(s=>card(s,true)).join('')||'<p>No reviewed stories yet.</p>')+'</main></body></html>';
  fs.writeFileSync(path.join(out,'stories.html'),archive);return stories;
 }
