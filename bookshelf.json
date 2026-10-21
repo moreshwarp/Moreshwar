@@ -1,0 +1,578 @@
+{
+  "source": "User-supplied reading list; titles and authors unverified",
+  "count": 143,
+  "books": [
+    {
+      "title": "The Pragmatic Programmer",
+      "authors": "Andrew Hunt; David Thomas"
+    },
+    {
+      "title": "The Art of Seduction",
+      "authors": "Robert Greene"
+    },
+    {
+      "title": "What You Do Is Who You Are",
+      "authors": "Ben Horowitz"
+    },
+    {
+      "title": "Unstoppable Us, Vol. 1: How Humans Took Over the World",
+      "authors": "Yuval Noah Harari"
+    },
+    {
+      "title": "Split",
+      "authors": "Taslima Nasrin"
+    },
+    {
+      "title": "Scientists Who Changed History",
+      "authors": "DK"
+    },
+    {
+      "title": "The Seven Moons of Maali Almeida",
+      "authors": "Shehan Karunatilaka"
+    },
+    {
+      "title": "The Hitchhiker's Guide to the Galaxy",
+      "authors": "Douglas Adams"
+    },
+    {
+      "title": "The Restaurant at the End of the Universe",
+      "authors": "Douglas Adams"
+    },
+    {
+      "title": "Life, the Universe and Everything",
+      "authors": "Douglas Adams"
+    },
+    {
+      "title": "So Long, and Thanks for All the Fish",
+      "authors": "Douglas Adams"
+    },
+    {
+      "title": "Mostly Harmless",
+      "authors": "Douglas Adams"
+    },
+    {
+      "title": "The Power of Mind Engineering",
+      "authors": "Cyril C. George"
+    },
+    {
+      "title": "Life 3.0",
+      "authors": "Max Tegmark"
+    },
+    {
+      "title": "The Road to Character",
+      "authors": "David Brooks"
+    },
+    {
+      "title": "Shakespeare",
+      "authors": "Bill Bryson"
+    },
+    {
+      "title": "The Murder of Roger Ackroyd",
+      "authors": "Agatha Christie"
+    },
+    {
+      "title": "Hooked: How to Build Habit-Forming Products",
+      "authors": "Nir Eyal"
+    },
+    {
+      "title": "Zero to One",
+      "authors": "Peter Thiel; Blake Masters"
+    },
+    {
+      "title": "The Laws of Human Nature",
+      "authors": "Robert Greene"
+    },
+    {
+      "title": "The Daily Laws",
+      "authors": "Robert Greene"
+    },
+    {
+      "title": "Benjamin Franklin: An American Life",
+      "authors": "Walter Isaacson"
+    },
+    {
+      "title": "Read Write Own",
+      "authors": "Chris Dixon"
+    },
+    {
+      "title": "Hidden Potential",
+      "authors": "Adam Grant"
+    },
+    {
+      "title": "100 Scientists Who Shaped World History",
+      "authors": "John Hudson Tiner"
+    },
+    {
+      "title": "The Temple Tiger and More Man-Eaters of Kumaon",
+      "authors": "Jim Corbett"
+    },
+    {
+      "title": "Boundaries",
+      "authors": "Henry Cloud; John Townsend"
+    },
+    {
+      "title": "The Innovators",
+      "authors": "Walter Isaacson"
+    },
+    {
+      "title": "The Book of Elon",
+      "authors": "Eric Jorgenson"
+    },
+    {
+      "title": "Drive",
+      "authors": "Daniel H. Pink"
+    },
+    {
+      "title": "Autobiography of a Yogi",
+      "authors": "Paramahansa Yogananda"
+    },
+    {
+      "title": "The Power of Your Subconscious Mind",
+      "authors": "Joseph Murphy"
+    },
+    {
+      "title": "Don't Sweat the Small Stuff... and It's All Small Stuff",
+      "authors": "Richard Carlson"
+    },
+    {
+      "title": "Shoe Dog",
+      "authors": "Phil Knight"
+    },
+    {
+      "title": "10% Happier",
+      "authors": "Dan Harris"
+    },
+    {
+      "title": "Indistractable",
+      "authors": "Nir Eyal"
+    },
+    {
+      "title": "Start with Why",
+      "authors": "Simon Sinek"
+    },
+    {
+      "title": "The Brain: The Story of You",
+      "authors": "David Eagleman"
+    },
+    {
+      "title": "The ONE Thing",
+      "authors": "Gary Keller; Jay Papasan"
+    },
+    {
+      "title": "The Time Keeper",
+      "authors": "Mitch Albom"
+    },
+    {
+      "title": "Mathability",
+      "authors": "Shakuntala Devi"
+    },
+    {
+      "title": "How to Talk to Anyone",
+      "authors": "Leil Lowndes"
+    },
+    {
+      "title": "The Road Less Travelled",
+      "authors": "M. Scott Peck"
+    },
+    {
+      "title": "Courage Is Calling",
+      "authors": "Ryan Holiday"
+    },
+    {
+      "title": "One Small Step Can Change Your Life",
+      "authors": "Robert Maurer"
+    },
+    {
+      "title": "Shiv Chalisa",
+      "authors": "Traditional devotional text"
+    },
+    {
+      "title": "Mastery",
+      "authors": "Robert Greene"
+    },
+    {
+      "title": "The Essential Rumi",
+      "authors": "Jalaluddin Rumi; translated by Coleman Barks"
+    },
+    {
+      "title": "Aghora I: At the Left Hand of God",
+      "authors": "Robert E. Svoboda"
+    },
+    {
+      "title": "The 50th Law",
+      "authors": "50 Cent; Robert Greene"
+    },
+    {
+      "title": "Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",
+      "authors": "Ashlee Vance"
+    },
+    {
+      "title": "The 4-Hour Workweek",
+      "authors": "Timothy Ferriss"
+    },
+    {
+      "title": "21 Lessons for the 21st Century",
+      "authors": "Yuval Noah Harari"
+    },
+    {
+      "title": "The Silent Patient",
+      "authors": "Alex Michaelides"
+    },
+    {
+      "title": "The Forty Rules of Love",
+      "authors": "Elif Shafak"
+    },
+    {
+      "title": "Dark Matter",
+      "authors": "Blake Crouch"
+    },
+    {
+      "title": "The Bezos Blueprint",
+      "authors": "Carmine Gallo"
+    },
+    {
+      "title": "Homo Deus: A Brief History of Tomorrow",
+      "authors": "Yuval Noah Harari"
+    },
+    {
+      "title": "The Hobbit",
+      "authors": "J. R. R. Tolkien"
+    },
+    {
+      "title": "The Lord of the Rings: The Two Towers",
+      "authors": "J. R. R. Tolkien"
+    },
+    {
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "authors": "J. R. R. Tolkien"
+    },
+    {
+      "title": "The Lord of the Rings: The Return of the King",
+      "authors": "J. R. R. Tolkien"
+    },
+    {
+      "title": "Ego Is the Enemy",
+      "authors": "Ryan Holiday"
+    },
+    {
+      "title": "The Kid Who Came from Space",
+      "authors": "Ross Welford"
+    },
+    {
+      "title": "Politics",
+      "authors": "Aristotle"
+    },
+    {
+      "title": "The Republic",
+      "authors": "Plato"
+    },
+    {
+      "title": "When Breath Becomes Air",
+      "authors": "Paul Kalanithi"
+    },
+    {
+      "title": "The Obstacle Is the Way",
+      "authors": "Ryan Holiday"
+    },
+    {
+      "title": "The Wealth of Nations",
+      "authors": "Adam Smith"
+    },
+    {
+      "title": "Poor Charlie's Almanack",
+      "authors": "Charles T. Munger; edited by Peter D. Kaufman"
+    },
+    {
+      "title": "India's Biggest Cover-up",
+      "authors": "Anuj Dhar"
+    },
+    {
+      "title": "Beyond the Last Blue Mountain",
+      "authors": "R. M. Lala"
+    },
+    {
+      "title": "Upgrade",
+      "authors": "Blake Crouch"
+    },
+    {
+      "title": "Einstein: His Life and Universe",
+      "authors": "Walter Isaacson"
+    },
+    {
+      "title": "Discipline Is Destiny",
+      "authors": "Ryan Holiday"
+    },
+    {
+      "title": "Foundation",
+      "authors": "Isaac Asimov"
+    },
+    {
+      "title": "Attitude: The Sh*t They Never Taught You",
+      "authors": "Adam Ashton; Adam Jones"
+    },
+    {
+      "title": "Influence: The Psychology of Persuasion",
+      "authors": "Robert B. Cialdini"
+    },
+    {
+      "title": "The Man-Eating Leopard of Rudraprayag",
+      "authors": "Jim Corbett"
+    },
+    {
+      "title": "The Code Breaker",
+      "authors": "Walter Isaacson"
+    },
+    {
+      "title": "The Tipping Point",
+      "authors": "Malcolm Gladwell"
+    },
+    {
+      "title": "India's Bravehearts",
+      "authors": "Satish Dua"
+    },
+    {
+      "title": "Questions Are the Answers",
+      "authors": "Allan Pease"
+    },
+    {
+      "title": "Factfulness",
+      "authors": "Hans Rosling; Ola Rosling; Anna Rosling Rönnlund"
+    },
+    {
+      "title": "The High 5 Habit",
+      "authors": "Mel Robbins"
+    },
+    {
+      "title": "Skin in the Game",
+      "authors": "Nassim Nicholas Taleb"
+    },
+    {
+      "title": "How I Taught My Grandmother to Read and Other Stories",
+      "authors": "Sudha Murty"
+    },
+    {
+      "title": "Letters from a Stoic",
+      "authors": "Seneca"
+    },
+    {
+      "title": "Leaders Eat Last",
+      "authors": "Simon Sinek"
+    },
+    {
+      "title": "The War of the Worlds",
+      "authors": "H. G. Wells"
+    },
+    {
+      "title": "Pride and Prejudice",
+      "authors": "Jane Austen"
+    },
+    {
+      "title": "Meditations",
+      "authors": "Marcus Aurelius"
+    },
+    {
+      "title": "Tim Cook: The Genius Who Took Apple to the Next Level",
+      "authors": "Leander Kahney"
+    },
+    {
+      "title": "Superintelligence",
+      "authors": "Nick Bostrom"
+    },
+    {
+      "title": "The Origin of Species",
+      "authors": "Charles Darwin"
+    },
+    {
+      "title": "The Life and Times of the Thunderbolt Kid",
+      "authors": "Bill Bryson"
+    },
+    {
+      "title": "Make Your Bed",
+      "authors": "William H. McRaven"
+    },
+    {
+      "title": "Grit",
+      "authors": "Angela Duckworth"
+    },
+    {
+      "title": "The Almanack of Naval Ravikant",
+      "authors": "Eric Jorgenson (editor); Naval Ravikant (ideas)"
+    },
+    {
+      "title": "Shantaram",
+      "authors": "Gregory David Roberts"
+    },
+    {
+      "title": "Thinking, Fast and Slow",
+      "authors": "Daniel Kahneman"
+    },
+    {
+      "title": "Dune",
+      "authors": "Frank Herbert"
+    },
+    {
+      "title": "The $100 Startup",
+      "authors": "Chris Guillebeau"
+    },
+    {
+      "title": "Getting to Yes",
+      "authors": "Roger Fisher; William Ury; Bruce Patton"
+    },
+    {
+      "title": "Recursion",
+      "authors": "Blake Crouch"
+    },
+    {
+      "title": "For Love and Honour",
+      "authors": "Anand Ranganathan"
+    },
+    {
+      "title": "Steve Jobs",
+      "authors": "Walter Isaacson"
+    },
+    {
+      "title": "A Short History of Nearly Everything",
+      "authors": "Bill Bryson"
+    },
+    {
+      "title": "Tools of Titans",
+      "authors": "Timothy Ferriss"
+    },
+    {
+      "title": "Same as Ever",
+      "authors": "Morgan Housel"
+    },
+    {
+      "title": "The Intelligent Investor",
+      "authors": "Benjamin Graham"
+    },
+    {
+      "title": "Wild Problems",
+      "authors": "Russ Roberts"
+    },
+    {
+      "title": "The Richest Man in Babylon",
+      "authors": "George S. Clason"
+    },
+    {
+      "title": "The Invisible Man",
+      "authors": "H. G. Wells"
+    },
+    {
+      "title": "The Diary of a Young Girl",
+      "authors": "Anne Frank"
+    },
+    {
+      "title": "She Stood by Me",
+      "authors": "Tarun Vikash"
+    },
+    {
+      "title": "Asura: Tale of the Vanquished",
+      "authors": "Anand Neelakantan"
+    },
+    {
+      "title": "The Compound Effect",
+      "authors": "Darren Hardy"
+    },
+    {
+      "title": "Mindset",
+      "authors": "Carol S. Dweck"
+    },
+    {
+      "title": "Rework",
+      "authors": "Jason Fried; David Heinemeier Hansson"
+    },
+    {
+      "title": "The Lean Startup",
+      "authors": "Eric Ries"
+    },
+    {
+      "title": "How the World Really Works",
+      "authors": "Vaclav Smil"
+    },
+    {
+      "title": "Beautiful World, Where Are You",
+      "authors": "Sally Rooney"
+    },
+    {
+      "title": "Maths Sutra",
+      "authors": "Gaurav Tekriwal"
+    },
+    {
+      "title": "Digital Minimalism",
+      "authors": "Cal Newport"
+    },
+    {
+      "title": "Linchpin",
+      "authors": "Seth Godin"
+    },
+    {
+      "title": "The 80/20 Principle",
+      "authors": "Richard Koch"
+    },
+    {
+      "title": "Good Economics for Hard Times",
+      "authors": "Abhijit V. Banerjee; Esther Duflo"
+    },
+    {
+      "title": "Flow: The Psychology of Optimal Experience",
+      "authors": "Mihaly Csikszentmihalyi"
+    },
+    {
+      "title": "Outliers",
+      "authors": "Malcolm Gladwell"
+    },
+    {
+      "title": "The Time Machine",
+      "authors": "H. G. Wells"
+    },
+    {
+      "title": "Orbital",
+      "authors": "Samantha Harvey"
+    },
+    {
+      "title": "Relativity",
+      "authors": "Albert Einstein"
+    },
+    {
+      "title": "12 Rules for Life",
+      "authors": "Jordan B. Peterson"
+    },
+    {
+      "title": "Surrounded by Idiots",
+      "authors": "Thomas Erikson"
+    },
+    {
+      "title": "More Puzzles",
+      "authors": "Shakuntala Devi"
+    },
+    {
+      "title": "World's Greatest Books for Growth, Wealth and Success",
+      "authors": "Joseph Murphy; Napoleon Hill; Dale Carnegie"
+    },
+    {
+      "title": "Deep Work",
+      "authors": "Cal Newport"
+    },
+    {
+      "title": "An Abundance of Katherines",
+      "authors": "John Green"
+    },
+    {
+      "title": "30 Days to Better English",
+      "authors": "Norman Lewis"
+    },
+    {
+      "title": "The Martian",
+      "authors": "Andy Weir"
+    },
+    {
+      "title": "The Courage to Be Disliked",
+      "authors": "Ichiro Kishimi; Fumitake Koga"
+    },
+    {
+      "title": "1984 & Animal Farm",
+      "authors": "George Orwell"
+    }
+  ]
+}
