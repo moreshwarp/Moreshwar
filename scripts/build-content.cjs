@@ -174,6 +174,7 @@ function build(outPath){
  for(const [name,html] of Object.entries(pieces)){
   const start='<!--'+name+'_BEGIN-->',end='<!--'+name+'_END-->';
   const a=index.indexOf(start),z=index.indexOf(end);
+  if(a<0&&z<0){console.log('Homepage editorial mode: skipping optional legacy section '+name);continue;}
   if(a<0||z<a||index.indexOf(start,a+1)!==-1||index.indexOf(end,z+1)!==-1)
     throw Error('Missing or repeated build markers '+name);
   index=index.slice(0,a+start.length)+html+index.slice(z);
