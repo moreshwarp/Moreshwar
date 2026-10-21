@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light"><title>Editorial System · Moreshwar Research Lab · Review Only</title>
+<meta name="description" content="Review-only visual reference for a consistent monochrome research journal design system.">
+<link rel="stylesheet" href="editorial-design-system.css">
+<style>
+.mrl-swatch-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.mrl-swatch{min-height:110px;padding:12px;border:1px solid var(--line);font-size:12px;display:flex;flex-direction:column;justify-content:space-between}
+.mrl-swatch code{font-size:11px}
+.mrl-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0}
+.mrl-controls .mrl-field{max-width:320px}
+.mrl-illustration{display:block;aspect-ratio:3/1;background:var(--soft);border:1px solid var(--line);overflow:hidden}
+.mrl-illustration svg{width:100%;height:100%;display:block}
+.mrl-spec{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.mrl-spec p{font-size:14px;color:var(--muted)}
+.mrl-note{padding:14px 18px;border-left:3px solid var(--ink);background:var(--soft);font-size:13px}
+@media(max-width:750px){.mrl-swatch-grid{grid-template-columns:repeat(3,1fr)}.mrl-spec{grid-template-columns:1fr}.mrl-illustration{aspect-ratio:2/1}}
+@media(max-width:480px){.mrl-swatch-grid{grid-template-columns:repeat(2,1fr)}.mrl-controls .mrl-field{max-width:none}}
+</style>
+</head>
+<body>
+<a class="mrl-skip" href="#content">Skip to content</a>
+<div class="mrl-review-banner">DESIGN REVIEW ONLY · Not approved for deployment</div>
+<header class="mrl-header"><div class="mrl-container mrl-header-inner">
+<a class="mrl-brand" href="studio.html">MORESHWAR<small>RESEARCH LAB</small></a>
+<nav class="mrl-nav" aria-label="Review navigation"><a href="studio.html">Magazine</a><a href="reading-archive.html">Archive</a><a aria-current="page" href="#content">Design system</a></nav>
+</div></header>
+<main id="content" class="mrl-container">
+<section class="mrl-intro"><div class="mrl-eyebrow">One system · All pages · Review iteration 01</div><h1 class="mrl-display">Less noise.<br>More thinking.</h1><p>A shared visual language for the magazine, article archive, research notes and reading experience. The goal is to reduce scrolling while making every interaction predictable.</p></section>
+<section class="mrl-section" aria-labelledby="visual-heading"><div class="mrl-section-heading"><h2 class="mrl-heading" id="visual-heading">Original illustration language</h2><span class="mrl-eyebrow">Monochrome / geometric</span></div>
+<div class="mrl-illustration" role="img" aria-label="Original monochrome illustration showing a paper, an open door and an orbiting research idea"><svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="900" height="300" fill="#f0f0ed"/><path d="M35 260V40h145v220" fill="#d9d9d5" stroke="#151515" stroke-width="2"/><path d="M62 260V68h92v192" fill="#151515"/><path d="M80 260V89h56v171" fill="#fafaf8"/><circle cx="420" cy="150" r="107" fill="none" stroke="#151515" stroke-width="2"/><circle cx="420" cy="150" r="65" fill="none" stroke="#151515" stroke-width="2"/><circle cx="420" cy="150" r="21" fill="#151515"/><path d="M604 46h194v209H604z" fill="#fff" stroke="#151515" stroke-width="2"/><path d="M630 85h139M630 105h139M630 125h112M630 145h139M630 165h94M630 185h139M630 205h113" stroke="#656565" stroke-width="3"/><path d="M0 260h900" stroke="#151515" stroke-width="2"/></svg></div></section>
+<section class="mrl-section" aria-labelledby="components-heading"><div class="mrl-section-heading"><h2 class="mrl-heading" id="components-heading">Published ideas, immediately visible</h2><a href="reading-archive.html" style="font-size:13px;font-weight:650">View all 22 essays ↗</a></div>
+<div class="mrl-grid">
+<a class="mrl-card" href="https://moreshwarp.github.io/Moreshwar/articles/183772820-the-secret-link-between-sounding.html"><span class="mrl-eyebrow">Essay · Jan 2026</span><h3>The Secret Link Between “Sounding Good” and “Being Right”</h3><p>Notes on the relationship between clear writing and clear thinking.</p><span class="mrl-card-foot">Read published essay ↗</span></a>
+<a class="mrl-card" href="https://moreshwarp.github.io/Moreshwar/articles/180980837-why-competition-is-for-losers-a-rational.html"><span class="mrl-eyebrow">Essay · Dec 2025</span><h3>Why Competition Is for Losers</h3><p>A rational analysis of value and monopoly.</p><span class="mrl-card-foot">Read published essay ↗</span></a>
+<a class="mrl-card" href="https://moreshwarp.github.io/Moreshwar/articles/165015692-chaos-monkey-25-06-02.html"><span class="mrl-eyebrow">Essay · Jun 2025</span><h3>Chaos Monkey?</h3><p>How reliability engineering helps keep internet services running.</p><span class="mrl-card-foot">Read published essay ↗</span></a>
+</div></section>
+<section class="mrl-section" aria-labelledby="system-heading"><div class="mrl-section-heading"><h2 class="mrl-heading" id="system-heading">Design tokens and interactions</h2><span class="mrl-eyebrow">Reusable across pages</span></div>
+<div class="mrl-swatch-grid" aria-label="Approved color tokens">
+<div class="mrl-swatch" style="background:#fafaf8"><b>Paper</b><code>#FAFAF8</code></div>
+<div class="mrl-swatch" style="background:#fff"><b>Surface</b><code>#FFFFFF</code></div>
+<div class="mrl-swatch" style="background:#151515;color:#fff"><b>Ink</b><code>#151515</code></div>
+<div class="mrl-swatch" style="background:#656565;color:#fff"><b>Muted</b><code>#656565</code></div>
+<div class="mrl-swatch" style="background:#f0f0ed"><b>Soft</b><code>#F0F0ED</code></div>
+</div>
+<div class="mrl-controls"><a class="mrl-button" href="reading-archive.html">Explore archive ↗</a><a class="mrl-button mrl-button-secondary" href="studio.html">Return to magazine ↗</a><label for="example-search" class="mrl-eyebrow">Input</label><input class="mrl-field" id="example-search" type="text" placeholder="Keyboard-accessible field (sample)" aria-describedby="example-note"></div>
+<div class="mrl-note" id="example-note">This is a component review, not a new search feature. Use the archive for functional search. All new styles use shared CSS tokens; no existing published articles were changed.</div></section>
+<section class="mrl-section" aria-labelledby="reading-heading"><h2 class="mrl-heading" id="reading-heading">Reading must remain comfortable</h2><div class="mrl-spec"><div class="mrl-reading"><p>Compact discovery and generous reading space are different design problems. The first screen should show useful choices. Once a reader opens an article, typography should support sustained attention.</p></div><div><div class="mrl-eyebrow">Consistent rules</div><p>UI uses the system sans-serif stack. Headlines use a restrained editorial serif. Spacing follows shared tokens; cards and borders follow one reusable treatment.</p><p>Responsive grid: three columns on desktop, two on tablet, one on small screens. Motion respects reduced-motion settings.</p></div></div></section>
+</main><footer class="mrl-container mrl-footer">Moreshwar Research Lab · Draft PR #39 · Review only · No live deployment</footer>
+</body></html>
