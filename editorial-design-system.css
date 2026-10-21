@@ -96,7 +96,7 @@ body .tools :is(input,select){border-radius:var(--radius)}
   body .topics .topic-grid{
     display:grid;
     grid-auto-flow:column;
-    grid-auto-columns:minmax(172px,68vw);
+    grid-auto-columns:minmax(160px,44vw);
     grid-template-columns:none;
     gap:var(--space-2);
     overflow-x:auto;
