@@ -264,3 +264,14 @@ body:has(.topic-grid) :is(#topics,#stories,#essays){scroll-margin-top:78px}
   body:has(.topic-grid) .topics{padding-block:16px 24px}
   body:has(.topic-grid) .featured{padding-block:22px}
 }
+
+/* Shared magazine reading rhythm: retain full essay titles and accessible targets. */
+body:has(.topic-grid) .feature-grid{gap:clamp(16px,2.5vw,28px)}
+body:has(.topic-grid) .feature-copy h3{font-family:var(--font-editorial);font-size:clamp(26px,3vw,43px);line-height:1.14;margin-block:9px 12px}
+body:has(.topic-grid) .feature-copy p{line-height:1.55;margin-block:8px}
+body:has(.topic-grid) .feature-copy .meta{margin-top:12px}
+@media(max-width:600px){
+  body:has(.topic-grid) .feature-grid{gap:12px}
+  body:has(.topic-grid) .feature-art{aspect-ratio:2.25}
+  body:has(.topic-grid) .feature-copy h3{font-size:clamp(25px,7vw,34px)}
+}
