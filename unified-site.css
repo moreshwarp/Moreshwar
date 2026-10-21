@@ -13,3 +13,21 @@ body .mrl-review-banner,body .review{display:none!important}
 body .mrl-nav a,body .nav a{min-height:40px;display:inline-flex;align-items:center}
 @media(max-width:650px){body .mrl-header-inner,body .top-inner{gap:12px}body .mrl-nav{display:flex;flex-wrap:wrap;gap:8px 14px}body .mrl-nav a{font-size:12px}body .intro h1{overflow-wrap:break-word}body .wrap,body .shell{max-width:100%}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body *{transition:none!important}}
+
+/* Material-inspired clarity: consistent scale, surfaces, responsive touch targets. */
+:root{--paper:#f8fafc;--surface:#fff;--ink:#202124;--muted:#5f6368;--line:#dadce0;--focus:#1a73e8;--font-ui:Arial,Helvetica,sans-serif;--max-width:1160px;--gutter:clamp(18px,4vw,48px)}
+body{background:var(--paper)!important;color:var(--ink)!important;font-family:Arial,Helvetica,sans-serif}
+body .shell,body .wrap{width:min(1160px,calc(100% - 2 * clamp(18px,4vw,48px)));margin-inline:auto}
+body :is(h1,h2,h3){text-wrap:balance}
+body :is(.top,.mrl-header){background:rgba(248,250,252,.96);border-bottom:1px solid var(--line);position:relative;z-index:10}
+body :is(.brand,.mrl-brand){color:#202124;letter-spacing:-.035em}
+body :is(.nav,.mrl-nav){gap:clamp(10px,2vw,24px)}
+body :is(.nav,.mrl-nav) a{font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:600;letter-spacing:.015em;text-transform:none;min-height:44px;display:inline-flex;align-items:center;white-space:nowrap}
+body :is(.nav,.mrl-nav) a:hover{color:#1967d2;text-decoration:none;opacity:1}
+body :is(.story,.topic,.article){border-radius:12px;overflow:hidden}
+body :is(.story,.topic,.article):focus-within{outline:2px solid #1a73e8;outline-offset:2px}
+body :is(button,input,select){font-family:Arial,Helvetica,sans-serif}
+body :is(button,.primary,.search,.shelf-toggle){min-height:44px}
+body .review,body .mrl-review-banner{display:none!important}
+@media(max-width:760px){body .shell,body .wrap{width:calc(100% - 32px)}body .top .shell,body .top-inner,body .mrl-header-inner{height:auto;min-height:68px;flex-wrap:wrap;padding-block:12px}body .mrl-nav{width:100%;overflow-x:auto;flex-wrap:nowrap!important;gap:18px;padding-bottom:3px;scrollbar-width:thin}body .mrl-nav a{flex:0 0 auto}body .intro{max-width:100%}body .grid,body .article-grid,body .topic-grid{max-width:100%}body img,body svg{max-width:100%}}
+@media(max-width:380px){body .mrl-brand,body .brand{font-size:20px}}
