@@ -275,3 +275,9 @@ body:has(.topic-grid) .feature-copy .meta{margin-top:12px}
   body:has(.topic-grid) .feature-art{aspect-ratio:2.25}
   body:has(.topic-grid) .feature-copy h3{font-size:clamp(25px,7vw,34px)}
 }
+
+/* Shared review discovery controls: keep archive search within reach on desktop. */
+@media(min-width:851px){
+  body .tools:has(#q):has(#year){position:sticky;top:62px;z-index:4;background:var(--paper);border-bottom:1px solid var(--line)}
+}
+body :is(.topic,.story,.article,.mrl-card):focus-visible{outline:var(--focus-ring-width) solid var(--focus);outline-offset:3px}
