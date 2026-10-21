@@ -11,6 +11,7 @@
   --space-1:.5rem;--space-2:.75rem;--space-3:1rem;--space-4:1.5rem;
   --space-5:2rem;--space-6:3rem;--radius:2px;
   --max-width:1160px;--gutter:24px;
+  --header-height:62px;--header-height-mobile:58px;--tap-target:44px;
   --focus-ring-width:3px;--reading-measure:70ch;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -25,10 +26,12 @@ img,svg{max-width:100%}
 .mrl-container{width:min(var(--max-width),calc(100% - 2*var(--gutter)));margin-inline:auto}
 .mrl-review-banner{background:var(--ink);color:#fff;text-align:center;font-size:var(--step-xs);letter-spacing:.06em;padding:8px 12px}
 .mrl-header{position:sticky;top:0;z-index:10;background:rgba(250,250,248,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.mrl-header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:60px}
-.mrl-brand{font-size:19px;font-weight:760;letter-spacing:-.06em;line-height:1.1}
-.mrl-brand small{display:block;font-size:10px;letter-spacing:.12em;color:var(--muted)}
-.mrl-nav{display:flex;align-items:center;gap:22px;font-size:13px}
+.mrl-header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:var(--header-height)}
+.mrl-brand{flex-shrink:0;font-size:19px;font-weight:760;letter-spacing:-.06em;line-height:1.1;white-space:nowrap}
+.mrl-brand :is(small,span){display:block;font-size:10px;font-weight:600;letter-spacing:.12em;line-height:1.15;color:var(--muted)}
+.mrl-nav{display:flex;align-items:center;gap:var(--space-4);min-width:0;font-size:13px}
+.mrl-nav a{display:inline-flex;align-items:center;min-height:var(--tap-target);white-space:nowrap}
+.mrl-header-action{min-height:var(--tap-target)}
 .mrl-nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
 .mrl-eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .mrl-display{font:400 clamp(42px,6vw,76px)/1.02 var(--font-editorial);letter-spacing:-.055em;margin:10px 0 12px}
@@ -54,7 +57,7 @@ img,svg{max-width:100%}
 .mrl-skip{position:fixed;top:-100px;left:12px;padding:10px;background:var(--ink);color:#fff;z-index:50}
 .mrl-skip:focus{top:12px}
 @media(max-width:850px){.mrl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mrl-nav{gap:12px}}
-@media(max-width:600px){:root{--gutter:16px}.mrl-header-inner{min-height:56px}.mrl-nav{gap:10px}.mrl-nav a{font-size:12px}.mrl-display{font-size:clamp(40px,12vw,60px)}.mrl-intro{padding:24px 0 20px}.mrl-grid{grid-template-columns:1fr;gap:10px}.mrl-card{min-height:130px;padding:16px}.mrl-section{padding:24px 0}}
+@media(max-width:600px){:root{--gutter:16px}.mrl-header-inner{min-height:var(--header-height-mobile)}.mrl-nav{gap:10px;overflow-x:auto;scrollbar-width:thin}.mrl-nav a{font-size:12px}.mrl-display{font-size:clamp(40px,12vw,60px)}.mrl-intro{padding:24px 0 20px}.mrl-grid{grid-template-columns:1fr;gap:10px}.mrl-card{min-height:130px;padding:16px}.mrl-section{padding:24px 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mrl-card{transition:none}}
 
 /* Review-only bridge for legacy magazine and archive components.
