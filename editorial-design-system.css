@@ -29,10 +29,10 @@ img,svg{max-width:100%}
 .mrl-header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:var(--header-height)}
 .mrl-brand{flex-shrink:0;font-size:19px;font-weight:760;letter-spacing:-.06em;line-height:1.1;white-space:nowrap}
 .mrl-brand :is(small,span){display:block;font-size:10px;font-weight:600;letter-spacing:.12em;line-height:1.15;color:var(--muted)}
-.mrl-nav{display:flex;align-items:center;gap:var(--space-4);min-width:0;font-size:13px}
-.mrl-nav a{display:inline-flex;align-items:center;min-height:var(--tap-target);white-space:nowrap}
+.mrl-nav{display:flex;align-items:center;justify-content:flex-end;flex:1 1 auto;gap:var(--space-4);min-width:0;font-size:13px}
+.mrl-nav a{display:inline-flex;align-items:center;min-height:var(--tap-target);white-space:nowrap;text-underline-offset:5px}
 .mrl-header-action{min-height:var(--tap-target)}
-.mrl-nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
+.mrl-nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
 .mrl-eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .mrl-display{font:400 clamp(42px,6vw,76px)/1.02 var(--font-editorial);letter-spacing:-.055em;margin:10px 0 12px}
 .mrl-heading{font:400 clamp(27px,3.2vw,42px)/1.12 var(--font-editorial);letter-spacing:-.04em;margin:0}
@@ -57,7 +57,7 @@ img,svg{max-width:100%}
 .mrl-skip{position:fixed;top:-100px;left:12px;padding:10px;background:var(--ink);color:#fff;z-index:50}
 .mrl-skip:focus{top:12px}
 @media(max-width:850px){.mrl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mrl-nav{gap:12px}}
-@media(max-width:600px){:root{--gutter:16px}.mrl-header-inner{min-height:var(--header-height-mobile)}.mrl-nav{gap:10px;overflow-x:auto;scrollbar-width:thin}.mrl-nav a{font-size:12px}.mrl-display{font-size:clamp(40px,12vw,60px)}.mrl-intro{padding:24px 0 20px}.mrl-grid{grid-template-columns:1fr;gap:10px}.mrl-card{min-height:130px;padding:16px}.mrl-section{padding:24px 0}}
+@media(max-width:600px){:root{--gutter:16px}.mrl-header-inner{min-height:var(--header-height-mobile)}.mrl-brand{font-size:16px}.mrl-brand :is(small,span){font-size:9px}.mrl-nav{gap:10px;overflow-x:auto;scrollbar-width:thin}.mrl-nav a{font-size:12px}.mrl-display{font-size:clamp(40px,12vw,60px)}.mrl-intro{padding:24px 0 20px}.mrl-grid{grid-template-columns:1fr;gap:10px}.mrl-card{min-height:130px;padding:16px}.mrl-section{padding:24px 0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mrl-card{transition:none}}
 
 /* Review-only bridge for legacy magazine and archive components.
