@@ -133,6 +133,8 @@ function pickCard(item){
 function build(outPath){
  const out=path.resolve(ROOT,outPath||'_site');
  fs.mkdirSync(out,{recursive:true});
+ // Include the shared stylesheet required by the journal, archive, and studio.
+ fs.copyFileSync(path.join(ROOT,'unified-site.css'),path.join(out,'unified-site.css'));
  const settings=settingsOK(load('data/site-settings.json'));
  const recommendations=load('data/recommendations.json');
  if(!Array.isArray(recommendations))throw Error('Recommendations must be a list');
