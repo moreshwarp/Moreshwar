@@ -6,7 +6,7 @@ test('QA and deployment share a complete public fixture',()=>{
   prepare(out);
   for(const page of ['index.html','studio.html','reading-archive.html']){
    const html=fs.readFileSync(path.join(out,page),'utf8');
-   for(const match of html.matchAll(/(?:href|src)="([^"#]+)"/g)){
+   for(const match of html.matchAll(/(?:href|src)="([^"]+)"/g)){
     const url=new URL(match[1],'https://fixture.invalid/'+page);
     if(url.origin!=='https://fixture.invalid')continue;
     const target=path.join(out,decodeURIComponent(url.pathname));
