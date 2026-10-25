@@ -5,7 +5,7 @@ const path=require('node:path');
 const root=path.join(__dirname,'..');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8');
 const data=JSON.parse(read('data/science-cabinet.json'));
-const html=read('index.html');
+const html=read('classic.html');
 const script=read('science-ideas.js');
 const css=read('science-ideas.css');
 
