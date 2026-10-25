@@ -26,7 +26,7 @@ test('all 3 systems research notes and models remain present',()=>{
 });
 test('canonical URL and actual GitHub Pages case are correct',()=>{
  assert.match(form,/name="_next" value="https:\/\/moreshwarp\.github\.io\/Moreshwar\/message-received\.html"/);
- assert.match(read('message-received.html'),/href="\.\/#writing"/);
+ assert.match(read('message-received.html'),/href="\.\/reading-archive\.html"/);
  assert.match(html,/href="experience\.css\?v=/);
 });
 test('contact uses plain browser POST and a reachable confirmation page',()=>{
