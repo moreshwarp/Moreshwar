@@ -23,11 +23,15 @@ jobs:
       - name: Prepare published fixture
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html _site/
+          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html bookshelf.json studio.html reading-archive.html editorial-design-system.css unified-site.css classic.html _site/
           cp -R assets/. _site/assets/
           cp -R articles _site/
           mkdir -p _site/data
           cp data/science-cabinet.json _site/data/science-cabinet.json
+          test -s _site/unified-site.css
+          test -s _site/bookshelf.json
+          test -s _site/reading-archive.html
+          test -s _site/classic.html
           node scripts/build-content.cjs _site
           python3 scripts/build_catalog.py --output _site/data/research-catalog.json
       - name: Run static site server

@@ -6,7 +6,7 @@ const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const {fanOutRisk,protocols}=require('../inquiry.js');
-const h=read('index.html'),css=read('inquiry.css'),method=read('RESEARCH_METHOD.md');
+const h=read('classic.html'),css=read('inquiry.css'),method=read('RESEARCH_METHOD.md');
 test('exact independent fan-out probability matches known example',()=>{
  assert.ok(Math.abs(fanOutRisk(8,.05)-.33657956871093775)<1e-12);
  assert.ok(Math.abs(fanOutRisk(1,.05)-.05)<1e-12);

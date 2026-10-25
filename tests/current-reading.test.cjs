@@ -5,7 +5,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8');
-const html=read('index.html'),css=read('styles.css');
+const html=read('classic.html'),css=read('styles.css');
 
 const feature=html.match(/<!-- BEGIN owner-curated-currently-reading -->([\s\S]*?)<!-- END owner-curated-currently-reading -->/)?.[1]||'';
 

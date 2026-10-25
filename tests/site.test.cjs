@@ -6,7 +6,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8');
-const html=read('index.html');
+const html=read('classic.html');
 const app=read('app.js');
 const contact=read('contact.js');
 const experience=read('experience.css');

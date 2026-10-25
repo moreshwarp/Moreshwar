@@ -8,7 +8,7 @@ test('all ten cinematic/scientific palettes remain implemented',()=>{
 });
 test('theme selection is repo-published rather than visitor-selectable',()=>{
  assert.ok(themes.includes(config.theme));assert.ok(['light','dark'].includes(config.brightness));
- const html=read('index.html');
+ const html=read('classic.html');
  assert.doesNotMatch(html,/data-universe-select=|id="theme-toggle"|id="universe-trigger"/);
  assert.match(html,/publisher\.css/);
 });

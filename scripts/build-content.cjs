@@ -115,11 +115,11 @@ function articlePage(post){
  '<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">'+
  '<link rel="stylesheet" href="../reader-theme.css?v=publisher-20261015"><link rel="stylesheet" href="../editorial.css?v=publisher-20261015">'+
  '<script src="../site-settings.js"></script></head><body>'+
- '<header class="top shell"><a class="brand" href="../index.html#home">m<span>.</span> / LAB</a><nav><a href="../index.html#writing">Writing</a><a href="../index.html#library">Library</a><a href="../index.html#contact">Contact</a></nav></header>'+
+ '<header class="top shell"><a class="brand" href="../index.html#home">m<span>.</span> / LAB</a><nav><a href="../reading-archive.html">Writing</a><a href="../index.html#bookshelf">Library</a><a href="../classic.html#contact">Contact</a></nav></header>'+
  '<main class="shell"><header class="editorial-heading"><span class="editorial-kicker">MORESHWAR / PUBLISHED RESEARCH NOTEBOOK · '+esc(category.toUpperCase())+'</span>'+
  '<h1>'+esc(title)+'</h1><p class="editorial-summary">'+esc(summary)+'</p>'+
  '<div class="editorial-byline"><strong>Moreshwar Pidadi</strong><time datetime="'+esc(date)+'">'+esc(date)+'</time><span>INDEPENDENT WRITING</span></div></header>'+
- '<article class="editorial-article">'+markdown(post.body)+'</article><footer class="editorial-back"><a href="../index.html#writing">← More writing from Moreshwar</a></footer></main></body></html>';
+ '<article class="editorial-article">'+markdown(post.body)+'</article><footer class="editorial-back"><a href="../reading-archive.html">← More writing from Moreshwar</a></footer></main></body></html>';
 }
 function pickCard(item){
  const url=allowedUrl(item.url);if(!url)return '';
@@ -133,6 +133,8 @@ function pickCard(item){
 function build(outPath){
  const out=path.resolve(ROOT,outPath||'_site');
  fs.mkdirSync(out,{recursive:true});
+ // Include the shared stylesheet required by the journal, archive, and studio.
+ fs.copyFileSync(path.join(ROOT,'unified-site.css'),path.join(out,'unified-site.css'));
  const settings=settingsOK(load('data/site-settings.json'));
  const recommendations=load('data/recommendations.json');
  if(!Array.isArray(recommendations))throw Error('Recommendations must be a list');
