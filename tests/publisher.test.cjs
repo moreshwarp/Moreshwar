@@ -87,10 +87,14 @@ test('the publishing build preserves 25 legacy articles and excludes draft Markd
   assert.equal(result.legacy,25);
   assert.equal(result.published.length,0);
   const html=fs.readFileSync(path.join(directory,'index.html'),'utf8');
-  assert.match(html,/An intellectual field guide\./);
-  assert.match(html,/The Imitation Game/);
+  // The build keeps the compact journal homepage; legacy collections live in classic.html.
+  assert.match(html,/Moreshwar Journal/);
+  assert.match(html,/bookshelf\.json/);
   assert.doesNotMatch(html,/<!--THEME_PICKS-->/);
-  assert.equal((html.match(/<li><a href="articles\//g)||[]).length,22);
+  const classic=fs.readFileSync(path.join(root,'classic.html'),'utf8');
+  assert.match(classic,/An intellectual field guide\./);
+  assert.match(classic,/The Imitation Game/);
+  assert.equal((classic.match(/<li><a href="articles\//g)||[]).length,22);
   assert.ok(!fs.existsSync(path.join(directory,'articles','notes-example-draft.html')));
   const issue=fs.readFileSync(path.join(directory,'articles','fieldnote-queues.html'),'utf8');
   assert.match(issue,/data-issue="29"/);
