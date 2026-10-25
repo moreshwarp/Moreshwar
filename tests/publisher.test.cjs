@@ -7,7 +7,7 @@ const os=require('node:os');
 const root=path.resolve(__dirname,'..');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8');
 const engine=require('../scripts/build-content.cjs');
-const source=read('index.html'),settings=JSON.parse(read('data/site-settings.json'));
+const source=read('classic.html'),settings=JSON.parse(read('data/site-settings.json'));
 const picks=JSON.parse(read('data/recommendations.json'));
 test('one canonical public appearance is authored by repository owner',()=>{
  assert.deepEqual(engine.settingsOK(settings),settings);
@@ -103,14 +103,14 @@ test('the publishing build preserves 25 legacy articles and excludes draft Markd
 
 // Raw repository HTML must remain readable even if GitHub Pages accidentally serves the main branch.
 test('unprocessed source has no empty Curiosity Index placeholders',()=>{
-  const index=read('index.html');
+  const index=read('classic.html');
   for(const text of ['An intellectual field guide.','The Imitation Game','Designing Data-Intensive Applications','MIT Distributed Systems Lectures','The research thread'.toUpperCase()]){
     assert.ok(index.toUpperCase().includes(text.toUpperCase()),'Missing fallback '+text);
   }
   assert.doesNotMatch(index,/<!--PICK_HEADING-->|<!--PICK_INTRO-->|<!--THEME_PICKS-->|<!--CURRENT_UNIVERSE-->/);
 });
 test('publishing build still has paired replacement anchors',()=>{
-  const index=read('index.html');
+  const index=read('classic.html');
   for(const key of ['PICK_HEADING','PICK_INTRO','THEME_PICKS','CURRENT_UNIVERSE','PUBLISHED_POSTS']){
     assert.ok(index.includes('<!--'+key+'_BEGIN-->'));
     assert.ok(index.includes('<!--'+key+'_END-->'));
