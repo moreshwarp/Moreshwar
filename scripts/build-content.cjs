@@ -96,6 +96,14 @@ function community(issue){
 }
 function decorate(html,issue){
  let s=String(html);
+ // Imported article pages link to retired multi-section homepage anchors.
+ // Repair navigation only in the generated site: keep the archived source intact.
+ const legacyDestinations={
+  home:'../index.html',writing:'../reading-archive.html',
+  research:'../classic.html#systems-lab',contact:'../classic.html#contact'
+ };
+ s=s.replace(/\bhref=(["'])\.\.\/#(home|writing|research|contact)\1/g,
+  (_match,quote,section)=>'href='+quote+legacyDestinations[section]+quote);
  s=s.replace(/<script>try\{const saved=localStorage\.getItem\('moreshwar-theme-v1'\)[\s\S]*?<\/script>/g,'');
  s=s.replace(/<script defer src="\.\.\/theme\.js[^"]*"><\/script>/g,'');
  s=s.replace(/<script src="\.\.\/site-settings\.js"><\/script>/g,'');
@@ -115,7 +123,7 @@ function articlePage(post){
  '<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">'+
  '<link rel="stylesheet" href="../reader-theme.css?v=publisher-20261015"><link rel="stylesheet" href="../editorial.css?v=publisher-20261015">'+
  '<script src="../site-settings.js"></script></head><body>'+
- '<header class="top shell"><a class="brand" href="../index.html#home">m<span>.</span> / LAB</a><nav><a href="../reading-archive.html">Writing</a><a href="../index.html#bookshelf">Library</a><a href="../classic.html#contact">Contact</a></nav></header>'+
+ '<header class="top shell"><a class="brand" href="../index.html">m<span>.</span> / LAB</a><nav><a href="../reading-archive.html">Writing</a><a href="../index.html#bookshelf">Library</a><a href="../classic.html#contact">Contact</a></nav></header>'+
  '<main class="shell"><header class="editorial-heading"><span class="editorial-kicker">MORESHWAR / PUBLISHED RESEARCH NOTEBOOK · '+esc(category.toUpperCase())+'</span>'+
  '<h1>'+esc(title)+'</h1><p class="editorial-summary">'+esc(summary)+'</p>'+
  '<div class="editorial-byline"><strong>Moreshwar Pidadi</strong><time datetime="'+esc(date)+'">'+esc(date)+'</time><span>INDEPENDENT WRITING</span></div></header>'+

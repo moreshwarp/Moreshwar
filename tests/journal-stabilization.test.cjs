@@ -26,3 +26,27 @@ test('Pages packages shared styles and classic workspace',()=>{
  const workflow=read('.github/workflows/pages.yml');
  for(const asset of ['unified-site.css','classic.html','bookshelf.json','reading-archive.html'])assert.ok(workflow.includes(asset),asset);
 });
+
+test('secondary page links resolve to real destinations',()=>{
+ assert.ok(archive.includes('href="classic.html#systems-lab"'));
+ assert.ok(classic.includes('id="systems-lab"'));
+ const confirmation=read('message-received.html');
+ assert.ok(confirmation.includes('href="./reading-archive.html"'));
+ assert.ok(confirmation.includes('href="./classic.html#contact"'));
+ assert.ok(classic.includes('id="contact"'));
+ assert.ok(journal.includes('href="#bookshelf">Explore reading'));
+ assert.ok(journal.includes('href="#bookshelf">Visit the reading desk'));
+});
+test('published article navigation is fixed in build artifacts',()=>{
+ const {decorate,articlePage}=require('../scripts/build-content.cjs');
+ const files=fs.readdirSync(path.join(root,'articles')).filter(f=>f.endsWith('.html'));
+ for(const file of files){
+  const original=read('articles/'+file);
+  const built=decorate(original,0);
+  assert.doesNotMatch(built,/\bhref=["']\.\.\/#(?:home|writing|research|contact)["']/,
+   'obsolete navigation in '+file);
+ }
+ const fresh=articlePage({meta:{title:'Test',date:'2026-10-25',description:'',category:'Systems'},body:'Sample'});
+ assert.ok(fresh.includes('href="../index.html"'));
+ assert.doesNotMatch(fresh,/href="\.\.\/index\.html#home"/);
+});
