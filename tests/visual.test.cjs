@@ -1,7 +1,7 @@
 // Responsive scientific graphics and owner-only settings.
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'..'),read=x=>fs.readFileSync(path.join(root,x),'utf8');
-const html=read('index.html'),mobile=read('mobile-fix.css'),visual=read('visual-theme.css'),lens=read('visual.js');
+const html=read('classic.html'),mobile=read('mobile-fix.css'),visual=read('visual-theme.css'),lens=read('visual.js');
 test('scientific instrument remains visible and interactive',()=>{
  assert.match(html,/class="instrument-svg"/);assert.match(html,/id="instrument-surface"/);
  assert.match(html,/id="instrument-focus-title"/);assert.match(lens,/ArrowRight/);
