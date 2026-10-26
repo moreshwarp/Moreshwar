@@ -140,3 +140,104 @@ body .footer-inner{flex-wrap:wrap}
 /* Visible only for keyboard users; remains above sticky navigation. */
 body .mrl-skip{position:absolute;left:16px;top:-100px;z-index:9999;background:#176b56;color:#fff;border-radius:12px;padding:12px 18px;font-weight:700}
 body .mrl-skip:focus{top:12px}
+
+
+/* Editorial research identity — intentional departure from the previous card-based UI.
+   Inspired by Jigsaw's design principles, not copied artwork or branding. */
+:root{--paper:#f1f0e9;--surface:#f1f0e9;--ink:#171b18;--muted:#4d534e;--line:#bfc4ba;--mrl-paper:#f1f0e9;--mrl-ink:#171b18;--mrl-line:#bfc4ba;--mrl-accent:#c73e25;--focus:#145bff;--gutter:clamp(20px,4vw,64px)}
+body{background:#f1f0e9!important;color:#171b18!important;font-family:Arial,Helvetica,sans-serif}
+body :is(.top,.mrl-header){background:#f1f0e9;border-color:#171b18}
+body :is(.brand,.mrl-brand){font-family:Arial,Helvetica,sans-serif;font-weight:900;letter-spacing:-.075em;color:#171b18}
+body .brand small{font-size:9px;letter-spacing:.12em;font-weight:600}
+body :is(.nav,.mrl-nav) a{color:#171b18;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+body :is(.nav,.mrl-nav) a:hover{color:#bd381f}
+body .issue{border-color:#171b18;font-weight:800;font-size:10px;letter-spacing:.14em;padding-block:20px;color:#333b35}
+body .status-dot{display:inline-block;background:#d24b2b;width:8px;height:8px;border-radius:50%;margin-right:10px}
+body .hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);padding-block:clamp(48px,7vw,100px);align-items:stretch}
+body .hero>div:first-child{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+body .hero .eyebrow{font-size:11px;color:#bb4027;font-weight:800;letter-spacing:.13em}
+body .hero h1{font-family:Arial,Helvetica,sans-serif;font-weight:850;font-size:clamp(48px,5.4vw,92px);line-height:.99;letter-spacing:-.075em;color:#171b18;margin-block:22px 28px;max-width:11ch}
+body .hero p{font-family:Arial,Helvetica,sans-serif;font-size:clamp(16px,1.6vw,19px);line-height:1.55;color:#424943;max-width:45ch}
+body .read{background:#171b18;border-color:#171b18;border-radius:0;box-shadow:none;text-transform:uppercase;font-weight:800;letter-spacing:.08em;min-height:52px;padding-inline:22px}
+body .read:hover{background:#b83b26;border-color:#b83b26;transform:none}
+body .visual-editorial{min-height:540px;background:#e3e1d5!important;border-radius:0!important;box-shadow:none!important;position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;overflow:hidden;padding:28px}
+body .visual-editorial:before,body .visual-editorial:after{display:none!important}
+body .visual-editorial .visual-index,body .visual-editorial .visual-caption{position:relative;inset:auto;display:flex;justify-content:space-between;color:#292f2b;font:800 11px/1.4 Arial,Helvetica,sans-serif;letter-spacing:.1em;z-index:1}
+body .visual-editorial .visual-word{position:relative;inset:auto;color:#181b17;font:900 clamp(48px,6.7vw,110px)/.87 Arial,Helvetica,sans-serif;letter-spacing:-.1em;overflow-wrap:anywhere;z-index:1}
+body .visual-editorial .visual-word span{display:block;color:#c7462b;font-size:1.45em;line-height:.8;letter-spacing:-.08em}
+body .visual-editorial:hover .visual-word span{color:#a12e1c}
+body .below{border-color:#171b18;gap:clamp(28px,5vw,80px)}
+body .sectionhead{border-bottom:2px solid #171b18;padding-bottom:18px}
+body .sectionhead h2,body .section-head h2{font-family:Arial,Helvetica,sans-serif;font-weight:850;letter-spacing:-.065em}
+body .sectionhead a,body .section-head a{color:#b63c25;font-weight:800}
+body .article{border-radius:0!important;border-color:#bfc4ba}
+body .article h3{font-family:Arial,Helvetica,sans-serif;font-weight:750;letter-spacing:-.045em}
+body .books{border-color:#171b18}
+body .book{background:#c7462b;color:#fff;border:0;border-radius:0;box-shadow:8px 8px 0 #b9b8ac}
+body .books h3{font-family:Arial,Helvetica,sans-serif;font-weight:800;letter-spacing:-.05em}
+body .shelf{border-color:#171b18}
+body .shelf-toggle,body .primary{border-radius:0;background:#171b18;border-color:#171b18;box-shadow:none;text-transform:uppercase;letter-spacing:.07em}
+body .shelf-toggle:hover,body .primary:hover{background:#b83b26;border-color:#b83b26}
+body .shelf-panel{background:#e9e8df;border:1px solid #aeb3a9;border-radius:0;box-shadow:none}
+body .shelf-search,body .tools input,body .tools select{border-radius:0}
+body .story,body .topic,body .article-grid .article{border-radius:0;background:#eae9e1;box-shadow:none;transition:background .15s}
+body :is(.story,.topic,.article-grid .article):hover{transform:none;box-shadow:none;background:#e0dfd5}
+body .intro h1{font-family:Arial,Helvetica,sans-serif;font-weight:850;letter-spacing:-.075em}
+body .hero-art,body .feature-art{border-radius:0}
+body .menu{border:1px solid #171b18;border-radius:0;display:none;align-items:center;gap:14px;min-height:48px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+body .menu-bars{display:flex;flex-direction:column;gap:5px}
+body .menu-bars i{display:block;width:19px;height:2px;background:currentColor}
+body .menu-bars i:last-child{width:12px;margin-left:auto}
+@media(max-width:760px){
+ body .hero{grid-template-columns:1fr;padding-block:44px;gap:36px}
+ body .hero h1{font-size:clamp(48px,11vw,76px);max-width:12ch}
+ body .visual-editorial{min-height:390px;padding:22px}
+ body .visual-editorial .visual-word{font-size:clamp(54px,14vw,94px)}
+ body .menu{display:inline-flex}
+ body .nav{background:#f1f0e9;box-shadow:0 16px 24px #171b1814}
+ body .nav a{padding-block:12px}
+ body .mrl-nav a{border-radius:0;background:transparent;border-bottom:2px solid #bfc4ba}
+ body .below{gap:46px}
+}
+@media(max-width:380px){
+ body .visual-editorial{min-height:330px}
+ body .visual-editorial .visual-word{font-size:48px}
+ body .hero h1{font-size:44px}
+}
+
+
+/* Navigation affordances, editorial rhythm, and robust small-screen behavior. */
+body .mrl-header-action.menu-toggle{display:inline-flex;align-items:center;gap:12px;background:transparent;color:#171b18;border:1px solid #171b18;border-radius:0;min-height:46px;padding:10px 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+body .mrl-header-action.search{border-radius:0;background:#171b18;color:#fff;border:1px solid #171b18;box-shadow:none;text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:.07em}
+body .mrl-header-action.search:hover{background:#b83b26;border-color:#b83b26}
+body .mobile-sections:not([hidden]){background:#f1f0e9;border-bottom:2px solid #171b18}
+body .mobile-sections a{min-height:48px;display:flex;align-items:center;padding-inline:18px;font-weight:700}
+body .story small,body .article small{font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+body .story h2{font-family:Arial,Helvetica,sans-serif;font-weight:800;letter-spacing:-.045em}
+body .story span{font-weight:800;color:#ad3a25}
+body .tools{border-bottom:2px solid #171b18;margin-bottom:24px}
+body .tools label{font-weight:800;text-transform:uppercase;font-size:11px;letter-spacing:.09em}
+body .tools input,body .tools select{background:#fff;border:1px solid #777e75}
+body .count{font-weight:700}
+body .topic-art,body .feature-art,body .hero-art{filter:saturate(.75)}
+body .topic-info b{font-weight:800;letter-spacing:-.03em}
+body .topic-info span{color:#b63c25}
+body .feature-copy h3{font-family:Arial,Helvetica,sans-serif;font-weight:850;letter-spacing:-.065em}
+body .footer,body footer{border-top:1px solid #171b18}
+@media(max-width:760px){
+ body .mrl-header-inner{gap:10px}
+ body .mrl-header-action.menu-toggle{padding-inline:12px}
+ body .mrl-header-action.search{padding-inline:12px}
+ body .mobile-sections:not([hidden]){display:grid;grid-template-columns:1fr 1fr}
+ body .intro{padding-top:42px}
+ body .intro h1{font-size:clamp(44px,11vw,72px)}
+ body .tools{gap:10px}
+}
+@media(max-width:420px){
+ body .mrl-header-action.menu-toggle{font-size:11px}
+ body .mrl-header-action.search{font-size:11px}
+ body .mobile-sections:not([hidden]){grid-template-columns:1fr}
+ body .visual-editorial{padding:18px}
+ body .visual-editorial .visual-word{font-size:clamp(46px,13vw,65px)}
+ body .hero h1{font-size:clamp(40px,11vw,54px)}
+}
