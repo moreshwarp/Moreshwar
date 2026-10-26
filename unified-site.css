@@ -204,3 +204,40 @@ body .menu-bars i:last-child{width:12px;margin-left:auto}
  body .visual-editorial .visual-word{font-size:48px}
  body .hero h1{font-size:44px}
 }
+
+
+/* Navigation affordances, editorial rhythm, and robust small-screen behavior. */
+body .mrl-header-action.menu-toggle{display:inline-flex;align-items:center;gap:12px;background:transparent;color:#171b18;border:1px solid #171b18;border-radius:0;min-height:46px;padding:10px 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em}
+body .mrl-header-action.search{border-radius:0;background:#171b18;color:#fff;border:1px solid #171b18;box-shadow:none;text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:.07em}
+body .mrl-header-action.search:hover{background:#b83b26;border-color:#b83b26}
+body .mobile-sections:not([hidden]){background:#f1f0e9;border-bottom:2px solid #171b18}
+body .mobile-sections a{min-height:48px;display:flex;align-items:center;padding-inline:18px;font-weight:700}
+body .story small,body .article small{font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+body .story h2{font-family:Arial,Helvetica,sans-serif;font-weight:800;letter-spacing:-.045em}
+body .story span{font-weight:800;color:#ad3a25}
+body .tools{border-bottom:2px solid #171b18;margin-bottom:24px}
+body .tools label{font-weight:800;text-transform:uppercase;font-size:11px;letter-spacing:.09em}
+body .tools input,body .tools select{background:#fff;border:1px solid #777e75}
+body .count{font-weight:700}
+body .topic-art,body .feature-art,body .hero-art{filter:saturate(.75)}
+body .topic-info b{font-weight:800;letter-spacing:-.03em}
+body .topic-info span{color:#b63c25}
+body .feature-copy h3{font-family:Arial,Helvetica,sans-serif;font-weight:850;letter-spacing:-.065em}
+body .footer,body footer{border-top:1px solid #171b18}
+@media(max-width:760px){
+ body .mrl-header-inner{gap:10px}
+ body .mrl-header-action.menu-toggle{padding-inline:12px}
+ body .mrl-header-action.search{padding-inline:12px}
+ body .mobile-sections:not([hidden]){display:grid;grid-template-columns:1fr 1fr}
+ body .intro{padding-top:42px}
+ body .intro h1{font-size:clamp(44px,11vw,72px)}
+ body .tools{gap:10px}
+}
+@media(max-width:420px){
+ body .mrl-header-action.menu-toggle{font-size:11px}
+ body .mrl-header-action.search{font-size:11px}
+ body .mobile-sections:not([hidden]){grid-template-columns:1fr}
+ body .visual-editorial{padding:18px}
+ body .visual-editorial .visual-word{font-size:clamp(46px,13vw,65px)}
+ body .hero h1{font-size:clamp(40px,11vw,54px)}
+}
