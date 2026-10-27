@@ -241,3 +241,36 @@ body .footer,body footer{border-top:1px solid #171b18}
  body .visual-editorial .visual-word{font-size:clamp(46px,13vw,65px)}
  body .hero h1{font-size:clamp(40px,11vw,54px)}
 }
+
+
+/* Discoverability and touch-first editorial refinement */
+body .quick-paths{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-bottom:2px solid #171b18}
+body .quick-paths>a{display:flex;align-items:center;gap:16px;min-height:124px;padding:24px clamp(14px,2.4vw,32px);border-right:1px solid #aeb4aa;text-decoration:none;color:#171b18;transition:background .18s ease}
+body .quick-paths>a:first-child{padding-left:0}
+body .quick-paths>a:last-child{border-right:0}
+body .quick-paths>a:hover,body .quick-paths>a:focus-visible{background:#e2e2d8;text-decoration:none}
+body .quick-paths .quick-no{font-size:12px;color:#b5412a;font-weight:800;align-self:flex-start}
+body .quick-paths strong{display:block;font-size:clamp(16px,1.8vw,23px);letter-spacing:-.045em;line-height:1.15}
+body .quick-paths small{display:block;margin-top:9px;font-size:12px;line-height:1.5;color:#515951;max-width:22ch}
+body .quick-paths .quick-arrow{margin-left:auto;font-size:24px;align-self:flex-start;color:#a63a26}
+body .hero{padding-top:clamp(45px,6vw,88px)}
+body .hero h1{text-wrap:balance}
+body .sectionhead{gap:18px}
+body .sectionhead h2{text-wrap:balance}
+body .article{padding-block:20px;border-bottom:1px solid #aeb4aa}
+body .article h3 a{text-decoration-thickness:1px;text-underline-offset:4px}
+body .article h3 a:hover{color:#b5412a}
+body .menu[aria-expanded="true"]{background:#171b18;color:#f1f0e9}
+body .menu[aria-expanded="true"] .menu-bars i{background:#f1f0e9}
+body .nav.open{z-index:20}
+body :is(a,button,input,select):focus-visible{outline:3px solid #1556df!important;outline-offset:4px}
+@media(max-width:900px){
+ body .quick-paths{grid-template-columns:1fr}
+ body .quick-paths>a,body .quick-paths>a:first-child{min-height:90px;padding:16px 6px;border-right:0;border-bottom:1px solid #bfc4ba}
+ body .quick-paths>a:last-child{border-bottom:0}
+ body .quick-paths small{max-width:none}
+ body .quick-paths .quick-arrow{align-self:center}
+}
+@media(prefers-reduced-motion:reduce){
+ body .quick-paths>a,body .story,body .topic,body .article-grid .article{transition:none!important}
+}
