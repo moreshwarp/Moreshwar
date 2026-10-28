@@ -20,6 +20,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
        const response=await page.goto(new URL(route,base).href,{waitUntil:'load',timeout:45000});
        assert.equal(response.status(),200,route+' HTTP');
        const geom=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,body:document.body.scrollWidth}));
+       if(geom.scroll>geom.width+2||geom.body>geom.width+2){const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(el=>({tag:el.tagName,cls:typeof el.className==='string'?el.className.slice(0,100):'',left:Math.round(el.getBoundingClientRect().left),right:Math.round(el.getBoundingClientRect().right),scroll:el.scrollWidth})).filter(x=>x.right>document.documentElement.clientWidth+2||x.left< -2).slice(0,12));console.error('Overflow offenders '+route+' '+JSON.stringify(offenders));}
        assert.ok(geom.scroll<=geom.width+2&&geom.body<=geom.width+2,route+' overflow '+JSON.stringify(geom));
        assert.ok(await page.locator('main').count()>0,route+' missing main landmark');
        assert.deepEqual(errors,[],route+' JS errors');
