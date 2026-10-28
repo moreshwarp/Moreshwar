@@ -122,7 +122,11 @@ body.mrl-reboot{margin:0;background:var(--r-paper);color:var(--r-ink);font:16px/
  .mrl-reboot .method-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:740px){
- .mrl-reboot .header-inner{min-height:75px}
+ .mrl-reboot .header-inner{min-height:75px;gap:10px}
+ .mrl-reboot .brand-emblem{height:38px;width:38px;font-size:23px}
+ .mrl-reboot .brand-lockup{gap:9px}
+ .mrl-reboot .brand-name{font-size:14px}
+ .mrl-reboot .brand-name small{font-size:8px;letter-spacing:.12em}
  .mrl-reboot .nav-toggle{display:block}
  .mrl-reboot .header-nav{display:none;position:absolute;top:100%;left:0;right:0;padding:17px 22px 22px;background:var(--r-paper);border-bottom:1px solid var(--r-line);box-shadow:0 20px 25px #10261915;flex-direction:column;align-items:stretch;gap:0}
  .mrl-reboot .header-nav.open{display:flex}
