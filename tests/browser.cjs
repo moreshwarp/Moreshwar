@@ -20,6 +20,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
        const response=await page.goto(new URL(route,base).href,{waitUntil:'load',timeout:45000});
        assert.equal(response.status(),200,route+' HTTP');
        const geom=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,body:document.body.scrollWidth}));
+       if(geom.scroll>geom.width+2||geom.body>geom.width+2){const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(el=>({tag:el.tagName,cls:typeof el.className==='string'?el.className.slice(0,100):'',left:Math.round(el.getBoundingClientRect().left),right:Math.round(el.getBoundingClientRect().right),scroll:el.scrollWidth})).filter(x=>x.right>document.documentElement.clientWidth+2||x.left< -2).slice(0,12));console.error('Overflow offenders '+route+' '+JSON.stringify(offenders));}
        assert.ok(geom.scroll<=geom.width+2&&geom.body<=geom.width+2,route+' overflow '+JSON.stringify(geom));
        assert.ok(await page.locator('main').count()>0,route+' missing main landmark');
        assert.deepEqual(errors,[],route+' JS errors');
@@ -29,6 +30,29 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     }finally{await ctx.close()}
    });
   }
+  await check('reboot navigation, publishing assets and searchable archive',async()=>{
+   const page=await browser.newPage({viewport:{width:390,height:844}});
+   try{
+    await page.goto(base);
+    assert.ok(await page.locator('#hero-title').isVisible(),'new homepage hero missing');
+    for(const asset of ['favicon.svg','social-preview.png','research-method.svg','mrl-reboot.css']){
+      const response=await page.request.get(new URL(asset,base).href);
+      assert.equal(response.status(),200,'missing publish asset '+asset);
+    }
+    await page.locator('#menu').click();
+    assert.equal(await page.locator('#menu').getAttribute('aria-expanded'),'true');
+    assert.ok(await page.locator('#nav').isVisible());
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#menu').getAttribute('aria-expanded'),'false');
+    await page.goto(new URL('reading-archive.html',base).href);
+    await page.locator('#q').fill('competition');
+    assert.match(await page.locator('#count').innerText(),/essay/);
+    assert.ok(await page.locator('.story:visible').count()>=1);
+    await page.screenshot({path:path.join(artifacts,'archive-reboot-mobile.png'),fullPage:true});
+    await page.goto(new URL('studio.html',base).href);
+    await page.screenshot({path:path.join(artifacts,'studio-reboot-mobile.png'),fullPage:true});
+   }finally{await page.close()}
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{

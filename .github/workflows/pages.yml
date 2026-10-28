@@ -26,7 +26,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html bookshelf.json studio.html reading-archive.html editorial-style-guide.html editorial-design-system.css unified-site.css classic.html _site/
+          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html bookshelf.json studio.html reading-archive.html editorial-style-guide.html editorial-design-system.css unified-site.css mrl-reboot.css favicon.svg social-preview.svg social-preview.png research-method.svg classic.html _site/
           cp -R assets/. _site/assets/
           cp -R articles _site/
           mkdir -p _site/data
@@ -37,6 +37,9 @@ jobs:
           test -s _site/editorial-style-guide.html
           test -s _site/classic.html
           test -s _site/unified-site.css
+          test -s _site/mrl-reboot.css
+          test -s _site/social-preview.png
+          test -s _site/favicon.svg
           test -s _site/editorial-design-system.css
           touch _site/.nojekyll
       - name: Open new reader discussions (GitHub Issues)
