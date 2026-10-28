@@ -59,7 +59,7 @@ body.mrl-reboot{margin:0;background:var(--r-paper);color:var(--r-ink);font:16px/
 .mrl-reboot .section-title{font:normal clamp(41px,5vw,74px)/1.06 var(--r-serif);letter-spacing:-.057em;margin:0}
 .mrl-reboot .section-intro{font:16px/1.75 var(--r-sans);color:#5e6b61;max-width:540px}
 .mrl-reboot .section-top{display:flex;justify-content:space-between;align-items:end;gap:35px;margin-bottom:38px}
-.mrl-reboot .text-link{display:inline-flex;align-items:center;gap:15px;font-size:13px;font-weight:750;border-bottom:1px solid #9ba99d;padding-bottom:8px;white-space:nowrap;transition:color .2s}
+.mrl-reboot .text-link{display:inline-flex;align-items:center;gap:12px;font-size:13px;font-weight:750;border-bottom:1px solid #9ba99d;padding-bottom:8px;white-space:normal;overflow-wrap:anywhere;min-width:0;max-width:100%;transition:color .2s}
 .mrl-reboot .text-link:hover{color:#bc5437}
 .mrl-reboot .feature-grid{display:grid;grid-template-columns:1.37fr 1fr 1fr;gap:18px}
 .mrl-reboot .story-card{background:#fffef9;display:flex;flex-direction:column;border:1px solid var(--r-line);overflow:hidden;min-width:0;transition:transform .2s,box-shadow .2s}
