@@ -43,3 +43,22 @@ test('legacy lab remains accessible and points to the real studio',()=>{
  assert.match(lab,/href="studio\.html"/);
  assert.doesNotMatch(lab,/design\/editorial-review-only-20261020\/studio\.html/);
 });
+
+test('editorial reference styling is original, accessible and published',()=>{
+ const html=read('index.html');
+ const css=read('atelier.css');
+ assert.match(html,/class="mrl-reboot mrl-reference"/);
+ assert.match(html,/href="atelier\.css"/);
+ assert.match(html,/class="at-hero"/);
+ assert.match(html,/class="at-feature"/);
+ assert.match(html,/class="at-method-grid"/);
+ assert.match(html,/aria-label="Primary navigation"/);
+ assert.match(html,/aria-controls="nav"/);
+ assert.match(css,/@media\(max-width:510px\)/);
+ assert.match(css, /prefers-reduced-motion:reduce/);
+ assert.match(css, /:focus-visible/);
+ assert.doesNotMatch(html, /anthropic\.com|Claude|ANTHROPIC/);
+ for(const page of ['studio.html','reading-archive.html'])assert.match(read(page),/href="atelier\.css"/);
+ for(const workflow of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml'])
+  assert.match(read(workflow),/atelier\.css/);
+});
