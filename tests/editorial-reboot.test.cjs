@@ -47,7 +47,7 @@ test('legacy lab remains accessible and points to the real studio',()=>{
 test('editorial reference styling is original, accessible and published',()=>{
  const html=read('index.html');
  const css=read('atelier.css');
- assert.match(html,/class="mrl-reboot mrl-reference"/);
+ assert.match(html,/class="mrl-reboot mrl-reference mrl-mobile"/);
  assert.match(html,/href="atelier\.css"/);
  assert.match(html,/class="at-hero"/);
  assert.match(html,/class="at-feature"/);
@@ -61,4 +61,37 @@ test('editorial reference styling is original, accessible and published',()=>{
  for(const page of ['studio.html','reading-archive.html'])assert.match(read(page),/href="atelier\.css"/);
  for(const workflow of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml'])
   assert.match(read(workflow),/atelier\.css/);
+});
+
+
+test('mobile-first UI is real on every journal entry page',()=>{
+ const home=read('index.html'),archive=read('reading-archive.html'),studio=read('studio.html');
+ for(const [name,html] of [['homepage',home],['archive',archive],['studio',studio]]){
+  assert.match(html,/mobile-first\.css/,name+' missing responsive styles');
+  assert.match(html,/mobile-first\.js/,name+' missing search script');
+  assert.match(html,/mrl-bottom-nav/,name+' missing mobile navigation');
+  assert.match(html,/data-mrl-search/,name+' missing usable search entry');
+  assert.match(html,/class="[^"]*mrl-mobile/,name+' missing mobile class');
+ }
+ assert.match(home,/mrl-jump-grid/);
+ assert.match(home,/href="index\.html#bookshelf"/);
+ assert.match(home,/href="reading-archive\.html"/);
+ assert.match(home,/href="studio\.html"/);
+ assert.match(archive,/data-mrl-query="netflix"/);
+ assert.match(archive,/data-mrl-query=""/);
+ const css=read('mobile-first.css'),script=read('mobile-first.js');
+ assert.match(css,/max-width:370px/);
+ assert.match(css,/min-width:761px/);
+ assert.match(css,/prefers-reduced-motion:reduce/);
+ assert.match(css,/safe-area-inset-bottom/);
+ assert.match(script,/new DOMParser/);
+ assert.match(script,/bookshelf\.json/);
+ assert.match(script,/aria-live/);
+ assert.doesNotMatch(script,/https:\/\/[^'"]+\.js/);
+ for(const workflow of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml']){
+  const content=read(workflow);
+  assert.ok(content.includes('mobile-first.css mobile-first.js'),workflow+' missing shipped assets');
+  assert.match(content,/test -s _site\/mobile-first\.css/);
+  assert.match(content,/test -s _site\/mobile-first\.js/);
+ }
 });
