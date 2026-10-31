@@ -68,7 +68,7 @@
  dialog.querySelector('.mrl-search-close').addEventListener('click',()=>dialog.close());
  dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close()});
  input.addEventListener('input',render);
- document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLocaleLowerCase()==='k'){event.preventDefault();if(dialog.open)dialog.close();else open()}});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&dialog.open){event.preventDefault();event.stopPropagation();dialog.close();return}if((event.ctrlKey||event.metaKey)&&event.key.toLocaleLowerCase()==='k'){event.preventDefault();if(dialog.open)dialog.close();else open()}},true);
  const archiveInput=document.getElementById('q');
  if(archiveInput){
   const initial=new URLSearchParams(location.search).get('q');
