@@ -72,6 +72,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     assert.match(await page.locator('.mrl-search-results').innerText(),/Pragmatic/i);
     await page.screenshot({path:path.join(artifacts,'mobile-search.png')});
     await page.keyboard.press('Escape');
+    await page.locator('#mrl-global-search').waitFor({state:'hidden',timeout:5000});
     assert.equal(await page.locator('#mrl-global-search').evaluate(el=>el.open),false);
     await page.goto(new URL('reading-archive.html',base).href);
     await page.locator('[data-mrl-query="netflix"]').click();
