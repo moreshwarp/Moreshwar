@@ -225,3 +225,24 @@ body.mrl-mobile .mrl-header-search:hover{background:#eee8dd}
  body.mrl-mobile .at-nav .mrl-header-search,body.mrl-mobile.mrl-archive .header-nav .mrl-header-search{min-height:46px;width:100%;margin-top:10px}
  body.mrl-mobile .mrl-reading-cue{display:block;margin:0 0 13px;font-size:12px}
 }
+
+
+/* Tablet portrait is not desktop navigation. Collapse before labels exceed available width. */
+@media(min-width:761px) and (max-width:940px){
+ body.mrl-mobile.mrl-reference .at-menu,body.mrl-mobile.mrl-archive .nav-toggle{
+  display:block!important;margin-left:auto;
+ }
+ body.mrl-mobile.mrl-reference .at-nav,body.mrl-mobile.mrl-archive .header-nav{
+  display:none!important;position:absolute;top:100%;left:0;right:0;width:100%;
+  margin:0;padding:18px max(24px,5vw) 24px;flex-direction:column;align-items:stretch;
+  gap:0;background:#faf8f3!important;border-bottom:1px solid var(--m26-line);
+  box-shadow:0 15px 30px #1a21151a;z-index:70;
+ }
+ body.mrl-mobile.mrl-reference .at-nav.open,body.mrl-mobile.mrl-archive .header-nav.open{
+  display:flex!important;
+ }
+ body.mrl-mobile.mrl-reference .at-nav a,body.mrl-mobile.mrl-archive .header-nav a{
+  padding:12px 5px!important;min-height:44px;display:flex;align-items:center;
+ }
+ body.mrl-mobile .mrl-header-search{margin-top:10px}
+}
