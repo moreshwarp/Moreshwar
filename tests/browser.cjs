@@ -53,6 +53,35 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     await page.screenshot({path:path.join(artifacts,'studio-reboot-mobile.png'),fullPage:true});
    }finally{await page.close()}
   });
+  await check('mobile-first quick navigation and local cross-library search',async()=>{
+   const page=await browser.newPage({viewport:{width:390,height:844}});
+   try{
+    await page.goto(base);
+    const bar=page.locator('.mrl-bottom-nav');
+    assert.ok(await bar.isVisible(),'mobile navigation missing');
+    assert.equal(await bar.locator('a').count(),4,'expected four direct destinations');
+    const targets=await bar.locator('a,button').evaluateAll(els=>els.map(el=>({label:el.textContent.trim(),height:el.getBoundingClientRect().height})));
+    assert.ok(targets.every(x=>x.height>=44),'undersized mobile touch target '+JSON.stringify(targets));
+    await bar.locator('button[data-mrl-search]').click();
+    assert.ok(await page.locator('#mrl-global-search').isVisible(),'search dialog unavailable');
+    await page.locator('#mrl-search-input').fill('Lamport');
+    await page.waitForFunction(()=>document.querySelector('.mrl-search-status')?.textContent?.includes('matching'));
+    assert.match(await page.locator('.mrl-search-results').innerText(),/Lamport/i);
+    await page.locator('#mrl-search-input').fill('Pragmatic');
+    await page.waitForFunction(()=>document.querySelector('.mrl-search-results')?.textContent?.includes('Pragmatic'));
+    assert.match(await page.locator('.mrl-search-results').innerText(),/Pragmatic/i);
+    await page.screenshot({path:path.join(artifacts,'mobile-search.png')});
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#mrl-global-search').evaluate(el=>el.open),false);
+    await page.goto(new URL('reading-archive.html',base).href);
+    await page.locator('[data-mrl-query="netflix"]').click();
+    assert.equal(await page.locator('#q').inputValue(),'netflix');
+    assert.equal(await page.locator('[data-mrl-query="netflix"]').getAttribute('aria-pressed'),'true');
+    assert.ok(await page.locator('.story:visible').count()>0,'Netflix topic should have published essays');
+    await page.locator('[data-mrl-query=""]').click();
+    assert.equal(await page.locator('.story:visible').count(),22,'clear topic restores archive');
+   }finally{await page.close()}
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
