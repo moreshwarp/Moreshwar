@@ -23,7 +23,7 @@ jobs:
       - name: Prepare published fixture
         run: |
           mkdir -p _site/assets
-          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html bookshelf.json studio.html reading-archive.html editorial-design-system.css unified-site.css mrl-reboot.css atelier.css favicon.svg social-preview.svg social-preview.png research-method.svg classic.html _site/
+          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html bookshelf.json studio.html reading-archive.html editorial-design-system.css unified-site.css mrl-reboot.css atelier.css mobile-first.css mobile-first.js favicon.svg social-preview.svg social-preview.png research-method.svg classic.html _site/
           cp -R assets/. _site/assets/
           cp -R articles _site/
           mkdir -p _site/data
@@ -31,6 +31,8 @@ jobs:
           test -s _site/unified-site.css
           test -s _site/mrl-reboot.css
           test -s _site/atelier.css
+          test -s _site/mobile-first.css
+          test -s _site/mobile-first.js
           test -s _site/social-preview.png
           test -s _site/favicon.svg
           test -s _site/bookshelf.json

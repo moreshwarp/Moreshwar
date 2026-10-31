@@ -25,9 +25,9 @@
 <meta name="twitter:description" content="Independent essays, books and research worth thinking about.">
 <meta name="twitter:image" content="https://moreshwarp.github.io/Moreshwar/social-preview.png?v=3">
 <link rel="stylesheet" href="mrl-reboot.css">
-<link rel="stylesheet" href="atelier.css">
-</head>
-<body class="mrl-reboot mrl-reference">
+<link rel="stylesheet" href="atelier.css"><link rel="stylesheet" href="mobile-first.css">
+<script src="mobile-first.js" defer></script></head>
+<body class="mrl-reboot mrl-reference mrl-mobile">
 <a class="at-skip" href="#main-content">Skip to main content</a>
 <header class="at-header">
  <div class="at-wrap at-header-inner">
@@ -42,6 +42,7 @@
    <a href="studio.html">Research studio</a>
    <a href="classic.html#systems-lab">Systems lab</a>
    <a class="at-nav-accent" href="#about">Our approach <span aria-hidden="true">↗</span></a>
+  <button class="mrl-header-search" type="button" data-mrl-search aria-haspopup="dialog" aria-controls="mrl-global-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.7"/><path d="m16 16 5 5"/></svg> Search</button>
   </nav>
  </div>
 </header>
@@ -51,8 +52,8 @@
   <div class="at-wrap at-hero-layout">
    <div class="at-hero-copy">
     <span class="at-eyebrow">An independent journal of ideas</span>
-    <h1 id="hero-title">Stay<br>curious<span aria-hidden="true">.</span><br><em>Think</em><br>deeper.</h1>
-    <p>Big questions rarely fit into small answers. We explore the ideas behind systems, science, books and the everyday decisions that shape our world.</p>
+    <h1 id="hero-title">Where<br>curiosity<br><em>leads.</em></h1>
+    <p>A thoughtful question can change how we see the world. Explore original essays, books, and systems experiments built around curiosity.</p>
     <div class="at-actions"><a class="at-pill" href="reading-archive.html">Explore the essays <span aria-hidden="true">↗</span></a><a class="at-link" href="#about">What we're exploring <span aria-hidden="true">↘</span></a></div>
    </div>
    <figure class="at-hero-art" aria-labelledby="illustration-title" role="group">
@@ -77,6 +78,7 @@
    </figure>
   </div>
  </section>
+ <aside class="mrl-jump" aria-label="Choose your starting point"><div class="at-wrap"><div class="mrl-jump-intro"><strong>Make an idea your next stop</strong><span>Swipe to explore →</span></div><nav class="mrl-jump-grid" aria-label="Three ways to explore"><a class="mrl-jump-card" href="reading-archive.html"><span class="mrl-jump-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5C8 3.3 10.6 3.5 12 5c1.4-1.5 4-1.7 7-.5v15c-3-1-5.6-.7-7 1-1.4-1.7-4-2-7-1zM12 5v15"/></svg></span><span><strong>Read the essays</strong><small>Think critically in five minutes</small></span><span class="mrl-jump-arrow" aria-hidden="true">↗</span></a><a class="mrl-jump-card" href="#bookshelf"><span class="mrl-jump-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg></span><span><strong>Find your next book</strong><small>143 titles across disciplines</small></span><span class="mrl-jump-arrow" aria-hidden="true">↗</span></a><a class="mrl-jump-card" href="classic.html#systems-lab"><span class="mrl-jump-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8m-6 0v7l-5.5 9.2A2 2 0 0 0 6.2 22h11.6a2 2 0 0 0 1.7-2.8L14 10V3M8 16h8"/></svg></span><span><strong>Test an idea</strong><small>Interactive systems research</small></span><span class="mrl-jump-arrow" aria-hidden="true">↗</span></a></nav></div></aside>
  <div class="at-wrap at-rail" aria-label="Explore the journal by numbers">
   <div class="at-rail-item"><strong>22</strong>Published essays</div>
   <div class="at-rail-item"><strong>143</strong>Books in the shelf</div>
@@ -103,6 +105,7 @@
      <a class="at-link" href="articles/183772820-the-secret-link-between-sounding.html">Read the essay <span aria-hidden="true">↗</span></a>
     </div>
    </article>
+   <p class="mrl-reading-cue" aria-hidden="true">Continue exploring · swipe across for more stories →</p>
    <div class="at-cards">
     <a class="at-card" href="articles/178480398-the-engine-of-progress-why-indias.html">
      <div class="at-card-visual"><svg viewBox="0 0 420 230" role="img" aria-label="Abstract ascending lines representing research and progress" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="420" height="230" fill="#DFD0B6"/><path d="M0 204 99 164 185 180 290 87 420 26" fill="none" stroke="#292D2A" stroke-width="5"/><path d="M0 229 99 189 185 205 290 112 420 51V230H0" fill="#BB7355" opacity=".78"/><g fill="#29352E"><circle cx="99" cy="164" r="8"/><circle cx="185" cy="180" r="8"/><circle cx="290" cy="87" r="8"/></g></svg></div>
@@ -175,5 +178,7 @@
 <script>
 (()=>{const button=document.getElementById('shelf-toggle'),panel=document.getElementById('shelf-panel'),input=document.getElementById('shelf-search'),list=document.getElementById('shelf-list'),count=document.getElementById('shelf-count');let books=null;function draw(){if(!books)return;const q=input.value.trim().toLowerCase(),filtered=books.filter(b=>(b.title+' '+b.authors).toLowerCase().includes(q));count.textContent=filtered.length+' of '+books.length+' books';list.replaceChildren();for(const b of filtered){const item=document.createElement('div'),title=document.createElement('b'),author=document.createElement('span');item.className='shelf-item';title.textContent=b.title;author.textContent=b.authors;item.append(title,author);list.append(item)}if(!filtered.length)list.textContent='No matching titles.'}button.addEventListener('click',async()=>{const open=panel.hidden;panel.hidden=!open;button.setAttribute('aria-expanded',String(open));button.textContent=open?'Close reading shelf ↑':'Browse all 143 books ↗';if(open){if(!books){count.textContent='Loading books…';try{const response=await fetch('bookshelf.json');if(!response.ok)throw Error('Could not load');const data=await response.json();books=data.books;draw()}catch(e){count.textContent='Reading list is temporarily unavailable.'}}input.focus()}});input.addEventListener('input',draw)})();
 </script>
+
+<nav class="mrl-bottom-nav" aria-label="Mobile primary navigation"><a href="index.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a><a href="reading-archive.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5C8 3.3 10.6 3.5 12 5c1.4-1.5 4-1.7 7-.5v15c-3-1-5.6-.7-7 1-1.4-1.7-4-2-7-1zM12 5v15"/></svg><span>Essays</span></a><a href="index.html#bookshelf"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg><span>Books</span></a><a href="studio.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8m-6 0v7l-5.5 9.2A2 2 0 0 0 6.2 22h11.6a2 2 0 0 0 1.7-2.8L14 10V3M8 16h8"/></svg><span>Studio</span></a><button type="button" data-mrl-search class="mrl-search-trigger" aria-label="Search essays and books" aria-haspopup="dialog" aria-controls="mrl-global-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.7"/><path d="m16 16 5 5"/></svg><span>Search</span></button></nav>
 </body>
 </html>
