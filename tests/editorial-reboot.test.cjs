@@ -31,11 +31,11 @@ test('web preview and diagram assets are actual published files',()=>{
  assert.equal(data.readUInt32BE(16),1200);
  assert.equal(data.readUInt32BE(20),630);
  for(const p of ['favicon.svg','research-method.svg','mrl-reboot.css'])assert.ok(fs.statSync(path.join(root,p)).size>200,p);
- for(const p of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml']){
-  const yaml=read(p);
-  for(const asset of ['favicon.svg','social-preview.png','research-method.svg','mrl-reboot.css'])
-   assert.ok(yaml.includes(asset),p+' missing '+asset);
- }
+ const {sourceFiles}=require('../scripts/prepare-site.cjs');
+ for(const asset of ['favicon.svg','social-preview.png','research-method.svg','mrl-reboot.css'])
+  assert.ok(sourceFiles.includes(asset),'missing published asset '+asset);
+ for(const p of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml'])
+  assert.match(read(p),/node scripts\/prepare-site\.cjs _site/);
 });
 test('legacy lab remains accessible and points to the real studio',()=>{
  const lab=read('classic.html');
@@ -59,8 +59,7 @@ test('editorial reference styling is original, accessible and published',()=>{
  assert.match(css, /:focus-visible/);
  assert.doesNotMatch(html, /anthropic\.com|Claude|ANTHROPIC/);
  for(const page of ['studio.html','reading-archive.html'])assert.match(read(page),/href="atelier\.css"/);
- for(const workflow of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml'])
-  assert.match(read(workflow),/atelier\.css/);
+ assert.ok(require('../scripts/prepare-site.cjs').sourceFiles.includes('atelier.css'));  assert.match(read(workflow),/atelier\.css/);
 });
 
 
@@ -88,10 +87,9 @@ test('mobile-first UI is real on every journal entry page',()=>{
  assert.match(script,/bookshelf\.json/);
  assert.match(script,/aria-live/);
  assert.doesNotMatch(script,/https:\/\/[^'"]+\.js/);
- for(const workflow of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml']){
-  const content=read(workflow);
-  assert.ok(content.includes('mobile-first.css mobile-first.js'),workflow+' missing shipped assets');
-  assert.match(content,/test -s _site\/mobile-first\.css/);
-  assert.match(content,/test -s _site\/mobile-first\.js/);
+ const {sourceFiles,requiredFiles}=require('../scripts/prepare-site.cjs');
+ for(const asset of ['mobile-first.css','mobile-first.js']){
+  assert.ok(sourceFiles.includes(asset),'missing shared asset '+asset);
+  assert.ok(requiredFiles.includes(asset),'missing required published asset '+asset);
  }
 });
