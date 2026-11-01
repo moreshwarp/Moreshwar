@@ -1,7 +1,6 @@
 name: Portfolio quality checks
 on:
-  push:
-    branches: [main]
+  workflow_call:
   pull_request:
     branches: [main]
   workflow_dispatch:

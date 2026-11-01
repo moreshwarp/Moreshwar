@@ -35,23 +35,29 @@ The public site has **no editable CMS or theme controls**. GitHub repository per
 
 ## Deployment
 
-The custom \`.github/workflows/pages.yml\` workflow copies the 25 existing readers, synchronizes issue-backed discussions, builds the published Markdown articles and curated theme, and deploys \`_site\` to GitHub Pages.
+**Automatic, test-gated production:** A push or merged PR to `main` starts `.github/workflows/pages.yml`. It calls the existing portfolio-quality and Playwright/browser QA workflows as required jobs. The Pages deployment only runs after **both** pass. Pull requests use those same quality workflows without duplicating their execution on every `main` push.
 
-Run local unit regression checks:
+**One build manifest:** `scripts/prepare-site.cjs` provides the same verified file list to browser QA and production. It ships the essays, bookshelf, social PNG, favicon, research diagrams and necessary styles/scripts. Do not maintain separate file-copy lists in YAML. The production pipeline then synchronizes issue-based reader discussions, builds owner-published content, verifies the catalog, and publishes `_site`.
 
-\`\`\`sh
+**Live verification:** After publishing, `scripts/release-health.cjs` verifies the publicly served homepage contains the exact merge SHA and that the PNG preview, favicon, diagrams and styles actually load. A failed smoke check reports a failed deployment workflow, even if the Pages deployment action succeeded.
+
+**Required repository setting:** GitHub **Settings → Pages → Build and deployment → Source** must be **GitHub Actions**. The workflow cannot change this account-level setting. Verify production status in the [Pages workflow history](https://github.com/moreshwarp/Moreshwar/actions/workflows/pages.yml).
+
+Run local regression tests:
+
+```sh
 node --test tests/*.test.cjs
-\`\`\`
+```
 
-Preview a publish build into a prepared directory containing \`index.html\` and \`articles/\`:
+Prepare a local publish artifact:
 
-\`\`\`sh
+```sh
+node scripts/prepare-site.cjs _site
 node scripts/build-content.cjs _site
-\`\`\`
+python3 scripts/build_catalog.py --output _site/data/research-catalog.json
+```
 
-For a fully copied artifact follow the Prepare site step in the GitHub Pages workflow.
-
-A separate Playwright/Chromium GitHub Actions workflow performs screenshot and actual viewport geometry tests. No JavaScript framework or browser-side secret is required.
+Playwright/browser QA tests the actual prepared site at mobile and desktop widths. The public website does not require a JavaScript framework or browser-side secrets.
 
 ## Existing original content and attribution
 

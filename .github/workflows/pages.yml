@@ -5,14 +5,26 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
-  pages: write
-  id-token: write
-  issues: write
 concurrency:
   group: pages
   cancel-in-progress: true
 jobs:
+  quality:
+    uses: ./.github/workflows/quality.yml
+    permissions:
+      contents: read
+  browser:
+    uses: ./.github/workflows/browser-qa.yml
+    permissions:
+      contents: read
   deploy:
+    needs: [quality, browser]
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+      issues: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -23,28 +35,11 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: '1.27.2'
-      - name: Prepare site
-        run: |
-          mkdir -p _site/assets
-          cp index.html styles.css discovery.css discovery.js design-system.css research-reader.css redesign.css app.js lab.css lab.js experience.css contact.js visual-theme.css mobile-fix.css universe.css visual.js reader-theme.css publisher.css inquiry.css inquiry.js science-ideas.css science-ideas.js editorial.css reader-feedback.css reader-feedback.js config.js substack-posts.json message-received.html bookshelf.json studio.html reading-archive.html editorial-style-guide.html editorial-design-system.css unified-site.css mrl-reboot.css atelier.css mobile-first.css mobile-first.js favicon.svg social-preview.svg social-preview.png research-method.svg classic.html _site/
-          cp -R assets/. _site/assets/
-          cp -R articles _site/
-          mkdir -p _site/data
-          cp data/science-cabinet.json _site/data/science-cabinet.json
-          test -s _site/bookshelf.json
-          test -s _site/studio.html
-          test -s _site/reading-archive.html
-          test -s _site/editorial-style-guide.html
-          test -s _site/classic.html
-          test -s _site/unified-site.css
-          test -s _site/mrl-reboot.css
-          test -s _site/atelier.css
-          test -s _site/mobile-first.css
-          test -s _site/mobile-first.js
-          test -s _site/social-preview.png
-          test -s _site/favicon.svg
-          test -s _site/editorial-design-system.css
-          touch _site/.nojekyll
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare site from canonical manifest
+        run: node scripts/prepare-site.cjs _site
       - name: Open new reader discussions (GitHub Issues)
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -55,6 +50,8 @@ jobs:
         run: |
           python3 scripts/build_catalog.py --output _site/data/research-catalog.json
           go run ./tools/catalogcheck _site
+      - name: Embed exact merged commit in published homepage
+        run: node scripts/release-health.cjs stamp _site
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
@@ -64,3 +61,7 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify public production revision and published social assets
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/release-health.cjs verify

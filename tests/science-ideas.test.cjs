@@ -54,10 +54,11 @@ test('no hard-coded innerHTML is used with external catalogue text',()=>{
  assert.match(script,/https:/);
 });
 test('Pages artifact contains science data and scripts',()=>{
- for(const workflow of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml']){
-  const source=read(workflow);
-  for(const file of ['science-ideas.js','science-ideas.css','data/science-cabinet.json'])assert.ok(source.includes(file),workflow+' missing '+file);
- }
+ const {sourceFiles}=require('../scripts/prepare-site.cjs');
+ for(const file of ['science-ideas.js','science-ideas.css'])assert.ok(sourceFiles.includes(file),file);
+ assert.match(read('scripts/prepare-site.cjs'),/data\/science-cabinet\.json/);
+ for(const workflow of ['.github/workflows/pages.yml','.github/workflows/browser-qa.yml'])
+  assert.match(read(workflow),/node scripts\/prepare-site\.cjs _site/);
 });
 test('layout and accessibility support phone screens and reduced motion',()=>{
  assert.match(css,/@media\(max-width:540px\)/);

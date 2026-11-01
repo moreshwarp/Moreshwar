@@ -50,7 +50,9 @@ test('GitHub Pages artifact and PR quality workflow preserve the feature',()=>{
  const deploy=read('.github/workflows/pages.yml');
  const browser=read('.github/workflows/browser-qa.yml');
  const quality=read('.github/workflows/quality.yml');
- assert.match(deploy,/cp index\.html styles\.css/);
+ assert.match(deploy,/node scripts\/prepare-site\.cjs _site/);
+ const {sourceFiles}=require('../scripts/prepare-site.cjs');
+ assert.ok(sourceFiles.includes('index.html')&&sourceFiles.includes('styles.css'));
  assert.match(quality,/pull_request:/);
  assert.match(browser,/pull_request:/);
  assert.match(browser,/node tests\/browser\.cjs/);

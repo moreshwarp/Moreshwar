@@ -63,8 +63,7 @@ test('site includes a navigable inquiry section and linked method documentation'
  assert.match(h,/RESEARCH_METHOD\.md/);
  const workflow=read('.github/workflows/pages.yml');
  const browser=read('.github/workflows/browser-qa.yml');
- for(const f of ['inquiry.css','inquiry.js']){
-  assert.ok(workflow.includes(f));
-  assert.ok(browser.includes(f));
- }
+ const {sourceFiles}=require('../scripts/prepare-site.cjs');
+ for(const f of ['inquiry.css','inquiry.js'])assert.ok(sourceFiles.includes(f));
+ for(const source of [workflow,browser])assert.match(source,/node scripts\/prepare-site\.cjs _site/);
 });
