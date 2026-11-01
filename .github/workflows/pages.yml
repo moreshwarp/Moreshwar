@@ -50,6 +50,8 @@ jobs:
         run: |
           python3 scripts/build_catalog.py --output _site/data/research-catalog.json
           go run ./tools/catalogcheck _site
+      - name: Embed exact merged commit in published homepage
+        run: node scripts/release-health.cjs stamp _site
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
@@ -59,3 +61,7 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify public production revision and published social assets
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: node scripts/release-health.cjs verify
