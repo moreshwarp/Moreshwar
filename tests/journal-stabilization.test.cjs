@@ -24,7 +24,9 @@ test('journal links do not point to nonexistent fragments or files',()=>{
 });
 test('Pages packages shared styles and classic workspace',()=>{
  const workflow=read('.github/workflows/pages.yml');
- for(const asset of ['unified-site.css','classic.html','bookshelf.json','reading-archive.html'])assert.ok(workflow.includes(asset),asset);
+ assert.match(workflow,/node scripts\/prepare-site\.cjs _site/);
+ const {sourceFiles}=require('../scripts/prepare-site.cjs');
+ for(const asset of ['unified-site.css','classic.html','bookshelf.json','reading-archive.html'])assert.ok(sourceFiles.includes(asset),asset);
 });
 
 test('secondary page links resolve to real destinations',()=>{
