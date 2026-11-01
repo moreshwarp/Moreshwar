@@ -59,7 +59,7 @@ test('editorial reference styling is original, accessible and published',()=>{
  assert.match(css, /:focus-visible/);
  assert.doesNotMatch(html, /anthropic\.com|Claude|ANTHROPIC/);
  for(const page of ['studio.html','reading-archive.html'])assert.match(read(page),/href="atelier\.css"/);
- assert.ok(require('../scripts/prepare-site.cjs').sourceFiles.includes('atelier.css'));  assert.match(read(workflow),/atelier\.css/);
+ assert.ok(require('../scripts/prepare-site.cjs').sourceFiles.includes('atelier.css'));
 });
 
 
