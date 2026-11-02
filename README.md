@@ -33,6 +33,14 @@ The public site has **no editable CMS or theme controls**. GitHub repository per
 
 **Draft confidentiality:** Draft Markdown in a public GitHub repository is visible on GitHub even when \`published: false\` prevents public Pages generation. Do not put confidential research into this public repository.
 
+## Hosting: GitHub Pages only
+
+**Canonical website:** https://moreshwarp.github.io/Moreshwar/
+
+This repository publishes its public website **only through GitHub Pages and GitHub Actions**. It has no Vercel configuration, does not require a Vercel account for visitors, and does not depend on Vercel for building or serving the site. A successful GitHub merge is not proof of a completed public deployment: check the [Pages deployment workflow](https://github.com/moreshwarp/Moreshwar/actions/workflows/pages.yml) and its public revision/asset verification.
+
+To stop old third-party deployments, disconnect or delete the separately configured Vercel project in its own dashboard. Removing Vercel there is an **account-level action**, not something a change to this GitHub repository can do. Do not delete historical GitHub branches or content merely to turn off Vercel.
+
 ## Deployment
 
 **Automatic, test-gated production:** A push or merged PR to `main` starts `.github/workflows/pages.yml`. It calls the existing portfolio-quality and Playwright/browser QA workflows as required jobs. The Pages deployment only runs after **both** pass. Pull requests use those same quality workflows without duplicating their execution on every `main` push.
