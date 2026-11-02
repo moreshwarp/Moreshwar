@@ -19,7 +19,7 @@ test('locally hosted, responsive new profile has meaningful visual design and no
  assert.ok(site.requiredFiles.includes('research-profile.css'));
  assert.match(home,/href="research-profile.css"/);
  assert.match(css,/@media\(max-width:510px\)/);
- assert.match(css,/@media\(max-width:760px\)/);
+ assert.match(css,/@media\(max-width:900px\)/);
  assert.match(css,/prefers-reduced-motion:reduce/);
  assert.match(css,/:focus|focus-visible|at-nav/);
  assert.doesNotMatch(css,/@import|https?:\/\//);
