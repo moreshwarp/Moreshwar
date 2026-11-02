@@ -104,6 +104,32 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     }finally{await page.close()}
    }
   });
+  await check('visual magazine browsing, topic filtering and real links',async()=>{
+   for(const width of [320,390,768,1440]){
+    const page=await browser.newPage({viewport:{width,height:850}});
+    try{
+     await page.goto(base);
+     const section=page.locator('#editorial-discovery');
+     assert.ok(await section.isVisible());
+     assert.equal(await section.locator('.ed-card:visible').count(),6);
+     await section.locator('[data-ed-filter="systems"]').click();
+     assert.equal(await section.locator('.ed-card:visible').count(),3);
+     assert.equal(await section.locator('[data-ed-filter="systems"]').getAttribute('aria-pressed'),'true');
+     await section.locator('[data-ed-filter="reading"]').click();
+     assert.equal(await section.locator('.ed-card:visible').count(),1);
+     await section.locator('#ed-surprise').click();
+     assert.ok(await section.locator('.ed-card:focus').count()===1,'surprise control must focus visible card');
+     await section.locator('[data-ed-filter="all"]').click();
+     assert.equal(await section.locator('.ed-card:visible').count(),6);
+     const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+     assert.ok(geom.scroll<=geom.client+2,'discovery overflow '+JSON.stringify(geom));
+     for(const asset of ['edition.css','edition.js','vendor/open-props/colors.css','vendor/open-props/easing.css','vendor/open-props/sizes.css']){
+      assert.equal((await page.request.get(new URL(asset,base).href)).status(),200,'asset not published '+asset);
+     }
+     await page.screenshot({path:path.join(artifacts,'magazine-'+width+'.png')});
+    }finally{await page.close()}
+   }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
