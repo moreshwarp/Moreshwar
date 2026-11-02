@@ -83,6 +83,27 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     assert.equal(await page.locator('.story:visible').count(),22,'clear topic restores archive');
    }finally{await page.close()}
   });
+  await check('interactive research map controls and keyboard on mobile and desktop',async()=>{
+   for(const width of [320,390,1440]){
+    const page=await browser.newPage({viewport:{width,height:850}});
+    try{
+     await page.goto(base);
+     const buttons=page.locator('[data-observatory] button[data-idea]');
+     assert.equal(await buttons.count(),5);
+     await page.locator('[data-idea="books"]').click();
+     assert.equal(await page.locator('#obs-title').innerText(),'The reading shelf');
+     assert.equal(await page.locator('#obs-link').getAttribute('href'),'index.html#bookshelf');
+     assert.equal(await page.locator('[data-idea="books"]').getAttribute('aria-pressed'),'true');
+     await page.locator('[data-idea="books"]').focus();
+     await page.keyboard.press('ArrowRight');
+     assert.equal(await page.locator('[data-idea="ideas"]').getAttribute('aria-pressed'),'true');
+     assert.equal(await page.locator('#obs-title').innerText(),'Original essays');
+     const size=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+     assert.ok(size.scroll<=size.client+2,'research map overflow '+JSON.stringify(size));
+     await page.screenshot({path:path.join(artifacts,'observatory-'+width+'.png'),fullPage:false});
+    }finally{await page.close()}
+   }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{

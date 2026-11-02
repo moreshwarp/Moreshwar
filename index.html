@@ -25,9 +25,9 @@
 <meta name="twitter:description" content="Independent essays, books and research worth thinking about.">
 <meta name="twitter:image" content="https://moreshwarp.github.io/Moreshwar/social-preview.png?v=3">
 <link rel="stylesheet" href="mrl-reboot.css">
-<link rel="stylesheet" href="atelier.css"><link rel="stylesheet" href="mobile-first.css"><link rel="stylesheet" href="atlas-edition.css">
-<script src="mobile-first.js" defer></script></head>
-<body class="mrl-reboot mrl-reference mrl-mobile mrl-atlas">
+<link rel="stylesheet" href="atelier.css"><link rel="stylesheet" href="mobile-first.css"><link rel="stylesheet" href="atlas-edition.css"><link rel="stylesheet" href="idea-observatory.css">
+<script src="mobile-first.js" defer></script><script src="idea-observatory.js" defer></script></head>
+<body class="mrl-reboot mrl-reference mrl-mobile mrl-atlas mrl-observatory">
 <a class="at-skip" href="#main-content">Skip to main content</a>
 <header class="at-header">
  <div class="at-wrap at-header-inner">
@@ -52,29 +52,23 @@
   <div class="at-wrap at-hero-layout">
    <div class="at-hero-copy">
     <span class="at-eyebrow">An independent journal of ideas</span>
-    <h1 id="hero-title">Think deeper.<br>Build wiser.<br><em>Stay curious.</em></h1>
-    <p>A research journal for minds that refuse easy answers. Explore systems software, original essays, disciplined experiments and books that change how we think.</p>
+    <h1 id="hero-title">Explore ideas.<br>Question everything.<br><em>Make progress.</em></h1>
+    <p>Choose a question on the interactive map. Follow the connections between computing, research, books and ideas worth testing.</p>
     <div class="at-actions"><a class="at-pill" href="reading-archive.html">Explore the essays <span aria-hidden="true">↗</span></a><a class="at-link" href="#about">What we're exploring <span aria-hidden="true">↘</span></a></div>
    </div>
-   <figure class="at-hero-art" aria-labelledby="illustration-title" role="group">
-    <span class="at-art-top">Curiosity / 001</span>
-    <svg viewBox="0 0 620 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="illustration-title illustration-desc" preserveAspectRatio="xMidYMid slice">
-     <title id="illustration-title">Exploring questions through research</title>
-     <desc id="illustration-desc">An original geometric artwork of layered paper, a central red circle and branching research paths.</desc>
-     <rect width="620" height="660" fill="#E9C9B1"/>
-     <path d="M-130 548 430-25l240 0-560 573Z" fill="#D9977D" opacity=".82"/>
-     <path d="M-40 626 560-42" stroke="#754B3E" stroke-width="2" fill="none" opacity=".45"/>
-     <circle cx="387" cy="318" r="207" fill="#F3E3CC" stroke="#372D2A" stroke-width="2"/>
-     <circle cx="387" cy="318" r="152" fill="#C35A43"/>
-     <path d="M387 167 A151 151 0 0 1 525 260" fill="none" stroke="#392C27" stroke-width="2"/>
-     <circle cx="387" cy="318" r="84" fill="#272925"/>
-     <circle cx="387" cy="318" r="23" fill="#F5DBB4"/>
-     <path d="M387 295V118M411 318h180M364 318H96M387 341v201" stroke="#322A27" stroke-width="2" stroke-dasharray="6 8" opacity=".85"/>
-     <g fill="#362b26"><circle cx="387" cy="118" r="7"/><circle cx="591" cy="318" r="7"/><circle cx="96" cy="318" r="7"/><circle cx="387" cy="542" r="7"/></g>
-     <g font-family="Georgia,serif" fill="#342B26" font-size="27" font-style="italic"><text x="62" y="142">why?</text><text x="444" y="587">what if?</text></g>
-     <path d="M32 32h70M32 32v70M518 626h70v-70" stroke="#423129" stroke-width="2" fill="none"/>
-    </svg>
-    <figcaption class="at-art-bottom"><span>Questions become connections</span><span>↗ MRL</span></figcaption>
+   <figure class="obs-frame" data-observatory aria-label="Interactive map of research ideas">
+    <div class="obs-topline"><span><span class="obs-signal" aria-hidden="true"></span> IDEAS / CONNECTED</span><span>RESEARCH FIELD / 001</span></div>
+    <div class="obs-stage" role="group" aria-label="Choose an idea. Use the arrow keys between buttons.">
+      <svg class="obs-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><circle cx="49" cy="53" r="31"/><circle cx="49" cy="53" r="43"/><line x1="49" y1="53" x2="48" y2="21"/><line x1="49" y1="53" x2="78" y2="41"/><line x1="49" y1="53" x2="66" y2="76"/><line x1="49" y1="53" x2="20" y2="70"/><line x1="49" y1="53" x2="22" y2="32"/></svg>
+      <span class="obs-center" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 4"/><path d="M12 1v5M12 18v5M1 12h5M18 12h5"/></svg></span>
+      <button class="obs-node obs-node--systems" type="button" data-idea="systems" aria-pressed="true" aria-controls="obs-detail" title="Explore systems"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="7" height="7" rx="1"/><rect x="14" y="5" width="7" height="7" rx="1"/><rect x="8.5" y="15" width="7" height="6" rx="1"/><path d="M6.5 12v3h5M17.5 12v3h-5"/></svg><span>Systems</span></button>
+<button class="obs-node obs-node--proof" type="button" data-idea="proof" aria-pressed="false" aria-controls="obs-detail" title="Explore proof"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 8 4v6c0 5-3.5 8.2-8 10-4.5-1.8-8-5-8-10V6z"/><path d="m8 12 3 3 5-6"/></svg><span>Proof</span></button>
+<button class="obs-node obs-node--books" type="button" data-idea="books" aria-pressed="false" aria-controls="obs-detail" title="Explore books"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4c3-1.5 5.4-1.2 7 1 1.6-2.2 4-2.5 7-1v15c-3-1.5-5.4-1.2-7 1-1.6-2.2-4-2.5-7-1zM12 5v15"/></svg><span>Books</span></button>
+<button class="obs-node obs-node--ideas" type="button" data-idea="ideas" aria-pressed="false" aria-controls="obs-detail" title="Explore essays"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h10l3 3v15H6zM15 3v4h4M9 11h7M9 15h7"/></svg><span>Essays</span></button>
+<button class="obs-node obs-node--research" type="button" data-idea="research" aria-pressed="false" aria-controls="obs-detail" title="Explore research"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5M8 11h6M11 8v6"/></svg><span>Research</span></button>
+    </div>
+    <div class="obs-detail" id="obs-detail" aria-live="polite" aria-atomic="true"><div><span id="obs-kicker" class="obs-detail-kicker">SELECTED / SYSTEMS</span><h2 id="obs-title">Distributed systems</h2><p id="obs-description">How can independent machines behave like one reliable system? Study failures, coordination and real trade-offs.</p></div><a class="obs-go" id="obs-link" href="classic.html#systems-lab">Open systems lab ↗</a></div>
+    <figcaption class="obs-foot"><span>5 research directions · click to explore</span><span>EXPLORE → QUESTION → TEST</span></figcaption>
    </figure>
   </div>
  </section>
