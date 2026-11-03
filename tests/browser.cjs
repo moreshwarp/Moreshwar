@@ -57,12 +57,17 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
    const page=await browser.newPage({viewport:{width:390,height:844}});
    try{
     await page.goto(base);
-    const bar=page.locator('.mrl-bottom-nav');
-    assert.ok(await bar.isVisible(),'mobile navigation missing');
-    assert.equal(await bar.locator('a').count(),4,'expected four direct destinations');
-    const targets=await bar.locator('a,button').evaluateAll(els=>els.map(el=>({label:el.textContent.trim(),height:el.getBoundingClientRect().height})));
-    assert.ok(targets.every(x=>x.height>=44),'undersized mobile touch target '+JSON.stringify(targets));
-    await bar.locator('button[data-mrl-search]').click();
+    const bar=page.locator('header.mrl-site-header');
+    assert.ok(await bar.isVisible(),'shared academic mobile header missing');
+    assert.equal(await page.locator('.mrl-bottom-nav').isVisible(),false,'outdated duplicate bottom toolbar visible');
+    const menu=bar.locator('.mrl-site-mobile-toggle');
+    assert.ok(await menu.isVisible(),'mobile academic menu missing');
+    const targetHeight=await menu.evaluate(el=>el.getBoundingClientRect().height);
+    assert.ok(targetHeight>=40,'undersized mobile menu target');
+    await menu.click();
+    assert.ok(await bar.locator('a[href="reading-archive.html"]').first().isVisible());
+    await page.keyboard.press('Escape');
+    await bar.locator('.mrl-site-search').click();
     assert.ok(await page.locator('#mrl-global-search').isVisible(),'search dialog unavailable');
     await page.locator('#mrl-search-input').fill('Lamport');
     await page.waitForFunction(()=>document.querySelector('.mrl-search-status')?.textContent?.includes('matching'));
@@ -227,6 +232,32 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
         assert.ok(rects.scroll<=rects.width+2,'scholarly layout overflow '+JSON.stringify(rects));
         assert.equal((await page.request.get(new URL('scholarly-layout.css',base).href)).status(),200);
         await page.screenshot({path:path.join(artifacts,'scholarly-'+width+'.png'),fullPage:false});
+      }finally{await page.close()}
+    }
+  });
+  await check('reference-style academic navigation, simplified archives and studio sidebars',async()=>{
+    for(const width of [320,390,768,1440]){
+      const page=await browser.newPage({viewport:{width,height:900}});
+      try{
+        for(const route of ['','reading-archive.html','studio.html','classic.html']){
+          await page.goto(new URL(route,base).href);
+          assert.ok(await page.locator('body.mrl-heritage').count(),'academic unification missing '+route);
+          assert.equal((await page.request.get(new URL('heritage-unified.css',base).href)).status(),200);
+          const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+          assert.ok(geom.scroll<=geom.client+2,'academic overflow '+route+' '+JSON.stringify(geom));
+        }
+        await page.goto(new URL('reading-archive.html',base).href);
+        const main=page.locator('.sch-page-columns main'),aside=page.locator('.sch-page-columns aside.sch-related');
+        assert.ok(await aside.isVisible());
+        assert.equal(await page.locator('.story').count(),22);
+        const positions=await page.evaluate(()=>{
+          const a=document.querySelector('.sch-page-columns main').getBoundingClientRect();
+          const b=document.querySelector('.sch-page-columns aside').getBoundingClientRect();
+          return {mainRight:a.right,mainBottom:a.bottom,asideLeft:b.left,asideTop:b.top};
+        });
+        if(width>700)assert.ok(positions.asideLeft>=positions.mainRight-3,'sidebar must align right '+JSON.stringify(positions));
+        else assert.ok(positions.asideTop>=positions.mainBottom-3,'sidebar must stack below '+JSON.stringify(positions));
+        await page.screenshot({path:path.join(artifacts,'heritage-archive-'+width+'.png')});
       }finally{await page.close()}
     }
   });
