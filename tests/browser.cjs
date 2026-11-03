@@ -262,6 +262,38 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       }finally{await page.close()}
     }
   });
+  await check('every published article uses unified navigation and reading style at phone and desktop',async()=>{
+   const all=fs.readdirSync(path.join(__dirname,'..','_site','articles')).filter(n=>n.endsWith('.html'));
+   assert.ok(all.length>=25,'expected full article inventory');
+   for(const width of [390,1440]){
+    const page=await browser.newPage({viewport:{width,height:900}});
+    try{
+     await page.route(/fonts\\.googleapis\\.com|fonts\\.gstatic\\.com/,route=>route.abort());
+     for(const name of all){
+      const response=await page.goto(new URL('articles/'+name,base).href,{waitUntil:'domcontentloaded'});
+      assert.equal(response.status(),200,name);
+      assert.ok(await page.locator('body.sch-reader').count(),name+' inconsistent article body');
+      assert.ok(await page.locator('header.sch-reader-header').isVisible(),name+' missing shared navigation');
+      assert.ok(await page.locator('main h1').count()>0,name+' missing article title');
+      const hidden=await page.locator('.site-nav,header.top.shell').evaluateAll(els=>els.every(el=>getComputedStyle(el).display==='none'));
+      assert.ok(hidden,name+' old article header visible');
+      const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+      assert.ok(geom.scroll<=geom.client+2,name+' horizontal overflow '+JSON.stringify(geom));
+      if(name===all[0]||name===all[all.length-1])await page.screenshot({path:path.join(artifacts,'article-'+width+'-'+name+'.png')});
+     }
+     await page.goto(new URL('articles/'+all[0],base).href);
+     if(width<700){
+      const menu=page.locator('.sch-reader-mobile-toggle');
+      await menu.click();
+      assert.equal(await menu.getAttribute('aria-expanded'),'true');
+      await page.locator('.sch-reader-nav summary').first().click();
+      assert.ok(await page.locator('a[href="../classic.html#systems-lab"]').isVisible());
+      await page.keyboard.press('Escape');
+      assert.equal(await menu.getAttribute('aria-expanded'),'false');
+     }
+    }finally{await page.close()}
+   }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
