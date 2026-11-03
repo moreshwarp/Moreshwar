@@ -10,7 +10,7 @@ test('resume-inspired research profile gives visitors a clear identity and infor
  assert.equal((home.match(/class="rs-project(?: rs-project-main)?"/g)||[]).length,3);
  assert.equal((home.match(/data-observatory/g)||[]).length,1);
  assert.ok(home.indexOf('id="research-projects"')<home.indexOf('id="idea-map"'));
- for(const dest of ['classic.html#systems-lab','classic.html#inquiry','reading-archive.html','studio.html'])assert.ok(home.includes('href="'+dest+'"'));
+ for(const dest of ['studio.html#systems-lab','studio.html#inquiry','reading-archive.html','studio.html'])assert.ok(home.includes('href="'+dest+'"'));
  assert.match(home,/not a claim of completed scientific breakthroughs/);
 });
 test('locally hosted, responsive new profile has meaningful visual design and no external runtime',()=>{
