@@ -69,3 +69,9 @@ body.mrl-article-page .mrl-site-header .mrl-nav-sub a{color:#293944!important}
 @media(max-width:940px){body.mrl-article-page .mrl-site-nav{z-index:100!important}}
 @media(max-width:700px){body.mrl-article-page main.shell,body.mrl-article-page main,body.mrl-article-page .shell{width:calc(100% - 30px)!important}body.mrl-article-page h1{font-size:29px!important}}
 @media(prefers-reduced-motion:reduce){body.mrl-text-first *,body.mrl-text-first *::before,body.mrl-text-first *::after,body.mrl-article-page *,body.mrl-article-page *::before,body.mrl-article-page *::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Remove orphaned historical headers and internal-only review notices on secondary pages. */
+body.mrl-text-first.mrl-nav-ready > header:not(.mrl-site-header){display:none!important}
+body.mrl-text-first .mrl-review-banner{display:none!important}
+body.mrl-text-first :is(.at-hero-art,.obs-lines,.rs-grid-dots,.rs-visual-art,.rs-orbit-label,.rs-visual-label,.at-book,.cover,.book-art){display:none!important}
+body.mrl-text-first :is(.intro,.hero,.feature,.featured,.topic-grid,.latest){background-image:none!important;box-shadow:none!important}
