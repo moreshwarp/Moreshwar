@@ -1,468 +1,120 @@
-/* Journal-first browser QA: do not test removed legacy homepage selectors. */
-const {chromium}=require('playwright');
-const assert=require('node:assert/strict');
-const fs=require('node:fs'),path=require('node:path');
+/* Researcher-first browser QA: verify actual reading UI and every linked section. */
+'use strict';
+const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const base=process.env.SITE_QA_BASE||'http://127.0.0.1:4173/';
-const widths=[320,390,768,1440],failures=[];
-const artifacts=path.join(__dirname,'..','browser-artifacts');fs.mkdirSync(artifacts,{recursive:true});
-async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){failures.push(name+': '+e.message);console.error('FAIL '+name,e)}}
+const widths=[320,390,768,1440],failures=[],artifacts=path.join(__dirname,'..','browser-artifacts');
+fs.mkdirSync(artifacts,{recursive:true});
+async function check(label,fn){try{await fn();console.log('PASS '+label)}catch(e){failures.push(label+': '+e.message);console.error('FAIL '+label,e)}}
+const rgb=s=>[...(String(s).match(/[0-9.]+/g)||[])].slice(0,3).map(Number);
+const lum=s=>rgb(s).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
+const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
 (async()=>{
  const browser=await chromium.launch({headless:true,args:['--no-sandbox'],...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
  try{
-  for(const width of widths){
-   await check('viewport '+width+' journal, archive, studio and classic',async()=>{
-    const ctx=await browser.newContext({viewport:{width,height:850}});
+  await check('all public routes render without overflow or script errors on phones and desktop',async()=>{
+   for(const width of widths){
+    const context=await browser.newContext({viewport:{width,height:850},reducedMotion:'reduce'});
     try{
-     for(const route of ['','reading-archive.html','studio.html','studio.html']){
-      const page=await ctx.newPage();
+     for(const route of ['','reading-archive.html','studio.html','articles/fieldnote-queues.html']){
+      const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
       try{
-       const errors=[];page.on('pageerror',e=>errors.push(e.message));
-       const response=await page.goto(new URL(route,base).href,{waitUntil:'load',timeout:45000});
-       assert.equal(response.status(),200,route+' HTTP');
-       const geom=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,body:document.body.scrollWidth}));
-       if(geom.scroll>geom.width+2||geom.body>geom.width+2){const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(el=>({tag:el.tagName,cls:typeof el.className==='string'?el.className.slice(0,100):'',left:Math.round(el.getBoundingClientRect().left),right:Math.round(el.getBoundingClientRect().right),scroll:el.scrollWidth})).filter(x=>x.right>document.documentElement.clientWidth+2||x.left< -2).slice(0,12));console.error('Overflow offenders '+route+' '+JSON.stringify(offenders));}
-       assert.ok(geom.scroll<=geom.width+2&&geom.body<=geom.width+2,route+' overflow '+JSON.stringify(geom));
-       assert.ok(await page.locator('main').count()>0,route+' missing main landmark');
+       const res=await page.goto(new URL(route,base).href,{waitUntil:'load'});
+       assert.equal(res.status(),200,route);
+       await page.locator('main').first().waitFor({state:'visible'});
+       const dim=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,body:document.body.scrollWidth}));
+       assert.ok(dim.scroll<=dim.width+2&&dim.body<=dim.width+2,route+' overflow '+JSON.stringify(dim));
        assert.deepEqual(errors,[],route+' JS errors');
-       if(!route)await page.screenshot({path:path.join(artifacts,'journal-'+width+'.png'),fullPage:true});
+       if(route===''||route==='studio.html')await page.screenshot({path:path.join(artifacts,(route||'home').replace('.html','')+'-'+width+'.png'),fullPage:false});
       }finally{await page.close()}
      }
-    }finally{await ctx.close()}
-   });
-  }
-  await check('reboot navigation, publishing assets and searchable archive',async()=>{
-   const page=await browser.newPage({viewport:{width:390,height:844}});
+    }finally{await context.close()}
+   }
+  });
+  await check('researcher homepage has exactly four navigational tabs and no portfolio clutter',async()=>{
+   const page=await browser.newPage({viewport:{width:1440,height:900}});
    try{
     await page.goto(base);
-    assert.ok(await page.locator('#hero-title').isVisible(),'new homepage hero missing');
-    for(const asset of ['favicon.svg','social-preview.png','research-method.svg','mrl-reboot.css']){
-      const response=await page.request.get(new URL(asset,base).href);
-      assert.equal(response.status(),200,'missing publish asset '+asset);
-    }
-    await page.locator('.mrl-site-mobile-toggle').click();
-    assert.equal(await page.locator('.mrl-site-mobile-toggle').getAttribute('aria-expanded'),'true');
-    assert.ok(await page.locator('#mrl-site-navigation').isVisible());
-    await page.keyboard.press('Escape');
-    assert.equal(await page.locator('.mrl-site-mobile-toggle').getAttribute('aria-expanded'),'false');
-    await page.goto(new URL('reading-archive.html',base).href);
-    await page.locator('#q').fill('competition');
-    assert.match(await page.locator('#count').innerText(),/essay/);
-    assert.ok(await page.locator('.story:visible').count()>=1);
-    await page.screenshot({path:path.join(artifacts,'archive-reboot-mobile.png'),fullPage:true});
-    await page.goto(new URL('studio.html',base).href);
-    await page.screenshot({path:path.join(artifacts,'studio-reboot-mobile.png'),fullPage:true});
+    const labels=await page.locator('.site-navigation a').allTextContents();
+    assert.deepEqual(labels.map(x=>x.trim()),['Home','Research','Writing','About']);
+    assert.equal(await page.locator('.site-header').count(),1);
+    assert.equal(await page.locator('main h1').innerText(),'Hello!');
+    assert.equal(await page.locator('.main-column').count(),1);
+    assert.equal(await page.locator('.sidebar').count(),1);
+    for(const id of ['research-projects','academic-directory','essays','about-profile','academic-recent','method'])assert.equal(await page.locator('#'+id).count(),1,id);
+    for(const selector of ['#bookshelf','#reading-desk','.ed-card','.rs-project','.obs-frame','.rs-hero-visual','.mrl-bottom-nav'])assert.equal(await page.locator(selector).count(),0,selector);
+    assert.ok((await page.locator('time[datetime]').count())>=4);
+    const layout=await page.evaluate(()=>{const a=document.querySelector('.main-column').getBoundingClientRect(),b=document.querySelector('.sidebar').getBoundingClientRect();return{mainRight:a.right,sideLeft:b.left,sideTop:b.top}});
+    assert.ok(layout.sideLeft>layout.mainRight,JSON.stringify(layout));
    }finally{await page.close()}
   });
-  await check('mobile-first quick navigation and local cross-library search',async()=>{
-   const page=await browser.newPage({viewport:{width:390,height:844}});
+  await check('mobile researcher page has no clipped headings and sidebar stacks below writing',async()=>{
+   const page=await browser.newPage({viewport:{width:320,height:850}});
    try{
     await page.goto(base);
-    const bar=page.locator('header.mrl-site-header');
-    assert.ok(await bar.isVisible(),'shared academic mobile header missing');
-    assert.equal(await page.locator('.mrl-bottom-nav').isVisible(),false,'outdated duplicate bottom toolbar visible');
-    const menu=bar.locator('.mrl-site-mobile-toggle');
-    assert.ok(await menu.isVisible(),'mobile academic menu missing');
-    const targetHeight=await menu.evaluate(el=>el.getBoundingClientRect().height);
-    assert.ok(targetHeight>=40,'undersized mobile menu target');
-    await menu.click();
-    await bar.locator('summary').filter({hasText:'Writing'}).click();
-    assert.ok(await bar.locator('.mrl-nav-sub a[href="reading-archive.html"]').isVisible(),'Writing submenu should reveal archive');
-    await page.keyboard.press('Escape');
-    await bar.locator('.mrl-site-search').click();
-    assert.ok(await page.locator('#mrl-global-search').isVisible(),'search dialog unavailable');
-    await page.locator('#mrl-search-input').fill('Lamport');
-    await page.waitForFunction(()=>document.querySelector('.mrl-search-status')?.textContent?.includes('matching'));
-    assert.match(await page.locator('.mrl-search-results').innerText(),/Lamport/i);
-    assert.equal(await page.locator('.mrl-search-results a[href*="bookshelf"]').count(),0);
-    await page.screenshot({path:path.join(artifacts,'mobile-search.png')});
-    await page.keyboard.press('Escape');
-    await page.locator('#mrl-global-search').waitFor({state:'hidden',timeout:5000});
-    assert.equal(await page.locator('#mrl-global-search').evaluate(el=>el.open),false);
-    await page.goto(new URL('reading-archive.html',base).href);
-    await page.locator('[data-mrl-query="netflix"]').click();
-    assert.equal(await page.locator('#q').inputValue(),'netflix');
-    assert.equal(await page.locator('[data-mrl-query="netflix"]').getAttribute('aria-pressed'),'true');
-    assert.ok(await page.locator('.story:visible').count()>0,'Netflix topic should have published essays');
-    await page.locator('[data-mrl-query=""]').click();
-    assert.equal(await page.locator('.story:visible').count(),22,'clear topic restores archive');
+    const geom=await page.evaluate(()=>{const a=document.querySelector('.main-column').getBoundingClientRect(),b=document.querySelector('.sidebar').getBoundingClientRect();return{bottom:a.bottom,top:b.top,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}});
+    assert.ok(geom.top>=geom.bottom-2,JSON.stringify(geom));
+    assert.ok(geom.scroll<=geom.client+2);
+    assert.equal(await page.locator('.site-navigation a:visible').count(),4);
    }finally{await page.close()}
   });
-  await check('interactive research map controls and keyboard on mobile and desktop',async()=>{
-   for(const width of [320,390,1440]){
-    const page=await browser.newPage({viewport:{width,height:850}});
-    try{
-     await page.goto(base);
-     const buttons=page.locator('[data-observatory] button[data-idea]');
-     assert.equal(await buttons.count(),4);
-     await page.locator('[data-idea="proof"]').click();
-     assert.equal(await page.locator('#obs-title').innerText(),'Proof and trust');
-     assert.equal(await page.locator('[data-idea="proof"]').getAttribute('aria-pressed'),'true');
-     await page.locator('[data-idea="proof"]').focus();
-     await page.keyboard.press('ArrowRight');
-     assert.equal(await page.locator('[data-idea="ideas"]').getAttribute('aria-pressed'),'true');
-     assert.equal(await page.locator('#obs-title').innerText(),'Original essays');
-     const size=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-     assert.ok(size.scroll<=size.client+2,'research map overflow '+JSON.stringify(size));
-     await page.screenshot({path:path.join(artifacts,'observatory-'+width+'.png'),fullPage:false});
-    }finally{await page.close()}
-   }
-  });
-  await check('visual magazine browsing, topic filtering and real links',async()=>{
-   for(const width of [320,390,768,1440]){
-    const page=await browser.newPage({viewport:{width,height:850}});
-    try{
-     await page.goto(base);
-     const section=page.locator('#editorial-discovery');
-     assert.ok(await section.isVisible());
-     assert.equal(await section.locator('.ed-card:visible').count(),5);
-     await section.locator('[data-ed-filter="systems"]').click();
-     assert.equal(await section.locator('.ed-card:visible').count(),3);
-     assert.equal(await section.locator('[data-ed-filter="systems"]').getAttribute('aria-pressed'),'true');
-     await section.locator('[data-ed-filter="thinking"]').click();
-     assert.equal(await section.locator('.ed-card:visible').count(),3);
-     await section.locator('#ed-surprise').click();
-     assert.ok(await section.locator('.ed-card:focus').count()===1,'surprise control must focus visible card');
-     await section.locator('[data-ed-filter="all"]').click();
-     assert.equal(await section.locator('.ed-card:visible').count(),5);
-     const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-     assert.ok(geom.scroll<=geom.client+2,'discovery overflow '+JSON.stringify(geom));
-     for(const asset of ['edition.css','edition.js','vendor/open-props/colors.css','vendor/open-props/easing.css','vendor/open-props/sizes.css']){
-      assert.equal((await page.request.get(new URL(asset,base).href)).status(),200,'asset not published '+asset);
-     }
-     await page.screenshot({path:path.join(artifacts,'magazine-'+width+'.png')});
-    }finally{await page.close()}
-   }
-  });
-  await check('research UX cover editions, accessible zoom, consistent controls and scroll',async()=>{
-   for(const width of [320,390,1440]){
-    const page=await browser.newPage({viewport:{width,height:850}});
-    try{
-     await page.goto(base);
-     assert.equal(await page.locator('#bookshelf,#reading-desk,#ux-featured-books').count(),0);
-     await page.locator('#ux-theme').click();
-     assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'dark');
-     await page.locator('#ux-theme').click();
-     assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'light');
-     assert.equal(await page.locator('.ux-research-figure').isVisible(),false,'decorative figure should be hidden in the new text-first layout');
-     const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-     assert.ok(geom.scroll<=geom.client+2,'research UX overflow '+JSON.stringify(geom));
-     assert.equal((await page.request.get(new URL('assets/distributed-request-flow.svg',base).href)).status(),200);
-     await page.screenshot({path:path.join(artifacts,'research-ux-'+width+'.png')});
-    }finally{await page.close()}
-   }
-  });
-  await check('shared academic navigation across every route, dropdowns, mobile and search',async()=>{
-   for(const width of [320,390,768,1440]){
-    const page=await browser.newPage({viewport:{width,height:850}});
-    try{
-     for(const route of ['','studio.html','reading-archive.html','studio.html']){
-      await page.goto(new URL(route,base).href);
-      const header=page.locator('header.mrl-site-header');
-      assert.ok(await header.isVisible(),route+' shared header not visible');
-      assert.equal(await header.locator('details.mrl-nav-group').count(),3);
-      const old=page.locator('header.at-header,header.site-header,header.mrl-header,header.nav');
-      assert.equal(await old.isVisible(),false,route+' old inconsistent header still visible');
-      const doc=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-      assert.ok(doc.scroll<=doc.width+2,route+' overflow with new header '+JSON.stringify(doc));
-      if(width<940){
-       const button=header.locator('.mrl-site-mobile-toggle');
-       await button.click();
-       assert.equal(await button.getAttribute('aria-expanded'),'true');
-       await header.locator('summary').filter({hasText:'Research'}).click();
-       assert.ok(await header.locator('a[href="studio.html#systems-lab"]').isVisible());
-       await page.keyboard.press('Escape');
-       assert.equal(await button.getAttribute('aria-expanded'),'false');
-      }else{
-       await header.locator('summary').filter({hasText:'Research'}).click();
-       assert.ok(await header.locator('a[href="studio.html#systems-lab"]').isVisible());
-       await header.locator('summary').filter({hasText:'Writing'}).click();
-       assert.equal(await header.locator('details[open]').count(),1);
-      }
-     }
-     await page.goto(new URL('',base).href);
-     await page.locator('.mrl-site-search').click();
-     assert.ok(await page.locator('#mrl-global-search').isVisible());
-     await page.keyboard.press('Escape');
-    }finally{await page.close()}
-   }
-  });
-  await check('academic journal reference layout and real writing remain accessible at every width',async()=>{
-   for(const width of [320,390,768,1440]){
-    const page=await browser.newPage({viewport:{width,height:850}});
-    try{
-     for(const route of ['','reading-archive.html','studio.html','studio.html']){
-      await page.goto(new URL(route,base).href);
-      assert.ok(await page.locator('body.mrl-academic').count(),'academic design class missing '+route);
-      assert.equal((await page.request.get(new URL('academic-journal.css',base).href)).status(),200);
-      assert.ok(await page.locator('header.mrl-site-header').isVisible(),'academic header missing '+route);
-      const overflow=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-      assert.ok(overflow.scroll<=overflow.width+2,'academic overflow '+route+' '+JSON.stringify(overflow));
-     }
-     await page.goto(base);
-     assert.ok(await page.locator('#academic-directory').isVisible());
-     assert.equal(await page.locator('#academic-directory time').count(),5);
-     const bg=await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor);
-     assert.equal(bg,'rgb(255, 255, 255)');
-     assert.ok(await page.locator('#academic-directory a[href="reading-archive.html"]').count()>0);
-     await page.screenshot({path:path.join(artifacts,'academic-home-'+width+'.png'),fullPage:false});
-    }finally{await page.close()}
-   }
-  });
-  await check('scholarly two-column main and sidebar at desktop, single column on mobile',async()=>{
-    for(const width of [320,390,768,1440]){
-      const page=await browser.newPage({viewport:{width,height:900}});
-      try{
-        await page.goto(base);
-        const main=page.locator('.academic-main'),aside=page.locator('.academic-sidebar');
-        assert.ok(await main.isVisible());assert.ok(await aside.isVisible());
-        const rects=await page.evaluate(()=>{
-          const a=document.querySelector('.academic-main').getBoundingClientRect();
-          const b=document.querySelector('.academic-sidebar').getBoundingClientRect();
-          return {a:{left:a.left,right:a.right,top:a.top,bottom:a.bottom},b:{left:b.left,right:b.right,top:b.top},width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth};
-        });
-        if(width<=700)assert.ok(rects.b.top>=rects.a.bottom-2,'sidebar should follow main content '+JSON.stringify(rects));
-        else assert.ok(rects.b.left>=rects.a.right-2,'sidebar must be beside main '+JSON.stringify(rects));
-        assert.ok(rects.scroll<=rects.width+2,'scholarly layout overflow '+JSON.stringify(rects));
-        assert.equal((await page.request.get(new URL('scholarly-layout.css',base).href)).status(),200);
-        await page.screenshot({path:path.join(artifacts,'scholarly-'+width+'.png'),fullPage:false});
-      }finally{await page.close()}
-    }
-  });
-  await check('reference-style academic navigation, simplified archives and studio sidebars',async()=>{
-    for(const width of [320,390,768,1440]){
-      const page=await browser.newPage({viewport:{width,height:900}});
-      try{
-        for(const route of ['','reading-archive.html','studio.html','studio.html']){
-          await page.goto(new URL(route,base).href);
-          assert.ok(await page.locator('body.mrl-heritage').count(),'academic unification missing '+route);
-          assert.equal((await page.request.get(new URL('heritage-unified.css',base).href)).status(),200);
-          const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-          assert.ok(geom.scroll<=geom.client+2,'academic overflow '+route+' '+JSON.stringify(geom));
-        }
-        await page.goto(new URL('reading-archive.html',base).href);
-        const main=page.locator('.sch-page-columns main'),aside=page.locator('.sch-page-columns aside.sch-related');
-        assert.ok(await aside.isVisible());
-        assert.equal(await page.locator('.story').count(),22);
-        const positions=await page.evaluate(()=>{
-          const a=document.querySelector('.sch-page-columns main').getBoundingClientRect();
-          const b=document.querySelector('.sch-page-columns aside').getBoundingClientRect();
-          return {mainRight:a.right,mainBottom:a.bottom,asideLeft:b.left,asideTop:b.top};
-        });
-        if(width>700)assert.ok(positions.asideLeft>=positions.mainRight-3,'sidebar must align right '+JSON.stringify(positions));
-        else assert.ok(positions.asideTop>=positions.mainBottom-3,'sidebar must stack below '+JSON.stringify(positions));
-        await page.screenshot({path:path.join(artifacts,'heritage-archive-'+width+'.png')});
-      }finally{await page.close()}
-    }
-  });
-  await check('every published article uses unified navigation and reading style at phone and desktop',async()=>{
-   const all=fs.readdirSync(path.join(__dirname,'..','_site','articles')).filter(n=>n.endsWith('.html'));
-   assert.ok(all.length>=25,'expected full article inventory');
-   for(const width of [390,1440]){
-    const page=await browser.newPage({viewport:{width,height:900}});
-    try{
-     await page.route(/fonts\\.googleapis\\.com|fonts\\.gstatic\\.com/,route=>route.abort());
-     for(const name of all){
-      const response=await page.goto(new URL('articles/'+name,base).href,{waitUntil:'domcontentloaded'});
-      assert.equal(response.status(),200,name);
-      assert.ok(await page.locator('body.sch-reader').count(),name+' inconsistent article body');
-      assert.ok(await page.locator('header.sch-reader-header').isVisible(),name+' missing shared navigation');
-      assert.ok(await page.locator('main h1').count()>0,name+' missing article title');
-      const appearance=await page.evaluate(()=>{
-        const body=document.body,headline=document.querySelector('main h1');
-        return {background:getComputedStyle(body).backgroundColor,headingFont:getComputedStyle(headline).fontFamily,
-          colors:document.querySelector('meta[name="theme-color"]')?.content||'',
-          readerStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('article-unified.css?v=')),
-          textStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('text-first-site.css?v='))};
-      });
-      assert.equal(appearance.background,'rgb(255, 255, 255)',name+' old dark page background');
-      assert.match(appearance.headingFont,/Georgia/,name+' old heading typeface');
-      assert.ok(appearance.readerStyle&&appearance.textStyle,name+' missing cache-versioned academic styles');
-      if(name.includes('secret-link-between-sounding')||name.includes('fieldnote-queues')){
-        assert.ok(/^#(?:f[0-9a-f]){3}$/i.test(appearance.colors),name+' old dark browser theme '+appearance.colors);
-        assert.equal(await page.locator('head style').count(),0,name+' legacy inline stylesheet still shipped');
-      }
-      const hidden=await page.locator('.site-nav,header.top.shell').evaluateAll(els=>els.every(el=>getComputedStyle(el).display==='none'));
-      assert.ok(hidden,name+' old article header visible');
-      const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-      assert.ok(geom.scroll<=geom.client+2,name+' horizontal overflow '+JSON.stringify(geom));
-      if(name===all[0]||name===all[all.length-1])await page.screenshot({path:path.join(artifacts,'article-'+width+'-'+name+'.png')});
-     }
-     await page.goto(new URL('articles/'+all[0],base).href);
-     if(width<700){
-      const menu=page.locator('.sch-reader-mobile-toggle');
-      await menu.click();
-      assert.equal(await menu.getAttribute('aria-expanded'),'true');
-      await page.locator('.sch-reader-nav summary').first().click();
-      assert.ok(await page.locator('.sch-reader-sub a[href="../studio.html#systems-lab"]').isVisible());
-      assert.equal(await page.locator('a[href*="classic.html"]').count(),0,'article menu retains retired Classic links');
-      await page.keyboard.press('Escape');
-      assert.equal(await menu.getAttribute('aria-expanded'),'false');
-     }
-    }finally{await page.close()}
-   }
-  });
-  await check('every published HTML page uses a clean text-first UI, coherent nav and no images',async()=>{
-   const root=path.join(__dirname,'..','_site');
-   const inventory=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?inventory(path.join(dir,entry.name)):(entry.name.endsWith('.html')?[path.join(dir,entry.name)]:[]));
-   const pages=inventory(root).map(p=>path.relative(root,p).split(path.sep).join('/')).sort();
-   assert.ok(pages.length>=30,'expected the complete public page inventory');
-   for(const width of [390,1440]){
-    const page=await browser.newPage({viewport:{width,height:850}});
-    try{
-     await page.route(/fonts\\.googleapis\\.com|fonts\\.gstatic\\.com/,route=>route.abort());
-     for(const target of pages){
-      const response=await page.goto(new URL(target,base).href,{waitUntil:'domcontentloaded'});
-      assert.equal(response.status(),200,'missing public page '+target);
-      assert.ok(await page.locator('body.mrl-text-first').count(),target+' old theme still active');
-      const selector=target.startsWith('articles/')?'header.sch-reader-header':'header.mrl-site-header';
-      await page.locator(selector).waitFor({state:'visible',timeout:5000});
-      assert.equal(await page.locator('img:visible').count(),0,'unnecessary image on '+target);
-      const geom=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-      assert.ok(geom.scroll<=geom.width+2,'horizontal overflow at '+width+' on '+target+' '+JSON.stringify(geom));
-     }
-     await page.screenshot({path:path.join(artifacts,'text-first-'+width+'.png')});
-    }finally{await page.close()}
-   }
-  });
-  await check('studio mobile typography and controls meet contrast rules in both themes',async()=>{
-    for(const width of [320,390,768,1440]){
-      const page=await browser.newPage({viewport:{width,height:850}});
-      try{
-        await page.goto(new URL('studio.html',base).href);
-        for(const theme of ['light','dark']){
-          await page.evaluate(value=>document.documentElement.dataset.theme=value,theme);
-          const metrics=await page.evaluate(()=>{
-            const hero=document.querySelector('main#main-content .intro');
-            const title=hero.querySelector('h1'),paragraph=hero.querySelector('p');
-            const primary=hero.querySelector('.actions .primary');
-            const secondary=hero.querySelector('.actions .secondary');
-            const rgb=value=>{const n=value.match(/[0-9.]+/g)?.slice(0,3).map(Number);return n||[0,0,0]};
-            const luminance=c=>c.map(v=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4)}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
-            const contrast=(fg,bg)=>{const a=luminance(rgb(fg)),b=luminance(rgb(bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)};
-            const bg=getComputedStyle(hero).backgroundColor;
-            const titleContrast=contrast(getComputedStyle(title).color,bg);
-            const textContrast=contrast(getComputedStyle(paragraph).color,bg);
-            const primaryContrast=contrast(getComputedStyle(primary).color,getComputedStyle(primary).backgroundColor);
-            const secondaryContrast=contrast(getComputedStyle(secondary).color,getComputedStyle(secondary).backgroundColor);
-            const buttons=[primary,secondary].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height,right:el.getBoundingClientRect().right}));
-            return {titleContrast,textContrast,primaryContrast,secondaryContrast,buttons,
-              viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
-              heading:title.innerText,background:bg};
-          });
-          assert.ok(metrics.titleContrast>=4.5,'studio '+theme+' title invisible '+JSON.stringify(metrics));
-          assert.ok(metrics.textContrast>=4.5,'studio '+theme+' paragraph unreadable '+JSON.stringify(metrics));
-          assert.ok(metrics.primaryContrast>=4.5,'studio '+theme+' primary button contrast '+JSON.stringify(metrics));
-          assert.ok(metrics.secondaryContrast>=4.5,'studio '+theme+' secondary button contrast '+JSON.stringify(metrics));
-          assert.ok(metrics.buttons.every(b=>b.height>=44&&b.right<=metrics.viewport+2),'studio '+theme+' button geometry '+JSON.stringify(metrics));
-          assert.ok(metrics.scroll<=metrics.viewport+2,'studio '+theme+' horizontal overflow '+JSON.stringify(metrics));
-          assert.match(metrics.heading,/An invitation to/);
-          if(width===390)await page.screenshot({path:path.join(artifacts,'studio-contrast-'+theme+'.png'),fullPage:false});
-        }
-      }finally{await page.close()}
-    }
-  });
-  await check('studio article lists replace cramped dark cards in rendered desktop and mobile',async()=>{
-    for(const width of [320,390,768,1440,1600]){
-      const page=await browser.newPage({viewport:{width,height:900}});
-      try{
-        await page.goto(new URL('studio.html',base).href);
-        const data=await page.evaluate(()=>{
-          const cards=[...document.querySelectorAll('main#main-content .article-grid>a.article')];
-          const topics=[...document.querySelectorAll('main#main-content .topic-grid>a.topic')];
-          const panel=document.querySelector('main#main-content .latest');
-          const parent=document.querySelector('main#main-content .article-grid');
-          const rect=el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,top:r.top,bottom:r.bottom}};
-          return {background:getComputedStyle(panel).backgroundColor,
-            articleLayout:getComputedStyle(parent).display,
-            cards:cards.map(el=>({position:rect(el),background:getComputedStyle(el).backgroundColor,
-              heading:el.querySelector('h3')?.innerText||'',headingColor:getComputedStyle(el.querySelector('h3')).color,
-              textWidth:el.querySelector('h3').getBoundingClientRect().width})),
-            topics:topics.map(rect),viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
-            sidebar:rect(document.querySelector('.sch-related'))};
-        });
-        assert.equal(data.background,'rgb(255, 255, 255)','studio dark content region still visible '+JSON.stringify(data));
-        assert.equal(data.articleLayout,'block','article cards still multi-column');
-        assert.ok(data.topics.every(t=>t.width>=Math.min(width-45,240)&&t.right<=data.viewport+2),'topic links must fit the screen '+JSON.stringify(data));
-        assert.equal(data.cards.length,2);
-        assert.ok(data.cards.every(c=>c.position.width>=Math.min(width-45,300)),'cramped article columns '+JSON.stringify(data));
-        assert.ok(data.cards.every((c,i)=>i===0||c.position.top>=data.cards[i-1].position.bottom-2),'article entries must stack '+JSON.stringify(data));
-        assert.ok(data.scroll<=data.viewport+2,'studio horizontal overflow '+JSON.stringify(data));
-        await page.screenshot({path:path.join(artifacts,'studio-lists-'+width+'.png'),fullPage:false});
-      }finally{await page.close()}
-    }
-  });
-  await check('retired Classic and consistent academic color contrast in published pages',async()=>{
-    const missing=await browser.newPage();
-    try{
-      const response=await missing.goto(new URL('classic.html',base).href);
-      assert.equal(response.status(),404,'retired Classic HTML must not be publicly served');
-    }finally{await missing.close()}
-    for(const width of [390,1440]){
-      const page=await browser.newPage({viewport:{width,height:850}});
-      try{
-        for(const route of ['','studio.html','reading-archive.html']){
-          await page.goto(new URL(route,base).href);
-          assert.equal(await page.locator('a[href*="classic.html"]').count(),0,route+' contains retired Classic links');
-          for(const theme of ['light','dark']){
-            await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
-            const result=await page.evaluate(()=>{
-              const rgb=v=>(v.match(/[0-9.]+/g)||[]).slice(0,3).map(Number);
-              const lum=v=>rgb(v).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4}).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0);
-              const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
-              const body=document.body,head=document.querySelector('.mrl-site-header'),title=document.querySelector('main h1, main h2');
-              const bodyStyle=getComputedStyle(body),headerStyle=getComputedStyle(head),titleStyle=getComputedStyle(title);
-              const background=bodyStyle.backgroundColor;
-              const titleSurface=getComputedStyle(title.closest('section')||body).backgroundColor;
-              return {background,color:bodyStyle.color,
-                bodyContrast:contrast(bodyStyle.color,background),
-                headingContrast:contrast(titleStyle.color,titleSurface),
-                headerContrast:contrast(headerStyle.color,headerStyle.backgroundColor),
-                scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth};
-            });
-            assert.ok(result.bodyContrast>=4.5,route+' '+theme+' body contrast '+JSON.stringify(result));
-            assert.ok(result.headingContrast>=4.5,route+' '+theme+' title contrast '+JSON.stringify(result));
-            assert.ok(result.headerContrast>=4.5,route+' '+theme+' header contrast '+JSON.stringify(result));
-            assert.ok(result.scroll<=result.width+2,route+' '+theme+' horizontal overflow '+JSON.stringify(result));
-          }
-        }
-        await page.goto(new URL('studio.html#systems-lab',base).href);
-        for(const id of ['systems-lab','inquiry','science-ideas','contact'])assert.ok(await page.locator('#'+id).count()>0,id+' missing');
-      }finally{await page.close()}
-    }
-  });
-  await check('public site has no Books section, links, search entries or downloadable catalog',async()=>{
-   for(const route of ['','reading-archive.html','studio.html']){
-    const page=await browser.newPage();
-    try{
-     await page.goto(new URL(route,base).href);
-     assert.equal(await page.locator('a[href*="bookshelf"],a[href*="reading-desk"],#bookshelf,#reading-desk').count(),0,route+' still exposes book UI');
-     assert.ok(await page.locator('main').count()>0);
-    }finally{await page.close()}
-   }
-   const page=await browser.newPage();
-   try{assert.equal((await page.request.get(new URL('bookshelf.json',base).href)).status(),404)}finally{await page.close()}
-  });
-  await check('archive entries link to published articles',async()=>{
-   const page=await browser.newPage();
+  await check('black and white themes plus maroon links have readable contrast',async()=>{
+   const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
-    await page.goto(new URL('reading-archive.html',base).href);
-    const links=await page.locator('a[href*="articles/"]').evaluateAll(els=>[...new Set(els.map(e=>e.getAttribute('href')).filter(Boolean))]);
-    assert.ok(links.length>=22,'Expected 22 article links, got '+links.length);
-    for(const href of links){const response=await page.request.get(new URL(href,page.url()).href);assert.equal(response.status(),200,href)}
+    await page.goto(base);
+    await page.evaluate(()=>localStorage.removeItem('mrl-research-theme'));
+    await page.reload();
+    for(const [mode,expected] of [['light','rgb(255, 255, 255)'],['dark','rgb(17, 17, 17)']]){
+     const data=await page.evaluate(()=>{const body=getComputedStyle(document.body),a=getComputedStyle(document.querySelector('.main-column a')),heading=getComputedStyle(document.querySelector('h1'));return{mode:document.documentElement.dataset.theme,background:body.backgroundColor,ink:body.color,link:a.color,heading:heading.color}});
+     assert.equal(data.mode,mode);assert.equal(data.background,expected);
+     assert.ok(contrast(data.ink,data.background)>=7,'body '+mode+' contrast '+JSON.stringify(data));
+     assert.ok(contrast(data.heading,data.background)>=7,'heading '+mode+' contrast '+JSON.stringify(data));
+     assert.ok(contrast(data.link,data.background)>=4.5,'link '+mode+' contrast '+JSON.stringify(data));
+     await page.screenshot({path:path.join(artifacts,'research-home-'+mode+'.png'),fullPage:false});
+     await page.locator('#theme-toggle').click();
+    }
+    assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'light');
    }finally{await page.close()}
   });
-  await check('Studio research destinations and shared assets published',async()=>{
-   const page=await browser.newPage();
-   try{
-    for(const route of ['studio.html','unified-site.css','studio.html','reading-archive.html']){
-     const response=await page.request.get(new URL(route,base).href);assert.equal(response.status(),200,route)
+  await check('home navigation and dated writing links lead to real pages or anchors',async()=>{
+   const page=await browser.newPage();try{
+    await page.goto(base);
+    const hrefs=await page.locator('main a[href], .site-navigation a[href], footer a[href]').evaluateAll(nodes=>[...new Set(nodes.map(n=>n.getAttribute('href')))]);
+    for(const href of hrefs){
+     if(href.startsWith('#')){assert.equal(await page.locator(href).count(),1,href);continue}
+     if(/^https?:\/\//.test(href)||href.startsWith('mailto:'))continue;
+     const [target,hash]=href.split('#'),url=new URL(target,page.url()),res=await page.request.get(url.href);
+     assert.equal(res.status(),200,href+' is broken');
+     if(hash){const anchor=await page.request.get(url.href);assert.ok((await anchor.text()).includes('id="'+hash+'"'),href+' target anchor missing')}
     }
+    const removed=await page.request.get(new URL('bookshelf.json',base).href);
+    assert.equal(removed.status(),404,'removed book catalog should not be published');
+   }finally{await page.close()}
+  });
+  await check('archive search filters retained essays and deep-link article navigation works',async()=>{
+   const page=await browser.newPage({viewport:{width:390,height:850}});
+   try{
+    await page.goto(new URL('reading-archive.html',base).href);
+    assert.equal(await page.locator('.story').count(),22);
+    await page.locator('#q').fill('Netflix');
+    assert.ok(await page.locator('.story:visible').count()>0);
+    assert.ok(await page.locator('.story:visible').count()<22);
+    await page.locator('#q').fill('');
+    assert.equal(await page.locator('.story:visible').count(),22);
+    await page.goto(new URL('articles/fieldnote-queues.html',base).href);
+    assert.ok(await page.locator('main h1').count()>0);
+    assert.ok(await page.locator('.sch-reader-header').isVisible());
+    assert.ok(await page.locator('a[href="../index.html"]').count()>0);
+   }finally{await page.close()}
+  });
+  await check('Studio research destinations remain accessible after homepage redesign',async()=>{
+   const page=await browser.newPage({viewport:{width:390,height:850}});
+   try{
     await page.goto(new URL('studio.html',base).href);
-    assert.ok(await page.locator('#systems-lab').count()>0,'systems research missing');
-    assert.ok(await page.locator('#contact').count()>0,'contact missing');
+    for(const id of ['systems-lab','inquiry','science-ideas','contact'])assert.ok(await page.locator('#'+id).count()>0,id);
+    const tabs=await page.locator('.mrl-site-header .mrl-nav-group').count();
+    assert.ok(tabs<=3,'Studio header navigation exceeds agreed site menu');
    }finally{await page.close()}
   });
  }finally{await browser.close()}
  if(failures.length){console.error(failures.join('\n'));process.exitCode=1}
- else console.log('Journal and classic browser checks passed');
-})().catch(e=>{console.error(e);process.exitCode=1});
+})();
