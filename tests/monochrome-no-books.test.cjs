@@ -19,7 +19,7 @@ test('Four top-level navigation tabs are Home, Research, Writing, About',()=>{
  const nav=read('shared-navigation.js');
  for(const dest of ['index.html','studio.html','reading-archive.html','index.html#about-profile'])assert.ok(nav.includes('href="'+dest+'"'),dest);
  assert.equal((nav.match(/<a href=/g)||[]).length,4);
- assert.match(nav,/mrl-site-home/);
+ assert.match(nav,/href="index\.html">Home<\/a>/);
  assert.doesNotMatch(nav,/mrl-site-single|label:'Reading'/);
  const article=read('article-unified.js');
  assert.match(article,/Research/);assert.match(article,/Writing/);assert.match(article,/About/);
