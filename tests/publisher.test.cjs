@@ -7,7 +7,7 @@ const os=require('node:os');
 const root=path.resolve(__dirname,'..');
 const read=name=>fs.readFileSync(path.join(root,name),'utf8');
 const engine=require('../scripts/build-content.cjs');
-const source=read('classic.html'),settings=JSON.parse(read('data/site-settings.json'));
+const source=read('tests/fixtures/legacy-classic.html'),settings=JSON.parse(read('data/site-settings.json'));
 const picks=JSON.parse(read('data/recommendations.json'));
 test('one canonical public appearance is authored by repository owner',()=>{
  assert.deepEqual(engine.settingsOK(settings),settings);
@@ -91,7 +91,7 @@ test('the publishing build preserves 25 legacy articles and excludes draft Markd
   assert.match(html,/Moreshwar Research Lab/);
   assert.match(html,/bookshelf\.json/);
   assert.doesNotMatch(html,/<!--THEME_PICKS-->/);
-  const classic=fs.readFileSync(path.join(root,'classic.html'),'utf8');
+  const classic=fs.readFileSync(path.join(root,'tests/fixtures/legacy-classic.html'),'utf8');
   assert.match(classic,/An intellectual field guide\./);
   assert.match(classic,/The Imitation Game/);
   assert.equal((classic.match(/<li><a href="articles\//g)||[]).length,22);
@@ -107,14 +107,14 @@ test('the publishing build preserves 25 legacy articles and excludes draft Markd
 
 // Raw repository HTML must remain readable even if GitHub Pages accidentally serves the main branch.
 test('unprocessed source has no empty Curiosity Index placeholders',()=>{
-  const index=read('classic.html');
+  const index=read('tests/fixtures/legacy-classic.html');
   for(const text of ['An intellectual field guide.','The Imitation Game','Designing Data-Intensive Applications','MIT Distributed Systems Lectures','The research thread'.toUpperCase()]){
     assert.ok(index.toUpperCase().includes(text.toUpperCase()),'Missing fallback '+text);
   }
   assert.doesNotMatch(index,/<!--PICK_HEADING-->|<!--PICK_INTRO-->|<!--THEME_PICKS-->|<!--CURRENT_UNIVERSE-->/);
 });
 test('publishing build still has paired replacement anchors',()=>{
-  const index=read('classic.html');
+  const index=read('tests/fixtures/legacy-classic.html');
   for(const key of ['PICK_HEADING','PICK_INTRO','THEME_PICKS','CURRENT_UNIVERSE','PUBLISHED_POSTS']){
     assert.ok(index.includes('<!--'+key+'_BEGIN-->'));
     assert.ok(index.includes('<!--'+key+'_END-->'));
