@@ -81,3 +81,79 @@ body.mrl-text-first{display:block!important;margin:0!important;min-height:100vh}
 body.mrl-text-first > .card{margin:36px auto;max-width:760px;background:#fff!important;box-shadow:none!important;border:1px solid #d9dcde!important;border-radius:2px!important;color:#292b2c!important}
 body.mrl-text-first > .card :is(h1,h2,p,div,span){color:#293138!important}
 body.mrl-text-first .mrl-review-banner{display:none!important}
+
+/* Fix reported iPhone Studio screenshot: old studio rules rendered near-black
+ * headings on dark surfaces. Pair each surface with legible text in both themes.
+ * This is in the canonical final stylesheet, not another standalone theme layer. */
+body.mrl-studio.mrl-text-first{
+  --studio-bg:#ffffff;--studio-paper:#ffffff;--studio-text:#293239;
+  --studio-muted:#48545c;--studio-link:#7b2935;--studio-border:#dce1e3;
+  background:var(--studio-bg)!important;color:var(--studio-text)!important;
+}
+html[data-theme="dark"] body.mrl-studio.mrl-text-first{
+  --studio-bg:#151c21;--studio-paper:#1e292e;--studio-text:#f3f6f7;
+  --studio-muted:#c3d0d4;--studio-link:#f1b7bc;--studio-border:#44565c;
+}
+body.mrl-studio.mrl-text-first :is(.sch-page-columns,main#main-content,main#main-content .intro,main#main-content .featured,main#main-content .latest,main#main-content .topics,main#main-content .topic-grid,main#main-content .article-grid,main#main-content .feature-grid){
+  background:var(--studio-bg)!important;color:var(--studio-text)!important;
+  background-image:none!important;box-shadow:none!important;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro{
+  padding-block:clamp(24px,5vw,48px)!important;
+  display:grid;align-items:start;min-width:0;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro h1{
+  color:var(--studio-text)!important;
+  font:700 clamp(29px,5vw,45px)/1.18 Georgia,"Times New Roman",serif!important;
+  letter-spacing:-.025em!important;overflow-wrap:normal;margin:12px 0 16px!important;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro p{
+  color:var(--studio-muted)!important;
+  font:400 16px/1.7 Georgia,"Times New Roman",serif!important;
+  max-width:62ch;margin:0 0 16px!important;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro .eyebrow{
+  color:var(--studio-muted)!important;
+  font:700 11px/1.55 ui-monospace,Consolas,monospace!important;
+  letter-spacing:.09em!important;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro .actions{
+  display:flex!important;flex-wrap:wrap!important;align-items:center!important;
+  gap:12px!important;margin-top:18px!important;min-width:0;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro .actions a{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:auto!important;max-width:100%!important;min-height:44px!important;
+  padding:10px 14px!important;border-radius:8px!important;
+  font:650 13px/1.4 system-ui,sans-serif!important;
+  white-space:normal!important;letter-spacing:0!important;text-align:center;
+  text-decoration:none!important;box-shadow:none!important;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro .actions .primary{
+  background:#315d68!important;color:#fff!important;border:1px solid #315d68!important;
+}
+body.mrl-studio.mrl-text-first main#main-content .intro .actions .secondary{
+  background:var(--studio-paper)!important;color:var(--studio-text)!important;
+  border:1px solid var(--studio-border)!important;
+}
+body.mrl-studio.mrl-text-first main#main-content :is(.section-head h2,.feature-copy h3,.article h3,.topic-info b){
+  color:var(--studio-text)!important;
+}
+body.mrl-studio.mrl-text-first main#main-content :is(.feature-copy p,.article p,.overline,.topic-info span){
+  color:var(--studio-muted)!important;
+}
+body.mrl-studio.mrl-text-first main#main-content :is(.topic,.article){
+  background:var(--studio-paper)!important;border-color:var(--studio-border)!important;
+}
+body.mrl-studio.mrl-text-first .sch-related{
+  background:var(--studio-bg)!important;border-color:var(--studio-border)!important;
+  color:var(--studio-text)!important;
+}
+body.mrl-studio.mrl-text-first .sch-related :is(h2,p,li){color:var(--studio-text)!important}
+body.mrl-studio.mrl-text-first .sch-related a{color:var(--studio-link)!important}
+@media(max-width:700px){
+  body.mrl-studio.mrl-text-first main#main-content .intro{display:block!important;padding-block:26px 30px!important}
+  body.mrl-studio.mrl-text-first main#main-content .intro h1{font-size:clamp(30px,8vw,38px)!important;line-height:1.2!important}
+  body.mrl-studio.mrl-text-first main#main-content .intro .actions{gap:10px!important}
+  body.mrl-studio.mrl-text-first main#main-content .intro .actions a{min-height:44px!important}
+}

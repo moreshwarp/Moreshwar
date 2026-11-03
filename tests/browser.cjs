@@ -328,6 +328,43 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     }finally{await page.close()}
    }
   });
+  await check('studio mobile typography and controls meet contrast rules in both themes',async()=>{
+    for(const width of [320,390,768,1440]){
+      const page=await browser.newPage({viewport:{width,height:850}});
+      try{
+        await page.goto(new URL('studio.html',base).href);
+        for(const theme of ['light','dark']){
+          await page.evaluate(value=>document.documentElement.dataset.theme=value,theme);
+          const metrics=await page.evaluate(()=>{
+            const hero=document.querySelector('main#main-content .intro');
+            const title=hero.querySelector('h1'),paragraph=hero.querySelector('p');
+            const primary=hero.querySelector('.actions .primary');
+            const secondary=hero.querySelector('.actions .secondary');
+            const rgb=value=>{const n=value.match(/[0-9.]+/g)?.slice(0,3).map(Number);return n||[0,0,0]};
+            const luminance=c=>c.map(v=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4)}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
+            const contrast=(fg,bg)=>{const a=luminance(rgb(fg)),b=luminance(rgb(bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)};
+            const bg=getComputedStyle(hero).backgroundColor;
+            const titleContrast=contrast(getComputedStyle(title).color,bg);
+            const textContrast=contrast(getComputedStyle(paragraph).color,bg);
+            const primaryContrast=contrast(getComputedStyle(primary).color,getComputedStyle(primary).backgroundColor);
+            const secondaryContrast=contrast(getComputedStyle(secondary).color,getComputedStyle(secondary).backgroundColor);
+            const buttons=[primary,secondary].map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height,right:el.getBoundingClientRect().right}));
+            return {titleContrast,textContrast,primaryContrast,secondaryContrast,buttons,
+              viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
+              heading:title.innerText,background:bg};
+          });
+          assert.ok(metrics.titleContrast>=4.5,'studio '+theme+' title invisible '+JSON.stringify(metrics));
+          assert.ok(metrics.textContrast>=4.5,'studio '+theme+' paragraph unreadable '+JSON.stringify(metrics));
+          assert.ok(metrics.primaryContrast>=4.5,'studio '+theme+' primary button contrast '+JSON.stringify(metrics));
+          assert.ok(metrics.secondaryContrast>=4.5,'studio '+theme+' secondary button contrast '+JSON.stringify(metrics));
+          assert.ok(metrics.buttons.every(b=>b.height>=44&&b.right<=metrics.viewport+2),'studio '+theme+' button geometry '+JSON.stringify(metrics));
+          assert.ok(metrics.scroll<=metrics.viewport+2,'studio '+theme+' horizontal overflow '+JSON.stringify(metrics));
+          assert.match(metrics.heading,/An invitation to/);
+          if(width===390)await page.screenshot({path:path.join(artifacts,'studio-contrast-'+theme+'.png'),fullPage:false});
+        }
+      }finally{await page.close()}
+    }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
