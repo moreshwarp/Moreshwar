@@ -299,7 +299,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       assert.equal(await menu.getAttribute('aria-expanded'),'true');
       await page.locator('.sch-reader-nav summary').first().click();
       assert.ok(await page.locator('.sch-reader-sub a[href="../studio.html#systems-lab"]').isVisible());
-      assert.equal(await page.locator('a[href*="classic.html"]').count(),0,name+' retains retired Classic links');
+      assert.equal(await page.locator('a[href*="classic.html"]').count(),0,'article menu retains retired Classic links');
       await page.keyboard.press('Escape');
       assert.equal(await menu.getAttribute('aria-expanded'),'false');
      }
