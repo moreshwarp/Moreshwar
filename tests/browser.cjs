@@ -96,9 +96,11 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     await page.goto(new URL('reading-archive.html',base).href);
     assert.equal(await page.locator('.story').count(),22);
     await page.locator('#q').fill('Netflix');
-    assert.ok(await page.locator('.story:visible').count()>0);
-    assert.ok(await page.locator('.story:visible').count()<22);
+    await page.waitForFunction(()=>document.querySelectorAll('.story:not([hidden])').length<22,{timeout:10000});
+    const filtered=await page.locator('.story:visible').count();
+    assert.ok(filtered>0&&filtered<22,'archive filter did not narrow results '+filtered);
     await page.locator('#q').fill('');
+    await page.waitForFunction(()=>document.querySelectorAll('.story:not([hidden])').length===22,{timeout:10000});
     assert.equal(await page.locator('.story:visible').count(),22);
     await page.goto(new URL('articles/fieldnote-queues.html',base).href);
     assert.ok(await page.locator('main h1').count()>0);
