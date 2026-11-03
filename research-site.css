@@ -1,0 +1,52 @@
+/* Moreshwar Research Lab — single, original academic design system.
+   Clear type, plain lists and sidebars inspired by established personal research sites.
+   No decorative cards, images, animation frameworks, external fonts or analytics. */
+:root{color-scheme:light;--paper:#fff;--ink:#222;--muted:#555;--link:#965262;--line:#d5d5d5;--mast:#454a4e;--mast-ink:#fff;--nav:#ededed;--focus:#965262}
+html[data-theme="dark"]{color-scheme:dark;--paper:#111;--ink:#f5f5f5;--muted:#c8c8c8;--link:#d8a3b1;--line:#414141;--mast:#242424;--mast-ink:#fff;--nav:#292929;--focus:#d8a3b1}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.63 Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
+.container{width:min(960px,calc(100% - 36px));margin-inline:auto}
+a{color:var(--link);text-decoration:none;text-underline-offset:3px}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.skip{position:absolute;left:12px;top:-100px;background:var(--paper);padding:12px;z-index:100}
+.skip:focus{top:12px}
+.brand-band{background:var(--mast);color:var(--mast-ink)}
+.brand-inner{min-height:105px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{color:var(--mast-ink);font:400 clamp(29px,4vw,42px)/1.15 Arial,Helvetica,sans-serif;letter-spacing:-.035em}
+.brand:hover{text-decoration:none}
+.brand span{display:block;margin-top:3px;letter-spacing:.025em;font:400 12px/1.25 Arial,Helvetica,sans-serif;color:#e1e1e1}
+.theme-button{font:600 12px/1.25 Arial,Helvetica,sans-serif;min-height:40px;padding:10px 14px;border:1px solid #aeb2b4;border-radius:2px;background:transparent;color:#fff;cursor:pointer}
+.theme-button:hover{background:#fff2}
+.site-navigation{background:var(--nav);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:stretch;gap:0;min-height:45px}
+.nav-inner a{font:600 14px/1.3 Arial,Helvetica,sans-serif;color:var(--ink);padding:13px 18px;white-space:nowrap}
+.nav-inner a:first-child{padding-left:0}
+.nav-inner a:hover,.nav-inner a[aria-current="page"]{text-decoration:underline;text-decoration-color:var(--link);text-decoration-thickness:2px;text-underline-offset:6px}
+.layout{display:grid;grid-template-columns:minmax(0,610px) minmax(0,300px);gap:50px;align-items:start;padding-block:36px 70px}
+.main-column,.sidebar{min-width:0}
+h1,h2{color:var(--ink);font-family:Georgia,"Times New Roman",serif;letter-spacing:-.02em}
+h1{font-size:32px;line-height:1.2;margin:0 0 20px}
+h2{font-size:23px;line-height:1.32;margin:34px 0 12px}
+p{margin:0 0 14px}
+.introduction p{font-size:16.5px}
+.main-column section:not(:first-child){border-top:1px solid var(--line);margin-top:33px;padding-top:3px}
+.main-column section:not(:first-child) h2{margin-top:23px}
+.research-list{margin:14px 0 15px;padding-left:23px}
+.research-list li{padding-left:2px;margin-bottom:12px}
+.dated-list{list-style:none;padding:0;margin:14px 0 16px}
+.dated-list li{display:grid;grid-template-columns:95px minmax(0,1fr);gap:8px;padding:7px 0}
+.dated-list time{color:var(--muted);font-size:13px;white-space:nowrap}
+.sidebar{border-left:1px solid var(--line);padding-left:23px}
+.sidebar section+section{margin-top:28px}
+.sidebar h2{font-size:18px;letter-spacing:0;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.sidebar p,.sidebar li{font-size:14px;line-height:1.62}
+.sidebar ul{padding-left:20px;margin:8px 0}
+.sidebar li{margin-bottom:5px}
+.site-footer{background:var(--nav);border-top:1px solid var(--line);padding:20px 0 30px}
+.site-footer .container{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.site-footer p{font-size:13px;color:var(--muted);margin:0}
+@media(max-width:700px){.layout{grid-template-columns:1fr;gap:34px;padding-top:27px}.sidebar{border-left:0;border-top:1px solid var(--line);padding:26px 0 0}.sidebar section+section{margin-top:22px}.brand-inner{min-height:87px}.nav-inner{justify-content:space-between}.nav-inner a{padding:13px 8px;font-size:13px}.nav-inner a:first-child{padding-left:0}.nav-inner a:last-child{padding-right:0}.dated-list li{grid-template-columns:90px 1fr}}
+@media(max-width:400px){.container{width:calc(100% - 28px)}.brand{font-size:27px}.brand span{font-size:10px}h1{font-size:29px}h2{font-size:21px}.dated-list li{display:block}.dated-list time{display:block;margin-bottom:2px}.theme-button{padding:9px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

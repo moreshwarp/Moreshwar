@@ -438,3 +438,6 @@ html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-group>summary{
 }
 html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub{background:var(--site-surface)!important}
 html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub small{color:var(--site-muted)!important}
+
+/* HTML hidden must override historical forced display declarations. */
+body.mrl-text-first .story[hidden],body.mrl-text-first [hidden]{display:none!important}

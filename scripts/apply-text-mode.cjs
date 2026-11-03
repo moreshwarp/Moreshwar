@@ -6,6 +6,8 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {listHtml}=require('./audit-site.cjs');
 function stylePage(html,relative,version=''){
+ // The research homepage is self-contained; do not inject legacy CSS or menus.
+ if(relative==='index.html' && html.includes('href="research-site.css"'))return html;
  if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
  const article=relative.startsWith('articles/');
  const prefix=article?'../':'';
