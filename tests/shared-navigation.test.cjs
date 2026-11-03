@@ -10,8 +10,8 @@ test('one shared academic header is installed on every primary public page',()=>
 });
 test('navigation has real academic destinations, accessible details, mobile menu and search',()=>{
  const js=read('shared-navigation.js'),css=read('shared-navigation.css');
- for(const p of ['studio.html#systems-lab','studio.html#inquiry','studio.html#science-ideas','index.html#academic-recent','studio.html#contact','index.html#bookshelf','index.html#about','reading-archive.html','studio.html'])assert.ok(js.includes(p),p);
- for(const p of ['Research','Writing','Reading','About'])assert.ok(js.includes("label:'"+p+"'"),p);
+ for(const p of ['studio.html#systems-lab','studio.html#inquiry','studio.html#science-ideas','index.html#academic-recent','studio.html#contact','index.html#about','reading-archive.html','studio.html'])assert.ok(js.includes(p),p);
+ for(const p of ['Research','Writing','About'])assert.ok(js.includes("label:'"+p+"'"),p);
  assert.match(js,/<details class="mrl-nav-group"/);
  assert.match(js,/aria-expanded/);
  assert.match(js,/event\.key==='Escape'/);

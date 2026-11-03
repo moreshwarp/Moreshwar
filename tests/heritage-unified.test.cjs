@@ -22,11 +22,11 @@ test('academic navigation is original, responsive, and preserves content and sea
  assert.doesNotMatch(js,/fetch\(|localStorage|sessionStorage|analytics/);
  assert.doesNotMatch(css,/@import|https?:\/\//);
 });
-test('the original published essays, books and research destination ids stay in place',()=>{
+test('the original published essays and research destination ids stay in place',()=>{
  const home=read('index.html'),archive=read('reading-archive.html'),studio=read('studio.html'),lab=read('tests/fixtures/legacy-classic.html');
  assert.equal((archive.match(/class="story"/g)||[]).length,22);
- assert.equal(JSON.parse(read('bookshelf.json')).books.length,143);
- for(const id of ['bookshelf','academic-directory','research-projects'])assert.ok(home.includes('id="'+id+'"'));
+ assert.ok(!require('../scripts/prepare-site.cjs').sourceFiles.includes('bookshelf.json'));
+ for(const id of ['academic-directory','research-projects'])assert.ok(home.includes('id="'+id+'"'));
  for(const id of ['q','grid','year'])assert.ok(archive.includes('id="'+id+'"'));
  for(const id of ['systems-lab','inquiry'])assert.ok(lab.includes('id="'+id+'"'));
  assert.match(studio,/id="main-content"/);

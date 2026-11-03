@@ -21,7 +21,7 @@ test('research, science, inquiry and contact live inside the maintained Studio',
 });
 test('one canonical palette sets paired surfaces, ink, link, control and focus colors',()=>{
  const css=read('text-first-site.css');
- for(const token of ['--site-paper','#fbfaf7','--site-surface','#ffffff','--site-ink','#23343d','--site-link','#245b78','--site-button','#235b70','--site-button-text','#ffffff','--site-focus','#a56935','--site-muted','#c1d0d2']){
+ for(const token of ['--site-paper','#ffffff','--site-surface','#ffffff','--site-ink','#171717','--site-link','#965262','--site-button','#171717','--site-button-text','#ffffff','--site-focus','#965262','--site-muted','#d1d1d1']){
   assert.ok(css.includes(token),token);
  }
  assert.match(css,/html\[data-theme="dark"\]/);

@@ -12,7 +12,7 @@ test('two-column scholarly homepage has genuine research material in main and si
  assert.equal((html.match(/id="academic-directory"/g)||[]).length,1);
  assert.equal((html.match(/class="academic-sidebar"/g)||[]).length,1);
  assert.ok(html.indexOf('class="academic-directory"')<html.indexOf('class="academic-sidebar"'));
- for(const item of ['Recent essays','Selected writing','Books and references','Source and reproducibility'])assert.ok(html.includes(item));
+ for(const item of ['Recent essays','Selected writing','Source and reproducibility'])assert.ok(html.includes(item));
  assert.doesNotMatch(html,/kleppmann-local-first-2026.jpg|Martin Kleppmann is an Associate Professor/);
 });
 test('scholarly responsive layout ships locally, not from reference website',()=>{

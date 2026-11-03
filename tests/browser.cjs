@@ -73,9 +73,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     await page.locator('#mrl-search-input').fill('Lamport');
     await page.waitForFunction(()=>document.querySelector('.mrl-search-status')?.textContent?.includes('matching'));
     assert.match(await page.locator('.mrl-search-results').innerText(),/Lamport/i);
-    await page.locator('#mrl-search-input').fill('Pragmatic');
-    await page.waitForFunction(()=>document.querySelector('.mrl-search-results')?.textContent?.includes('Pragmatic'));
-    assert.match(await page.locator('.mrl-search-results').innerText(),/Pragmatic/i);
+    assert.equal(await page.locator('.mrl-search-results a[href*="bookshelf"]').count(),0);
     await page.screenshot({path:path.join(artifacts,'mobile-search.png')});
     await page.keyboard.press('Escape');
     await page.locator('#mrl-global-search').waitFor({state:'hidden',timeout:5000});
@@ -95,12 +93,11 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     try{
      await page.goto(base);
      const buttons=page.locator('[data-observatory] button[data-idea]');
-     assert.equal(await buttons.count(),5);
-     await page.locator('[data-idea="books"]').click();
-     assert.equal(await page.locator('#obs-title').innerText(),'The reading shelf');
-     assert.equal(await page.locator('#obs-link').getAttribute('href'),'index.html#bookshelf');
-     assert.equal(await page.locator('[data-idea="books"]').getAttribute('aria-pressed'),'true');
-     await page.locator('[data-idea="books"]').focus();
+     assert.equal(await buttons.count(),4);
+     await page.locator('[data-idea="proof"]').click();
+     assert.equal(await page.locator('#obs-title').innerText(),'Proof and trust');
+     assert.equal(await page.locator('[data-idea="proof"]').getAttribute('aria-pressed'),'true');
+     await page.locator('[data-idea="proof"]').focus();
      await page.keyboard.press('ArrowRight');
      assert.equal(await page.locator('[data-idea="ideas"]').getAttribute('aria-pressed'),'true');
      assert.equal(await page.locator('#obs-title').innerText(),'Original essays');
@@ -117,16 +114,16 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
      await page.goto(base);
      const section=page.locator('#editorial-discovery');
      assert.ok(await section.isVisible());
-     assert.equal(await section.locator('.ed-card:visible').count(),6);
+     assert.equal(await section.locator('.ed-card:visible').count(),5);
      await section.locator('[data-ed-filter="systems"]').click();
      assert.equal(await section.locator('.ed-card:visible').count(),3);
      assert.equal(await section.locator('[data-ed-filter="systems"]').getAttribute('aria-pressed'),'true');
-     await section.locator('[data-ed-filter="reading"]').click();
-     assert.equal(await section.locator('.ed-card:visible').count(),1);
+     await section.locator('[data-ed-filter="thinking"]').click();
+     assert.equal(await section.locator('.ed-card:visible').count(),3);
      await section.locator('#ed-surprise').click();
      assert.ok(await section.locator('.ed-card:focus').count()===1,'surprise control must focus visible card');
      await section.locator('[data-ed-filter="all"]').click();
-     assert.equal(await section.locator('.ed-card:visible').count(),6);
+     assert.equal(await section.locator('.ed-card:visible').count(),5);
      const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
      assert.ok(geom.scroll<=geom.client+2,'discovery overflow '+JSON.stringify(geom));
      for(const asset of ['edition.css','edition.js','vendor/open-props/colors.css','vendor/open-props/easing.css','vendor/open-props/sizes.css']){
@@ -141,9 +138,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     const page=await browser.newPage({viewport:{width,height:850}});
     try{
      await page.goto(base);
-     await page.locator('#ux-featured-books .ux-book-card').first().waitFor({state:'attached'});
-     assert.equal(await page.locator('#ux-featured-books .ux-book-card').count(),3);
-     assert.equal(await page.locator('#ux-featured-books a[href^="https://openlibrary.org/isbn/"]').count(),3);
+     assert.equal(await page.locator('#bookshelf,#reading-desk,#ux-featured-books').count(),0);
      await page.locator('#ux-theme').click();
      assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'dark');
      await page.locator('#ux-theme').click();
@@ -164,7 +159,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       await page.goto(new URL(route,base).href);
       const header=page.locator('header.mrl-site-header');
       assert.ok(await header.isVisible(),route+' shared header not visible');
-      assert.equal(await header.locator('details.mrl-nav-group').count(),4);
+      assert.equal(await header.locator('details.mrl-nav-group').count(),3);
       const old=page.locator('header.at-header,header.site-header,header.mrl-header,header.nav');
       assert.equal(await old.isVisible(),false,route+' old inconsistent header still visible');
       const doc=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
@@ -207,7 +202,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
      assert.ok(await page.locator('#academic-directory').isVisible());
      assert.equal(await page.locator('#academic-directory time').count(),5);
      const bg=await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor);
-     assert.equal(bg,'rgb(251, 250, 247)');
+     assert.equal(bg,'rgb(255, 255, 255)');
      assert.ok(await page.locator('#academic-directory a[href="reading-archive.html"]').count()>0);
      await page.screenshot({path:path.join(artifacts,'academic-home-'+width+'.png'),fullPage:false});
     }finally{await page.close()}
@@ -279,7 +274,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
           readerStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('article-unified.css?v=')),
           textStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('text-first-site.css?v='))};
       });
-      assert.equal(appearance.background,'rgb(251, 250, 247)',name+' old dark page background');
+      assert.equal(appearance.background,'rgb(255, 255, 255)',name+' old dark page background');
       assert.match(appearance.headingFont,/Georgia/,name+' old heading typeface');
       assert.ok(appearance.readerStyle&&appearance.textStyle,name+' missing cache-versioned academic styles');
       if(name.includes('secret-link-between-sounding')||name.includes('fieldnote-queues')){
@@ -385,10 +380,10 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
             topics:topics.map(rect),viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
             sidebar:rect(document.querySelector('.sch-related'))};
         });
-        assert.equal(data.background,'rgb(251, 250, 247)','studio dark content region still visible '+JSON.stringify(data));
+        assert.equal(data.background,'rgb(255, 255, 255)','studio dark content region still visible '+JSON.stringify(data));
         assert.equal(data.articleLayout,'block','article cards still multi-column');
         assert.ok(data.topics.every(t=>t.width>=Math.min(width-45,240)&&t.right<=data.viewport+2),'topic links must fit the screen '+JSON.stringify(data));
-        assert.equal(data.cards.length,3);
+        assert.equal(data.cards.length,2);
         assert.ok(data.cards.every(c=>c.position.width>=Math.min(width-45,300)),'cramped article columns '+JSON.stringify(data));
         assert.ok(data.cards.every((c,i)=>i===0||c.position.top>=data.cards[i-1].position.bottom-2),'article entries must stack '+JSON.stringify(data));
         assert.ok(data.scroll<=data.viewport+2,'studio horizontal overflow '+JSON.stringify(data));
@@ -435,19 +430,17 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       }finally{await page.close()}
     }
   });
-  await check('bookshelf loads 143 and search filters',async()=>{
-   const page=await browser.newPage({viewport:{width:390,height:850}});
-   try{
-    await page.goto(base);
-    await page.locator('#shelf-toggle').click();
-    await page.waitForFunction(()=>document.querySelector('#shelf-list')?.children.length>0,{timeout:15000});
-    const data=await page.request.get(new URL('bookshelf.json',base).href);
-    assert.equal(data.status(),200);
-    assert.equal((await data.json()).books.length,143);
-    await page.locator('#shelf-search').fill('Pragmatic');
-    await page.waitForTimeout(150);
-    assert.match(await page.locator('#shelf-list').innerText(),/Pragmatic/i);
-   }finally{await page.close()}
+  await check('public site has no Books section, links, search entries or downloadable catalog',async()=>{
+   for(const route of ['','reading-archive.html','studio.html']){
+    const page=await browser.newPage();
+    try{
+     await page.goto(new URL(route,base).href);
+     assert.equal(await page.locator('a[href*="bookshelf"],a[href*="reading-desk"],#bookshelf,#reading-desk').count(),0,route+' still exposes book UI');
+     assert.ok(await page.locator('main').count()>0);
+    }finally{await page.close()}
+   }
+   const page=await browser.newPage();
+   try{assert.equal((await page.request.get(new URL('bookshelf.json',base).href)).status(),404)}finally{await page.close()}
   });
   await check('archive entries link to published articles',async()=>{
    const page=await browser.newPage();

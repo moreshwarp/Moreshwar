@@ -2,7 +2,7 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const root=path.resolve(__dirname,'..');const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 test('atlas experience retains the public journal and accessible research navigation',()=>{
  const home=read('index.html');
- for(const id of ['main-content','hero-title','essays','reading-desk','about','bookshelf','field-guide'])assert.ok(home.includes('id="'+id+'"'),id);
+ for(const id of ['main-content','hero-title','essays','about','field-guide'])assert.ok(home.includes('id="'+id+'"'),id);
  for(const href of ['studio.html#systems-lab','studio.html#inquiry','reading-archive.html','studio.html'])assert.ok(home.includes('href="'+href+'"'),href);
  assert.match(home,/aria-labelledby="field-guide-title"/);
  assert.match(home,/educational models, not production benchmarks/);

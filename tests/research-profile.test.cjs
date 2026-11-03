@@ -3,7 +3,7 @@ const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p
 test('resume-inspired research profile gives visitors a clear identity and information architecture',()=>{
  const home=read('index.html');
  assert.match(home,/id="hero-title">Hello! I’m/);
- for(const id of ['about-profile','research-projects','idea-map','essays','bookshelf','reading-desk'])assert.ok(home.includes('id="'+id+'"'),id);
+ for(const id of ['about-profile','research-projects','idea-map','essays'])assert.ok(home.includes('id="'+id+'"'),id);
  assert.match(home,/class="rs-section-nav"/);
  assert.match(home,/class="rs-hero-visual"/);
  assert.equal((home.match(/class="rs-project rs-project/g)||[]).length,1);

@@ -5,20 +5,11 @@ test('design system and progressive UX assets ship on all reading pages',()=>{
  for(const asset of ['research-ux.css','research-ux.js']){assert.ok(sourceFiles.includes(asset));assert.ok(requiredFiles.includes(asset));assert.ok(fs.statSync(path.join(root,asset)).size>1000)}
  for(const page of ['index.html','reading-archive.html','studio.html']){assert.match(read(page),/research-ux\.css/);assert.match(read(page),/research-ux\.js/)}
 });
-test('featured real cover editions have verified ISBNs and no invented universal covers',()=>{
+test('book showcase and remote cover requests are removed from public UI',()=>{
  const js=read('research-ux.js'),html=read('index.html');
- assert.match(html,/id="ux-featured-books"/);
- assert.match(js,/9780135957059/);
- assert.match(js,/9781544514215/);
- assert.match(js,/9781455586691/);
- assert.match(js,/covers\.openlibrary\.org\/b\/isbn/);
- assert.match(js,/default=false/);
- assert.match(js,/Cover unavailable/);
- assert.match(js,/Cover not verified/);
- assert.doesNotMatch(js,/faker|randomCover|unsplash|bookcover\.generate/i);
- const books=JSON.parse(read('bookshelf.json')).books;
- for(const title of ['The Pragmatic Programmer','The Almanack of Naval Ravikant','Deep Work'])assert.ok(books.some(b=>b.title===title),title);
- assert.equal(books.length,143);
+ assert.doesNotMatch(html,/id="bookshelf"|id="reading-desk"|id="ux-featured-books"|id="shelf-toggle"/);
+ assert.doesNotMatch(js,/covers\.openlibrary\.org|ux-book-cover|shelf-list/);
+ assert.ok(!require('../scripts/prepare-site.cjs').sourceFiles.includes('bookshelf.json'));
 });
 test('meaningful system figure can be zoomed with a keyboard-operable dialog',()=>{
  const html=read('index.html'),js=read('research-ux.js'),svg=read('assets/distributed-request-flow.svg');
