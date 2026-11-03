@@ -68,3 +68,8 @@ html[data-theme=dark] body.mrl-profile .rs-secondary{background:#1b2526!importan
 .ux-research-figure figcaption{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px;font-size:13px;line-height:1.6;color:var(--ux-secondary)}
 .ux-research-figure figcaption strong{color:var(--ux-text)}
 .ux-research-figure figcaption .ux-zoom{margin-left:auto}
+
+body.mrl-archive .ux-theme,body.mrl-studio .ux-theme{font-family:Inter,system-ui,sans-serif}
+html[data-theme=dark] body.mrl-archive,html[data-theme=dark] body.mrl-studio{background:#12171a!important;color:#f4f4f5!important}
+html[data-theme=dark] body.mrl-archive :is(.site-header,.story,.tools,.intro,.mrl-bottom-nav),html[data-theme=dark] body.mrl-studio :is(.site-header,.topic,.intro,.mrl-bottom-nav){background:#1b2526!important;color:#f4f4f5!important;border-color:#354542!important}
+html[data-theme=dark] body.mrl-archive :is(h1,h2,h3,p,a,span),html[data-theme=dark] body.mrl-studio :is(h1,h2,h3,p,a,span){color:inherit}
