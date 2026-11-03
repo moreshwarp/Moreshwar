@@ -3,7 +3,7 @@ const {finalizeHtml}=require('../scripts/finalize-site.cjs'),{check,references}=
 test('article finalizer restores scholarly navigation and corrects historic stale links without losing content',()=>{
  const article='<!doctype html><html><head><title>Research note</title></head><body><main><h1>Original essay</h1><a href="../#writing">Writing</a><a href="../index.html#systems-lab">Lab</a></main></body></html>';
  const final=finalizeHtml(article);assert.match(final,/article-unified\.css/);assert.match(final,/article-unified\.js/);
- assert.match(final,/class="sch-reader"/);assert.match(final,/href="\.\.\/reading-archive\.html"/);assert.match(final,/href="\.\.\/classic\.html#systems-lab"/);
+ assert.match(final,/class="sch-reader"/);assert.match(final,/href="\.\.\/reading-archive\.html"/);assert.match(final,/href="\.\.\/studio\.html#systems-lab"/);
  assert.match(final,/Original essay/);
  assert.equal(finalizeHtml(final),final,'finalization must be idempotent');
 });
