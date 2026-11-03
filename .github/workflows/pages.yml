@@ -50,7 +50,7 @@ jobs:
         run: |
           python3 scripts/build_catalog.py --output _site/data/research-catalog.json
           go run ./tools/catalogcheck _site
-      - name: Embed exact merged commit in published homepage
+      - name: Finalize every article and verify all internal links\n        run: |\n          node scripts/finalize-site.cjs _site\n          node scripts/audit-site.cjs _site site-audit.json\n      - name: Embed exact merged commit in published homepage
         run: node scripts/release-health.cjs stamp _site
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
