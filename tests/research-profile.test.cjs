@@ -2,7 +2,7 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
 test('resume-inspired research profile gives visitors a clear identity and information architecture',()=>{
  const home=read('index.html');
- assert.match(home,/id="hero-title">Hello, I'm/);
+ assert.match(home,/id="hero-title">Hello! I’m/);
  for(const id of ['about-profile','research-projects','idea-map','essays','bookshelf','reading-desk'])assert.ok(home.includes('id="'+id+'"'),id);
  assert.match(home,/class="rs-section-nav"/);
  assert.match(home,/class="rs-hero-visual"/);
