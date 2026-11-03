@@ -14,7 +14,7 @@ test('research, science, inquiry and contact live inside the maintained Studio',
  const studio=read('studio.html');
  for(const id of ['systems-lab','inquiry','science-ideas','contact']){
   assert.ok(studio.includes('id="'+id+'"'),'missing '+id);
-  assert.ok(read('shared-navigation.js').includes('studio.html#'+id),'navigation missing '+id);
+  assert.ok(read('index.html').includes('studio.html#'+id)||id==='contact'&&read('index.html').includes('studio.html#contact'),'research destination missing '+id);
  }
  assert.ok(studio.includes('articles/fieldnote-queues.html'));
  assert.ok(studio.includes('mailto:moreshwarpidadi@gmail.com'));
