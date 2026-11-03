@@ -210,6 +210,26 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     }finally{await page.close()}
    }
   });
+  await check('scholarly two-column main and sidebar at desktop, single column on mobile',async()=>{
+    for(const width of [320,390,768,1440]){
+      const page=await browser.newPage({viewport:{width,height:900}});
+      try{
+        await page.goto(base);
+        const main=page.locator('.academic-main'),aside=page.locator('.academic-sidebar');
+        assert.ok(await main.isVisible());assert.ok(await aside.isVisible());
+        const rects=await page.evaluate(()=>{
+          const a=document.querySelector('.academic-main').getBoundingClientRect();
+          const b=document.querySelector('.academic-sidebar').getBoundingClientRect();
+          return {a:{left:a.left,right:a.right,top:a.top,bottom:a.bottom},b:{left:b.left,right:b.right,top:b.top},width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth};
+        });
+        if(width<=700)assert.ok(rects.b.top>=rects.a.bottom-2,'sidebar should follow main content '+JSON.stringify(rects));
+        else assert.ok(rects.b.left>=rects.a.right-2,'sidebar must be beside main '+JSON.stringify(rects));
+        assert.ok(rects.scroll<=rects.width+2,'scholarly layout overflow '+JSON.stringify(rects));
+        assert.equal((await page.request.get(new URL('scholarly-layout.css',base).href)).status(),200);
+        await page.screenshot({path:path.join(artifacts,'scholarly-'+width+'.png'),fullPage:false});
+      }finally{await page.close()}
+    }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
