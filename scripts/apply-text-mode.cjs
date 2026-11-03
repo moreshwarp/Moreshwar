@@ -15,7 +15,7 @@ function stylePage(html,relative,version=''){
  for(const asset of extras){
   const address=prefix+asset;
   const url=asset==='text-first-site.css'&&version?address+'?v='+version:address;
-  if(output.includes('href="'+address+'"')||output.includes('src="'+address+'"'))continue;
+  if(output.includes('href="'+address+'"')||output.includes('href="'+address+'?')||output.includes('src="'+address+'"'))continue;
   const tag=asset.endsWith('.css')?'<link rel="stylesheet" href="'+url+'">':'<script defer src="'+address+'"></script>';
   output=output.replace(/<\/head>/i,tag+'\n</head>');
  }
