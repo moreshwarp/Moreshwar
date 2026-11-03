@@ -145,7 +145,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
      await page.locator('[data-ux-zoom="assets/distributed-request-flow.svg"]').click();
      assert.ok(await page.locator('dialog.ux-lightbox').isVisible());
      await page.keyboard.press('Escape');
-     assert.equal(await page.locator('dialog.ux-lightbox').count(),0);
+     await page.locator('dialog.ux-lightbox').waitFor({state:'detached',timeout:5000});
      const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
      assert.ok(geom.scroll<=geom.client+2,'research UX overflow '+JSON.stringify(geom));
      assert.equal((await page.request.get(new URL('assets/distributed-request-flow.svg',base).href)).status(),200);
