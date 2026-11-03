@@ -207,7 +207,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
      assert.ok(await page.locator('#academic-directory').isVisible());
      assert.equal(await page.locator('#academic-directory time').count(),5);
      const bg=await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor);
-     assert.equal(bg,'rgb(255, 255, 255)');
+     assert.equal(bg,'rgb(251, 250, 247)');
      assert.ok(await page.locator('#academic-directory a[href="reading-archive.html"]').count()>0);
      await page.screenshot({path:path.join(artifacts,'academic-home-'+width+'.png'),fullPage:false});
     }finally{await page.close()}
@@ -279,7 +279,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
           readerStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('article-unified.css?v=')),
           textStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('text-first-site.css?v='))};
       });
-      assert.equal(appearance.background,'rgb(255, 255, 255)',name+' old dark page background');
+      assert.equal(appearance.background,'rgb(251, 250, 247)',name+' old dark page background');
       assert.match(appearance.headingFont,/Georgia/,name+' old heading typeface');
       assert.ok(appearance.readerStyle&&appearance.textStyle,name+' missing cache-versioned academic styles');
       if(name.includes('secret-link-between-sounding')||name.includes('fieldnote-queues')){
@@ -384,8 +384,9 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
             topics:topics.map(rect),viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
             sidebar:rect(document.querySelector('.sch-related'))};
         });
-        assert.equal(data.background,'rgb(255, 255, 255)','studio dark content region still visible '+JSON.stringify(data));
+        assert.equal(data.background,'rgb(251, 250, 247)','studio dark content region still visible '+JSON.stringify(data));
         assert.equal(data.articleLayout,'block','article cards still multi-column');
+        assert.ok(data.topics.every(t=>t.width>=Math.min(width-45,240)&&t.right<=data.viewport+2),'topic links must fit the screen '+JSON.stringify(data));
         assert.equal(data.cards.length,3);
         assert.ok(data.cards.every(c=>c.position.width>=Math.min(width-45,300)),'cramped article columns '+JSON.stringify(data));
         assert.ok(data.cards.every((c,i)=>i===0||c.position.top>=data.cards[i-1].position.bottom-2),'article entries must stack '+JSON.stringify(data));
