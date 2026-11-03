@@ -30,7 +30,7 @@ const toggle=header.querySelector('.mrl-site-mobile-toggle'),nav=header.querySel
 function closeMenu(){nav.classList.remove('mrl-site-nav-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation')}
 function closeGroups(except){details.forEach(g=>{if(g!==except)g.open=false})}
 toggle.addEventListener('click',()=>{const open=nav.classList.toggle('mrl-site-nav-open');toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');if(!open)closeGroups()});
-details.forEach(group=>group.addEventListener('toggle',()=>{if(group.open)closeGroups(group)}));
+details.forEach(group=>{group.querySelector('summary').addEventListener('click',()=>closeGroups(group));group.addEventListener('toggle',()=>{if(group.open)closeGroups(group)})});
 nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{closeGroups();closeMenu()}));
 d.addEventListener('keydown',event=>{if(event.key==='Escape'){const hadOpen=details.some(g=>g.open)||nav.classList.contains('mrl-site-nav-open');closeGroups();closeMenu();if(hadOpen){toggle.focus();event.stopPropagation()}}});
 d.addEventListener('click',event=>{if(!header.contains(event.target)){closeGroups();closeMenu()}});
