@@ -26,6 +26,11 @@ jobs:
           node --check scripts/sync-feedback.cjs
           node --check reader-feedback.js
           node --check inquiry.js
+      - name: Validate finalization and link-audit syntax
+        run: |
+          node --check scripts/finalize-site.cjs
+          node --check scripts/audit-site.cjs
+          node --check shared-navigation.js
       - name: Run zero-dependency regression tests
         run: node --test tests/*.test.cjs
       - uses: actions/setup-go@v5
