@@ -299,6 +299,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       assert.equal(await menu.getAttribute('aria-expanded'),'true');
       await page.locator('.sch-reader-nav summary').first().click();
       assert.ok(await page.locator('.sch-reader-sub a[href="../studio.html#systems-lab"]').isVisible());
+      assert.equal(await page.locator('a[href*="classic.html"]').count(),0,name+' retains retired Classic links');
       await page.keyboard.press('Escape');
       assert.equal(await menu.getAttribute('aria-expanded'),'false');
      }
@@ -457,7 +458,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     for(const href of links){const response=await page.request.get(new URL(href,page.url()).href);assert.equal(response.status(),200,href)}
    }finally{await page.close()}
   });
-  await check('classic workspace and shared assets published',async()=>{
+  await check('Studio research destinations and shared assets published',async()=>{
    const page=await browser.newPage();
    try{
     for(const route of ['studio.html','unified-site.css','studio.html','reading-archive.html']){
