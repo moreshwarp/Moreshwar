@@ -73,7 +73,7 @@ test('mobile-first UI is real on every journal entry page',()=>{
   assert.match(html,/class="[^"]*mrl-mobile/,name+' missing mobile class');
  }
  assert.match(home,/mrl-jump-grid/);
- assert.match(home,/href="index\.html#bookshelf"/);
+ assert.doesNotMatch(home,/href="index\.html#bookshelf"/);
  assert.match(home,/href="reading-archive\.html"/);
  assert.match(home,/href="studio\.html"/);
  assert.match(archive,/data-mrl-query="netflix"/);
@@ -84,7 +84,7 @@ test('mobile-first UI is real on every journal entry page',()=>{
  assert.match(css,/prefers-reduced-motion:reduce/);
  assert.match(css,/safe-area-inset-bottom/);
  assert.match(script,/new DOMParser/);
- assert.match(script,/bookshelf\.json/);
+ assert.doesNotMatch(script,/bookshelf\.json/);
  assert.match(script,/aria-live/);
  assert.doesNotMatch(script,/https:\/\/[^'"]+\.js/);
  const {sourceFiles,requiredFiles}=require('../scripts/prepare-site.cjs');
