@@ -73,3 +73,23 @@ body.mrl-archive .ux-theme,body.mrl-studio .ux-theme{font-family:Inter,system-ui
 html[data-theme=dark] body.mrl-archive,html[data-theme=dark] body.mrl-studio{background:#12171a!important;color:#f4f4f5!important}
 html[data-theme=dark] body.mrl-archive :is(.site-header,.story,.tools,.intro,.mrl-bottom-nav),html[data-theme=dark] body.mrl-studio :is(.site-header,.topic,.intro,.mrl-bottom-nav){background:#1b2526!important;color:#f4f4f5!important;border-color:#354542!important}
 html[data-theme=dark] body.mrl-archive :is(h1,h2,h3,p,a,span),html[data-theme=dark] body.mrl-studio :is(h1,h2,h3,p,a,span){color:inherit}
+
+/* Reserve a compact theme affordance on narrow headers; no horizontal page overflow. */
+@media(max-width:760px){
+ body.mrl-profile .at-header-inner{gap:8px!important}
+ body.mrl-profile .at-logo{gap:8px;min-width:0}
+ body.mrl-profile .at-logo-title{font-size:19px!important}
+ body.mrl-profile .at-logo-sub{font-size:7px!important;letter-spacing:.08em}
+ body.mrl-profile .at-menu{margin-left:auto!important;min-width:54px!important;padding:8px 10px!important}
+ body.mrl-profile .ux-utility{flex:none;margin:0!important}
+ body.mrl-profile .ux-theme{min-width:42px;padding:9px 11px!important}
+ body.mrl-profile .ux-theme span{display:none}
+}
+@media(max-width:380px){
+ body.mrl-profile .at-header-inner{gap:5px!important}
+ body.mrl-profile .at-mark{width:34px;height:34px;font-size:24px!important}
+ body.mrl-profile .at-logo-title{font-size:17px!important}
+ body.mrl-profile .at-logo-sub{font-size:6px!important}
+ body.mrl-profile .at-menu{min-width:48px!important;padding:7px!important}
+ body.mrl-profile .ux-theme{min-width:40px;padding:8px 10px!important}
+}
