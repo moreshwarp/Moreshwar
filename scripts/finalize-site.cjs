@@ -3,7 +3,7 @@
  * Rewrites only known stale internal routes. Source files are untouched.
  */
 'use strict';
-const fs=require('node:fs'),path=require('node:path');
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const oldRoutes=[
  [/href=(["'])\.\.\/(?:index\.html)?#home\1/g,'href="../index.html"'],
  [/href=(["'])\.\.\/(?:index\.html)?#writing\1/g,'href="../reading-archive.html"'],
@@ -12,11 +12,26 @@ const oldRoutes=[
  [/href=(["'])\.\.\/(?:index\.html)?#inquiry\1/g,'href="../classic.html#inquiry"'],
  [/href=(["'])\.\.\/(?:index\.html)?#contact\1/g,'href="../classic.html#contact"']
 ];
-function finalizeHtml(html){
+function finalizeHtml(html,assetVersions={}){
  if(!/<html\b/i.test(html)||!/<\/head>/i.test(html)||!/<body\b/i.test(html)||!/<\/body>/i.test(html))throw Error('Invalid article HTML shell');
  let out=html;
  for(const [pattern,target] of oldRoutes)out=out.replace(pattern,target);
- if(!out.includes('article-unified.css'))out=out.replace(/<\/head>/i,'<link rel="stylesheet" href="../article-unified.css">\n<script defer src="../article-unified.js"></script>\n</head>');
+ // Legacy exported articles brought their own dark palette and original header.
+ // Keeping those styles in the deployed document made deep-linked pages look
+ // unrelated to the scholarly homepage even when an override stylesheet loaded.
+ // Strip only legacy first-party dark article themes, never author prose or figures.
+ if(/moreshwar-theme-v1|:root\s*\{\s*color-scheme:\s*dark/i.test(out)){
+  out=out.replace(/<script>\s*try\s*\{\s*const saved=localStorage\.getItem\('moreshwar-theme-v1'\);[\s\S]*?<\/script>/i,'');
+  out=out.replace(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/i,'');
+  out=out.replace(/<link\b[^>]*href=["']https:\/\/fonts\.googleapis\.com\/[^"']*["'][^>]*>/gi,'');
+  out=out.replace(/<link\b[^>]*rel=["']preconnect["'][^>]*href=["']https:\/\/fonts\.(?:googleapis|gstatic)\.com[^"']*["'][^>]*>/gi,'');
+  out=out.replace(/<meta\s+name=["']theme-color["']\s+content=["'][^"']*["'][^>]*>/i,'<meta name="theme-color" content="#ffffff">');
+ }
+ const cssVersion=assetVersions.css?'?v='+assetVersions.css:'';
+ const jsVersion=assetVersions.js?'?v='+assetVersions.js:'';
+ // Versioned assets invalidate CSS/JS caches automatically when source changes.
+ if(!out.includes('article-unified.css'))out=out.replace(/<\/head>/i,'<link rel="stylesheet" href="../article-unified.css'+cssVersion+'">\n<script defer src="../article-unified.js'+jsVersion+'"></script>\n</head>');
+
  if(!/class=["'][^"']*\bsch-reader\b/.test(out.match(/<body[^>]*>/i)?.[0]||'')){
   out=out.replace(/<body(\s[^>]*)?>/i,(tag,attrs='')=>{
    if(/\bclass\s*=/.test(attrs))return tag.replace(/\bclass\s*=(["'])([^"']*)\1/i,(_m,q,c)=>'class='+q+c+' sch-reader'+q);
@@ -29,7 +44,9 @@ function finalize(dir='_site'){
  const root=path.resolve(dir),articles=path.join(root,'articles');
  if(!fs.existsSync(articles))throw Error('Published articles directory missing: '+articles);
  const names=fs.readdirSync(articles).filter(n=>n.endsWith('.html'));if(names.length<22)throw Error('Expected at least 22 published articles, got '+names.length);
- for(const name of names){const file=path.join(articles,name);const previous=fs.readFileSync(file,'utf8'),current=finalizeHtml(previous);if(current!==previous)fs.writeFileSync(file,current)}
+ const fingerprint=name=>crypto.createHash('sha256').update(fs.readFileSync(path.join(root,name))).digest('hex').slice(0,12);
+ const versions={css:fingerprint('article-unified.css'),js:fingerprint('article-unified.js')};
+ for(const name of names){const file=path.join(articles,name);const previous=fs.readFileSync(file,'utf8'),current=finalizeHtml(previous,versions);if(current!==previous)fs.writeFileSync(file,current)}
  const stories=path.join(root,'stories.html');
  if(fs.existsSync(stories)){const old=fs.readFileSync(stories,'utf8');const fixed=old.replace(/href=(["'])index\.html#story-of-the-day\1/g,'href="classic.html#story-of-the-day"');if(fixed!==old)fs.writeFileSync(stories,fixed)}
  for(const asset of ['article-unified.css','article-unified.js'])if(!fs.existsSync(path.join(root,asset)))throw Error('Missing reader asset '+asset);
