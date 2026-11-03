@@ -287,7 +287,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       await menu.click();
       assert.equal(await menu.getAttribute('aria-expanded'),'true');
       await page.locator('.sch-reader-nav summary').first().click();
-      assert.ok(await page.locator('a[href="../classic.html#systems-lab"]').isVisible());
+      assert.ok(await page.locator('.sch-reader-sub a[href="../classic.html#systems-lab"]').isVisible());
       await page.keyboard.press('Escape');
       assert.equal(await menu.getAttribute('aria-expanded'),'false');
      }
