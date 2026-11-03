@@ -1,11 +1,11 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
-test('magazine discovery has functional accessible filters and six valid destinations',()=>{
+test('magazine discovery has functional accessible filters and five valid destinations',()=>{
  const home=read('index.html');
  assert.match(home,/id="editorial-discovery" aria-labelledby="ed-title"/);
  assert.match(home,/id="ed-status"[^>]+role="status" aria-live="polite"/);
- for(const topic of ['all','systems','thinking','reading'])assert.match(home,new RegExp('data-ed-filter="'+topic+'"'));
- assert.equal((home.match(/class="ed-card ed-card--/g)||[]).length,6);
+ for(const topic of ['all','systems','thinking'])assert.match(home,new RegExp('data-ed-filter="'+topic+'"'));
+ assert.equal((home.match(/class="ed-card ed-card--/g)||[]).length,5);
  assert.match(home,/id="ed-surprise"/);
  for(const match of home.matchAll(/class="ed-card ed-card--[^"]+" href="([^"]+)"/g)){
   const pathname=match[1].split('#')[0];assert.ok(fs.existsSync(path.join(root,pathname)),pathname);
