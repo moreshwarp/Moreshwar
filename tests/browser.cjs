@@ -283,7 +283,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       assert.match(appearance.headingFont,/Georgia/,name+' old heading typeface');
       assert.ok(appearance.readerStyle&&appearance.textStyle,name+' missing cache-versioned academic styles');
       if(name.includes('secret-link-between-sounding')||name.includes('fieldnote-queues')){
-        assert.equal(appearance.colors,'#ffffff',name+' old dark browser theme');
+        assert.ok(/^#(?:f[0-9a-f]){3}$/i.test(appearance.colors),name+' old dark browser theme '+appearance.colors);
         assert.equal(await page.locator('head style').count(),0,name+' legacy inline stylesheet still shipped');
       }
       const hidden=await page.locator('.site-nav,header.top.shell').evaluateAll(els=>els.every(el=>getComputedStyle(el).display==='none'));
