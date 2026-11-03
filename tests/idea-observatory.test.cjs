@@ -14,7 +14,7 @@ test('interactive observatory replaces static hero artwork with genuine controls
 });
 test('observatory destinations exist and support keyboard navigation without telemetry',()=>{
  const js=read('idea-observatory.js'),css=read('idea-observatory.css');
- for(const destination of ['classic.html#systems-lab','reading-archive.html','studio.html','index.html#bookshelf','articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html']){
+ for(const destination of ['studio.html#systems-lab','reading-archive.html','studio.html','index.html#bookshelf','articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html']){
   assert.ok(js.includes(destination),destination);
   const base=destination.split('#')[0];assert.ok(fs.existsSync(path.join(root,base)),base);
  }

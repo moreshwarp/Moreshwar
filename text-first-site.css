@@ -2,7 +2,7 @@
  * Prioritize content, navigation, citations, and accessible functionality.
  * User requested no visual decoration or image galleries.
  */
-:root{--tf-bg:#fff;--tf-ink:#272b2d;--tf-link:#7c2530;--tf-muted:#606970;--tf-rule:#d9dcde;--tf-header:#48515a;--tf-reading:960px;--tf-focus:#c38c37}
+:root{--tf-bg:#fbfaf7;--tf-ink:#23343d;--tf-link:#245b78;--tf-muted:#52646c;--tf-rule:#d8e0e2;--tf-header:#f0f3f2;--tf-reading:960px;--tf-focus:#a56935}
 html{scroll-behavior:auto!important;scroll-padding-top:24px}
 body.mrl-text-first{background:var(--tf-bg)!important;background-image:none!important;color:var(--tf-ink)!important;font-family:Georgia,"Times New Roman",serif!important;font-size:16px!important;line-height:1.65!important}
 body.mrl-text-first *,body.mrl-text-first *::before,body.mrl-text-first *::after{box-sizing:border-box}
@@ -161,7 +161,6 @@ body.mrl-studio.mrl-text-first .sch-related a{color:var(--studio-link)!important
 /* Research Studio: remove legacy magazine cards and conflicting dark palettes.
  * One readable academic content column + related sidebar, like the rest of the journal.
  * This final publishing stylesheet wins over historical inline Studio CSS. */
-html[data-theme="dark"] body.mrl-studio.mrl-text-first,
 html[data-theme="light"] body.mrl-studio.mrl-text-first,
 body.mrl-studio.mrl-text-first{
   --studio-bg:#ffffff;--studio-paper:#ffffff;--studio-text:#292d31;
@@ -204,11 +203,11 @@ body.mrl-studio.mrl-text-first main#main-content .topics{
   border-top:1px solid #d9dee1!important;padding-block:28px!important;
 }
 body.mrl-studio.mrl-text-first main#main-content .topic-grid{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:0 22px!important;margin:0!important;
+  display:flex!important;flex-direction:column!important;
+  gap:0!important;margin:0!important;
 }
 body.mrl-studio.mrl-text-first main#main-content .topic-grid>a.topic{
-  display:flex!important;align-items:center!important;min-width:0!important;min-height:50px!important;
+  display:flex!important;align-items:center!important;width:100%!important;min-width:0!important;min-height:50px!important;
   padding:12px 0!important;margin:0!important;background:#fff!important;
   border:0!important;border-bottom:1px solid #d9dee1!important;border-radius:0!important;
   color:#8a2631!important;text-decoration:none!important;box-shadow:none!important;
@@ -276,3 +275,123 @@ body.mrl-studio.mrl-text-first .sch-related a{color:#8a2631!important}
 @media(max-width:400px){
   body.mrl-studio.mrl-text-first main#main-content .topic-grid{grid-template-columns:1fr!important}
 }
+
+/* THE CANONICAL READING PALETTE — one source of truth on every published page.
+ * Paper + slate + blue. All text and interactive controls inherit paired surface
+ * and ink tokens; older scattered greens, browns and black panels cannot leak.
+ * This remains in text-first-site.css, the last stylesheet in the publishing pass. */
+:root{
+  --site-paper:#fbfaf7;--site-surface:#ffffff;--site-header:#f0f3f2;
+  --site-panel:#f6f8f8;--site-ink:#23343d;--site-muted:#52646c;
+  --site-link:#245b78;--site-rule:#d8e0e2;--site-button:#235b70;
+  --site-button-text:#ffffff;--site-focus:#a56935;
+}
+html[data-theme="dark"]{
+  --site-paper:#151e23;--site-surface:#202d33;--site-header:#1e2b31;
+  --site-panel:#25343b;--site-ink:#f0f5f5;--site-muted:#c1d0d2;
+  --site-link:#b0deed;--site-rule:#42545c;--site-button:#add8e6;
+  --site-button-text:#152831;--site-focus:#f1bb80;
+}
+html[data-theme] body.mrl-text-first{
+  background:var(--site-paper)!important;color:var(--site-ink)!important;
+  --tf-bg:var(--site-paper);--tf-ink:var(--site-ink);--tf-link:var(--site-link);
+  --tf-muted:var(--site-muted);--tf-rule:var(--site-rule);
+  --tf-header:var(--site-header);--tf-focus:var(--site-focus);
+}
+html[data-theme] body.mrl-text-first :is(
+  .at-hero,.rs-hero,.rs-intro,.rs-projects,.rs-observatory,.ed-discover,
+  .atlas-field,.at-reading,.at-method,.at-shelf,.at-section,.mrl-jump,
+  .sch-page-columns,.academic-main,.academic-sidebar,.sch-related,
+  main#main-content,main#main-content>.shell,main#main-content .intro,
+  main#main-content .featured,main#main-content .latest,main#main-content .topics,
+  main#main-content .topic-grid,main#main-content .article-grid
+){
+  background:var(--site-paper)!important;background-image:none!important;
+  color:var(--site-ink)!important;border-color:var(--site-rule)!important;
+}
+html[data-theme] body.mrl-text-first :is(h1,h2,h3,h4,.at-section-title,.rs-project-info h3,.ed-card h3,.section-head h2,.feature-copy h3,.article h3,.topic-info b){
+  color:var(--site-ink)!important;
+}
+html[data-theme] body.mrl-text-first :is(p,li,.overline,.eyebrow,.feature-copy p,.article p,.rs-hero-lead,.rs-hero-sub){
+  color:var(--site-muted)!important;
+}
+html[data-theme] body.mrl-text-first :is(
+  a:not(.mrl-site-brand):not(.mrl-site-action):not(.rs-primary):not(.primary),
+  .academic-directory a,.academic-sidebar a,.sch-related a,
+  .article-grid>a.article h3,.topic-grid>a.topic .topic-info b
+){color:var(--site-link)!important}
+html[data-theme] body.mrl-text-first :is(
+  .rs-project,.ed-card,.at-card,.story,.topic,.article,
+  .academic-note,.ux-book-card,.obs-frame,.at-method-step
+){
+  background:var(--site-surface)!important;color:var(--site-ink)!important;
+  border-color:var(--site-rule)!important;box-shadow:none!important;
+}
+html[data-theme] body.mrl-text-first.mrl-nav-ready .mrl-site-header{
+  background:var(--site-header)!important;color:var(--site-ink)!important;
+  border-top:3px solid var(--site-button)!important;
+  border-bottom:1px solid var(--site-rule)!important;
+  box-shadow:none!important;
+}
+html[data-theme] body.mrl-text-first.mrl-nav-ready .mrl-site-header:after{
+  background:var(--site-header)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-site-brandtext strong{
+  color:var(--site-ink)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-site-brandtext small{
+  color:var(--site-muted)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-site-monogram{
+  background:var(--site-button)!important;color:var(--site-button-text)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header :is(.mrl-site-nav>a,.mrl-nav-group>summary){
+  color:var(--site-ink)!important;background:transparent!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header :is(.mrl-site-nav>a,.mrl-nav-group>summary):hover,
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-group[open]>summary{
+  background:var(--site-panel)!important;color:var(--site-link)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub,
+html[data-theme] body.mrl-text-first .mrl-site-nav.mrl-site-nav-open{
+  background:var(--site-surface)!important;border-color:var(--site-rule)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub a{color:var(--site-link)!important}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub small{color:var(--site-muted)!important}
+html[data-theme] body.mrl-text-first .mrl-site-header :is(.mrl-site-search,.mrl-site-mobile-toggle,.ux-theme){
+  background:var(--site-surface)!important;color:var(--site-ink)!important;
+  border:1px solid var(--site-rule)!important;
+}
+html[data-theme] body.mrl-text-first :is(.mrl-site-action,.rs-primary,.primary,.obs-go){
+  background:var(--site-button)!important;color:var(--site-button-text)!important;
+  border-color:var(--site-button)!important;border-radius:7px!important;
+}
+html[data-theme] body.mrl-text-first :is(.rs-secondary,.secondary,.ed-filter,.shelf-toggle){
+  background:var(--site-surface)!important;color:var(--site-ink)!important;
+  border-color:var(--site-rule)!important;border-radius:7px!important;
+}
+html[data-theme] body.mrl-text-first main#main-content .article-grid>a.article{
+  background:var(--site-paper)!important;border-color:var(--site-rule)!important;
+}
+html[data-theme] body.mrl-text-first main#main-content .article-grid>a.article p,
+html[data-theme] body.mrl-text-first main#main-content .intro p{color:var(--site-muted)!important}
+html[data-theme] body.mrl-text-first main#main-content .article-grid>a.article h3{
+  color:var(--site-link)!important;
+}
+html[data-theme] body.mrl-text-first main#main-content .topic-grid>a.topic{
+  background:var(--site-paper)!important;border-color:var(--site-rule)!important;
+}
+html[data-theme] body.mrl-text-first .sch-related :is(p,li,h2){
+  color:var(--site-ink)!important;
+}
+html[data-theme] body.mrl-text-first :is(.at-footer,footer,.footer){
+  background:var(--site-header)!important;color:var(--site-ink)!important;
+  border-top:1px solid var(--site-rule)!important;
+}
+html[data-theme] body.mrl-text-first :is(.at-footer,footer,.footer) :is(a,p,h2,span){
+  color:var(--site-muted)!important;
+}
+html[data-theme] body.mrl-text-first :is(a,button,input,summary,select,textarea):focus-visible{
+  outline:3px solid var(--site-focus)!important;outline-offset:3px!important;
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}

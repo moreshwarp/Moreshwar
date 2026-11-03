@@ -8,9 +8,9 @@ const oldRoutes=[
  [/href=(["'])\.\.\/(?:index\.html)?#home\1/g,'href="../index.html"'],
  [/href=(["'])\.\.\/(?:index\.html)?#writing\1/g,'href="../reading-archive.html"'],
  [/href=(["'])\.\.\/(?:index\.html)?#research\1/g,'href="../index.html#research-projects"'],
- [/href=(["'])\.\.\/(?:index\.html)?#systems-lab\1/g,'href="../classic.html#systems-lab"'],
- [/href=(["'])\.\.\/(?:index\.html)?#inquiry\1/g,'href="../classic.html#inquiry"'],
- [/href=(["'])\.\.\/(?:index\.html)?#contact\1/g,'href="../classic.html#contact"']
+ [/href=(["'])\.\.\/(?:index\.html)?#systems-lab\1/g,'href="../studio.html#systems-lab"'],
+ [/href=(["'])\.\.\/(?:index\.html)?#inquiry\1/g,'href="../studio.html#inquiry"'],
+ [/href=(["'])\.\.\/(?:index\.html)?#contact\1/g,'href="../studio.html#contact"']
 ];
 function finalizeHtml(html,assetVersions={}){
  if(!/<html\b/i.test(html)||!/<\/head>/i.test(html)||!/<body\b/i.test(html)||!/<\/body>/i.test(html))throw Error('Invalid article HTML shell');
@@ -48,7 +48,7 @@ function finalize(dir='_site'){
  const versions={css:fingerprint('article-unified.css'),js:fingerprint('article-unified.js')};
  for(const name of names){const file=path.join(articles,name);const previous=fs.readFileSync(file,'utf8'),current=finalizeHtml(previous,versions);if(current!==previous)fs.writeFileSync(file,current)}
  const stories=path.join(root,'stories.html');
- if(fs.existsSync(stories)){const old=fs.readFileSync(stories,'utf8');const fixed=old.replace(/href=(["'])index\.html#story-of-the-day\1/g,'href="classic.html#story-of-the-day"');if(fixed!==old)fs.writeFileSync(stories,fixed)}
+ if(fs.existsSync(stories)){const old=fs.readFileSync(stories,'utf8');const fixed=old.replace(/href=(["'])index\.html#story-of-the-day\1/g,'href="index.html#academic-recent"');if(fixed!==old)fs.writeFileSync(stories,fixed)}
  for(const asset of ['article-unified.css','article-unified.js'])if(!fs.existsSync(path.join(root,asset)))throw Error('Missing reader asset '+asset);
  console.log('Unified '+names.length+' published articles with academic reading navigation');
  return names.length;

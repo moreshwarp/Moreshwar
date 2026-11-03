@@ -12,10 +12,10 @@ const search=icon('M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 5 5');
 const burger=icon('M4 7h16M4 12h16M4 17h16');
 const arrow=icon('M7 17 17 7M8 7h9v9');
 const groups=[
- {label:'Research',links:[['Systems laboratory','classic.html#systems-lab','Working demonstrations'],['Inquiry engine','classic.html#inquiry','Frame a testable question'],['Science & ideas','classic.html#science-ideas','Explore scientific concepts'],['Research studio','studio.html','Notes and experiments']]},
- {label:'Writing',links:[['All essays','reading-archive.html','Published writing'],['Featured essay','articles/183772820-the-secret-link-between-sounding.html','Evidence and persuasion'],['Latest story','classic.html#story-of-the-day','Editorial story collection']]},
+ {label:'Research',links:[['Systems laboratory','studio.html#systems-lab','Working demonstrations'],['Inquiry engine','studio.html#inquiry','Frame a testable question'],['Science & ideas','studio.html#science-ideas','Explore scientific concepts'],['Research studio','studio.html','Notes and experiments']]},
+ {label:'Writing',links:[['All essays','reading-archive.html','Published writing'],['Featured essay','articles/183772820-the-secret-link-between-sounding.html','Evidence and persuasion'],['Latest story','index.html#academic-recent','Editorial story collection']]},
  {label:'Reading',links:[['Book catalog','index.html#bookshelf','143 searchable titles'],['Reading desk','index.html#reading-desk','What informs the lab'],['Learning notes','studio.html','Follow the research process']]},
- {label:'About',links:[['Research profile','index.html#about-profile','Focus and approach'],['Method','index.html#about','How ideas are examined'],['Contact','classic.html#contact','Reach the lab']]}
+ {label:'About',links:[['Research profile','index.html#about-profile','Focus and approach'],['Method','index.html#about','How ideas are examined'],['Contact','studio.html#contact','Reach the lab']]}
 ];
 const item=(entry)=>'<a href="'+entry[1]+'"><span>'+entry[0]+'</span><small>'+entry[2]+'</small></a>';
 const menu=groups.map((g,i)=>'<details class="mrl-nav-group"><summary>'+g.label+chevron+'</summary><div class="mrl-nav-sub" aria-label="'+g.label+' submenu">'+g.links.map(v=>item([v[0],v[1],v[2]])).join('')+'</div></details>').join('');
@@ -36,5 +36,5 @@ d.addEventListener('keydown',event=>{if(event.key==='Escape'){const hadOpen=deta
 d.addEventListener('click',event=>{if(!header.contains(event.target)){closeGroups();closeMenu()}});
 header.querySelector('.mrl-site-search').addEventListener('click',()=>{const trigger=onLab?d.getElementById('search-trigger'):d.querySelector('[data-mrl-search]');if(trigger)trigger.click();else location.href='reading-archive.html'});
 const file=location.pathname.split('/').pop()||'index.html';
-header.querySelectorAll('a').forEach(a=>{const target=a.getAttribute('href');if(target===file||(file==='index.html'&&target==='index.html')||(file==='classic.html'&&target==='classic.html'))a.setAttribute('aria-current','page')});
+header.querySelectorAll('a').forEach(a=>{const target=a.getAttribute('href');if(target===file||(file==='index.html'&&target==='index.html')||(file==='studio.html'&&target==='studio.html'))a.setAttribute('aria-current','page')});
 })();

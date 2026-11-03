@@ -13,7 +13,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
    await check('viewport '+width+' journal, archive, studio and classic',async()=>{
     const ctx=await browser.newContext({viewport:{width,height:850}});
     try{
-     for(const route of ['','reading-archive.html','studio.html','classic.html']){
+     for(const route of ['','reading-archive.html','studio.html','studio.html']){
       const page=await ctx.newPage();
       try{
        const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -160,7 +160,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
    for(const width of [320,390,768,1440]){
     const page=await browser.newPage({viewport:{width,height:850}});
     try{
-     for(const route of ['','classic.html','reading-archive.html','studio.html']){
+     for(const route of ['','studio.html','reading-archive.html','studio.html']){
       await page.goto(new URL(route,base).href);
       const header=page.locator('header.mrl-site-header');
       assert.ok(await header.isVisible(),route+' shared header not visible');
@@ -174,12 +174,12 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
        await button.click();
        assert.equal(await button.getAttribute('aria-expanded'),'true');
        await header.locator('summary').filter({hasText:'Research'}).click();
-       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       assert.ok(await header.locator('a[href="studio.html#systems-lab"]').isVisible());
        await page.keyboard.press('Escape');
        assert.equal(await button.getAttribute('aria-expanded'),'false');
       }else{
        await header.locator('summary').filter({hasText:'Research'}).click();
-       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       assert.ok(await header.locator('a[href="studio.html#systems-lab"]').isVisible());
        await header.locator('summary').filter({hasText:'Writing'}).click();
        assert.equal(await header.locator('details[open]').count(),1);
       }
@@ -195,7 +195,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
    for(const width of [320,390,768,1440]){
     const page=await browser.newPage({viewport:{width,height:850}});
     try{
-     for(const route of ['','reading-archive.html','studio.html','classic.html']){
+     for(const route of ['','reading-archive.html','studio.html','studio.html']){
       await page.goto(new URL(route,base).href);
       assert.ok(await page.locator('body.mrl-academic').count(),'academic design class missing '+route);
       assert.equal((await page.request.get(new URL('academic-journal.css',base).href)).status(),200);
@@ -207,7 +207,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
      assert.ok(await page.locator('#academic-directory').isVisible());
      assert.equal(await page.locator('#academic-directory time').count(),5);
      const bg=await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor);
-     assert.equal(bg,'rgb(255, 255, 255)');
+     assert.equal(bg,'rgb(251, 250, 247)');
      assert.ok(await page.locator('#academic-directory a[href="reading-archive.html"]').count()>0);
      await page.screenshot({path:path.join(artifacts,'academic-home-'+width+'.png'),fullPage:false});
     }finally{await page.close()}
@@ -237,7 +237,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     for(const width of [320,390,768,1440]){
       const page=await browser.newPage({viewport:{width,height:900}});
       try{
-        for(const route of ['','reading-archive.html','studio.html','classic.html']){
+        for(const route of ['','reading-archive.html','studio.html','studio.html']){
           await page.goto(new URL(route,base).href);
           assert.ok(await page.locator('body.mrl-heritage').count(),'academic unification missing '+route);
           assert.equal((await page.request.get(new URL('heritage-unified.css',base).href)).status(),200);
@@ -279,7 +279,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
           readerStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('article-unified.css?v=')),
           textStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('text-first-site.css?v='))};
       });
-      assert.equal(appearance.background,'rgb(255, 255, 255)',name+' old dark page background');
+      assert.equal(appearance.background,'rgb(251, 250, 247)',name+' old dark page background');
       assert.match(appearance.headingFont,/Georgia/,name+' old heading typeface');
       assert.ok(appearance.readerStyle&&appearance.textStyle,name+' missing cache-versioned academic styles');
       if(name.includes('secret-link-between-sounding')||name.includes('fieldnote-queues')){
@@ -298,7 +298,8 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       await menu.click();
       assert.equal(await menu.getAttribute('aria-expanded'),'true');
       await page.locator('.sch-reader-nav summary').first().click();
-      assert.ok(await page.locator('.sch-reader-sub a[href="../classic.html#systems-lab"]').isVisible());
+      assert.ok(await page.locator('.sch-reader-sub a[href="../studio.html#systems-lab"]').isVisible());
+      assert.equal(await page.locator('a[href*="classic.html"]').count(),0,'article menu retains retired Classic links');
       await page.keyboard.press('Escape');
       assert.equal(await menu.getAttribute('aria-expanded'),'false');
      }
@@ -384,13 +385,53 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
             topics:topics.map(rect),viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
             sidebar:rect(document.querySelector('.sch-related'))};
         });
-        assert.equal(data.background,'rgb(255, 255, 255)','studio dark content region still visible '+JSON.stringify(data));
+        assert.equal(data.background,'rgb(251, 250, 247)','studio dark content region still visible '+JSON.stringify(data));
         assert.equal(data.articleLayout,'block','article cards still multi-column');
+        assert.ok(data.topics.every(t=>t.width>=Math.min(width-45,240)&&t.right<=data.viewport+2),'topic links must fit the screen '+JSON.stringify(data));
         assert.equal(data.cards.length,3);
         assert.ok(data.cards.every(c=>c.position.width>=Math.min(width-45,300)),'cramped article columns '+JSON.stringify(data));
         assert.ok(data.cards.every((c,i)=>i===0||c.position.top>=data.cards[i-1].position.bottom-2),'article entries must stack '+JSON.stringify(data));
         assert.ok(data.scroll<=data.viewport+2,'studio horizontal overflow '+JSON.stringify(data));
         await page.screenshot({path:path.join(artifacts,'studio-lists-'+width+'.png'),fullPage:false});
+      }finally{await page.close()}
+    }
+  });
+  await check('retired Classic and consistent academic color contrast in published pages',async()=>{
+    const missing=await browser.newPage();
+    try{
+      const response=await missing.goto(new URL('classic.html',base).href);
+      assert.equal(response.status(),404,'retired Classic HTML must not be publicly served');
+    }finally{await missing.close()}
+    for(const width of [390,1440]){
+      const page=await browser.newPage({viewport:{width,height:850}});
+      try{
+        for(const route of ['','studio.html','reading-archive.html']){
+          await page.goto(new URL(route,base).href);
+          assert.equal(await page.locator('a[href*="classic.html"]').count(),0,route+' contains retired Classic links');
+          for(const theme of ['light','dark']){
+            await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+            const result=await page.evaluate(()=>{
+              const rgb=v=>(v.match(/[0-9.]+/g)||[]).slice(0,3).map(Number);
+              const lum=v=>rgb(v).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4}).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0);
+              const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+              const body=document.body,head=document.querySelector('.mrl-site-header'),title=document.querySelector('main h1, main h2');
+              const bodyStyle=getComputedStyle(body),headerStyle=getComputedStyle(head),titleStyle=getComputedStyle(title);
+              const background=bodyStyle.backgroundColor;
+              const titleSurface=getComputedStyle(title.closest('section')||body).backgroundColor;
+              return {background,color:bodyStyle.color,
+                bodyContrast:contrast(bodyStyle.color,background),
+                headingContrast:contrast(titleStyle.color,titleSurface),
+                headerContrast:contrast(headerStyle.color,headerStyle.backgroundColor),
+                scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth};
+            });
+            assert.ok(result.bodyContrast>=4.5,route+' '+theme+' body contrast '+JSON.stringify(result));
+            assert.ok(result.headingContrast>=4.5,route+' '+theme+' title contrast '+JSON.stringify(result));
+            assert.ok(result.headerContrast>=4.5,route+' '+theme+' header contrast '+JSON.stringify(result));
+            assert.ok(result.scroll<=result.width+2,route+' '+theme+' horizontal overflow '+JSON.stringify(result));
+          }
+        }
+        await page.goto(new URL('studio.html#systems-lab',base).href);
+        for(const id of ['systems-lab','inquiry','science-ideas','contact'])assert.ok(await page.locator('#'+id).count()>0,id+' missing');
       }finally{await page.close()}
     }
   });
@@ -417,13 +458,13 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     for(const href of links){const response=await page.request.get(new URL(href,page.url()).href);assert.equal(response.status(),200,href)}
    }finally{await page.close()}
   });
-  await check('classic workspace and shared assets published',async()=>{
+  await check('Studio research destinations and shared assets published',async()=>{
    const page=await browser.newPage();
    try{
-    for(const route of ['classic.html','unified-site.css','studio.html','reading-archive.html']){
+    for(const route of ['studio.html','unified-site.css','studio.html','reading-archive.html']){
      const response=await page.request.get(new URL(route,base).href);assert.equal(response.status(),200,route)
     }
-    await page.goto(new URL('classic.html',base).href);
+    await page.goto(new URL('studio.html',base).href);
     assert.ok(await page.locator('#systems-lab').count()>0,'systems research missing');
     assert.ok(await page.locator('#contact').count()>0,'contact missing');
    }finally{await page.close()}

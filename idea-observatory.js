@@ -2,7 +2,7 @@
 (()=>{'use strict';const root=document.querySelector('[data-observatory]');if(!root)return;
 const nodes=[...root.querySelectorAll('[data-idea]')],title=root.querySelector('#obs-title'),body=root.querySelector('#obs-description'),kicker=root.querySelector('#obs-kicker'),link=root.querySelector('#obs-link');
 const ideas={
-systems:{title:'Distributed systems',desc:'How can independent machines behave like one reliable system? Study failures, coordination and real trade-offs.',href:'classic.html#systems-lab',label:'Open systems lab'},
+systems:{title:'Distributed systems',desc:'How can independent machines behave like one reliable system? Study failures, coordination and real trade-offs.',href:'studio.html#systems-lab',label:'Open systems lab'},
 proof:{title:'Proof and trust',desc:'What can we prove without revealing the information itself? Explore zero-knowledge ideas through a published introduction.',href:'articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html',label:'Read the essay'},
 books:{title:'The reading shelf',desc:'Search 143 cataloged titles across computer science, psychology, mathematics and literature.',href:'index.html#bookshelf',label:'Browse books'},
 ideas:{title:'Original essays',desc:'Explore 22 published essays, from critical thinking to research and the hidden structure of technology.',href:'reading-archive.html',label:'Explore essays'},

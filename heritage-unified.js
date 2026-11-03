@@ -12,8 +12,8 @@ const related={
   title:'Explore the journal',
   intro:'A guided index of topics that connect the published essays with hands-on models.',
   links:[
-   ['Start with systems thinking','classic.html#systems-lab'],
-   ['Explore research methods','classic.html#inquiry'],
+   ['Start with systems thinking','studio.html#systems-lab'],
+   ['Explore research methods','studio.html#inquiry'],
    ['Open the reading shelf','index.html#bookshelf'],
    ['Read the research studio','studio.html']
   ]
@@ -22,8 +22,8 @@ const related={
   title:'Related research',
   intro:'Follow the questions behind the exercises and essays in the research notebook.',
   links:[
-   ['Systems and reliability','classic.html#systems-lab'],
-   ['The inquiry engine','classic.html#inquiry'],
+   ['Systems and reliability','studio.html#systems-lab'],
+   ['The inquiry engine','studio.html#inquiry'],
    ['Published essays','reading-archive.html'],
    ['Browse books and references','index.html#bookshelf']
   ]

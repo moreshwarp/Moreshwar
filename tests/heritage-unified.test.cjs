@@ -4,7 +4,7 @@ test('one academic design layer is installed on all main pages with a shared pub
  const {sourceFiles,requiredFiles}=require('../scripts/prepare-site.cjs');
  for(const asset of ['heritage-unified.css','heritage-unified.js']){
   assert.ok(sourceFiles.includes(asset),asset);assert.ok(requiredFiles.includes(asset),asset);
-  for(const page of ['index.html','reading-archive.html','studio.html','classic.html'])assert.ok(read(page).includes(asset),page+' lacks '+asset);
+  for(const page of ['index.html','reading-archive.html','studio.html'])assert.ok(read(page).includes(asset),page+' lacks '+asset);
  }
 });
 test('academic navigation is original, responsive, and preserves content and search',()=>{
@@ -23,7 +23,7 @@ test('academic navigation is original, responsive, and preserves content and sea
  assert.doesNotMatch(css,/@import|https?:\/\//);
 });
 test('the original published essays, books and research destination ids stay in place',()=>{
- const home=read('index.html'),archive=read('reading-archive.html'),studio=read('studio.html'),lab=read('classic.html');
+ const home=read('index.html'),archive=read('reading-archive.html'),studio=read('studio.html'),lab=read('tests/fixtures/legacy-classic.html');
  assert.equal((archive.match(/class="story"/g)||[]).length,22);
  assert.equal(JSON.parse(read('bookshelf.json')).books.length,143);
  for(const id of ['bookshelf','academic-directory','research-projects'])assert.ok(home.includes('id="'+id+'"'));

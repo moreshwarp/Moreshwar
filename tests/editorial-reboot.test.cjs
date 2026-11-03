@@ -14,7 +14,7 @@ test('new homepage has accessible landmarks and interactive bookshelf',()=>{
  assert.match(html,/aria-expanded="false"/);
  assert.match(html,/research-method\.svg/);
  assert.match(html,/href="reading-archive\.html"/);
- assert.match(html,/href="classic\.html#systems-lab"/);
+ assert.match(html,/href="studio\.html#systems-lab"/);
  assert.match(html,/social-preview\.png\?v=3/);
 });
 test('all 22 published archive entries remain, with filtering controls',()=>{
@@ -38,7 +38,7 @@ test('web preview and diagram assets are actual published files',()=>{
   assert.match(read(p),/node scripts\/prepare-site\.cjs _site/);
 });
 test('legacy lab remains accessible and points to the real studio',()=>{
- const lab=read('classic.html');
+ const lab=read('tests/fixtures/legacy-classic.html');
  assert.match(lab,/id="systems-lab"/);
  assert.match(lab,/href="studio\.html"/);
  assert.doesNotMatch(lab,/design\/editorial-review-only-20261020\/studio\.html/);

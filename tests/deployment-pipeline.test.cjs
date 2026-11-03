@@ -13,7 +13,7 @@ test('one file manifest serves browser QA and the production publisher',()=>{
  const browser=read('.github/workflows/browser-qa.yml');
  assert.match(pages,/node scripts\/prepare-site\.cjs _site/);
  assert.match(browser,/node scripts\/prepare-site\.cjs _site/);
- for(const filename of ['index.html','classic.html','reading-archive.html','studio.html',
+ for(const filename of ['index.html','reading-archive.html','studio.html',
     'bookshelf.json','favicon.svg','social-preview.png','research-method.svg',
     'mrl-reboot.css','atelier.css','mobile-first.css','mobile-first.js']){
   assert.ok(sourceFiles.includes(filename),'shared manifest missing '+filename);
@@ -48,7 +48,7 @@ test('shared build publishes real social artwork, navigation and article data',(
   prepareSite(dir);
   for(const asset of ['index.html','bookshelf.json','favicon.svg','social-preview.png',
     'research-method.svg','mrl-reboot.css','atelier.css','mobile-first.css',
-    'mobile-first.js','reading-archive.html','studio.html','classic.html',
+    'mobile-first.js','reading-archive.html','studio.html',
     'data/science-cabinet.json']){
    assert.ok(fs.statSync(path.join(dir,asset)).size>0,'missing '+asset);
   }
