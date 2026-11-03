@@ -340,7 +340,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
             const title=hero.querySelector('h1'),paragraph=hero.querySelector('p');
             const primary=hero.querySelector('.actions .primary');
             const secondary=hero.querySelector('.actions .secondary');
-            const rgb=value=>{const n=value.match(/[\\d.]+/g)?.slice(0,3).map(Number);return n||[0,0,0]};
+            const rgb=value=>{const n=value.match(/[0-9.]+/g)?.slice(0,3).map(Number);return n||[0,0,0]};
             const luminance=c=>c.map(v=>{v/=255;return v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4)}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0);
             const contrast=(fg,bg)=>{const a=luminance(rgb(fg)),b=luminance(rgb(bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)};
             const bg=getComputedStyle(hero).backgroundColor;
