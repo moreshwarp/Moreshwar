@@ -81,3 +81,25 @@ body.mrl-academic .academic-directory .academic-quicklinks a{padding:7px 10px;bo
 @media(max-width:760px){body.mrl-academic .rs-project-grid{grid-template-columns:1fr 1fr}body.mrl-academic .ed-card,body.mrl-academic .ed-card:first-child,body.mrl-academic .ed-card:nth-child(2){grid-column:span 6}body.mrl-academic .mrl-site-inner{min-height:67px}}
 @media(max-width:510px){body.mrl-academic .rs-project-grid{grid-template-columns:1fr}body.mrl-academic .ed-card,body.mrl-academic .ed-card:first-child,body.mrl-academic .ed-card:nth-child(2){grid-column:span 12}body.mrl-academic .rs-hero-grid{padding-block:36px 25px!important}body.mrl-academic .rs-hero h1{font-size:36px!important}body.mrl-academic .academic-directory{font-size:15px}}
 @media(prefers-reduced-motion:reduce){body.mrl-academic *{transition:none!important;animation:none!important}}
+
+/* Related pages share the scholarly reading environment without removing their tools. */
+body.mrl-academic:not(.mrl-profile){background:#fff!important;color:#292929!important;font-family:Georgia,"Times New Roman",serif!important;line-height:1.65}
+body.mrl-academic:not(.mrl-profile) :is(.intro h1,.intro h2){font-family:Georgia,"Times New Roman",serif!important;font-weight:700!important;color:#293741!important;letter-spacing:-.02em!important}
+body.mrl-archive.mrl-academic .intro h1,body.mrl-studio.mrl-academic .intro h1{font-size:clamp(31px,4.2vw,46px)!important;line-height:1.2!important}
+body.mrl-archive.mrl-academic :is(.intro,.tools,.grid),body.mrl-studio.mrl-academic :is(.intro,.article-grid,.topics){max-width:1060px!important;margin-inline:auto}
+body.mrl-archive.mrl-academic .story{background:#fff!important;border:1px solid #e0e4e5!important;box-shadow:none!important;border-radius:4px!important}
+body.mrl-archive.mrl-academic .story h2{font:700 20px/1.4 Georgia,serif!important;color:#27577a!important}
+body.mrl-archive.mrl-academic .story p{font:400 15px/1.6 Georgia,serif!important}
+body.mrl-archive.mrl-academic .tools{background:#f6f8f8!important;border-color:#d5dfe4!important;border-radius:4px!important}
+body.mrl-studio.mrl-academic .hero-art{background:#f5f8f8!important;border-radius:4px!important}
+body.mrl-studio.mrl-academic :is(.topic,.article,.essay-card){border-radius:4px!important;box-shadow:none!important}
+body.lab-edition.mrl-academic :is(.reboot-intro,.reboot-kicker,.rev-chapter,.workspace-shell){font-family:Georgia,"Times New Roman",serif}
+body.lab-edition.mrl-academic .reboot-intro h2{font:700 clamp(36px,4vw,52px)/1.18 Georgia,serif!important;letter-spacing:-.02em!important}
+body.lab-edition.mrl-academic .rev-chapter a{border-radius:4px!important}
+body.lab-edition.mrl-academic .workspace-shell{border-radius:4px}
+body.mrl-academic .mrl-site-header{font-family:Georgia,"Times New Roman",serif!important}
+body.mrl-academic .mrl-site-nav>a,body.mrl-academic .mrl-nav-group>summary{font:600 14px Georgia,serif!important}
+body.mrl-academic .mrl-nav-sub>a>span{font:700 14px Georgia,serif!important}
+body.mrl-academic .mrl-nav-sub>a>small{font:400 12px Georgia,serif!important}
+body.mrl-academic .mrl-site-brandtext strong{font:700 18px Georgia,serif!important}
+@media(max-width:760px){body.mrl-archive.mrl-academic .story h2{font-size:19px!important}}
