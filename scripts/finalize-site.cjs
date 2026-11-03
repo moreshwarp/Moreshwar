@@ -8,7 +8,7 @@ function inject(html,relative){
  if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Malformed publishable HTML: missing head/body');
  const article=relative.startsWith('articles/');
  const prefix=article?'../':'';
- const assets=article?['shared-navigation.css','text-first-site.css','shared-navigation.js']:['text-first-site.css'];
+ const assets=['shared-navigation.css','text-first-site.css','shared-navigation.js'];
  let updated=html;
  for(const file of assets)if(!updated.includes('href="'+prefix+file+'"')&&!updated.includes('src="'+prefix+file+'"')){
   const tag=file.endsWith('.css')?'<link rel="stylesheet" href="'+prefix+file+'">':'<script src="'+prefix+file+'" defer></script>';
