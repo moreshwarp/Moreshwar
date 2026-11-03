@@ -153,6 +153,41 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     }finally{await page.close()}
    }
   });
+  await check('shared academic navigation across every route, dropdowns, mobile and search',async()=>{
+   for(const width of [320,390,768,1440]){
+    const page=await browser.newPage({viewport:{width,height:850}});
+    try{
+     for(const route of ['','classic.html','reading-archive.html','studio.html']){
+      await page.goto(new URL(route,base).href);
+      const header=page.locator('header.mrl-site-header');
+      assert.ok(await header.isVisible(),route+' shared header not visible');
+      assert.equal(await header.locator('details.mrl-nav-group').count(),4);
+      const old=page.locator('header.at-header,header.site-header,header.mrl-header,header.nav');
+      assert.equal(await old.isVisible(),false,route+' old inconsistent header still visible');
+      const doc=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+      assert.ok(doc.scroll<=doc.width+2,route+' overflow with new header '+JSON.stringify(doc));
+      if(width<940){
+       const button=header.locator('.mrl-site-mobile-toggle');
+       await button.click();
+       assert.equal(await button.getAttribute('aria-expanded'),'true');
+       await header.locator('summary').filter({hasText:'Research'}).click();
+       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       await page.keyboard.press('Escape');
+       assert.equal(await button.getAttribute('aria-expanded'),'false');
+      }else{
+       await header.locator('summary').filter({hasText:'Research'}).click();
+       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       await header.locator('summary').filter({hasText:'Writing'}).click();
+       assert.equal(await header.locator('details[open]').count(),1);
+      }
+     }
+     await page.goto(new URL('',base).href);
+     await page.locator('.mrl-site-search').click();
+     assert.ok(await page.locator('#mrl-global-search').isVisible());
+     await page.keyboard.press('Escape');
+    }finally{await page.close()}
+   }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
