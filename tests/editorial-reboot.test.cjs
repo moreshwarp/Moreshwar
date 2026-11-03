@@ -5,9 +5,9 @@ const path = require('node:path');
 const root=path.join(__dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 
-test('new homepage has accessible landmarks and interactive bookshelf',()=>{
+test('new homepage has accessible landmarks and research navigation',()=>{
  const html=read('index.html');
- for(const id of ['main-content','hero-title','nav','menu','bookshelf','shelf-toggle','shelf-panel','shelf-search','shelf-list','shelf-count']){
+ for(const id of ['main-content','hero-title','nav','menu','academic-directory','research-projects']){
    assert.match(html,new RegExp('id="'+id+'"'),'missing '+id);
  }
  assert.match(html,/<main\b/);
