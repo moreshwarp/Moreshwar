@@ -38,7 +38,7 @@ test('web preview and diagram assets are actual published files',()=>{
   assert.match(read(p),/node scripts\/prepare-site\.cjs _site/);
 });
 test('legacy lab remains accessible and points to the real studio',()=>{
- const lab=read('classic.html');
+ const lab=read('tests/fixtures/legacy-classic.html');
  assert.match(lab,/id="systems-lab"/);
  assert.match(lab,/href="studio\.html"/);
  assert.doesNotMatch(lab,/design\/editorial-review-only-20261020\/studio\.html/);
