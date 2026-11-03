@@ -161,7 +161,6 @@ body.mrl-studio.mrl-text-first .sch-related a{color:var(--studio-link)!important
 /* Research Studio: remove legacy magazine cards and conflicting dark palettes.
  * One readable academic content column + related sidebar, like the rest of the journal.
  * This final publishing stylesheet wins over historical inline Studio CSS. */
-html[data-theme="dark"] body.mrl-studio.mrl-text-first,
 html[data-theme="light"] body.mrl-studio.mrl-text-first,
 body.mrl-studio.mrl-text-first{
   --studio-bg:#ffffff;--studio-paper:#ffffff;--studio-text:#292d31;
@@ -204,11 +203,11 @@ body.mrl-studio.mrl-text-first main#main-content .topics{
   border-top:1px solid #d9dee1!important;padding-block:28px!important;
 }
 body.mrl-studio.mrl-text-first main#main-content .topic-grid{
-  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:0 22px!important;margin:0!important;
+  display:flex!important;flex-direction:column!important;
+  gap:0!important;margin:0!important;
 }
 body.mrl-studio.mrl-text-first main#main-content .topic-grid>a.topic{
-  display:flex!important;align-items:center!important;min-width:0!important;min-height:50px!important;
+  display:flex!important;align-items:center!important;width:100%!important;min-width:0!important;min-height:50px!important;
   padding:12px 0!important;margin:0!important;background:#fff!important;
   border:0!important;border-bottom:1px solid #d9dee1!important;border-radius:0!important;
   color:#8a2631!important;text-decoration:none!important;box-shadow:none!important;
