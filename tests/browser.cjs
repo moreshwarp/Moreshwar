@@ -65,7 +65,8 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     const targetHeight=await menu.evaluate(el=>el.getBoundingClientRect().height);
     assert.ok(targetHeight>=40,'undersized mobile menu target');
     await menu.click();
-    assert.ok(await bar.locator('a[href="reading-archive.html"]').first().isVisible());
+    await bar.locator('summary').filter({hasText:'Writing'}).click();
+    assert.ok(await bar.locator('.mrl-nav-sub a[href="reading-archive.html"]').isVisible(),'Writing submenu should reveal archive');
     await page.keyboard.press('Escape');
     await bar.locator('.mrl-site-search').click();
     assert.ok(await page.locator('#mrl-global-search').isVisible(),'search dialog unavailable');
