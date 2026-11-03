@@ -23,6 +23,8 @@ jobs:
         run: |
           node scripts/prepare-site.cjs _site
           node scripts/build-content.cjs _site
+          node scripts/finalize-site.cjs _site
+          node scripts/audit-site.cjs _site site-audit.json
           python3 scripts/build_catalog.py --output _site/data/research-catalog.json
       - name: Run static site server
         run: |
@@ -35,6 +37,14 @@ jobs:
           exit 1
       - name: Test actual browser geometry and theme flows
         run: node tests/browser.cjs
+      - name: Save site integrity report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-link-audit
+          path: site-audit.json
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Save visual QA screenshots
         if: always()
         uses: actions/upload-artifact@v4

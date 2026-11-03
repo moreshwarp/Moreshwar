@@ -28,6 +28,12 @@ jobs:
           node --check inquiry.js
       - name: Run zero-dependency regression tests
         run: node --test tests/*.test.cjs
+      - name: Audit every published page and internal link
+        run: |
+          node scripts/prepare-site.cjs _site
+          node scripts/build-content.cjs _site
+          node scripts/finalize-site.cjs _site
+          node scripts/audit-site.cjs _site site-audit.json
       - uses: actions/setup-go@v5
         with:
           go-version: '1.27.2'
