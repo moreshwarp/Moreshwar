@@ -13,7 +13,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
    await check('viewport '+width+' journal, archive, studio and classic',async()=>{
     const ctx=await browser.newContext({viewport:{width,height:850}});
     try{
-     for(const route of ['','reading-archive.html','studio.html','classic.html']){
+     for(const route of ['','reading-archive.html','studio.html','studio.html']){
       const page=await ctx.newPage();
       try{
        const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -160,7 +160,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
    for(const width of [320,390,768,1440]){
     const page=await browser.newPage({viewport:{width,height:850}});
     try{
-     for(const route of ['','classic.html','reading-archive.html','studio.html']){
+     for(const route of ['','studio.html','reading-archive.html','studio.html']){
       await page.goto(new URL(route,base).href);
       const header=page.locator('header.mrl-site-header');
       assert.ok(await header.isVisible(),route+' shared header not visible');
@@ -174,12 +174,12 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
        await button.click();
        assert.equal(await button.getAttribute('aria-expanded'),'true');
        await header.locator('summary').filter({hasText:'Research'}).click();
-       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       assert.ok(await header.locator('a[href="studio.html#systems-lab"]').isVisible());
        await page.keyboard.press('Escape');
        assert.equal(await button.getAttribute('aria-expanded'),'false');
       }else{
        await header.locator('summary').filter({hasText:'Research'}).click();
-       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       assert.ok(await header.locator('a[href="studio.html#systems-lab"]').isVisible());
        await header.locator('summary').filter({hasText:'Writing'}).click();
        assert.equal(await header.locator('details[open]').count(),1);
       }
@@ -195,7 +195,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
    for(const width of [320,390,768,1440]){
     const page=await browser.newPage({viewport:{width,height:850}});
     try{
-     for(const route of ['','reading-archive.html','studio.html','classic.html']){
+     for(const route of ['','reading-archive.html','studio.html','studio.html']){
       await page.goto(new URL(route,base).href);
       assert.ok(await page.locator('body.mrl-academic').count(),'academic design class missing '+route);
       assert.equal((await page.request.get(new URL('academic-journal.css',base).href)).status(),200);
@@ -237,7 +237,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     for(const width of [320,390,768,1440]){
       const page=await browser.newPage({viewport:{width,height:900}});
       try{
-        for(const route of ['','reading-archive.html','studio.html','classic.html']){
+        for(const route of ['','reading-archive.html','studio.html','studio.html']){
           await page.goto(new URL(route,base).href);
           assert.ok(await page.locator('body.mrl-heritage').count(),'academic unification missing '+route);
           assert.equal((await page.request.get(new URL('heritage-unified.css',base).href)).status(),200);
@@ -298,7 +298,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       await menu.click();
       assert.equal(await menu.getAttribute('aria-expanded'),'true');
       await page.locator('.sch-reader-nav summary').first().click();
-      assert.ok(await page.locator('.sch-reader-sub a[href="../classic.html#systems-lab"]').isVisible());
+      assert.ok(await page.locator('.sch-reader-sub a[href="../studio.html#systems-lab"]').isVisible());
       await page.keyboard.press('Escape');
       assert.equal(await menu.getAttribute('aria-expanded'),'false');
      }
@@ -420,10 +420,10 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
   await check('classic workspace and shared assets published',async()=>{
    const page=await browser.newPage();
    try{
-    for(const route of ['classic.html','unified-site.css','studio.html','reading-archive.html']){
+    for(const route of ['studio.html','unified-site.css','studio.html','reading-archive.html']){
      const response=await page.request.get(new URL(route,base).href);assert.equal(response.status(),200,route)
     }
-    await page.goto(new URL('classic.html',base).href);
+    await page.goto(new URL('studio.html',base).href);
     assert.ok(await page.locator('#systems-lab').count()>0,'systems research missing');
     assert.ok(await page.locator('#contact').count()>0,'contact missing');
    }finally{await page.close()}
