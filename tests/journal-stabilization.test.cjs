@@ -2,11 +2,10 @@ const {test}=require('node:test'),assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const root=path.join(__dirname,'..'),read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const journal=read('index.html'),classic=read('tests/fixtures/legacy-classic.html'),archive=read('reading-archive.html');
-test('journal remains compact and bookshelf contains 143 searchable entries',()=>{
- const data=JSON.parse(read('bookshelf.json'));assert.equal(data.books.length,143);
- for(const id of ['hero-title','shelf-toggle','shelf-search','shelf-list'])assert.ok(journal.includes('id="'+id+'"'),id);
- assert.match(journal,/bookshelf\.json/);
- assert.ok(!journal.includes('id="systems-lab"'),'legacy workspace must stay separate');
+test('journal retains navigation and removes the public book shelf',()=>{
+ for(const id of ['hero-title','academic-directory','research-projects'])assert.ok(journal.includes('id="'+id+'"'),id);
+ assert.doesNotMatch(journal,/id="bookshelf"|id="reading-desk"|id="shelf-toggle"|bookshelf\.json/);
+ assert.ok(!require('../scripts/prepare-site.cjs').sourceFiles.includes('bookshelf.json'));
 });
 test('archive preserves at least 22 real article files',()=>{
  const links=[...archive.matchAll(/articles\/[^"'?# ]+\.html/g)].map(m=>m[0]);
@@ -26,7 +25,7 @@ test('Pages packages shared styles and classic workspace',()=>{
  const workflow=read('.github/workflows/pages.yml');
  assert.match(workflow,/node scripts\/prepare-site\.cjs _site/);
  const {sourceFiles}=require('../scripts/prepare-site.cjs');
- for(const asset of ['unified-site.css','bookshelf.json','reading-archive.html'])assert.ok(sourceFiles.includes(asset),asset);
+ for(const asset of ['unified-site.css','reading-archive.html'])assert.ok(sourceFiles.includes(asset),asset);
 });
 
 test('secondary page links resolve to real destinations',()=>{
@@ -36,8 +35,6 @@ test('secondary page links resolve to real destinations',()=>{
  assert.ok(confirmation.includes('href="./reading-archive.html"'));
  assert.ok(confirmation.includes('href="./studio.html#contact"'));
  assert.ok(classic.includes('id="contact"'));
- assert.ok(journal.includes('href="#bookshelf"'),'Homepage must link to its searchable shelf');
- assert.ok(journal.includes('href="index.html#bookshelf"'),'Homepage footer must link back to shelf');
  assert.ok(journal.includes('href="studio.html"'),'Research studio must remain reachable');
 });
 test('published article navigation is fixed in build artifacts',()=>{
