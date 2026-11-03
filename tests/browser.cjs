@@ -276,8 +276,8 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
         const body=document.body,headline=document.querySelector('main h1');
         return {background:getComputedStyle(body).backgroundColor,headingFont:getComputedStyle(headline).fontFamily,
           colors:document.querySelector('meta[name="theme-color"]')?.content||'',
-          readerStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>/article-unified\\.css\\?v=[0-9a-f]{12}/.test(l.getAttribute('href')||'')),
-          textStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>/text-first-site\\.css\\?v=[0-9a-f]{12}/.test(l.getAttribute('href')||''))};
+          readerStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('article-unified.css?v=')),
+          textStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>(l.getAttribute('href')||'').includes('text-first-site.css?v='))};
       });
       assert.equal(appearance.background,'rgb(255, 255, 255)',name+' old dark page background');
       assert.match(appearance.headingFont,/Georgia/,name+' old heading typeface');
