@@ -61,3 +61,10 @@ html[data-theme=dark] body.mrl-profile .rs-secondary{background:#1b2526!importan
 @media(max-width:900px){.ux-cover-shelf{grid-template-columns:1fr 1fr}.ux-book-card:last-child{grid-column:1/-1}}
 @media(max-width:600px){.ux-cover-shelf{grid-template-columns:1fr}.ux-book-card:last-child{grid-column:auto}.ux-book-cover{width:84px}.ux-utility{margin-left:6px}.ux-theme{padding:9px}.rs-section-nav{top:76px!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+.ux-book-fallback[hidden]{display:none!important}
+.ux-research-figure{margin:32px 0 0;padding:20px;border:1px solid var(--ux-border);border-radius:var(--ux-radius);background:var(--ux-card)}
+.ux-research-figure img{display:block;width:100%;height:auto;aspect-ratio:1100/580;object-fit:contain;border-radius:calc(var(--ux-radius) - 4px)}
+.ux-research-figure figcaption{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px;font-size:13px;line-height:1.6;color:var(--ux-secondary)}
+.ux-research-figure figcaption strong{color:var(--ux-text)}
+.ux-research-figure figcaption .ux-zoom{margin-left:auto}
