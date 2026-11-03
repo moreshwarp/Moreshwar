@@ -394,6 +394,45 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       }finally{await page.close()}
     }
   });
+  await check('retired Classic and consistent academic color contrast in published pages',async()=>{
+    const missing=await browser.newPage();
+    try{
+      const response=await missing.goto(new URL('classic.html',base).href);
+      assert.equal(response.status(),404,'retired Classic HTML must not be publicly served');
+    }finally{await missing.close()}
+    for(const width of [390,1440]){
+      const page=await browser.newPage({viewport:{width,height:850}});
+      try{
+        for(const route of ['','studio.html','reading-archive.html']){
+          await page.goto(new URL(route,base).href);
+          assert.equal(await page.locator('a[href*="classic.html"]').count(),0,route+' contains retired Classic links');
+          for(const theme of ['light','dark']){
+            await page.evaluate(theme=>document.documentElement.dataset.theme=theme,theme);
+            const result=await page.evaluate(()=>{
+              const rgb=v=>(v.match(/[0-9.]+/g)||[]).slice(0,3).map(Number);
+              const lum=v=>rgb(v).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4}).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0);
+              const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+              const body=document.body,head=document.querySelector('.mrl-site-header'),title=document.querySelector('main h1, main h2');
+              const bodyStyle=getComputedStyle(body),headerStyle=getComputedStyle(head),titleStyle=getComputedStyle(title);
+              const background=bodyStyle.backgroundColor;
+              const titleSurface=getComputedStyle(title.closest('section')||body).backgroundColor;
+              return {background,color:bodyStyle.color,
+                bodyContrast:contrast(bodyStyle.color,background),
+                headingContrast:contrast(titleStyle.color,titleSurface),
+                headerContrast:contrast(headerStyle.color,headerStyle.backgroundColor),
+                scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth};
+            });
+            assert.ok(result.bodyContrast>=4.5,route+' '+theme+' body contrast '+JSON.stringify(result));
+            assert.ok(result.headingContrast>=4.5,route+' '+theme+' title contrast '+JSON.stringify(result));
+            assert.ok(result.headerContrast>=4.5,route+' '+theme+' header contrast '+JSON.stringify(result));
+            assert.ok(result.scroll<=result.width+2,route+' '+theme+' horizontal overflow '+JSON.stringify(result));
+          }
+        }
+        await page.goto(new URL('studio.html#systems-lab',base).href);
+        for(const id of ['systems-lab','inquiry','science-ideas','contact'])assert.ok(await page.locator('#'+id).count()>0,id+' missing');
+      }finally{await page.close()}
+    }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
