@@ -272,6 +272,20 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       assert.ok(await page.locator('body.sch-reader').count(),name+' inconsistent article body');
       assert.ok(await page.locator('header.sch-reader-header').isVisible(),name+' missing shared navigation');
       assert.ok(await page.locator('main h1').count()>0,name+' missing article title');
+      const appearance=await page.evaluate(()=>{
+        const body=document.body,headline=document.querySelector('main h1');
+        return {background:getComputedStyle(body).backgroundColor,headingFont:getComputedStyle(headline).fontFamily,
+          colors:document.querySelector('meta[name="theme-color"]')?.content||'',
+          readerStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>/article-unified\\.css\\?v=[0-9a-f]{12}/.test(l.getAttribute('href')||'')),
+          textStyle:[...document.querySelectorAll('link[rel="stylesheet"]')].some(l=>/text-first-site\\.css\\?v=[0-9a-f]{12}/.test(l.getAttribute('href')||''))};
+      });
+      assert.equal(appearance.background,'rgb(255, 255, 255)',name+' old dark page background');
+      assert.match(appearance.headingFont,/Georgia/,name+' old heading typeface');
+      assert.ok(appearance.readerStyle&&appearance.textStyle,name+' missing cache-versioned academic styles');
+      if(name.includes('secret-link-between-sounding')||name.includes('fieldnote-queues')){
+        assert.equal(appearance.colors,'#ffffff',name+' old dark browser theme');
+        assert.equal(await page.locator('head style').count(),0,name+' legacy inline stylesheet still shipped');
+      }
       const hidden=await page.locator('.site-nav,header.top.shell').evaluateAll(els=>els.every(el=>getComputedStyle(el).display==='none'));
       assert.ok(hidden,name+' old article header visible');
       const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
