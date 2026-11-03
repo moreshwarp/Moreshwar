@@ -25,8 +25,8 @@
 <meta name="twitter:description" content="Independent essays, books and research worth thinking about.">
 <meta name="twitter:image" content="https://moreshwarp.github.io/Moreshwar/social-preview.png?v=3">
 <link rel="stylesheet" href="mrl-reboot.css">
-<link rel="stylesheet" href="atelier.css"><link rel="stylesheet" href="mobile-first.css"><link rel="stylesheet" href="atlas-edition.css"><link rel="stylesheet" href="idea-observatory.css"><link rel="stylesheet" href="edition.css"><link rel="stylesheet" href="research-profile.css">
-<script src="mobile-first.js" defer></script><script src="idea-observatory.js" defer></script><script src="edition.js" defer></script></head>
+<link rel="stylesheet" href="atelier.css"><link rel="stylesheet" href="mobile-first.css"><link rel="stylesheet" href="atlas-edition.css"><link rel="stylesheet" href="idea-observatory.css"><link rel="stylesheet" href="edition.css"><link rel="stylesheet" href="research-profile.css"><link rel="stylesheet" href="research-ux.css">
+<script src="mobile-first.js" defer></script><script src="idea-observatory.js" defer></script><script src="edition.js" defer></script><script src="research-ux.js" defer></script></head>
 <body class="mrl-reboot mrl-reference mrl-mobile mrl-atlas mrl-observatory mrl-edition mrl-profile">
 <a class="at-skip" href="#main-content">Skip to main content</a>
 <header class="at-header">
@@ -53,7 +53,7 @@
  <h1 id="hero-title">Hello, I'm<br><em>Moreshwar.</em></h1>
  <p class="rs-hero-lead">I explore <strong>systems software, computer science, and the questions behind how things work.</strong></p>
  <p class="rs-hero-sub">This is my living research notebook—essays, practical experiments, and a reading shelf built around careful curiosity.</p>
- <div class="rs-hero-actions"><a class="rs-primary" href="#research-projects">Explore my work <span aria-hidden="true">↗</span></a><a class="rs-secondary" href="reading-archive.html">Read my writing <span aria-hidden="true">↗</span></a></div>
+ <div class="rs-hero-actions"><a class="rs-primary" href="#research-projects">Read research <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a><a class="rs-secondary" href="reading-archive.html">Read essays <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5c2.5-1.2 5-.9 7 1.2 2-2.1 4.5-2.4 7-1.2v15c-2.5-1.2-5-.9-7 1.2-2-2.1-4.5-2.4-7-1.2V4.5ZM12 5.7v15"/></svg></a><a class="rs-secondary" href="https://github.com/moreshwarp/Moreshwar" rel="noopener noreferrer" target="_blank">GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8 4 12l4 4m8-8 4 4-4 4m-3-13-2 18"/></svg></a></div>
  <div class="rs-social-note"><span class="rs-note-line" aria-hidden="true"></span> Read widely. Build carefully. Question everything.</div></div>
  <div class="rs-hero-visual" role="img" aria-label="Original abstract research illustration featuring linked computation nodes, systems diagrams, and a monogram">
  <div class="rs-grid-dots" aria-hidden="true"></div><div class="rs-visual-label rs-label-top">MORESHWAR / RESEARCH LAB <span>001</span></div>
@@ -175,6 +175,7 @@
  <section class="at-section at-shelf" id="bookshelf" aria-labelledby="shelf-heading">
   <div class="at-wrap">
    <div class="at-section-head"><div><span class="at-eyebrow">04 / The library</span><h2 class="at-section-title" id="shelf-heading">Read across<br><em>boundaries.</em></h2><p class="at-section-deck">A searchable collection of 143 books spanning science, software, literature and more. The list is a catalog, not a claim that every book has been read or endorsed.</p></div></div>
+   <div class="ux-book-intro">Selected editions with verified ISBN identifiers and cover sources. These are reading references, not claims that every title has been fully reviewed. The full 143-title catalog remains searchable below.</div><div id="ux-featured-books" class="ux-cover-shelf" aria-label="Featured books with verified editions"></div>
    <button type="button" id="shelf-toggle" class="shelf-toggle" aria-expanded="false" aria-controls="shelf-panel">Browse all 143 books ↗</button>
    <div id="shelf-panel" class="shelf-panel" hidden>
     <label for="shelf-search">Search by title or author</label>
