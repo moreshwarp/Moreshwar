@@ -2,7 +2,7 @@
  * Prioritize content, navigation, citations, and accessible functionality.
  * User requested no visual decoration or image galleries.
  */
-:root{--tf-bg:#fbfaf7;--tf-ink:#23343d;--tf-link:#245b78;--tf-muted:#52646c;--tf-rule:#d8e0e2;--tf-header:#f0f3f2;--tf-reading:960px;--tf-focus:#a56935}
+:root{--tf-bg:#fff;--tf-ink:#171717;--tf-link:#965262;--tf-muted:#454545;--tf-rule:#dedede;--tf-header:#f7f7f7;--tf-reading:960px;--tf-focus:#965262}
 html{scroll-behavior:auto!important;scroll-padding-top:24px}
 body.mrl-text-first{background:var(--tf-bg)!important;background-image:none!important;color:var(--tf-ink)!important;font-family:Georgia,"Times New Roman",serif!important;font-size:16px!important;line-height:1.65!important}
 body.mrl-text-first *,body.mrl-text-first *::before,body.mrl-text-first *::after{box-sizing:border-box}
@@ -276,21 +276,21 @@ body.mrl-studio.mrl-text-first .sch-related a{color:#8a2631!important}
   body.mrl-studio.mrl-text-first main#main-content .topic-grid{grid-template-columns:1fr!important}
 }
 
-/* THE CANONICAL READING PALETTE — one source of truth on every published page.
- * Paper + slate + blue. All text and interactive controls inherit paired surface
- * and ink tokens; older scattered greens, browns and black panels cannot leak.
- * This remains in text-first-site.css, the last stylesheet in the publishing pass. */
+/* CANONICAL BLACK, WHITE, AND SOFT MAROON COLOR TOKENS.
+ * Links meet WCAG AA on both papers. No alternate greens, blues, or beige.
+ * Source of truth for all published pages (appended as final stylesheet).
+ */
 :root{
-  --site-paper:#fbfaf7;--site-surface:#ffffff;--site-header:#f0f3f2;
-  --site-panel:#f6f8f8;--site-ink:#23343d;--site-muted:#52646c;
-  --site-link:#245b78;--site-rule:#d8e0e2;--site-button:#235b70;
-  --site-button-text:#ffffff;--site-focus:#a56935;
+ --site-paper:#ffffff;--site-surface:#ffffff;--site-header:#f7f7f7;
+ --site-panel:#f8f8f8;--site-ink:#171717;--site-muted:#454545;
+ --site-link:#965262;--site-rule:#dedede;--site-button:#171717;
+ --site-button-text:#ffffff;--site-focus:#965262;
 }
 html[data-theme="dark"]{
-  --site-paper:#151e23;--site-surface:#202d33;--site-header:#1e2b31;
-  --site-panel:#25343b;--site-ink:#f0f5f5;--site-muted:#c1d0d2;
-  --site-link:#b0deed;--site-rule:#42545c;--site-button:#add8e6;
-  --site-button-text:#152831;--site-focus:#f1bb80;
+ --site-paper:#111111;--site-surface:#191919;--site-header:#191919;
+ --site-panel:#222222;--site-ink:#f7f7f7;--site-muted:#d1d1d1;
+ --site-link:#d8a3b1;--site-rule:#414141;--site-button:#f7f7f7;
+ --site-button-text:#111111;--site-focus:#d8a3b1;
 }
 html[data-theme] body.mrl-text-first{
   background:var(--site-paper)!important;color:var(--site-ink)!important;
@@ -395,3 +395,46 @@ html[data-theme] body.mrl-text-first :is(a,button,input,summary,select,textarea)
   outline:3px solid var(--site-focus)!important;outline-offset:3px!important;
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+/* Final theme surface pairing across the home, essay archive and research studio. */
+html[data-theme] body.mrl-text-first :is(
+  .rs-project,.ed-card,.at-card,.story,.topic,.article,.academic-note,
+  .academic-sidebar,.sch-related,.ux-book-card,.obs-frame,.at-method-step,
+  .at-footer,.footer,.at-reading,.at-shelf,.at-method,.atlas-field,
+  .at-feature,.at-hero,.rs-hero,.at-nav,.mrl-site-header,.academic-main
+){
+ border-color:var(--site-rule)!important;
+}
+html[data-theme] body.mrl-text-first :is(
+ .at-hero,.rs-hero,.academic-main,.academic-sidebar,.at-meta,.at-section,
+ .rs-intro,.rs-projects,.rs-observatory,.at-reading,.at-method,.at-shelf,
+ .ed-discover,.atlas-field,.sch-page-columns,.sch-related,
+ main#main-content,main#main-content .intro,main#main-content .latest,
+ main#main-content .topics,main#main-content .featured,
+ main#main-content .topic-grid,main#main-content .article-grid
+){background:var(--site-paper)!important;color:var(--site-ink)!important}
+html[data-theme] body.mrl-text-first .at-footer,
+html[data-theme] body.mrl-text-first :is(footer,.footer){background:var(--site-header)!important}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-site-action,
+html[data-theme] body.mrl-text-first :is(.rs-primary,.primary,.obs-go){
+ background:var(--site-button)!important;color:var(--site-button-text)!important;
+}
+html[data-theme] body.mrl-text-first .rs-secondary{color:var(--site-ink)!important;background:var(--site-surface)!important}
+html[data-theme] body.mrl-text-first main#main-content :is(.intro h1,.section-head h2,.article-grid h3){
+ color:var(--site-ink)!important;
+}
+html[data-theme] body.mrl-text-first main#main-content .article-grid>a.article h3{
+ color:var(--site-link)!important;
+}
+html[data-theme] body.mrl-text-first main#main-content :is(.intro p,.article-grid p){
+ color:var(--site-muted)!important;
+}
+html[data-theme] body.mrl-text-first a[href]:not(.mrl-site-brand):not(.mrl-site-action):not(.rs-primary):not(.primary){
+ color:var(--site-link)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-site-nav>a,
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-group>summary{
+ color:var(--site-ink)!important;
+}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub{background:var(--site-surface)!important}
+html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub small{color:var(--site-muted)!important}
