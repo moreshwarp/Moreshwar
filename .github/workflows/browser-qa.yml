@@ -24,6 +24,10 @@ jobs:
           node scripts/prepare-site.cjs _site
           node scripts/build-content.cjs _site
           python3 scripts/build_catalog.py --output _site/data/research-catalog.json
+      - name: Finalize all pages and check internal links
+        run: |
+          node scripts/finalize-site.cjs _site
+          node scripts/audit-site.cjs _site --strict
       - name: Run static site server
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 --directory _site > /tmp/moreshwar-http.log 2>&1 &
