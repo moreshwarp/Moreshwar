@@ -17,7 +17,7 @@ const groups=[
  {label:'Reading',links:[['Book catalog','index.html#bookshelf','143 searchable titles'],['Reading desk','index.html#reading-desk','What informs the lab'],['Learning notes','studio.html','Follow the research process']]},
  {label:'About',links:[['Research profile','index.html#about-profile','Focus and approach'],['Method','index.html#about','How ideas are examined'],['Contact','classic.html#contact','Reach the lab']]}
 ];
-const item=(entry)=>'<a href="'+entry[0]+'"><span>'+entry[1]+'</span><small>'+entry[2]+'</small></a>';
+const item=(entry)=>'<a href="'+entry[1]+'"><span>'+entry[0]+'</span><small>'+entry[2]+'</small></a>';
 const menu=groups.map((g,i)=>'<details class="mrl-nav-group"><summary>'+g.label+chevron+'</summary><div class="mrl-nav-sub" aria-label="'+g.label+' submenu">'+g.links.map(v=>item([v[0],v[1],v[2]])).join('')+'</div></details>').join('');
 const header=d.createElement('header');
 header.className='mrl-site-header';
