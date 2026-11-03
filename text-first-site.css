@@ -10,7 +10,7 @@ body.mrl-text-first :is(p,li){line-height:1.65}
 body.mrl-text-first :is(a,button,input,summary,select,textarea):focus-visible{outline:3px solid var(--tf-focus)!important;outline-offset:3px!important}
 body.mrl-text-first :is(h1,h2,h3,h4){font-family:Georgia,"Times New Roman",serif!important;letter-spacing:0!important;text-wrap:pretty}
 body.mrl-text-first a:not(.mrl-site-brand):not(.mrl-site-action){text-underline-offset:3px}
-body.mrl-text-first :is(img,picture,video,canvas,.at-hero-art,.rs-hero-visual,.rs-project-art,.ed-card-art,.topic-art,.feature-art,.hero-art,.mrl-illustration,.ux-cover-shelf,.ux-research-figure,.academic-portrait,.mrl-jump-icon){display:none!important}
+body.mrl-text-first :is(img,picture,video,.at-hero-art,.rs-hero-visual,.rs-project-art,.ed-card-art,.topic-art,.feature-art,.hero-art,.mrl-illustration,.ux-cover-shelf,.ux-research-figure,.academic-portrait,.mrl-jump-icon){display:none!important}
 body.mrl-text-first :is(.at-hero,.rs-hero,.rs-intro,.rs-projects,.rs-observatory,.ed-discover,.atlas-field,.at-reading,.at-method,.at-shelf,.at-section,.mrl-jump){background:#fff!important;background-image:none!important;box-shadow:none!important;border-color:var(--tf-rule)!important}
 body.mrl-text-first :is(.at-section,.rs-projects,.rs-observatory,.rs-intro,.ed-discover,.atlas-field,.at-reading,.at-method,.at-shelf){padding-block:28px!important}
 body.mrl-text-first :is(.rs-project,.ed-card,.at-card,.atlas-lab-link,.at-method-step,.topic,.article,.story,.ux-book-card){border-radius:0!important;box-shadow:none!important;transform:none!important;background:transparent!important}
@@ -61,7 +61,7 @@ body.mrl-article-page :is(hr){border:0;border-top:1px solid var(--tf-rule)}
 body.mrl-article-page :is(.site-footer,footer){background:#fafafa!important;color:#32383b!important}
 body.mrl-article-page :is(.site-footer a,footer a){color:var(--tf-link)!important}
 body.mrl-article-page :is(.scrollbar){background:#7b303a!important}
-body.mrl-article-page :is(img,picture,video,canvas,figure>svg){display:none!important}
+body.mrl-article-page :is(img,picture,video,figure>svg){display:none!important}
 body.mrl-article-page figure:empty{display:none!important}
 body.mrl-article-page .mrl-site-header :is(.mrl-site-brand,.mrl-site-brandtext strong){color:white!important}
 body.mrl-article-page .mrl-site-header .mrl-nav-sub a{color:#293944!important}
@@ -75,3 +75,9 @@ body.mrl-text-first.mrl-nav-ready > header:not(.mrl-site-header){display:none!im
 body.mrl-text-first .mrl-review-banner{display:none!important}
 body.mrl-text-first :is(.at-hero-art,.obs-lines,.rs-grid-dots,.rs-visual-art,.rs-orbit-label,.rs-visual-label,.at-book,.cover,.book-art){display:none!important}
 body.mrl-text-first :is(.intro,.hero,.feature,.featured,.topic-grid,.latest){background-image:none!important;box-shadow:none!important}
+
+/* Do not let old contact or style-guide layouts override the scholarly document flow. */
+body.mrl-text-first{display:block!important;margin:0!important;min-height:100vh}
+body.mrl-text-first > .card{margin:36px auto;max-width:760px;background:#fff!important;box-shadow:none!important;border:1px solid #d9dcde!important;border-radius:2px!important;color:#292b2c!important}
+body.mrl-text-first > .card :is(h1,h2,p,div,span){color:#293138!important}
+body.mrl-text-first .mrl-review-banner{display:none!important}
