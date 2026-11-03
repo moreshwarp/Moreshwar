@@ -6,7 +6,7 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {listHtml}=require('./audit-site.cjs');
 function stylePage(html,relative,version=''){
- if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
+ // Researcher homepage is a self-contained layout. Do not inject the legacy\n // header, theme or CSS layers that previously hid its real navigation.\n if(relative==='index.html' && html.includes('href="research-site.css"'))return html;\n if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
  const article=relative.startsWith('articles/');
  const prefix=article?'../':'';
  const extras=['text-first-site.css'];
