@@ -3,9 +3,9 @@
  * No content deletion; decorative images are suppressed by accessible CSS.
  */
 'use strict';
-const fs=require('node:fs'),path=require('node:path');
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {listHtml}=require('./audit-site.cjs');
-function stylePage(html,relative){
+function stylePage(html,relative,version=''){
  if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
  const article=relative.startsWith('articles/');
  const prefix=article?'../':'';
@@ -14,8 +14,9 @@ function stylePage(html,relative){
  let output=html;
  for(const asset of extras){
   const address=prefix+asset;
+  const url=asset==='text-first-site.css'&&version?address+'?v='+version:address;
   if(output.includes('href="'+address+'"')||output.includes('src="'+address+'"'))continue;
-  const tag=asset.endsWith('.css')?'<link rel="stylesheet" href="'+address+'">':'<script defer src="'+address+'"></script>';
+  const tag=asset.endsWith('.css')?'<link rel="stylesheet" href="'+url+'">':'<script defer src="'+address+'"></script>';
   output=output.replace(/<\/head>/i,tag+'\n</head>');
  }
  output=output.replace(/<body\b([^>]*)>/i,(full,attr)=>{
@@ -32,10 +33,11 @@ function stylePage(html,relative){
 }
 function apply(dir='_site'){
  const root=path.resolve(dir),files=listHtml(root);
+ const version=crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'text-first-site.css'))).digest('hex').slice(0,12);
  if(files.length<30)throw Error('Expected complete published site (30+ pages), found '+files.length);
  for(const file of files){
   const name=path.relative(root,file).split(path.sep).join('/');
-  const initial=fs.readFileSync(file,'utf8'),next=stylePage(initial,name);
+  const initial=fs.readFileSync(file,'utf8'),next=stylePage(initial,name,version);
   if(next!==initial)fs.writeFileSync(file,next);
  }
  console.log('Applied uniform text-first layout to all '+files.length+' published HTML pages');
