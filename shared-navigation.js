@@ -2,7 +2,9 @@
  * Vanilla JS + semantic details, same markup on all pages, GitHub Pages only. */
 (()=>{'use strict';
 const d=document,body=d.body;
-const original=d.querySelector('header.at-header, header.site-header, header.mrl-header, header.nav');
+const articleRoute=location.pathname.includes('/articles/');
+const basePrefix=articleRoute?'../':'';
+const original=d.querySelector('header.at-header, header.site-header, header.mrl-header, header.nav, nav.site-nav, header.top') || (articleRoute?d.querySelector('main'):null);
 if(!original)return;
 const onLab=/classic\.html$/i.test(location.pathname);
 const icon=(path)=>'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+path+'"/></svg>';
@@ -22,7 +24,7 @@ const menu=groups.map((g,i)=>'<details class="mrl-nav-group"><summary>'+g.label+
 const header=d.createElement('header');
 header.className='mrl-site-header';
 header.innerHTML='<div class="mrl-site-inner"><a class="mrl-site-brand" href="index.html" aria-label="Moreshwar Research Lab home"><span class="mrl-site-monogram" aria-hidden="true">m.</span><span class="mrl-site-brandtext"><strong>Moreshwar</strong><small>Research Lab</small></span></a><nav id="mrl-site-navigation" class="mrl-site-nav" aria-label="Primary navigation"><a class="mrl-site-home" href="index.html">Home</a>'+menu+'<a class="mrl-site-single" href="studio.html">Studio</a></nav><div class="mrl-site-tools"><button class="mrl-site-search" type="button" aria-label="Search essays and books" title="Search (Ctrl+K)">'+search+'<span>Search</span></button><a class="mrl-site-action" href="reading-archive.html">Explore writing '+arrow+'</a><button class="mrl-site-mobile-toggle" type="button" aria-label="Open navigation" aria-controls="mrl-site-navigation" aria-expanded="false">'+burger+'</button></div></div>';
-original.insertAdjacentElement('beforebegin',header);
+if(articleRoute){body.insertBefore(header,body.firstChild);for(const a of header.querySelectorAll('a[href]')){const dest=a.getAttribute('href');if(dest&&!/^(?:https?:|mailto:|tel:|\/|#)/.test(dest))a.setAttribute('href',basePrefix+dest)}}else original.insertAdjacentElement('beforebegin',header);
 body.classList.add('mrl-nav-ready');
 const themeButton=original.querySelector('#ux-theme');if(themeButton){const holder=header.querySelector('.mrl-site-tools');holder.insertBefore(themeButton,holder.querySelector('.mrl-site-mobile-toggle'));themeButton.classList.add('mrl-site-theme')}
 
@@ -34,7 +36,7 @@ details.forEach(group=>{group.querySelector('summary').addEventListener('click',
 nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{closeGroups();closeMenu()}));
 d.addEventListener('keydown',event=>{if(event.key==='Escape'){const hadOpen=details.some(g=>g.open)||nav.classList.contains('mrl-site-nav-open');closeGroups();closeMenu();if(hadOpen){toggle.focus();event.stopPropagation()}}});
 d.addEventListener('click',event=>{if(!header.contains(event.target)){closeGroups();closeMenu()}});
-header.querySelector('.mrl-site-search').addEventListener('click',()=>{const trigger=onLab?d.getElementById('search-trigger'):d.querySelector('[data-mrl-search]');if(trigger)trigger.click();else location.href='reading-archive.html'});
+header.querySelector('.mrl-site-search').addEventListener('click',()=>{const trigger=onLab?d.getElementById('search-trigger'):d.querySelector('[data-mrl-search]');if(trigger)trigger.click();else location.href=basePrefix+'reading-archive.html'});
 const file=location.pathname.split('/').pop()||'index.html';
 header.querySelectorAll('a').forEach(a=>{const target=a.getAttribute('href');if(target===file||(file==='index.html'&&target==='index.html')||(file==='classic.html'&&target==='classic.html'))a.setAttribute('aria-current','page')});
 })();
