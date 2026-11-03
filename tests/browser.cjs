@@ -39,11 +39,11 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       const response=await page.request.get(new URL(asset,base).href);
       assert.equal(response.status(),200,'missing publish asset '+asset);
     }
-    await page.locator('#menu').click();
-    assert.equal(await page.locator('#menu').getAttribute('aria-expanded'),'true');
-    assert.ok(await page.locator('#nav').isVisible());
+    await page.locator('.mrl-site-mobile-toggle').click();
+    assert.equal(await page.locator('.mrl-site-mobile-toggle').getAttribute('aria-expanded'),'true');
+    assert.ok(await page.locator('#mrl-site-navigation').isVisible());
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('#menu').getAttribute('aria-expanded'),'false');
+    assert.equal(await page.locator('.mrl-site-mobile-toggle').getAttribute('aria-expanded'),'false');
     await page.goto(new URL('reading-archive.html',base).href);
     await page.locator('#q').fill('competition');
     assert.match(await page.locator('#count').innerText(),/essay/);
@@ -150,6 +150,41 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
      assert.ok(geom.scroll<=geom.client+2,'research UX overflow '+JSON.stringify(geom));
      assert.equal((await page.request.get(new URL('assets/distributed-request-flow.svg',base).href)).status(),200);
      await page.screenshot({path:path.join(artifacts,'research-ux-'+width+'.png')});
+    }finally{await page.close()}
+   }
+  });
+  await check('shared academic navigation across every route, dropdowns, mobile and search',async()=>{
+   for(const width of [320,390,768,1440]){
+    const page=await browser.newPage({viewport:{width,height:850}});
+    try{
+     for(const route of ['','classic.html','reading-archive.html','studio.html']){
+      await page.goto(new URL(route,base).href);
+      const header=page.locator('header.mrl-site-header');
+      assert.ok(await header.isVisible(),route+' shared header not visible');
+      assert.equal(await header.locator('details.mrl-nav-group').count(),4);
+      const old=page.locator('header.at-header,header.site-header,header.mrl-header,header.nav');
+      assert.equal(await old.isVisible(),false,route+' old inconsistent header still visible');
+      const doc=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+      assert.ok(doc.scroll<=doc.width+2,route+' overflow with new header '+JSON.stringify(doc));
+      if(width<940){
+       const button=header.locator('.mrl-site-mobile-toggle');
+       await button.click();
+       assert.equal(await button.getAttribute('aria-expanded'),'true');
+       await header.locator('summary').filter({hasText:'Research'}).click();
+       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       await page.keyboard.press('Escape');
+       assert.equal(await button.getAttribute('aria-expanded'),'false');
+      }else{
+       await header.locator('summary').filter({hasText:'Research'}).click();
+       assert.ok(await header.locator('a[href="classic.html#systems-lab"]').isVisible());
+       await header.locator('summary').filter({hasText:'Writing'}).click();
+       assert.equal(await header.locator('details[open]').count(),1);
+      }
+     }
+     await page.goto(new URL('',base).href);
+     await page.locator('.mrl-site-search').click();
+     assert.ok(await page.locator('#mrl-global-search').isVisible());
+     await page.keyboard.press('Escape');
     }finally{await page.close()}
    }
   });
