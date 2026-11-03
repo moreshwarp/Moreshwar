@@ -130,6 +130,29 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     }finally{await page.close()}
    }
   });
+  await check('research UX cover editions, accessible zoom, consistent controls and scroll',async()=>{
+   for(const width of [320,390,1440]){
+    const page=await browser.newPage({viewport:{width,height:850}});
+    try{
+     await page.goto(base);
+     await page.locator('#ux-featured-books .ux-book-card').first().waitFor();
+     assert.equal(await page.locator('#ux-featured-books .ux-book-card').count(),3);
+     assert.equal(await page.locator('#ux-featured-books a[href^="https://openlibrary.org/isbn/"]').count(),3);
+     await page.locator('#ux-theme').click();
+     assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'dark');
+     await page.locator('#ux-theme').click();
+     assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'light');
+     await page.locator('[data-ux-zoom="assets/distributed-request-flow.svg"]').click();
+     assert.ok(await page.locator('dialog.ux-lightbox').isVisible());
+     await page.keyboard.press('Escape');
+     await page.locator('dialog.ux-lightbox').waitFor({state:'detached',timeout:5000});
+     const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+     assert.ok(geom.scroll<=geom.client+2,'research UX overflow '+JSON.stringify(geom));
+     assert.equal((await page.request.get(new URL('assets/distributed-request-flow.svg',base).href)).status(),200);
+     await page.screenshot({path:path.join(artifacts,'research-ux-'+width+'.png')});
+    }finally{await page.close()}
+   }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
