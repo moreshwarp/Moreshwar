@@ -3,7 +3,7 @@ const root=path.resolve(__dirname,'..');const read=p=>fs.readFileSync(path.join(
 test('atlas experience retains the public journal and accessible research navigation',()=>{
  const home=read('index.html');
  for(const id of ['main-content','hero-title','essays','reading-desk','about','bookshelf','field-guide'])assert.ok(home.includes('id="'+id+'"'),id);
- for(const href of ['classic.html#systems-lab','classic.html#inquiry','reading-archive.html','studio.html'])assert.ok(home.includes('href="'+href+'"'),href);
+ for(const href of ['studio.html#systems-lab','studio.html#inquiry','reading-archive.html','studio.html'])assert.ok(home.includes('href="'+href+'"'),href);
  assert.match(home,/aria-labelledby="field-guide-title"/);
  assert.match(home,/educational models, not production benchmarks/);
  assert.match(home,/mrl-atlas/);
