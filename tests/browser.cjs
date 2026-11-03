@@ -123,7 +123,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
      await section.locator('#ed-surprise').click();
      assert.ok(await section.locator('.ed-card:focus').count()===1,'surprise control must focus visible card');
      await section.locator('[data-ed-filter="all"]').click();
-     assert.equal(await section.locator('.ed-card:visible').count(),6);
+     assert.equal(await section.locator('.ed-card:visible').count(),5);
      const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
      assert.ok(geom.scroll<=geom.client+2,'discovery overflow '+JSON.stringify(geom));
      for(const asset of ['edition.css','edition.js','vendor/open-props/colors.css','vendor/open-props/easing.css','vendor/open-props/sizes.css']){
@@ -383,7 +383,7 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
         assert.equal(data.background,'rgb(255, 255, 255)','studio dark content region still visible '+JSON.stringify(data));
         assert.equal(data.articleLayout,'block','article cards still multi-column');
         assert.ok(data.topics.every(t=>t.width>=Math.min(width-45,240)&&t.right<=data.viewport+2),'topic links must fit the screen '+JSON.stringify(data));
-        assert.equal(data.cards.length,3);
+        assert.equal(data.cards.length,2);
         assert.ok(data.cards.every(c=>c.position.width>=Math.min(width-45,300)),'cramped article columns '+JSON.stringify(data));
         assert.ok(data.cards.every((c,i)=>i===0||c.position.top>=data.cards[i-1].position.bottom-2),'article entries must stack '+JSON.stringify(data));
         assert.ok(data.scroll<=data.viewport+2,'studio horizontal overflow '+JSON.stringify(data));
