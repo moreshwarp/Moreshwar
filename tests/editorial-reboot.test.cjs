@@ -14,7 +14,7 @@ test('new homepage has accessible landmarks and interactive bookshelf',()=>{
  assert.match(html,/aria-expanded="false"/);
  assert.match(html,/research-method\.svg/);
  assert.match(html,/href="reading-archive\.html"/);
- assert.match(html,/href="classic\.html#systems-lab"/);
+ assert.match(html,/href="studio\.html#systems-lab"/);
  assert.match(html,/social-preview\.png\?v=3/);
 });
 test('all 22 published archive entries remain, with filtering controls',()=>{
