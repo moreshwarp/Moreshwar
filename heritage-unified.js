@@ -14,7 +14,6 @@ const related={
   links:[
    ['Start with systems thinking','studio.html#systems-lab'],
    ['Explore research methods','studio.html#inquiry'],
-   ['Open the reading shelf','index.html#bookshelf'],
    ['Read the research studio','studio.html']
   ]
  },
@@ -25,7 +24,7 @@ const related={
    ['Systems and reliability','studio.html#systems-lab'],
    ['The inquiry engine','studio.html#inquiry'],
    ['Published essays','reading-archive.html'],
-   ['Browse books and references','index.html#bookshelf']
+   ['Science and ideas','studio.html#science-ideas']
   ]
  }
 };
