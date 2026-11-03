@@ -188,6 +188,28 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     }finally{await page.close()}
    }
   });
+  await check('academic journal reference layout and real writing remain accessible at every width',async()=>{
+   for(const width of [320,390,768,1440]){
+    const page=await browser.newPage({viewport:{width,height:850}});
+    try{
+     for(const route of ['','reading-archive.html','studio.html','classic.html']){
+      await page.goto(new URL(route,base).href);
+      assert.ok(await page.locator('body.mrl-academic').count(),'academic design class missing '+route);
+      assert.equal((await page.request.get(new URL('academic-journal.css',base).href)).status(),200);
+      assert.ok(await page.locator('header.mrl-site-header').isVisible(),'academic header missing '+route);
+      const overflow=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+      assert.ok(overflow.scroll<=overflow.width+2,'academic overflow '+route+' '+JSON.stringify(overflow));
+     }
+     await page.goto(base);
+     assert.ok(await page.locator('#academic-directory').isVisible());
+     assert.equal(await page.locator('#academic-directory time').count(),5);
+     const bg=await page.locator('body').evaluate(el=>getComputedStyle(el).backgroundColor);
+     assert.equal(bg,'rgb(255, 255, 255)');
+     assert.ok(await page.locator('#academic-directory a[href="reading-archive.html"]').count()>0);
+     await page.screenshot({path:path.join(artifacts,'academic-home-'+width+'.png'),fullPage:false});
+    }finally{await page.close()}
+   }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
