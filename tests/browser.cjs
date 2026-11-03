@@ -365,6 +365,35 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       }finally{await page.close()}
     }
   });
+  await check('studio article lists replace cramped dark cards in rendered desktop and mobile',async()=>{
+    for(const width of [320,390,768,1440,1600]){
+      const page=await browser.newPage({viewport:{width,height:900}});
+      try{
+        await page.goto(new URL('studio.html',base).href);
+        const data=await page.evaluate(()=>{
+          const cards=[...document.querySelectorAll('main#main-content .article-grid>a.article')];
+          const topics=[...document.querySelectorAll('main#main-content .topic-grid>a.topic')];
+          const panel=document.querySelector('main#main-content .latest');
+          const parent=document.querySelector('main#main-content .article-grid');
+          const rect=el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,top:r.top,bottom:r.bottom}};
+          return {background:getComputedStyle(panel).backgroundColor,
+            articleLayout:getComputedStyle(parent).display,
+            cards:cards.map(el=>({position:rect(el),background:getComputedStyle(el).backgroundColor,
+              heading:el.querySelector('h3')?.innerText||'',headingColor:getComputedStyle(el.querySelector('h3')).color,
+              textWidth:el.querySelector('h3').getBoundingClientRect().width})),
+            topics:topics.map(rect),viewport:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,
+            sidebar:rect(document.querySelector('.sch-related'))};
+        });
+        assert.equal(data.background,'rgb(255, 255, 255)','studio dark content region still visible '+JSON.stringify(data));
+        assert.equal(data.articleLayout,'block','article cards still multi-column');
+        assert.equal(data.cards.length,3);
+        assert.ok(data.cards.every(c=>c.position.width>=Math.min(width-45,300)),'cramped article columns '+JSON.stringify(data));
+        assert.ok(data.cards.every((c,i)=>i===0||c.position.top>=data.cards[i-1].position.bottom-2),'article entries must stack '+JSON.stringify(data));
+        assert.ok(data.scroll<=data.viewport+2,'studio horizontal overflow '+JSON.stringify(data));
+        await page.screenshot({path:path.join(artifacts,'studio-lists-'+width+'.png'),fullPage:false});
+      }finally{await page.close()}
+    }
+  });
   await check('bookshelf loads 143 and search filters',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
