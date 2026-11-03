@@ -39,11 +39,11 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       const response=await page.request.get(new URL(asset,base).href);
       assert.equal(response.status(),200,'missing publish asset '+asset);
     }
-    await page.locator('#menu').click();
-    assert.equal(await page.locator('#menu').getAttribute('aria-expanded'),'true');
-    assert.ok(await page.locator('#nav').isVisible());
+    await page.locator('.mrl-site-mobile-toggle').click();
+    assert.equal(await page.locator('.mrl-site-mobile-toggle').getAttribute('aria-expanded'),'true');
+    assert.ok(await page.locator('#mrl-site-navigation').isVisible());
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('#menu').getAttribute('aria-expanded'),'false');
+    assert.equal(await page.locator('.mrl-site-mobile-toggle').getAttribute('aria-expanded'),'false');
     await page.goto(new URL('reading-archive.html',base).href);
     await page.locator('#q').fill('competition');
     assert.match(await page.locator('#count').innerText(),/essay/);
