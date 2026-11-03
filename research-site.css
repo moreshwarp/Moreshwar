@@ -50,3 +50,144 @@ p{margin:0 0 14px}
 @media(max-width:700px){.layout{grid-template-columns:1fr;gap:34px;padding-top:27px}.sidebar{border-left:0;border-top:1px solid var(--line);padding:26px 0 0}.sidebar section+section{margin-top:22px}.brand-inner{min-height:87px}.nav-inner{justify-content:space-between}.nav-inner a{padding:13px 8px;font-size:13px}.nav-inner a:first-child{padding-left:0}.nav-inner a:last-child{padding-right:0}.dated-list li{grid-template-columns:90px 1fr}}
 @media(max-width:400px){.container{width:calc(100% - 28px)}.brand{font-size:27px}.brand span{font-size:10px}h1{font-size:29px}h2{font-size:21px}.dated-list li{display:block}.dated-list time{display:block;margin-bottom:2px}.theme-button{padding:9px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+
+/* Research and Writing: scholarly companion pages to the new homepage.
+   Intentionally scoped. Preserve archive filters, research anchors and dialogs. */
+body.mrl-studio,body.mrl-archive{
+ --paper:#fff;--surface:#fff;--ink:#222;--muted:#555;--line:#d5d5d5;
+ --mrl-paper:#fff;--mrl-ink:#222;--mrl-muted:#555;--mrl-line:#d5d5d5;
+ --mrl-accent:#965262;--focus:#965262;
+ background:#fff!important;color:#222!important;
+ font:16px/1.63 Georgia,"Times New Roman",serif!important;
+}
+body.mrl-studio :is(.shell,.wrap),body.mrl-archive :is(.shell,.wrap){
+ width:min(960px,calc(100% - 36px))!important;margin-inline:auto!important;
+}
+body.mrl-studio :is(h1,h2,h3),body.mrl-archive :is(h1,h2,h3){
+ color:#222!important;font-family:Georgia,"Times New Roman",serif!important;
+ font-weight:400!important;letter-spacing:-.02em!important;text-wrap:pretty;
+}
+body.mrl-studio a,body.mrl-archive a{color:#965262}
+body.mrl-studio a:hover,body.mrl-archive a:hover{text-decoration:underline;text-underline-offset:3px}
+body.mrl-studio :is(a,button,input,select):focus-visible,
+body.mrl-archive :is(a,button,input,select):focus-visible{outline:3px solid #965262!important;outline-offset:3px}
+body.mrl-studio :is(.mrl-header,.site-header,.mrl-site-header),
+body.mrl-archive :is(.mrl-header,.site-header,.mrl-site-header){
+ background:#454a4e!important;color:#fff!important;border:0!important;
+ box-shadow:none!important;border-radius:0!important;
+}
+body.mrl-studio :is(.mrl-header,.site-header,.mrl-site-header) a,
+body.mrl-archive :is(.mrl-header,.site-header,.mrl-site-header) a{color:#fff!important}
+body.mrl-studio :is(.mrl-brand,.brand-lockup,.mrl-site-brand),
+body.mrl-archive :is(.mrl-brand,.brand-lockup,.mrl-site-brand){
+ font:400 clamp(25px,4vw,36px)/1.2 Arial,Helvetica,sans-serif!important;
+ letter-spacing:-.035em!important;color:#fff!important;
+}
+body.mrl-studio :is(.mrl-brand span,.brand-name small),
+body.mrl-archive :is(.mrl-brand span,.brand-name small){color:#e1e1e1!important}
+body.mrl-studio :is(.mrl-header-inner,.header-inner),
+body.mrl-archive :is(.mrl-header-inner,.header-inner){max-width:960px;min-height:94px!important}
+body.mrl-studio :is(.mrl-nav,.header-nav,.mrl-site-nav),
+body.mrl-archive :is(.mrl-nav,.header-nav,.mrl-site-nav){gap:clamp(10px,2vw,20px)!important}
+body.mrl-studio :is(.mrl-nav,.header-nav,.mrl-site-nav) a,
+body.mrl-archive :is(.mrl-nav,.header-nav,.mrl-site-nav) a{
+ font:600 13px/1.35 Arial,Helvetica,sans-serif!important;
+ letter-spacing:0!important;text-transform:none!important;
+ border:0!important;background:transparent!important;padding:10px 2px!important;
+}
+body.mrl-studio :is(.mrl-nav,.header-nav,.mrl-site-nav) a:hover,
+body.mrl-archive :is(.mrl-nav,.header-nav,.mrl-site-nav) a:hover{text-decoration:underline!important}
+body.mrl-studio .intro,body.mrl-archive .intro{
+ display:block!important;padding:36px 0 27px!important;
+ margin:0!important;min-height:0!important;max-width:none!important;
+ border-bottom:1px solid #d5d5d5!important;
+}
+body.mrl-studio .intro>div:first-child{max-width:750px}
+body.mrl-studio .intro h1,body.mrl-archive .intro h1{
+ font-size:clamp(30px,4vw,38px)!important;line-height:1.2!important;
+ margin:8px 0 17px!important;max-width:760px!important;
+}
+body.mrl-studio .intro p,body.mrl-archive .intro p{
+ font:16px/1.65 Georgia,"Times New Roman",serif!important;
+ color:#555!important;max-width:680px!important;
+}
+body.mrl-studio :is(.eyebrow,.overline),body.mrl-archive :is(.eyebrow,.overline){
+ color:#666!important;font:600 11px/1.45 Arial,Helvetica,sans-serif!important;
+ letter-spacing:.08em!important;text-transform:uppercase;
+}
+body.mrl-studio .hero-art,body.mrl-studio .feature-art,
+body.mrl-studio .topic-art{display:none!important}
+body.mrl-studio :is(.featured,.topics,.latest,.mrl-research-index){
+ padding:24px 0 32px!important;border-bottom:1px solid #d5d5d5!important;
+ border-top:0!important;margin:0 auto!important;
+}
+body.mrl-studio .section-head{margin:0 0 14px!important}
+body.mrl-studio .section-head h2,
+body.mrl-studio .mrl-research-index h2{
+ font-size:23px!important;line-height:1.32!important;margin:0 0 8px!important;
+}
+body.mrl-studio .feature-grid{display:block!important}
+body.mrl-studio .feature-copy h3{font-size:21px!important;line-height:1.35!important;margin:8px 0!important}
+body.mrl-studio .feature-copy p{font:15px/1.65 Georgia,serif!important;color:#555!important}
+body.mrl-studio .topic-grid,
+body.mrl-studio .article-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:0!important}
+body.mrl-studio .topic,body.mrl-studio .article-grid .article{
+ display:block!important;min-height:0!important;padding:12px 0!important;
+ margin:0!important;border:0!important;border-bottom:1px solid #e5e5e5!important;
+ background:transparent!important;border-radius:0!important;box-shadow:none!important;
+ transform:none!important;
+}
+body.mrl-studio .topic-info{padding:0!important}
+body.mrl-studio .topic-info b{font:600 16px/1.4 Georgia,serif!important;color:#965262!important}
+body.mrl-studio .article-grid .article h3{font:400 19px/1.4 Georgia,serif!important;margin:5px 0!important;color:#965262!important}
+body.mrl-studio .article-grid .article p{font-size:13px!important;color:#555!important;margin:4px 0!important}
+body.mrl-studio .actions .primary{
+ padding:0!important;background:transparent!important;color:#965262!important;
+ border:0!important;border-radius:0!important;min-height:0!important;
+ font:600 14px Georgia,serif!important;text-decoration:underline!important;
+}
+body.mrl-studio .actions .secondary{font:600 14px Georgia,serif!important}
+body.mrl-archive .tools{
+ display:flex!important;gap:12px!important;align-items:center!important;
+ padding:20px 0!important;
+}
+body.mrl-archive .tools :is(input,select){
+ border:1px solid #aaa!important;border-radius:2px!important;
+ background:#fff!important;color:#222!important;box-shadow:none!important;
+ min-height:44px!important;
+}
+body.mrl-archive .grid{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+ gap:0!important;padding-bottom:48px!important;
+}
+body.mrl-archive .story{
+ display:block!important;min-height:0!important;padding:17px 0!important;
+ border:0!important;border-bottom:1px solid #ddd!important;
+ border-radius:0!important;background:transparent!important;box-shadow:none!important;
+ transform:none!important;
+}
+body.mrl-archive .story h2{
+ font:400 21px/1.35 Georgia,serif!important;letter-spacing:-.02em!important;
+ margin:7px 0!important;color:#965262!important;
+}
+body.mrl-archive .story p{font:14px/1.55 Georgia,serif!important;color:#555!important;margin:0 0 6px!important}
+body.mrl-archive .story span,body.mrl-archive .story small{font-size:12px!important;color:#666!important}
+body.mrl-archive .story[hidden]{display:none!important}
+body.mrl-studio .mrl-bottom-nav,body.mrl-archive .mrl-bottom-nav{display:none!important}
+body.mrl-studio :is(.footer,.site-footer),body.mrl-archive :is(.footer,.site-footer){
+ background:#ededed!important;border-top:1px solid #d5d5d5!important;
+ color:#555!important;font:13px/1.5 Georgia,serif!important;
+}
+@media(max-width:700px){
+ body.mrl-studio :is(.shell,.wrap),body.mrl-archive :is(.shell,.wrap){width:calc(100% - 28px)!important}
+ body.mrl-studio :is(.mrl-header-inner,.header-inner),
+ body.mrl-archive :is(.mrl-header-inner,.header-inner){min-height:78px!important}
+ body.mrl-studio .intro,body.mrl-archive .intro{padding-top:26px!important}
+ body.mrl-archive .tools{align-items:stretch!important}
+ body.mrl-archive .tools input{min-width:100%!important;max-width:none!important}
+ body.mrl-studio .section-head{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){
+ body.mrl-studio *,body.mrl-archive *{transition:none!important;animation:none!important}
+}
