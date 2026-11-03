@@ -26,6 +26,8 @@ jobs:
           node --check scripts/sync-feedback.cjs
           node --check reader-feedback.js
           node --check inquiry.js
+      - name: Check site-wide academic publishing script syntax
+        run: node --check scripts/apply-text-mode.cjs
       - name: Run zero-dependency regression tests
         run: node --test tests/*.test.cjs
       - name: Audit every published page and internal link

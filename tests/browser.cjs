@@ -141,17 +141,14 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
     const page=await browser.newPage({viewport:{width,height:850}});
     try{
      await page.goto(base);
-     await page.locator('#ux-featured-books .ux-book-card').first().waitFor();
+     await page.locator('#ux-featured-books .ux-book-card').first().waitFor({state:'attached'});
      assert.equal(await page.locator('#ux-featured-books .ux-book-card').count(),3);
      assert.equal(await page.locator('#ux-featured-books a[href^="https://openlibrary.org/isbn/"]').count(),3);
      await page.locator('#ux-theme').click();
      assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'dark');
      await page.locator('#ux-theme').click();
      assert.equal(await page.evaluate(()=>document.documentElement.dataset.theme),'light');
-     await page.locator('[data-ux-zoom="assets/distributed-request-flow.svg"]').click();
-     assert.ok(await page.locator('dialog.ux-lightbox').isVisible());
-     await page.keyboard.press('Escape');
-     await page.locator('dialog.ux-lightbox').waitFor({state:'detached',timeout:5000});
+     assert.equal(await page.locator('.ux-research-figure').isVisible(),false,'decorative figure should be hidden in the new text-first layout');
      const geom=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
      assert.ok(geom.scroll<=geom.client+2,'research UX overflow '+JSON.stringify(geom));
      assert.equal((await page.request.get(new URL('assets/distributed-request-flow.svg',base).href)).status(),200);
@@ -291,6 +288,29 @@ async function check(name,fn){try{await fn();console.log('PASS '+name)}catch(e){
       await page.keyboard.press('Escape');
       assert.equal(await menu.getAttribute('aria-expanded'),'false');
      }
+    }finally{await page.close()}
+   }
+  });
+  await check('every published HTML page uses a clean text-first UI, coherent nav and no images',async()=>{
+   const root=path.join(__dirname,'..','_site');
+   const inventory=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?inventory(path.join(dir,entry.name)):(entry.name.endsWith('.html')?[path.join(dir,entry.name)]:[]));
+   const pages=inventory(root).map(p=>path.relative(root,p).split(path.sep).join('/')).sort();
+   assert.ok(pages.length>=30,'expected the complete public page inventory');
+   for(const width of [390,1440]){
+    const page=await browser.newPage({viewport:{width,height:850}});
+    try{
+     await page.route(/fonts\\.googleapis\\.com|fonts\\.gstatic\\.com/,route=>route.abort());
+     for(const target of pages){
+      const response=await page.goto(new URL(target,base).href,{waitUntil:'domcontentloaded'});
+      assert.equal(response.status(),200,'missing public page '+target);
+      assert.ok(await page.locator('body.mrl-text-first').count(),target+' old theme still active');
+      const selector=target.startsWith('articles/')?'header.sch-reader-header':'header.mrl-site-header';
+      await page.locator(selector).waitFor({state:'visible',timeout:5000});
+      assert.equal(await page.locator('img:visible').count(),0,'unnecessary image on '+target);
+      const geom=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+      assert.ok(geom.scroll<=geom.width+2,'horizontal overflow at '+width+' on '+target+' '+JSON.stringify(geom));
+     }
+     await page.screenshot({path:path.join(artifacts,'text-first-'+width+'.png')});
     }finally{await page.close()}
    }
   });

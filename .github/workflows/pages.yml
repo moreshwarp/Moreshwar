@@ -53,6 +53,7 @@ jobs:
       - name: Finalize every article and verify all internal links
         run: |
           node scripts/finalize-site.cjs _site
+          node scripts/apply-text-mode.cjs _site
           node scripts/audit-site.cjs _site site-audit.json
       - name: Embed exact merged commit in published homepage
         run: node scripts/release-health.cjs stamp _site
