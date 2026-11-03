@@ -51,6 +51,7 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
    const page=await browser.newPage({viewport:{width:320,height:850}});
    try{
     await page.goto(base);
+    console.log('DEBUG_RESEARCH_HEADER',JSON.stringify(await page.evaluate(()=>({bodyClass:document.body.className,header:getComputedStyle(document.querySelector('.site-header')).display,nav:getComputedStyle(document.querySelector('.site-navigation')).display,theme:getComputedStyle(document.querySelector('#theme-toggle')).display,script:[...document.scripts].map(x=>x.src),styles:[...document.styleSheets].map(x=>x.href),head:document.head.innerHTML.slice(-1300)}))));
     const geom=await page.evaluate(()=>{const a=document.querySelector('.main-column').getBoundingClientRect(),b=document.querySelector('.sidebar').getBoundingClientRect();return{bottom:a.bottom,top:b.top,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}});
     assert.ok(geom.top>=geom.bottom-2,JSON.stringify(geom));
     assert.ok(geom.scroll<=geom.client+2);
