@@ -5,7 +5,21 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {listHtml}=require('./audit-site.cjs');
+/* Normalize visible public brand across historical HTML at publication time.
+ * Preserve permanent URLs and author bylines in article text. */
+const PUBLIC_BRAND='Moreshwar Systems Lab';
+function brandPublishedHtml(html){
+ return String(html)
+  .replace(/Moreshwar Research Lab/g,PUBLIC_BRAND)
+  .replace(/Moreshwar \/ Lab/g,PUBLIC_BRAND)
+  .replace(/Moreshwar Lab/g,PUBLIC_BRAND)
+  .replace(/moreshwar\s*<span>\.<\/span>\s*\/\s*lab/gi,PUBLIC_BRAND)
+  .replace(/m\s*<span>\.<\/span>\s*\/\s*lab/gi,PUBLIC_BRAND)
+  .replace(/m\.\s*\/\s*lab/gi,PUBLIC_BRAND)
+  .replace(/(<title>[^<]*?) — Moreshwar Pidadi(<\/title>)/gi,'$1 — '+PUBLIC_BRAND+'$2');
+}
 function stylePage(html,relative,version=''){
+ html=brandPublishedHtml(html);
  // The research homepage is self-contained; do not inject legacy CSS or menus.
  if(['index.html','studio.html','reading-archive.html'].includes(relative) && html.includes('href="research-site.css"'))return html;
  if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
@@ -46,4 +60,4 @@ function apply(dir='_site'){
  return files.length;
 }
 if(require.main===module)apply(process.argv[2]||'_site');
-module.exports={stylePage,apply};
+module.exports={stylePage,apply,brandPublishedHtml,PUBLIC_BRAND};

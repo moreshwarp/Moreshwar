@@ -441,3 +441,50 @@ html[data-theme] body.mrl-text-first .mrl-site-header .mrl-nav-sub small{color:v
 
 /* HTML hidden must override historical forced display declarations. */
 body.mrl-text-first .story[hidden],body.mrl-text-first [hidden]{display:none!important}
+
+/* November 2026 editorial alignment: published essays and fieldnotes.
+   Keep citation tools and article bodies intact. This aligns the reading
+   typography with the top-level research pages without external web fonts. */
+:root{
+  --editorial-face:"Iowan Old Style","Baskerville","Palatino Linotype","Book Antiqua",Georgia,serif;
+  --editorial-ui:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+html[data-theme] body.mrl-text-first{
+  --tf-link:var(--site-link);
+  font-family:var(--editorial-face)!important;
+  line-height:1.73!important;
+}
+body.mrl-text-first :is(h1,h2,h3,h4){
+  font-family:var(--editorial-face)!important;
+  letter-spacing:-.02em!important;
+}
+body.mrl-article-page{
+  font:400 17px/1.73 var(--editorial-face)!important;
+}
+body.mrl-article-page :is(h1){
+  font:500 clamp(30px,4vw,41px)/1.22 var(--editorial-face)!important;
+  letter-spacing:-.035em!important;
+}
+body.mrl-article-page :is(h2){
+  font:600 25px/1.35 var(--editorial-face)!important;
+  letter-spacing:-.02em!important;
+}
+body.mrl-article-page :is(h3){
+  font:600 20px/1.4 var(--editorial-face)!important;
+}
+body.mrl-article-page :is(p,li,blockquote){
+  font-family:var(--editorial-face)!important;
+  line-height:1.74!important;
+}
+body.mrl-article-page :is(.eyebrow,.meta,.mini,.editorial-kicker,.editorial-byline){
+  font:500 12px/1.5 var(--editorial-ui)!important;
+  letter-spacing:.025em!important;
+}
+body.mrl-article-page :is(.lede,.dek,.lead,.editorial-summary){
+  font:400 18px/1.64 var(--editorial-face)!important;
+}
+:root{--site-link:#8c4558;--site-focus:#8c4558}
+html[data-theme="dark"]{--site-link:#e4afbd;--site-focus:#e4afbd}
+@media(max-width:500px){
+  body.mrl-article-page :is(h1){font-size:30px!important}
+}

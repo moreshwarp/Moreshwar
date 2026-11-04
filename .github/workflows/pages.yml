@@ -40,6 +40,19 @@ jobs:
           node-version: '22'
       - name: Prepare site from canonical manifest
         run: node scripts/prepare-site.cjs _site
+      - name: Render current branded social preview PNG
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq librsvg2-bin
+          rsvg-convert --width 1200 --height 630 _site/social-preview.svg --output _site/social-preview.png
+          python3 - <<'PY'
+          from pathlib import Path
+          import struct
+          raw = Path('_site/social-preview.png').read_bytes()
+          assert raw[:8] == b'\x89PNG\r\n\x1a\n', 'Missing valid social preview PNG'
+          assert struct.unpack('>II', raw[16:24]) == (1200, 630), 'Wrong social preview dimensions'
+          print('Verified branded 1200x630 social PNG')
+          PY
       - name: Open new reader discussions (GitHub Issues)
         env:
           GITHUB_TOKEN: ${{ github.token }}
