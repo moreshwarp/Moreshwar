@@ -119,11 +119,11 @@ function decorate(html,issue){
 function articlePage(post){
  const m=post.meta,title=String(m.title||''),summary=String(m.description||''),date=String(m.date||'').slice(0,10),category=String(m.category||'Research');
  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
- '<meta name="theme-color" content="#080d14"><meta name="description" content="'+esc(summary)+'"><title>'+esc(title)+' — Moreshwar Pidadi</title>'+
+ '<meta name="theme-color" content="#080d14"><meta name="description" content="'+esc(summary)+'"><title>'+esc(title)+' — Moreshwar Systems Lab</title>'+
  '<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">'+
  '<link rel="stylesheet" href="../reader-theme.css?v=publisher-20261015"><link rel="stylesheet" href="../editorial.css?v=publisher-20261015">'+
  '<script src="../site-settings.js"></script></head><body>'+
- '<header class="top shell"><a class="brand" href="../index.html">m<span>.</span> / LAB</a><nav><a href="../reading-archive.html">Writing</a><a href="../index.html#bookshelf">Library</a><a href="../studio.html#contact">Contact</a></nav></header>'+
+ '<header class="top shell"><a class="brand" href="../index.html">Moreshwar Systems Lab</a><nav><a href="../reading-archive.html">Writing</a><a href="../studio.html#systems-lab">Library</a><a href="../studio.html#contact">Contact</a></nav></header>'+
  '<main class="shell"><header class="editorial-heading"><span class="editorial-kicker">MORESHWAR / PUBLISHED RESEARCH NOTEBOOK · '+esc(category.toUpperCase())+'</span>'+
  '<h1>'+esc(title)+'</h1><p class="editorial-summary">'+esc(summary)+'</p>'+
  '<div class="editorial-byline"><strong>Moreshwar Pidadi</strong><time datetime="'+esc(date)+'">'+esc(date)+'</time><span>INDEPENDENT WRITING</span></div></header>'+
