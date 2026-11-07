@@ -57,13 +57,13 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     assert.equal(await page.locator('.site-navigation a:visible').count(),4);
    }finally{await page.close()}
   });
-  await check('black and white themes plus maroon links have readable contrast',async()=>{
+  await check('slate-blue light and dark themes have readable contrast',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
     await page.goto(base);
     await page.evaluate(()=>localStorage.removeItem('mrl-research-theme'));
     await page.reload();
-    for(const [mode,expected] of [['light','rgb(255, 255, 255)'],['dark','rgb(17, 17, 17)']]){
+    for(const [mode,expected] of [['light','rgb(250, 251, 252)'],['dark','rgb(17, 28, 37)']]){
      const data=await page.evaluate(()=>{const body=getComputedStyle(document.body),a=getComputedStyle(document.querySelector('.main-column a')),heading=getComputedStyle(document.querySelector('h1'));return{mode:document.documentElement.dataset.theme,background:body.backgroundColor,ink:body.color,link:a.color,heading:heading.color}});
      assert.equal(data.mode,mode);assert.equal(data.background,expected);
      assert.ok(contrast(data.ink,data.background)>=7,'body '+mode+' contrast '+JSON.stringify(data));
