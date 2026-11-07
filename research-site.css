@@ -1,20 +1,20 @@
 /* Moreshwar Systems Lab — editorial research identity.
    Inspired by the clarity of Martin Kleppmann's research site; original styles.
-   Quiet typography, black/white surfaces, muted maroon links.
+   Quiet typography, black/white surfaces, muted slate-blue links.
    Local font stacks only: no third-party tracking, images, or external font requests. */
 :root{
   color-scheme:light;
-  --paper:#ffffff;--ink:#252525;--muted:#555b60;--link:#8c4558;
-  --line:#dddddd;--mast:#ffffff;--mast-ink:#252525;--nav:#ffffff;
-  --focus:#8c4558;--wash:#faf7f8;
+  --paper:#FAFBFC;--ink:#202B33;--muted:#52636D;--link:#245B73;
+  --line:#D8E1E5;--mast:#F2F6F8;--mast-ink:#202B33;--nav:#FAFBFC;
+  --focus:#126480;--wash:#F1F7F9;
   --type-editorial:"Iowan Old Style","Baskerville","Palatino Linotype","Book Antiqua",Georgia,serif;
   --type-ui:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
 }
 html[data-theme="dark"]{
   color-scheme:dark;
-  --paper:#111111;--ink:#f1f1f1;--muted:#c7c7c7;--link:#e4afbd;
-  --line:#414141;--mast:#111111;--mast-ink:#f1f1f1;--nav:#111111;
-  --focus:#e4afbd;--wash:#21191d;
+  --paper:#111C25;--ink:#EEF3F5;--muted:#B1C4CC;--link:#91D0E2;
+  --line:#364B57;--mast:#172834;--mast-ink:#EEF3F5;--nav:#172834;
+  --focus:#91D0E2;--wash:#1D303C;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
@@ -93,7 +93,7 @@ p{margin:0 0 16px}
 body.mrl-studio,body.mrl-archive{
  --paper:#fff;--surface:#fff;--ink:#222;--muted:#555;--line:#d5d5d5;
  --mrl-paper:#fff;--mrl-ink:#222;--mrl-muted:#555;--mrl-line:#d5d5d5;
- --mrl-accent:#965262;--focus:#965262;
+ --mrl-accent:#245B73;--focus:#245B73;
  background:#fff!important;color:#222!important;
  font:16px/1.63 Georgia,"Times New Roman",serif!important;
 }
@@ -104,13 +104,13 @@ body.mrl-studio :is(h1,h2,h3),body.mrl-archive :is(h1,h2,h3){
  color:#222!important;font-family:Georgia,"Times New Roman",serif!important;
  font-weight:400!important;letter-spacing:-.02em!important;text-wrap:pretty;
 }
-body.mrl-studio a,body.mrl-archive a{color:#965262}
+body.mrl-studio a,body.mrl-archive a{color:#245B73}
 body.mrl-studio a:hover,body.mrl-archive a:hover{text-decoration:underline;text-underline-offset:3px}
 body.mrl-studio :is(a,button,input,select):focus-visible,
-body.mrl-archive :is(a,button,input,select):focus-visible{outline:3px solid #965262!important;outline-offset:3px}
+body.mrl-archive :is(a,button,input,select):focus-visible{outline:3px solid #245B73!important;outline-offset:3px}
 body.mrl-studio :is(.mrl-header,.site-header,.mrl-site-header),
 body.mrl-archive :is(.mrl-header,.site-header,.mrl-site-header){
- background:#454a4e!important;color:#fff!important;border:0!important;
+ background:#203746!important;color:#fff!important;border:0!important;
  box-shadow:none!important;border-radius:0!important;
 }
 body.mrl-studio :is(.mrl-header,.site-header,.mrl-site-header) a,
@@ -121,7 +121,7 @@ body.mrl-archive :is(.mrl-brand,.brand-lockup,.mrl-site-brand){
  letter-spacing:-.035em!important;color:#fff!important;
 }
 body.mrl-studio :is(.mrl-brand span,.brand-name small),
-body.mrl-archive :is(.mrl-brand span,.brand-name small){color:#e1e1e1!important}
+body.mrl-archive :is(.mrl-brand span,.brand-name small){color:#D8E7ED!important}
 body.mrl-studio :is(.mrl-header-inner,.header-inner),
 body.mrl-archive :is(.mrl-header-inner,.header-inner){max-width:960px;min-height:94px!important}
 body.mrl-studio :is(.mrl-nav,.header-nav,.mrl-site-nav),
@@ -175,11 +175,11 @@ body.mrl-studio .topic,body.mrl-studio .article-grid .article{
  transform:none!important;
 }
 body.mrl-studio .topic-info{padding:0!important}
-body.mrl-studio .topic-info b{font:600 16px/1.4 Georgia,serif!important;color:#965262!important}
-body.mrl-studio .article-grid .article h3{font:400 19px/1.4 Georgia,serif!important;margin:5px 0!important;color:#965262!important}
+body.mrl-studio .topic-info b{font:600 16px/1.4 Georgia,serif!important;color:#245B73!important}
+body.mrl-studio .article-grid .article h3{font:400 19px/1.4 Georgia,serif!important;margin:5px 0!important;color:#245B73!important}
 body.mrl-studio .article-grid .article p{font-size:13px!important;color:#555!important;margin:4px 0!important}
 body.mrl-studio .actions .primary{
- padding:0!important;background:transparent!important;color:#965262!important;
+ padding:0!important;background:transparent!important;color:#245B73!important;
  border:0!important;border-radius:0!important;min-height:0!important;
  font:600 14px Georgia,serif!important;text-decoration:underline!important;
 }
@@ -205,14 +205,14 @@ body.mrl-archive .story{
 }
 body.mrl-archive .story h2{
  font:400 21px/1.35 Georgia,serif!important;letter-spacing:-.02em!important;
- margin:7px 0!important;color:#965262!important;
+ margin:7px 0!important;color:#245B73!important;
 }
 body.mrl-archive .story p{font:14px/1.55 Georgia,serif!important;color:#555!important;margin:0 0 6px!important}
 body.mrl-archive .story span,body.mrl-archive .story small{font-size:12px!important;color:#666!important}
 body.mrl-archive .story[hidden]{display:none!important}
 body.mrl-studio .mrl-bottom-nav,body.mrl-archive .mrl-bottom-nav{display:none!important}
 body.mrl-studio :is(.footer,.site-footer),body.mrl-archive :is(.footer,.site-footer){
- background:#ededed!important;border-top:1px solid #d5d5d5!important;
+ background:#F2F6F8!important;border-top:1px solid #d5d5d5!important;
  color:#555!important;font:13px/1.5 Georgia,serif!important;
 }
 @media(max-width:700px){
@@ -251,8 +251,8 @@ body.mrl-studio :is(.footer,.site-footer),body.mrl-archive :is(.footer,.site-foo
 
 /* 2026-11: restrained academic interaction system.
    Links remain recognisable without card lifts, flashing fills or layout shifts. */
-:root{--hover-wash:rgba(150,82,98,.065)}
-html[data-theme="dark"]{--hover-wash:rgba(216,163,177,.11)}
+:root{--hover-wash:rgba(36,91,115,.065)}
+html[data-theme="dark"]{--hover-wash:rgba(145,208,226,.11)}
 .main-column a,.sidebar a,.site-footer a{
   text-decoration-thickness:1px;
   text-decoration-color:transparent;
