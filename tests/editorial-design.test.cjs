@@ -19,10 +19,10 @@ function contrast(a,b){
 test('research pages share one semantic typographic system and four navigation tabs',()=>{
   assert.match(css,/--type-editorial:/);
   assert.match(css,/--type-ui:/);
-  assert.match(css,/--paper:#ffffff/);
-  assert.match(css,/--paper:#111111/);
-  assert.match(css,/--link:#8c4558/);
-  assert.match(css,/--link:#e4afbd/);
+  assert.match(css,/--paper:#FAFBFC/);
+  assert.match(css,/--paper:#111C25/);
+  assert.match(css,/--link:#245B73/);
+  assert.match(css,/--link:#91D0E2/);
   for(const file of pages){
     const html=read(file);
     assert.match(html,/href="research-site\.css"/);
@@ -32,9 +32,9 @@ test('research pages share one semantic typographic system and four navigation t
     assert.deepEqual([...nav[0].matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map(m=>m[1]),['Home','Research','Writing','About'],file);
   }
 });
-test('maroon links pass minimum normal-text contrast in both modes',()=>{
-  assert.ok(contrast('#8c4558','#ffffff')>=4.5);
-  assert.ok(contrast('#e4afbd','#111111')>=4.5);
+test('slate-blue links pass minimum normal-text contrast in both modes',()=>{
+  assert.ok(contrast('#245B73','#FAFBFC')>=4.5);
+  assert.ok(contrast('#91D0E2','#111C25')>=4.5);
 });
 test('research and article styles remain text-first without external font downloads',()=>{
   assert.doesNotMatch(css,/@import|fonts\.googleapis|url\(.*\.woff/i);
