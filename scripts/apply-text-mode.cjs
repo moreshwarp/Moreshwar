@@ -24,9 +24,9 @@ function stylePage(html,relative,version=''){
  if(['index.html','studio.html','reading-archive.html'].includes(relative) && html.includes('href="research-site.css"'))return html;
  if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
  const article=relative.startsWith('articles/');
- const prefix=article?'../':'';
+ const prefix='../'.repeat(relative.split('/').length-1);
  const extras=['text-first-site.css'];
- if(!article && !html.includes('shared-navigation.js'))extras.push('shared-navigation.css','shared-navigation.js');
+ if(!prefix && !html.includes('shared-navigation.js'))extras.push('shared-navigation.css','shared-navigation.js');
  let output=html;
  for(const asset of extras){
   const address=prefix+asset;
