@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#FAFBFC">
 <title>Moreshwar Systems Lab — Research Notes and Essays</title>
-<meta name="description" content="Moreshwar's independent research notebook: systems software, distributed systems, experiments, and carefully sourced writing.">
+<meta name="description" content="An independent research notebook on systems software, distributed computing, reliability, and the methods used to test claims about computer systems.">
 <link rel="canonical" href="https://moreshwarp.github.io/Moreshwar/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
@@ -16,84 +16,71 @@
 <link rel="stylesheet" href="research-site.css">
 <script defer src="research-site.js"></script>
 </head>
-<body>
+<body class="research-home">
 <a class="skip" href="#content">Skip to content</a>
 <header class="site-header">
  <div class="brand-band"><div class="container brand-inner">
-  <a href="index.html" class="brand" aria-label="Moreshwar Systems Lab home">Moreshwar <span>Systems Lab</span></a>
+  <a href="#top" class="brand" aria-label="Moreshwar Systems Lab home">Moreshwar <span>Systems Lab</span></a>
   <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">Dark mode</button>
  </div></div>
  <nav class="site-navigation" aria-label="Primary navigation">
   <div class="container nav-inner">
-   <a href="index.html" aria-current="page">Home</a>
-   <a href="studio.html">Research</a>
-   <a href="reading-archive.html">Writing</a>
+   <a href="#research" aria-current="page">Research</a>
+   <a href="#writing">Writing</a>
+   <a href="#method">Method</a>
    <a href="#about-profile">About</a>
   </div>
  </nav>
 </header>
-<main id="content" class="container layout">
- <article class="main-column">
-  <section class="introduction" aria-labelledby="hello">
-   <h1 id="hello">Hello!</h1>
-   <p>I'm Moreshwar. I am interested in <strong>systems software, distributed computing, reliability, and the methods used to test claims about computer systems.</strong></p>
-   <p>This website is my independent research notebook. It contains questions I am investigating, small educational experiments, and essays that document what I learn. Work in progress is identified as such.</p>
-   <p>My aim is to understand how real systems behave, especially when concurrency, failures and imperfect information make simple explanations unreliable.</p>
-  </section>
-  <section id="research-projects" aria-labelledby="research-heading">
-   <h2 id="research-heading">Research interests and experiments</h2>
-   <p>These are exploratory learning projects, not claims of peer-reviewed discoveries or published benchmarks.</p>
-   <ul class="research-list">
-    <li><a href="studio.html#systems-lab">Distributed systems and reliability</a> — coordination, queueing, latency, failure behaviour, and consistency models.</li>
-    <li id="method"><a href="studio.html#inquiry">Research methodology</a> — hypotheses, baselines, reproducibility, and testing competing explanations.</li>
-    <li><a href="studio.html#science-ideas">Scientific and mathematical foundations</a> — models, proof, uncertainty, and reasoning about software.</li>
-   </ul>
-   <p><a href="studio.html">Explore the research studio</a></p>
-  </section>
-  <section id="academic-directory" aria-labelledby="academic-recent">
-   <h2 id="academic-recent">Recent writing</h2>
-   <p>Selected dated essays from the published archive.</p>
-   <ul class="dated-list">
-    <li><time datetime="2026-01-07">07 Jan 2026</time><a href="articles/183772820-the-secret-link-between-sounding.html">The Secret Link Between “Sounding Good” and “Being Right”</a></li>
-    <li><time datetime="2025-12-24">24 Dec 2025</time><a href="articles/182482423-the-lie-we-tell-ourselves-why-good.html">The Lie We Tell Ourselves: Why “Good” Is Not Just an Opinion</a></li>
-    <li><time datetime="2025-12-07">07 Dec 2025</time><a href="articles/180980837-why-competition-is-for-losers-a-rational.html">Why Competition Is for Losers: An Analysis of Value and Monopoly</a></li>
-    <li><time datetime="2025-11-10">10 Nov 2025</time><a href="articles/178480398-the-engine-of-progress-why-indias.html">Why India’s Future Depends on Research and a Scientific Mindset</a></li>
-   </ul>
-   <p><a href="reading-archive.html">Complete essay archive</a></p>
-  </section>
-  <section id="paul-graham-reading"><h2>Paul Graham reading notes</h2><p>Independent analyses of ideas about building, research and focused work.</p><p><a href="paul-graham.html">Browse the Paul Graham collection</a></p></section><section id="essays" aria-labelledby="selected-heading">
-   <h2 id="selected-heading">Selected technical writing</h2>
-   <ul class="research-list">
-    <li><a href="articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html">Zero-knowledge proofs</a> — an introduction to proving a claim without revealing the underlying secret.</li>
-    <li><a href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html">Leslie Lamport and distributed computing</a> — why ordering and coordination matter.</li>
-    <li><a href="articles/165015692-chaos-monkey-25-06-02.html">Chaos Monkey and system failures</a> — lessons from resilience testing.</li>
-    <li><a href="articles/fieldnote-queues.html">Queues and latency</a> — educational notes about waiting time and utilization.</li>
-   </ul>
-  </section>
-  <section id="about-profile" aria-labelledby="about-heading">
-   <h2 id="about-heading">About</h2>
-   <p>I use this site to document questions, reason from evidence, and build reproducible examples. Interests include distributed systems, operating systems, concurrency, mathematical foundations and careful technical communication.</p>
-   <p>Writing here reflects independent exploration. It should not be interpreted as a record of formal academic appointments, peer-reviewed publications, or proven scientific breakthroughs.</p>
-   <p>For questions or corrections, visit the <a href="studio.html#contact">contact section</a>.</p>
-  </section>
- </article>
- <aside class="sidebar" aria-label="Research profile and links">
-  <section><h2>Research focus</h2>
-   <p>Systems software and the science of building reliable computer systems.</p>
-   <ul><li>Distributed systems</li><li>Concurrency and consistency</li><li>Reliability and latency</li><li>Formal reasoning and experiments</li></ul>
-  </section>
-  <section><h2>Current work</h2>
-   <p>Maintaining educational notes and experiments on queues, failures and distributed request flows.</p>
-   <p><a href="studio.html#systems-lab">Research notebooks and examples</a></p>
-  </section>
-  <section><h2>Open source</h2>
-   <p>Project source and technical updates are available on <a href="https://github.com/moreshwarp/Moreshwar">GitHub</a>.</p>
-  </section>
-  <section><h2>Browse</h2>
-   <ul><li><a href="reading-archive.html">Essay archive</a></li><li><a href="studio.html">Research studio</a></li><li><a href="studio.html#contact">Contact</a></li></ul>
-  </section>
- </aside>
+<main id="content" class="container research-page">
+ <section class="intro-grid" id="top" aria-labelledby="page-title">
+  <div class="intro-copy">
+   <p class="eyebrow">INDEPENDENT RESEARCH NOTEBOOK <span>·</span> PUNE, INDIA</p>
+   <h1 id="page-title">Understanding systems by asking what happens when they fail.</h1>
+   <p class="intro-lede">I’m Moreshwar. I study systems software and distributed computing through careful reading, small experiments, and writing that makes assumptions visible.</p>
+   <div class="intro-actions"><a class="action-primary" href="#research">Explore my research questions <span aria-hidden="true">↓</span></a><a class="action-secondary" href="studio.html">Open the research notebook <span aria-hidden="true">↗</span></a></div>
+   <p class="scope-note">Independent exploration in progress. This site does not claim formal academic appointments, peer-reviewed publications, or original research results.</p>
+  </div>
+  <aside class="research-card" aria-label="Research snapshot">
+   <p class="card-label">RESEARCH SNAPSHOT</p>
+   <h2>Systems &amp; reliability</h2>
+   <p>How do concurrency, failures, and imperfect information shape the guarantees a computer system can make?</p>
+   <div class="rule"></div>
+   <p class="card-label">QUESTIONS I RETURN TO</p>
+   <ul><li>What is the system promising?</li><li>Which assumption could break?</li><li>What evidence would change my mind?</li></ul>
+  </aside>
+ </section>
+
+ <section class="content-section" id="research" aria-labelledby="research-heading">
+  <div class="section-heading"><div><p class="eyebrow">01 / RESEARCH DIRECTIONS</p><h2 id="research-heading">Questions worth working on</h2></div><a class="section-link" href="studio.html">Browse all research notes ↗</a></div>
+  <div class="question-list">
+   <article class="question-row"><span class="question-index">R / 01</span><div><h3>Distributed systems and reliability</h3><p>How do coordination, queueing, latency, and failures change what a system can guarantee?</p></div><a href="studio.html#systems-lab" aria-label="Explore distributed systems and reliability">↗</a></article>
+   <article class="question-row"><span class="question-index">R / 02</span><div><h3>Research methodology</h3><p>How can hypotheses, baselines, and reproducible experiments separate a useful explanation from a plausible story?</p></div><a href="studio.html#inquiry" aria-label="Explore research methodology">↗</a></article>
+   <article class="question-row"><span class="question-index">R / 03</span><div><h3>Scientific and mathematical foundations</h3><p>How do models, proof, uncertainty, and precise reasoning help us understand software behavior?</p></div><a href="studio.html#science-ideas" aria-label="Explore scientific and mathematical foundations">↗</a></article>
+  </div>
+ </section>
+
+ <section class="content-section writing-section" id="writing" aria-labelledby="writing-heading">
+  <div class="section-heading"><div><p class="eyebrow">02 / SELECTED WRITING</p><h2 id="writing-heading">Ideas I’m studying</h2></div><a class="section-link" href="reading-archive.html">View the complete archive ↗</a></div>
+  <div class="writing-grid">
+   <a class="writing-item" href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html"><span class="writing-type">DISTRIBUTED SYSTEMS</span><h3>Leslie Lamport and distributed computing</h3><p>Why ordering and coordination matter when computers work together.</p><span class="read-more">Read note ↗</span></a>
+   <a class="writing-item" href="articles/fieldnote-queues.html"><span class="writing-type">PERFORMANCE</span><h3>Queues and latency</h3><p>Educational notes about waiting time, utilization, and how load changes response time.</p><span class="read-more">Read note ↗</span></a>
+   <a class="writing-item" href="articles/165015692-chaos-monkey-25-06-02.html"><span class="writing-type">RELIABILITY</span><h3>Chaos Monkey and system failures</h3><p>What deliberate failure testing can teach us about resilience.</p><span class="read-more">Read note ↗</span></a>
+   <a class="writing-item" href="articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html"><span class="writing-type">THEORY</span><h3>Zero-knowledge proofs</h3><p>An introduction to proving a claim without revealing the underlying secret.</p><span class="read-more">Read note ↗</span></a>
+  </div>
+ </section>
+
+ <section class="method-band" id="method" aria-labelledby="method-heading">
+  <div><p class="eyebrow">03 / HOW I WORK</p><h2 id="method-heading">Make the reasoning inspectable.</h2></div>
+  <p>I start with a question, state the assumptions, look for primary sources, and build the smallest experiment that can expose a mistaken intuition. Notes are labelled as exploratory when they are still being developed.</p>
+  <a href="studio.html#inquiry">Read the research approach ↗</a>
+ </section>
+
+ <section class="about-section" id="about-profile" aria-labelledby="about-heading">
+  <p class="eyebrow">04 / ABOUT</p><h2 id="about-heading">A working notebook, open to correction.</h2>
+  <div class="about-grid"><p>This site is where I document questions, reason from evidence, and build reproducible examples. My interests include operating systems, distributed systems, concurrency, mathematical foundations, and clear technical communication.</p><p>For questions, corrections, or a technical discussion, visit the <a href="studio.html#contact">contact section</a>. Project source is available on <a href="https://github.com/moreshwarp/Moreshwar">GitHub ↗</a>.</p></div>
+ </section>
 </main>
-<footer class="site-footer"><div class="container"><p>© Moreshwar Systems Lab · Independent research and writing</p><p><a href="index.html">Home</a> · <a href="reading-archive.html">Writing</a> · <a href="studio.html">Research</a></p></div></footer>
+<footer class="site-footer"><div class="container"><p>© Moreshwar Systems Lab · Independent research and writing</p><p><a href="#top">Back to top ↑</a> · <a href="studio.html">Research notebook</a> · <a href="reading-archive.html">Writing archive</a></p></div></footer>
 </body>
 </html>
