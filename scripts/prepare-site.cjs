@@ -21,10 +21,12 @@ function prepareSite(destination = '_site') {
   for (const filename of sourceFiles) {
     fs.copyFileSync(path.join(root, filename), path.join(output, filename));
   }
-  for (const dirname of ['assets', 'articles', 'vendor']) {
-    fs.cpSync(path.join(root, dirname), path.join(output, dirname), {
-      recursive: true, force: true
-    });
+  for (const dirname of ['assets', 'articles', 'vendor', 'telemetry-lab', 'curiosity']) {
+    if (fs.existsSync(path.join(root, dirname))) {
+      fs.cpSync(path.join(root, dirname), path.join(output, dirname), {
+        recursive: true, force: true
+      });
+    }
   }
   fs.mkdirSync(path.join(output, 'data'), { recursive: true });
   fs.copyFileSync(path.join(root, 'data/science-cabinet.json'),

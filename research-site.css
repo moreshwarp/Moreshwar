@@ -480,3 +480,35 @@ html[data-theme="dark"]{--hover-wash:rgba(145,208,226,.11)}
     padding-bottom: 4px;
   }
 }
+
+/* Station Banner for Telemetry Lab & Curiosity */
+.station-banner {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+  font-size: 13px;
+}
+.station-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.station-tag {
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.station-link {
+  font-weight: 600;
+  color: var(--link);
+  text-decoration: none;
+}
+.station-link:hover {
+  text-decoration: underline;
+}
+.station-sep {
+  color: var(--line);
+}
