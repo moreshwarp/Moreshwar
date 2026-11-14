@@ -5,6 +5,7 @@ document.querySelectorAll('.mc-film').forEach(film=>{
  const button=film.querySelector('.mc-film-toggle');
  const bar=film.querySelector('.mc-film-progress span');
  const time=film.querySelector('.mc-film-time');
+ const progress=film.querySelector('.mc-film-progress');
  let started=0,timer=null,raf=null,elapsed=0;
  const duration=14000;
  const update=()=>{
@@ -12,6 +13,7 @@ document.querySelectorAll('.mc-film').forEach(film=>{
    const seconds=Math.min(14,Math.floor(elapsed/1000));
    time.textContent='0:'+String(seconds).padStart(2,'0')+' / 0:14';
    bar.style.width=Math.min(100,(elapsed/duration)*100)+'%';
+   progress.setAttribute('aria-valuenow',String(seconds));
    if(elapsed>=duration){finish();return}
    raf=requestAnimationFrame(update);
  };
@@ -26,10 +28,10 @@ document.querySelectorAll('.mc-film').forEach(film=>{
    clear();film.classList.remove('is-playing','is-paused');
    button.setAttribute('aria-pressed','false');
    button.querySelector('.mc-button-label').textContent='Play walkthrough';
-   elapsed=0;bar.style.width='0';time.textContent='0:00 / 0:14';
+   elapsed=0;bar.style.width='0';progress.setAttribute('aria-valuenow','0');time.textContent='0:00 / 0:14';
  };
  const start=(resume=false)=>{
-   if(!resume){clear();elapsed=0;bar.style.width='0'}
+   if(!resume){clear();elapsed=0;bar.style.width='0';progress.setAttribute('aria-valuenow','0')}
    film.classList.remove('is-paused');film.classList.add('is-playing');
    button.setAttribute('aria-pressed','true');
    button.querySelector('.mc-button-label').textContent='Pause walkthrough';
