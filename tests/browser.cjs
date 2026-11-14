@@ -30,12 +30,12 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     }finally{await context.close()}
    }
   });
-  await check('researcher homepage has exactly four navigational tabs and no portfolio clutter',async()=>{
+  await check('researcher homepage has five navigational tabs including Machine Check',async()=>{
    const page=await browser.newPage({viewport:{width:1440,height:900}});
    try{
     await page.goto(base);
     const labels=await page.locator('.site-navigation a').allTextContents();
-    assert.deepEqual(labels.map(x=>x.trim()),['Home','Research','Writing','About']);
+    assert.deepEqual(labels.map(x=>x.trim()),['Home','Research','Machine Check','Writing','About']);
     assert.equal(await page.locator('.site-header').count(),1);
     assert.equal(await page.locator('main h1').innerText(),'Hello!');
     assert.equal(await page.locator('.main-column').count(),1);
@@ -54,7 +54,7 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     const geom=await page.evaluate(()=>{const a=document.querySelector('.main-column').getBoundingClientRect(),b=document.querySelector('.sidebar').getBoundingClientRect();return{bottom:a.bottom,top:b.top,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}});
     assert.ok(geom.top>=geom.bottom-2,JSON.stringify(geom));
     assert.ok(geom.scroll<=geom.client+2);
-    assert.equal(await page.locator('.site-navigation a:visible').count(),4);
+    assert.equal(await page.locator('.site-navigation a:visible').count(),5);
    }finally{await page.close()}
   });
   await check('slate-blue light and dark themes have readable contrast',async()=>{
