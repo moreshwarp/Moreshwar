@@ -1,0 +1,82 @@
+// =====================================================================
+// MACHINA TELEMETRY LAB - SCSS MIXINS & REUSABLE UTILITIES
+// =====================================================================
+
+@import 'variables';
+
+// Glassmorphism card container
+@mixin glass-card($blur: 14px, $bg: $bg-card, $border: $border-subtle, $radius: $radius-lg) {
+  background: $bg;
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid $border;
+  border-radius: $radius;
+}
+
+// Flexbox shorthand mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+// Fluid transition
+@mixin smooth-transition($prop: all, $duration: 0.2s, $timing: ease) {
+  transition: $prop $duration $timing;
+}
+
+// Interactive Hover Elevation
+@mixin hover-elevation($translateY: -2px, $border: $border-accent) {
+  @include smooth-transition;
+  &:hover {
+    transform: translateY($translateY);
+    border-color: $border;
+  }
+}
+
+// Reusable Metric Badge
+@mixin badge($bg-color, $text-color, $border-color: transparent) {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: $radius-sm;
+  font-family: $font-mono;
+  font-weight: 500;
+  background: $bg-color;
+  color: $text-color;
+  @if $border-color != transparent {
+    border: 1px solid $border-color;
+  }
+}
+
+// Gradient text
+@mixin text-gradient($start-color, $end-color, $angle: 135deg) {
+  background: linear-gradient($angle, $start-color 40%, $end-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// Media Query Breakpoint Manager
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unfortunately, no value could be retrieved for `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}

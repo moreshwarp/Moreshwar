@@ -26,7 +26,10 @@
  <nav class="site-navigation" aria-label="Primary navigation">
   <div class="container nav-inner">
    <a href="index.html" aria-current="page">Home</a>
-   <a href="studio.html">Research</a>
+   <a href="#featured-lab" class="nav-tab-projects">Research Projects</a>
+   <a href="telemetry-lab/index.html" class="nav-tab-telemetry">⚡ Machine Telemetry</a>
+   <a href="curiosity/index.html" class="nav-tab-curiosity">🧠 Curiosity AI</a>
+   <a href="studio.html">Research Studio</a>
    <a href="reading-archive.html">Writing</a>
    <a href="#about-profile">About</a>
   </div>
@@ -35,21 +38,73 @@
 <main id="content" class="container layout">
  <article class="main-column">
   <section class="introduction" aria-labelledby="hello">
-   <h1 id="hello">Hello!</h1>
-   <p>I'm Moreshwar. I am interested in <strong>systems software, distributed computing, reliability, and the methods used to test claims about computer systems.</strong></p>
-   <p>This website is my independent research notebook. It contains questions I am investigating, small educational experiments, and essays that document what I learn. Work in progress is identified as such.</p>
-   <p>My aim is to understand how real systems behave, especially when concurrency, failures and imperfect information make simple explanations unreliable.</p>
+   <h1 id="hello">Moreshwar Systems & Architecture Lab</h1>
+   <p>I am a computer systems researcher focused on <strong>hardware-software co-design, microarchitectural telemetry, memory hierarchies, and queueing models in distributed computing.</strong></p>
+   <p>This portal serves as my open research notebook and interactive product laboratory. Here I investigate real-world execution dynamics—from CPU instruction pipelines and memory walls to tail latency and formal reliability models.</p>
   </section>
-  <section id="research-projects" aria-labelledby="research-heading">
-   <h2 id="research-heading">Research interests and experiments</h2>
-   <p>These are exploratory learning projects, not claims of peer-reviewed discoveries or published benchmarks.</p>
+
+  <!-- Featured Research Product: Machine Telemetry Lab -->
+  <section id="featured-lab" class="featured-research-card" aria-labelledby="featured-heading">
+   <div class="card-top-row">
+    <span class="product-badge">Featured Interactive Research Station</span>
+    <span class="product-tag">Apple Silicon M4 • Darwin XNU</span>
+   </div>
+   <h2 id="featured-heading">Machine Telemetry Lab: Hardware Diagnostics & Microarchitectural Station</h2>
+   <p>An interactive, high-precision telemetry engine analyzing asymmetric multiprocessing (4P + 6E cores), in-RAM compression ratios, 128-byte cachelines, and real-time execution queue saturation.</p>
+   <div class="product-actions">
+    <a href="telemetry-lab/index.html" class="research-btn" target="_blank" rel="noopener">Launch Live Machine Telemetry Station ↗</a>
+    <a href="https://github.com/moreshwarp/machina-telemetry-lab" class="source-link" target="_blank" rel="noopener">Source Code & Monograph ↗</a>
+   </div>
+   <div class="spec-pills">
+    <span>60fps Waveforms</span>
+    <span>UMA Fabric (~120 GB/s)</span>
+    <span>Mach VM Paging</span>
+    <span>M/M/c Queueing Saturation</span>
+   </div>
+  </section>
+
+  <!-- Featured Research Product 2: Curiosity-Driven AI & Systems Journal -->
+  <section id="curiosity-journal" class="featured-research-card" aria-labelledby="curiosity-heading">
+   <div class="card-top-row">
+    <span class="product-badge">Cognitive & AI Systems Lab</span>
+    <span class="product-tag">Independent Inquiry • Critical Thinking</span>
+   </div>
+   <h2 id="curiosity-heading">Curiosity-Driven: Artificial Intelligence, Epistemology & Reasoning</h2>
+   <p>An editorial research initiative exploring human-AI cognitive collaboration, the epistemic boundary between sounding convincing vs being correct, and rational economic models.</p>
+   <div class="product-actions">
+    <a href="curiosity/index.html" class="research-btn" target="_blank" rel="noopener">Open Curiosity Journal ↗</a>
+    <a href="https://github.com/moreshwarp/Curiosity-driven" class="source-link" target="_blank" rel="noopener">Source Code on GitHub ↗</a>
+   </div>
+   <div class="spec-pills">
+    <span>Human-AI Epistemology</span>
+    <span>Critical Thinking</span>
+    <span>Value & Monopolies</span>
+    <span>Scientific Progress</span>
+   </div>
+  </section>
+
+  <!-- Computer Architecture Monographs & Field Studies -->
+  <section id="monographs" aria-labelledby="monographs-heading">
+   <h2 id="monographs-heading">Computer Architecture Field Studies</h2>
+   <p>Working research papers and formal investigations into hardware execution dynamics:</p>
    <ul class="research-list">
-    <li><a href="assets/machine-check/index.html">Machine Check</a> — Check browser responsiveness and available resources in one click. No installation required.</li>
-    <li><a href="studio.html#systems-lab">Distributed systems and reliability</a> — coordination, queueing, latency, failure behaviour, and consistency models.</li>
-    <li id="method"><a href="studio.html#inquiry">Research methodology</a> — hypotheses, baselines, reproducibility, and testing competing explanations.</li>
-    <li><a href="studio.html#science-ideas">Scientific and mathematical foundations</a> — models, proof, uncertainty, and reasoning about software.</li>
+    <li><a href="telemetry-lab/articles/01_the_memory_wall_and_unified_memory.html" onclick="event.preventDefault(); window.open('telemetry-lab/index.html', '_blank');"><strong>Breaking the Memory Wall</strong></a> — How Unified Memory Architecture (UMA) broke the discrete GPU PCIe copy bottleneck.</li>
+    <li><a href="telemetry-lab/articles/02_anatomy_of_apple_m4_microarchitecture.html" onclick="event.preventDefault(); window.open('telemetry-lab/index.html', '_blank');"><strong>Anatomy of Apple M4 Micro-Architecture</strong></a> — 8-wide decode superscalar out-of-order execution and asymmetric thread scheduling.</li>
+    <li><a href="telemetry-lab/articles/03_the_mathematics_of_mach_virtual_memory.html" onclick="event.preventDefault(); window.open('telemetry-lab/index.html', '_blank');"><strong>The Mathematics of Mach Virtual Memory</strong></a> — Why "free RAM" is a myth, page replacement algorithms, and in-RAM WKdm compression.</li>
+    <li><a href="telemetry-lab/articles/04_queueing_theory_and_load_averages.html" onclick="event.preventDefault(); window.open('telemetry-lab/index.html', '_blank');"><strong>Queueing Theory & Unix Load Averages</strong></a> — Applying Little's Law and exponentially damped moving averages to multi-core run queues.</li>
    </ul>
-   <p><a href="studio.html">Explore the research studio</a></p>
+  </section>
+
+  <section id="research-projects" aria-labelledby="research-heading">
+   <h2 id="research-heading">Distributed Systems & Formal Inquiry</h2>
+   <p>Exploratory experiments into concurrency, consistency models, and reliability engineering:</p>
+   <ul class="research-list">
+    <li><a href="assets/machine-check/index.html">Machine Check</a> — In-browser responsiveness and hardware execution telemetry.</li>
+    <li><a href="studio.html#systems-lab">Distributed Systems Reliability</a> — Coordination, quorum protocols, latency fan-out, and failure domains.</li>
+    <li id="method"><a href="studio.html#inquiry">Empirical Research Methodology</a> — Hypotheses, observational baselines, and statistical reproducibility.</li>
+    <li><a href="studio.html#science-ideas">Foundations of Computation</a> — Formally verifying software and reasoning under uncertainty.</li>
+   </ul>
+   <p><a href="studio.html">Explore the complete research studio →</a></p>
   </section>
   <section id="academic-directory" aria-labelledby="academic-recent">
    <h2 id="academic-recent">Recent writing</h2>
@@ -79,19 +134,36 @@
   </section>
  </article>
  <aside class="sidebar" aria-label="Research profile and links">
-  <section><h2>Research focus</h2>
-   <p>Systems software and the science of building reliable computer systems.</p>
-   <ul><li>Distributed systems</li><li>Concurrency and consistency</li><li>Reliability and latency</li><li>Formal reasoning and experiments</li></ul>
+  <section><h2>Research Focus</h2>
+   <p>Empirical computer systems, processor micro-architecture, and fault-tolerant computing.</p>
+   <ul>
+    <li>Processor micro-architecture & memory walls</li>
+    <li>In-RAM compression & virtual memory geometry</li>
+    <li>Distributed systems & consistency models</li>
+    <li>Queueing theory & tail latency modeling</li>
+   </ul>
   </section>
-  <section><h2>Current work</h2>
-   <p>Maintaining educational notes and experiments on queues, failures and distributed request flows.</p>
-   <p><a href="studio.html#systems-lab">Research notebooks and examples</a></p>
+  <section><h2>Interactive Stations</h2>
+   <p>Operational live research tools & telemetry systems:</p>
+   <ul>
+    <li><a href="telemetry-lab/index.html"><strong>Machine Telemetry Lab</strong></a> — Live 60fps hardware diagnostics suite</li>
+    <li><a href="curiosity/index.html"><strong>Curiosity-Driven Lab</strong></a> — Cognitive & AI systems journal</li>
+    <li><a href="assets/machine-check/index.html"><strong>Browser Machine Check</strong></a> — Client execution resource probe</li>
+   </ul>
   </section>
-  <section><h2>Open source</h2>
-   <p>Project source and technical updates are available on <a href="https://github.com/moreshwarp/Moreshwar">GitHub</a>.</p>
+  <section><h2>Open Source Repositories</h2>
+   <ul>
+    <li><a href="https://github.com/moreshwarp/machina-telemetry-lab" target="_blank" rel="noopener">machina-telemetry-lab</a></li>
+    <li><a href="https://github.com/moreshwarp/Moreshwar" target="_blank" rel="noopener">Moreshwar (Systems Lab)</a></li>
+    <li><a href="https://github.com/moreshwarp/Curiosity-driven" target="_blank" rel="noopener">Curiosity-driven (AI Lab)</a></li>
+   </ul>
   </section>
-  <section><h2>Browse</h2>
-   <ul><li><a href="reading-archive.html">Essay archive</a></li><li><a href="studio.html">Research studio</a></li><li><a href="studio.html#contact">Contact</a></li></ul>
+  <section><h2>Browse & Inquiry</h2>
+   <ul>
+    <li><a href="reading-archive.html">Complete essay archive</a></li>
+    <li><a href="studio.html">Research studio</a></li>
+    <li><a href="studio.html#contact">Inquiries & peer feedback</a></li>
+   </ul>
   </section>
  </aside>
 </main>

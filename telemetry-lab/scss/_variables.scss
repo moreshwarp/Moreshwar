@@ -1,0 +1,47 @@
+// =====================================================================
+// MACHINA TELEMETRY LAB - SCSS DESIGN SYSTEM: VARIABLES & TOKENS
+// =====================================================================
+
+// --- Color Palette: Dark Laboratory Base ---
+$bg-primary: #07090e;
+$bg-surface: #0e131f;
+$bg-surface-elevated: #141b2d;
+$bg-card: rgba(18, 24, 40, 0.75);
+$bg-overlay: rgba(14, 20, 36, 0.9);
+
+// --- Borders & Outlines ---
+$border-subtle: rgba(255, 255, 255, 0.08);
+$border-accent: rgba(56, 189, 248, 0.3);
+$border-glow: rgba(56, 189, 248, 0.15);
+
+// --- Text Colors ---
+$text-main: #f1f5f9;
+$text-muted: #94a3b8;
+$text-dim: #64748b;
+
+// --- Scientific Accent Colors ---
+$accent-cyan: #38bdf8;
+$accent-cyan-glow: rgba(56, 189, 248, 0.25);
+$accent-green: #34d399;
+$accent-purple: #c084fc;
+$accent-amber: #fbbf24;
+$accent-rose: #f43f5e;
+
+// --- Typography ---
+$font-mono: 'JetBrains Mono', monospace, -apple-system, sans-serif;
+$font-sans: 'Space Grotesk', -apple-system, sans-serif;
+
+// --- Radii ---
+$radius-xs: 4px;
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 16px;
+
+// --- Breakpoints ---
+$breakpoints: (
+  'mobile': 640px,
+  'tablet': 800px,
+  'laptop': 1024px,
+  'desktop': 1440px
+);

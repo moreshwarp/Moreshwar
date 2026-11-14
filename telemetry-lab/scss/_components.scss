@@ -1,0 +1,579 @@
+// =====================================================================
+// MACHINA TELEMETRY LAB - SCSS REUSABLE COMPONENTS
+// =====================================================================
+
+@import 'variables';
+@import 'mixins';
+
+// --- Buttons ---
+.lab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: $bg-surface-elevated;
+  color: $text-main;
+  border: 1px solid $border-subtle;
+  border-radius: $radius-sm + 2px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  @include smooth-transition;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: $border-accent;
+  }
+
+  &.btn-primary {
+    background: rgba($accent-cyan, 0.15);
+    color: $accent-cyan;
+    border-color: rgba($accent-cyan, 0.4);
+
+    &:hover {
+      background: rgba($accent-cyan, 0.25);
+      box-shadow: 0 0 12px $accent-cyan-glow;
+    }
+  }
+
+  &.btn-accent {
+    background: rgba($accent-purple, 0.15);
+    color: $accent-purple;
+    border-color: rgba($accent-purple, 0.4);
+  }
+}
+
+// --- Meter Progress Bars ---
+.meter-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: $radius-xs;
+  overflow: hidden;
+  margin-top: 4px;
+
+  .meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, $accent-cyan, #818cf8);
+    border-radius: $radius-xs;
+    @include smooth-transition(width, 0.4s);
+
+    &.meter-cyan {
+      background: linear-gradient(90deg, #06b6d4, $accent-green);
+    }
+    &.meter-purple {
+      background: linear-gradient(90deg, $accent-purple, $accent-rose);
+    }
+    &.meter-amber {
+      background: linear-gradient(90deg, $accent-amber, #f97316);
+    }
+  }
+}
+
+// --- Status & Category Badges ---
+.kpi-badge {
+  @include badge(rgba($accent-cyan, 0.15), $accent-cyan);
+
+  &.badge-green {
+    @include badge(rgba($accent-green, 0.15), $accent-green);
+  }
+  &.badge-purple {
+    @include badge(rgba($accent-purple, 0.15), $accent-purple);
+  }
+  &.badge-amber {
+    @include badge(rgba($accent-amber, 0.15), $accent-amber);
+  }
+}
+
+.tag {
+  background: $bg-surface-elevated;
+  border: 1px solid $border-subtle;
+  padding: 4px 10px;
+  border-radius: $radius-sm;
+  font-size: 11px;
+  font-family: $font-mono;
+  color: $text-muted;
+}
+
+// --- Heterogeneous CPU Core Cards ---
+.core-card {
+  background: $bg-surface;
+  border: 1px solid $border-subtle;
+  border-radius: $radius-sm + 2px;
+  padding: 10px 8px;
+  @include flex-col(6px);
+  align-items: center;
+  @include smooth-transition;
+
+  &:hover {
+    border-color: $border-accent;
+    background: $bg-surface-elevated;
+  }
+
+  .core-header-row {
+    @include flex-between;
+    width: 100%;
+  }
+
+  .core-name {
+    font-size: 11px;
+    font-family: $font-mono;
+    font-weight: 700;
+  }
+
+  .core-chip-tag {
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: $radius-xs;
+    font-weight: 700;
+
+    &.p-tag {
+      background: rgba($accent-cyan, 0.2);
+      color: $accent-cyan;
+    }
+    &.e-tag {
+      background: rgba($accent-amber, 0.2);
+      color: $accent-amber;
+    }
+  }
+
+  .core-val {
+    font-size: 14px;
+    font-family: $font-mono;
+    font-weight: 700;
+  }
+
+  .core-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+
+    .core-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      @include smooth-transition(width, 0.3s);
+
+      &.p-fill { background: $accent-cyan; }
+      &.e-fill { background: $accent-amber; }
+    }
+  }
+}
+
+// --- Latency Pyramid Tiers ---
+.latency-pyramid {
+  @include flex-col(8px);
+  margin-top: 10px;
+
+  .pyramid-tier {
+    padding: 10px 14px;
+    border-radius: $radius-sm + 2px;
+    @include flex-between;
+    font-family: $font-mono;
+    font-size: 12px;
+    border: 1px solid $border-subtle;
+    @include smooth-transition(transform, 0.2s);
+
+    &:hover {
+      transform: translateX(4px);
+    }
+
+    &.tier-l1 {
+      background: rgba($accent-cyan, 0.12);
+      border-color: rgba($accent-cyan, 0.3);
+      color: $accent-cyan;
+    }
+    &.tier-l2 {
+      background: rgba($accent-purple, 0.12);
+      border-color: rgba($accent-purple, 0.3);
+      color: $accent-purple;
+    }
+    &.tier-ram {
+      background: rgba($accent-green, 0.12);
+      border-color: rgba($accent-green, 0.3);
+      color: $accent-green;
+    }
+    &.tier-nand {
+      background: rgba($accent-amber, 0.12);
+      border-color: rgba($accent-amber, 0.3);
+      color: $accent-amber;
+    }
+
+    .tier-latency {
+      font-weight: 600;
+    }
+  }
+}
+
+// --- Researcher Theory Cards ---
+.theory-card {
+  background: $bg-overlay;
+  border: 1px solid rgba($accent-purple, 0.25);
+  border-left: 4px solid $accent-purple;
+  border-radius: $radius-md;
+  padding: 16px 20px;
+  @include flex-col(10px);
+  @include smooth-transition;
+
+  &.hidden {
+    display: none;
+  }
+
+  .theory-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .theory-pill {
+      font-size: 10px;
+      font-family: $font-mono;
+      font-weight: 700;
+      padding: 2px 8px;
+      background: rgba($accent-purple, 0.2);
+      color: $accent-purple;
+      border-radius: $radius-xs;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-main;
+    }
+  }
+
+  .theory-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    font-size: 12px;
+    color: $text-muted;
+
+    @include respond-to('tablet') {
+      grid-template-columns: 1fr;
+    }
+
+    .theory-simple,
+    .theory-deep {
+      strong {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 4px;
+        color: $text-main;
+      }
+    }
+
+    .theory-deep p {
+      white-space: pre-line;
+    }
+  }
+}
+
+// --- Hardware Nuance Badges ---
+.badge-nuances {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+
+  .nuance-tag {
+    font-size: 10px;
+    font-family: $font-mono;
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: $radius-xs;
+    color: $text-muted;
+
+    &.text-green {
+      color: $accent-green;
+      border-color: rgba($accent-green, 0.25);
+    }
+  }
+}
+
+// --- Research Library Modal & Reader ---
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 1000;
+  @include flex-center;
+  padding: 24px;
+  @include smooth-transition(opacity, 0.25s);
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+  }
+}
+
+.articles-modal-box {
+  width: 100%;
+  max-width: 1200px;
+  height: 88vh;
+  @include glass-card(20px, $bg-surface, $border-accent, $radius-xl);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .modal-header {
+    @include flex-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid $border-subtle;
+    background: $bg-surface-elevated;
+
+    .modal-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .modal-icon {
+        font-size: 26px;
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: 700;
+        color: $text-main;
+      }
+
+      p {
+        font-size: 12px;
+        color: $text-muted;
+      }
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid $border-subtle;
+      color: $text-muted;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+      @include flex-center;
+      @include smooth-transition;
+
+      &:hover {
+        background: rgba($accent-rose, 0.2);
+        color: $accent-rose;
+        border-color: rgba($accent-rose, 0.4);
+      }
+    }
+  }
+
+  .modal-body-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    flex: 1;
+    overflow: hidden;
+
+    @include respond-to('tablet') {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .articles-sidebar {
+    background: rgba(10, 14, 24, 0.85);
+    border-right: 1px solid $border-subtle;
+    padding: 16px;
+    overflow-y: auto;
+    @include flex-col(8px);
+
+    .article-nav-item {
+      padding: 12px 14px;
+      border-radius: $radius-md;
+      border: 1px solid transparent;
+      cursor: pointer;
+      @include smooth-transition;
+      @include flex-col(4px);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: $border-subtle;
+      }
+
+      &.active {
+        background: rgba($accent-cyan, 0.12);
+        border-color: rgba($accent-cyan, 0.35);
+
+        .nav-title {
+          color: $accent-cyan;
+          font-weight: 600;
+        }
+      }
+
+      .nav-meta {
+        font-size: 10px;
+        font-family: $font-mono;
+        color: $text-dim;
+      }
+
+      .nav-title {
+        font-size: 13px;
+        color: $text-main;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .article-reader-view {
+    padding: 32px 40px;
+    overflow-y: auto;
+    background: $bg-primary;
+    line-height: 1.7;
+    color: #cbd5e1;
+    font-size: 14px;
+
+    .reader-placeholder {
+      height: 100%;
+      @include flex-center;
+      @include flex-col(12px);
+      color: $text-dim;
+      font-size: 15px;
+
+      .placeholder-icon {
+        font-size: 40px;
+      }
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid $border-subtle;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: $accent-cyan;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: $accent-purple;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+
+    blockquote {
+      background: rgba($accent-purple, 0.1);
+      border-left: 3px solid $accent-purple;
+      padding: 10px 16px;
+      border-radius: $radius-xs;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+
+    pre {
+      background: $bg-surface;
+      border: 1px solid $border-subtle;
+      padding: 16px;
+      border-radius: $radius-md;
+      font-family: $font-mono;
+      font-size: 12px;
+      color: $accent-cyan;
+      overflow-x: auto;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family: $font-mono;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: #f8fafc;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 16px;
+
+      li {
+        margin-bottom: 6px;
+      }
+    }
+  }
+
+  @include respond-to('tablet') {
+    width: 96vw;
+    height: 94vh;
+    border-radius: $radius-lg;
+
+    .modal-header {
+      padding: 12px 16px;
+      .modal-title-group h2 {
+        font-size: 15px;
+      }
+      .modal-title-group p {
+        display: none;
+      }
+    }
+
+    .modal-body-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+    }
+
+    .articles-sidebar {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      border-right: none;
+      border-bottom: 1px solid $border-subtle;
+      padding: 8px 12px;
+      max-height: 90px;
+      gap: 8px;
+
+      .article-nav-item {
+        min-width: 170px;
+        flex-shrink: 0;
+        padding: 6px 10px;
+
+        .nav-meta {
+          font-size: 9px;
+        }
+
+        .nav-title {
+          font-size: 11px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .article-reader-view {
+      padding: 16px 18px;
+      font-size: 13px;
+
+      h1 { font-size: 18px; }
+      h2 { font-size: 15px; }
+      h3 { font-size: 13px; }
+      pre { font-size: 11px; padding: 10px; }
+    }
+  }
+}

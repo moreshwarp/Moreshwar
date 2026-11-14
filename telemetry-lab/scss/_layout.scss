@@ -1,0 +1,699 @@
+// =====================================================================
+// MACHINA TELEMETRY LAB - SCSS LAYOUT & GRID ARCHITECTURE
+// Mobile-First & Responsive Across All Screen Sizes
+// =====================================================================
+
+@import 'variables';
+@import 'mixins';
+
+.app-container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  @include flex-col(24px);
+  overflow-x: hidden;
+
+  @include respond-to('mobile') {
+    gap: 16px;
+  }
+}
+
+// --- Header ---
+.lab-header {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px 28px;
+  @include glass-card(16px, $bg-card, $border-subtle, $radius-xl);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .brand-icon {
+      position: relative;
+      font-size: 32px;
+      background: $bg-surface-elevated;
+      padding: 12px;
+      border-radius: $radius-lg;
+      border: 1px solid $border-subtle;
+      @include flex-center;
+      flex-shrink: 0;
+
+      .pulse-indicator {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        background-color: $accent-green;
+        border-radius: 50%;
+        box-shadow: 0 0 10px $accent-green;
+        animation: pulse 2s infinite ease-in-out;
+      }
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      @include text-gradient(#ffffff, $accent-cyan);
+    }
+
+    .brand-subtitle {
+      font-size: 13px;
+      color: $text-muted;
+    }
+  }
+
+  .system-badge {
+    @include flex-col(4px);
+    background: $bg-surface;
+    padding: 8px 16px;
+    border-radius: $radius-md;
+    border: 1px solid $border-subtle;
+    font-family: $font-mono;
+    font-size: 13px;
+
+    .badge-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: $accent-cyan;
+      font-weight: 600;
+    }
+
+    .badge-meta {
+      color: $text-dim;
+      font-size: 11px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+  }
+
+  .lab-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: $text-muted;
+
+      .lab-select {
+        background: $bg-surface-elevated;
+        border: 1px solid $border-subtle;
+        color: $text-main;
+        padding: 8px 12px;
+        border-radius: $radius-sm + 2px;
+        font-family: $font-mono;
+        font-size: 12px;
+        cursor: pointer;
+        outline: none;
+      }
+    }
+  }
+
+  @include respond-to('mobile') {
+    padding: 14px;
+    gap: 12px;
+
+    .brand {
+      width: 100%;
+      gap: 10px;
+
+      .brand-icon {
+        font-size: 24px;
+        padding: 8px;
+      }
+
+      .brand-title {
+        font-size: 16px;
+      }
+
+      .brand-subtitle {
+        font-size: 11px;
+      }
+    }
+
+    .system-badge {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 11px;
+
+      .badge-meta {
+        font-size: 10px;
+      }
+    }
+
+    .lab-controls {
+      width: 100%;
+      gap: 8px;
+
+      .lab-btn,
+      .control-group {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 120px;
+        justify-content: center;
+        font-size: 11px;
+        padding: 8px;
+      }
+
+      .control-group {
+        justify-content: space-between;
+
+        .lab-select {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// --- KPI Section ---
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+
+  .kpi-card {
+    @include glass-card(12px, $bg-card, $border-subtle, $radius-lg);
+    padding: 20px;
+    @include flex-col(12px);
+    position: relative;
+    overflow: hidden;
+    @include hover-elevation(-2px, $border-accent);
+
+    .kpi-header {
+      @include flex-between;
+
+      .kpi-label {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        color: $text-muted;
+      }
+    }
+
+    .kpi-value-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+
+      .kpi-number {
+        font-size: 34px;
+        font-weight: 700;
+        font-family: $font-mono;
+        letter-spacing: -1px;
+      }
+
+      .kpi-unit {
+        font-size: 14px;
+        color: $text-dim;
+        font-weight: 500;
+      }
+    }
+
+    .kpi-sub {
+      font-size: 12px;
+      color: $text-muted;
+      font-family: $font-mono;
+    }
+  }
+
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr;
+    gap: 12px;
+
+    .kpi-card {
+      padding: 14px;
+
+      .kpi-number {
+        font-size: 28px;
+      }
+
+      .kpi-sub {
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+// --- Main 12-Column Diagnostic Grid ---
+.lab-main-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+
+  .full-width {
+    grid-column: span 12;
+  }
+
+  .half-width {
+    grid-column: span 6;
+
+    @include respond-to('laptop') {
+      grid-column: span 12;
+    }
+  }
+
+  .diagnostic-panel {
+    @include glass-card(14px, $bg-card, $border-subtle, $radius-xl);
+    padding: 24px;
+    @include flex-col(20px);
+    overflow: hidden;
+
+    .panel-header {
+      @include flex-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 1px solid $border-subtle;
+      padding-bottom: 16px;
+
+      .panel-title-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .panel-icon {
+          font-size: 24px;
+          background: $bg-surface-elevated;
+          padding: 8px;
+          border-radius: $radius-md;
+          @include flex-center;
+          flex-shrink: 0;
+        }
+
+        h2 {
+          font-size: 18px;
+          font-weight: 700;
+          color: $text-main;
+        }
+
+        .panel-desc {
+          font-size: 13px;
+          color: $text-muted;
+        }
+      }
+
+      .panel-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+    }
+
+    @include respond-to('mobile') {
+      padding: 14px;
+      gap: 14px;
+
+      .panel-header {
+        padding-bottom: 12px;
+
+        .panel-title-group {
+          gap: 8px;
+
+          .panel-icon {
+            font-size: 20px;
+            padding: 6px;
+          }
+
+          h2 {
+            font-size: 15px;
+          }
+
+          .panel-desc {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+
+  @include respond-to('mobile') {
+    gap: 16px;
+  }
+}
+
+// --- CPU Dashboard Layout ---
+.cpu-dashboard-layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 24px;
+
+  @include respond-to('tablet') {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chart-container {
+    @include flex-col(12px);
+    width: 100%;
+    min-width: 0;
+
+    .chart-header {
+      @include flex-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+      color: $text-muted;
+
+      .chart-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 11px;
+        font-family: $font-mono;
+
+        .legend-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+
+          .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+
+            &.user-color { background-color: $accent-cyan; box-shadow: 0 0 6px $accent-cyan; }
+            &.sys-color { background-color: $accent-purple; box-shadow: 0 0 6px $accent-purple; }
+            &.idle-color { background-color: $text-dim; }
+          }
+        }
+      }
+    }
+  }
+
+  .cores-container {
+    @include flex-col(12px);
+    width: 100%;
+    min-width: 0;
+
+    .cores-header {
+      @include flex-col(2px);
+      font-size: 13px;
+      color: $text-muted;
+
+      .cores-subtitle {
+        font-size: 11px;
+        color: $text-dim;
+      }
+    }
+
+    .cores-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+
+      @include respond-to('mobile') {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+    }
+
+    .cores-legend {
+      @include flex-col(6px);
+      font-size: 11px;
+      color: $text-dim;
+      margin-top: 6px;
+
+      .core-chip-sample {
+        display: inline-block;
+        padding: 1px 5px;
+        border-radius: $radius-xs;
+        font-weight: 700;
+        font-size: 10px;
+
+        &.p-sample { background: rgba($accent-cyan, 0.2); color: $accent-cyan; }
+        &.e-sample { background: rgba($accent-amber, 0.2); color: $accent-amber; }
+      }
+    }
+  }
+}
+
+// --- Memory Dashboard Layout ---
+.memory-dashboard-layout {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+
+  .donut-chart-box {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    @include flex-center;
+    flex-shrink: 0;
+
+    .donut-center-text {
+      position: absolute;
+      @include flex-col;
+      align-items: center;
+      pointer-events: none;
+
+      .donut-val {
+        font-size: 22px;
+        font-family: $font-mono;
+        font-weight: 700;
+      }
+
+      .donut-lbl {
+        font-size: 10px;
+        color: $text-muted;
+      }
+    }
+  }
+
+  .mem-breakdown-list {
+    flex: 1;
+    min-width: 200px;
+    @include flex-col(8px);
+    font-family: $font-mono;
+    font-size: 12px;
+
+    .mem-row {
+      @include flex-between;
+
+      &.border-top {
+        border-top: 1px solid $border-subtle;
+        padding-top: 6px;
+        margin-top: 4px;
+      }
+
+      .mem-type {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: $text-muted;
+
+        .bullet {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+
+          &.wired-bullet { background-color: $accent-rose; }
+          &.active-bullet { background-color: $accent-cyan; }
+          &.inactive-bullet { background-color: $accent-purple; }
+          &.compressed-bullet { background-color: $accent-amber; }
+          &.free-bullet { background-color: $accent-green; }
+        }
+      }
+
+      .text-green { color: $accent-green; }
+    }
+  }
+
+  @include respond-to('tablet') {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+
+    .donut-chart-box {
+      margin: 0 auto;
+    }
+
+    .mem-breakdown-list {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+}
+
+// --- Storage & Network Layout ---
+.storage-io-box {
+  background: $bg-surface;
+  border: 1px solid $border-subtle;
+  border-radius: $radius-md + 2px;
+  padding: 16px;
+
+  .io-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+
+    .io-metric {
+      @include flex-col(4px);
+
+      .io-label { font-size: 11px; color: $text-dim; }
+      .io-number {
+        font-size: 22px;
+        font-family: $font-mono;
+        font-weight: 700;
+        color: $accent-purple;
+      }
+      .io-unit { font-size: 11px; color: $text-muted; }
+    }
+  }
+
+  @include respond-to('mobile') {
+    padding: 12px;
+
+    .io-metrics-row {
+      gap: 6px;
+
+      .io-metric {
+        .io-number {
+          font-size: 16px;
+        }
+        .io-label,
+        .io-unit {
+          font-size: 9px;
+        }
+      }
+    }
+  }
+}
+
+.network-chart-box {
+  @include flex-col(10px);
+  width: 100%;
+  min-width: 0;
+
+  .net-interface-tag {
+    font-size: 11px;
+    font-family: $font-mono;
+    color: $accent-cyan;
+    background: rgba($accent-cyan, 0.1);
+    padding: 2px 8px;
+    border-radius: $radius-xs;
+  }
+}
+
+.packet-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  font-family: $font-mono;
+  font-size: 12px;
+  background: $bg-surface;
+  padding: 14px;
+  border-radius: $radius-md;
+  border: 1px solid $border-subtle;
+
+  .packet-stat {
+    @include flex-between;
+
+    .p-label { color: $text-muted; }
+  }
+
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
+    font-size: 11px;
+  }
+}
+
+// --- Architecture Diagram Nodes ---
+.architecture-diagram-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  @include respond-to('laptop') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('mobile') {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .arch-node {
+    background: $bg-surface;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-md + 2px;
+    padding: 20px;
+    @include flex-col(10px);
+    cursor: pointer;
+    @include hover-elevation(-4px, $accent-cyan);
+
+    &:hover {
+      box-shadow: 0 0 16px $accent-cyan-glow;
+    }
+
+    .node-badge {
+      font-size: 10px;
+      font-family: $font-mono;
+      padding: 2px 6px;
+      border-radius: $radius-xs;
+      width: fit-content;
+      background: rgba(255, 255, 255, 0.1);
+      color: $text-muted;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .node-specs {
+      @include flex-col(4px);
+      font-size: 12px;
+      color: $text-dim;
+      font-family: $font-mono;
+    }
+
+    @include respond-to('mobile') {
+      padding: 14px;
+
+      h3 {
+        font-size: 14px;
+      }
+
+      .node-specs {
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+// --- Footer ---
+.lab-footer {
+  @include flex-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px;
+  @include glass-card(12px, $bg-card, $border-subtle, $radius-md + 2px);
+  font-size: 12px;
+  color: $text-dim;
+  font-family: $font-mono;
+
+  .status-indicator {
+    color: $accent-green;
+  }
+
+  @include respond-to('mobile') {
+    padding: 12px;
+    font-size: 11px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

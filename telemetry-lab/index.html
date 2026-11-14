@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Machine Telemetry Lab 🔬 | System Architecture & Diagnostics</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Scientific Header -->
+    <header class="lab-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <span class="pulse-indicator"></span>
+          🔬
+        </div>
+        <div>
+          <h1 class="brand-title">MACHINE TELEMETRY LAB</h1>
+          <p class="brand-subtitle">Computer Architecture Diagnostics & Real-Time Telemetry Research Station</p>
+        </div>
+      </div>
+
+      <div class="system-badge" id="systemBadge">
+        <div class="badge-chip">
+          <span class="icon">💻</span>
+          <span id="chipModel">Detecting hardware...</span>
+        </div>
+        <div class="badge-meta">
+          <span id="osKernel">Darwin Kernel</span> • 
+          <span id="cacheLineMeta">Cacheline: 128B</span> •
+          <span id="uptimeDisplay">Uptime: --</span>
+        </div>
+        <div class="badge-nuances">
+          <span class="nuance-tag">UMA Fabric: ~120 GB/s</span>
+          <span class="nuance-tag">Apple AMX Engine</span>
+          <span class="nuance-tag text-green">Thermal: Nominal</span>
+        </div>
+      </div>
+
+      <div class="lab-controls">
+        <a href="../index.html" class="lab-btn portfolio-btn" title="Return to Moreshwar Portfolio"><span class="btn-icon">🏛️</span> Portfolio</a>
+        <button id="audioToggleBtn" class="lab-btn" title="Toggle Real-Time Acoustic CPU Sonifier"><span class="btn-icon" id="audioIcon">🔇</span> Audio Drone</button>
+        <button id="articlesBtn" class="lab-btn btn-primary" title="Open Research Library & Academic Articles">
+          <span class="btn-icon">📚</span> Research Library
+        </button>
+
+        <div class="control-group">
+          <label for="pollRate">Sampling:</label>
+          <select id="pollRate" class="lab-select">
+            <option value="1000" selected>1.0s (Live)</option>
+            <option value="2000">2.0s (Standard)</option>
+            <option value="5000">5.0s (Eco)</option>
+          </select>
+        </div>
+
+        <button id="pauseBtn" class="lab-btn" title="Pause / Resume Live Telemetry">
+          <span class="btn-icon">⏸️</span> Pause
+        </button>
+
+        <button id="snapshotBtn" class="lab-btn btn-primary" title="Download Full JSON Telemetry Experiment Report">
+          <span class="btn-icon">📥</span> Export Snapshot
+        </button>
+
+        <button id="toggleTheoryBtn" class="lab-btn btn-accent" title="Toggle Researcher Notes">
+          <span class="btn-icon">🧠</span> Researcher Notes: <strong id="theoryStateText">ON</strong>
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Key Performance Indicators (KPIs) -->
+    <section class="kpi-grid">
+      <!-- CPU KPI -->
+      <div class="kpi-card" id="cpuKpiCard">
+        <div class="kpi-header">
+          <span class="kpi-label">CPU UTILIZATION</span>
+          <span class="kpi-badge" id="cpuSaturationBadge">Optimal</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-number" id="cpuTotalPct">--</span>
+          <span class="kpi-unit">%</span>
+        </div>
+        <div class="kpi-sub">
+          <span>Load Avg: <strong id="load1m">--</strong> (1m) • <strong id="load5m">--</strong> (5m)</span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-fill" id="cpuMeterFill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Memory KPI -->
+      <div class="kpi-card" id="memKpiCard">
+        <div class="kpi-header">
+          <span class="kpi-label">UNIFIED MEMORY (RAM)</span>
+          <span class="kpi-badge badge-green" id="memPressureBadge">Normal</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-number" id="memUsedGb">--</span>
+          <span class="kpi-unit">/ <span id="memTotalGb">16</span> GB</span>
+        </div>
+        <div class="kpi-sub">
+          <span>App Memory: <strong id="memAppGb">--</strong> GB • Wired: <strong id="memWiredGb">--</strong> GB</span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-fill meter-cyan" id="memMeterFill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Storage KPI -->
+      <div class="kpi-card" id="storageKpiCard">
+        <div class="kpi-header">
+          <span class="kpi-label">NVMe FLASH STORAGE</span>
+          <span class="kpi-badge badge-purple">APFS Volume</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-number" id="storageUsedGb">--</span>
+          <span class="kpi-unit">/ <span id="storageTotalGb">--</span> GB</span>
+        </div>
+        <div class="kpi-sub">
+          <span>Available: <strong id="storageAvailGb">--</strong> GB (<span id="storagePct">--</span>% used)</span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-fill meter-purple" id="storageMeterFill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Network KPI -->
+      <div class="kpi-card" id="netKpiCard">
+        <div class="kpi-header">
+          <span class="kpi-label">NETWORK I/O</span>
+          <span class="kpi-badge badge-amber" id="netIfaceBadge">en1</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-number" id="netRxRate">0.0</span>
+          <span class="kpi-unit">KB/s ↓</span>
+        </div>
+        <div class="kpi-sub">
+          <span>Upload: <strong id="netTxRate">0.0</strong> KB/s ↑ • Rx: <strong id="netTotalRx">--</strong> MB</span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-fill meter-amber" id="netMeterFill" style="width: 15%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Diagnostic Grid -->
+    <main class="lab-main-grid">
+
+      <!-- Section 1: CPU Architecture & Cores -->
+      <section class="diagnostic-panel full-width">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">⚡</span>
+            <div>
+              <h2>Processor Subsystem & Micro-Architecture</h2>
+              <p class="panel-desc">Heterogeneous Multi-Processing (HMP) Execution & Core Scheduling</p>
+            </div>
+          </div>
+          <div class="panel-tags">
+            <span class="tag">Apple M4</span>
+            <span class="tag">10 Physical Cores</span>
+            <span class="tag">8-Wide Decode</span>
+          </div>
+        </div>
+
+        <div class="cpu-dashboard-layout">
+          <!-- Canvas Waveform -->
+          <div class="chart-container">
+            <div class="chart-header">
+              <span>Real-Time Activity Waveform (Rolling 30s)</span>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="legend-dot user-color"></span> User (%)</span>
+                <span class="legend-item"><span class="legend-dot sys-color"></span> System (%)</span>
+                <span class="legend-item"><span class="legend-dot idle-color"></span> Idle (%)</span>
+              </div>
+            </div>
+            <canvas id="cpuWaveformCanvas" width="700" height="220"></canvas>
+          </div>
+
+          <!-- Cores Grid -->
+          <div class="cores-container">
+            <div class="cores-header">
+              <span>Heterogeneous Core Topology Map</span>
+              <span class="cores-subtitle">4 Performance (P) + 6 Efficiency (E) Cores</span>
+            </div>
+            <div class="cores-grid" id="coresGrid">
+              <!-- Dynamically populated via JS -->
+            </div>
+            <div class="cores-legend">
+              <span class="legend-item"><span class="core-chip-sample p-sample">P</span> High-Frequency (Heavy Compute)</span>
+              <span class="legend-item"><span class="core-chip-sample e-sample">E</span> Low-Power (Background Tasks)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Researcher Theory Card: CPU -->
+        <div class="theory-card" id="theoryCpuCard">
+          <div class="theory-header">
+            <span class="theory-pill">🔬 Researcher Notes</span>
+            <h3 id="theoryCpuTitle">Asymmetric Multiprocessing & Queueing Theory</h3>
+          </div>
+          <div class="theory-body">
+            <div class="theory-simple">
+              <strong>💡 Simple Explanation:</strong>
+              <p id="theoryCpuSimple">Loading theory...</p>
+            </div>
+            <div class="theory-deep">
+              <strong>📐 Mathematical & Engineering Insight:</strong>
+              <p id="theoryCpuDeep">Loading theory...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Memory & Cache Hierarchy -->
+      <section class="diagnostic-panel half-width">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">🧠</span>
+            <div>
+              <h2>Unified Memory & Cache Pyramid</h2>
+              <p class="panel-desc">Mach Virtual Memory Subsystem & Latency Stages</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="memory-dashboard-layout">
+          <!-- Donut Breakdown -->
+          <div class="donut-chart-box">
+            <canvas id="memoryDonutCanvas" width="220" height="220"></canvas>
+            <div class="donut-center-text">
+              <span class="donut-val" id="donutUsedPct">--%</span>
+              <span class="donut-lbl">Active/Wired</span>
+            </div>
+          </div>
+
+          <!-- Memory Stats Breakdown List -->
+          <div class="mem-breakdown-list">
+            <div class="mem-row">
+              <span class="mem-type"><span class="bullet wired-bullet"></span> Wired (Kernel Lock):</span>
+              <strong id="memWiredVal">-- GB</strong>
+            </div>
+            <div class="mem-row">
+              <span class="mem-type"><span class="bullet active-bullet"></span> Active (App Data):</span>
+              <strong id="memActiveVal">-- GB</strong>
+            </div>
+            <div class="mem-row">
+              <span class="mem-type"><span class="bullet inactive-bullet"></span> Inactive (File Cache):</span>
+              <strong id="memInactiveVal">-- GB</strong>
+            </div>
+            <div class="mem-row">
+              <span class="mem-type"><span class="bullet compressed-bullet"></span> Compressed in RAM:</span>
+              <strong id="memCompressedVal">-- GB</strong>
+            </div>
+            <div class="mem-row">
+              <span class="mem-type"><span class="bullet free-bullet"></span> Free (Unallocated):</span>
+              <strong id="memFreeVal">-- GB</strong>
+            </div>
+            <div class="mem-row border-top">
+              <span class="mem-type">Page Size:</span>
+              <strong id="memPageSizeVal">16 KB</strong>
+            </div>
+            <div class="mem-row">
+              <span class="mem-type">Swap Activity:</span>
+              <strong id="memSwapVal" class="text-green">0 Swapouts (Zero Thrashing)</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Latency Pyramid Diagram -->
+        <div class="latency-pyramid">
+          <div class="pyramid-tier tier-l1">
+            <div class="tier-name">L1 Cache: 128KB (I) + 64KB (D)</div>
+            <div class="tier-latency">~1.0 ns (30 cm of light)</div>
+          </div>
+          <div class="pyramid-tier tier-l2">
+            <div class="tier-name">L2 Shared Cache: 4 MB</div>
+            <div class="tier-latency">~3.5 ns (1 meter)</div>
+          </div>
+          <div class="pyramid-tier tier-ram">
+            <div class="tier-name">Unified LPDDR5X RAM: 16 GB</div>
+            <div class="tier-latency">~70 ns (20 meters)</div>
+          </div>
+          <div class="pyramid-tier tier-nand">
+            <div class="tier-name">NVMe Flash Storage (APFS): 256 GB</div>
+            <div class="tier-latency">~25,000 ns (7.5 km!)</div>
+          </div>
+        </div>
+
+        <!-- Researcher Theory Card: Memory -->
+        <div class="theory-card" id="theoryMemCard">
+          <div class="theory-header">
+            <span class="theory-pill">🔬 Researcher Notes</span>
+            <h3 id="theoryMemTitle">Mach Virtual Memory & Latency Hierarchy</h3>
+          </div>
+          <div class="theory-body">
+            <div class="theory-simple">
+              <strong>💡 Simple Explanation:</strong>
+              <p id="theoryMemSimple">Loading theory...</p>
+            </div>
+            <div class="theory-deep">
+              <strong>📐 Mathematical & Engineering Insight:</strong>
+              <p id="theoryMemDeep">Loading theory...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Storage & Network I/O Dynamics -->
+      <section class="diagnostic-panel half-width">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">💾</span>
+            <div>
+              <h2>Storage I/O & Network Fabric</h2>
+              <p class="panel-desc">APFS File System Bandwidth & Socket Throughput</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Storage & Disk I/O Row -->
+        <div class="storage-io-box">
+          <div class="sub-section-title">Disk Real-Time I/O (iostat telemetry)</div>
+          <div class="io-metrics-row">
+            <div class="io-metric">
+              <span class="io-label">Transfer Throughput</span>
+              <span class="io-number" id="diskMbSec">--</span>
+              <span class="io-unit">MB/s</span>
+            </div>
+            <div class="io-metric">
+              <span class="io-label">Transactions Rate</span>
+              <span class="io-number" id="diskTps">--</span>
+              <span class="io-unit">transfers/s</span>
+            </div>
+            <div class="io-metric">
+              <span class="io-label">Transfer Size</span>
+              <span class="io-number" id="diskKbT">--</span>
+              <span class="io-unit">KB/transfer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Network Waveform Chart -->
+        <div class="network-chart-box">
+          <div class="sub-section-title">
+            <span>Network Streaming Bandwidth (Rolling 30s)</span>
+            <span class="net-interface-tag" id="netInterfaceTag">Interface: en1</span>
+          </div>
+          <canvas id="networkWaveformCanvas" width="500" height="150"></canvas>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="legend-dot rx-color"></span> Download / Inbound (KB/s)</span>
+            <span class="legend-item"><span class="legend-dot tx-color"></span> Upload / Outbound (KB/s)</span>
+          </div>
+        </div>
+
+        <!-- Total Packet Counters -->
+        <div class="packet-stats-grid">
+          <div class="packet-stat">
+            <span class="p-label">Packets Ingress (In):</span>
+            <strong id="packetsIn">--</strong>
+          </div>
+          <div class="packet-stat">
+            <span class="p-label">Packets Egress (Out):</span>
+            <strong id="packetsOut">--</strong>
+          </div>
+          <div class="packet-stat">
+            <span class="p-label">Total Inbound Data:</span>
+            <strong id="totalRxGb">-- GB</strong>
+          </div>
+          <div class="packet-stat">
+            <span class="p-label">Total Outbound Data:</span>
+            <strong id="totalTxGb">-- GB</strong>
+          </div>
+        </div>
+
+        <!-- Researcher Theory Card: Storage & Network -->
+        <div class="theory-card" id="theoryIoCard">
+          <div class="theory-header">
+            <span class="theory-pill">🔬 Researcher Notes</span>
+            <h3 id="theoryIoTitle">Storage I/O & APFS Copy-on-Write</h3>
+          </div>
+          <div class="theory-body">
+            <div class="theory-simple">
+              <strong>💡 Simple Explanation:</strong>
+              <p id="theoryIoSimple">Loading theory...</p>
+            </div>
+            <div class="theory-deep">
+              <strong>📐 Mathematical & Engineering Insight:</strong>
+              <p id="theoryIoDeep">Loading theory...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Von Neumann Computer Architecture Interactive Diagram -->
+      <section class="diagnostic-panel full-width">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">🏛️</span>
+            <div>
+              <h2>Interactive Von Neumann Computer Architecture Explorer</h2>
+              <p class="panel-desc">Interactive mapping of CPU, Memory Bus, Cache Levels, and I/O Channels</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="architecture-diagram-container">
+          <!-- CPU Box -->
+          <div class="arch-node arch-cpu" data-topic="cpu_topology">
+            <div class="node-badge">Compute Core</div>
+            <h3>CPU (Apple M4)</h3>
+            <div class="node-specs">
+              <span>• ALU & 8-Wide Decoder</span>
+              <span>• 4 Performance + 6 Efficiency Cores</span>
+              <span>• Hardware Vector Engine</span>
+            </div>
+            <div class="bus-wire wire-down"></div>
+          </div>
+
+          <!-- Cache Box -->
+          <div class="arch-node arch-cache" data-topic="cache_hierarchy">
+            <div class="node-badge">SRAM Cache</div>
+            <h3>L1 & L2 Caches</h3>
+            <div class="node-specs">
+              <span>• L1: 128KB Inst / 64KB Data (1ns)</span>
+              <span>• L2: 4MB Shared (3.5ns)</span>
+              <span>• Ultra-high bandwidth fabric</span>
+            </div>
+            <div class="bus-wire wire-down"></div>
+          </div>
+
+          <!-- Unified Memory Box -->
+          <div class="arch-node arch-ram" data-topic="memory_management">
+            <div class="node-badge">DRAM Bus</div>
+            <h3>Unified RAM (UMA)</h3>
+            <div class="node-specs">
+              <span>• 16 GB High-Speed LPDDR5X</span>
+              <span>• Shared between CPU & GPU</span>
+              <span>• 16 KB Mach Virtual Pages</span>
+            </div>
+            <div class="bus-wire wire-down"></div>
+          </div>
+
+          <!-- Secondary Storage Box -->
+          <div class="arch-node arch-disk" data-topic="storage_io">
+            <div class="node-badge">Non-Volatile I/O</div>
+            <h3>NVMe Flash (SSD)</h3>
+            <div class="node-specs">
+              <span>• 256 GB APFS Volume</span>
+              <span>• Copy-on-Write Architecture</span>
+              <span>• Swap Space & File Storage</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    
+      <!-- Panel 6: Live Memory & Cache Hierarchy Latency Microbenchmark -->
+      <section class="diagnostic-panel full-width" id="benchmarkPanel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">⚡</span>
+            <div>
+              <h2>Cache Hierarchy & Memory Wall Microbenchmark</h2>
+              <p>In-Browser Strided Buffer Probe: Measuring L1, L2, System Level Cache & DRAM Latency Cliffs</p>
+            </div>
+          </div>
+          <div class="panel-actions">
+            <button id="runBenchmarkBtn" class="lab-btn btn-primary">
+              <span class="btn-icon">▶</span> Run Latency Benchmark
+            </button>
+          </div>
+        </div>
+
+        <div class="benchmark-container">
+          <div class="benchmark-chart-box">
+            <canvas id="benchmarkCanvas" width="760" height="240"></canvas>
+            <div class="benchmark-legend">
+              <span class="leg-item"><span class="leg-color c-l1"></span> L1 Cache (&le; 128KB)</span>
+              <span class="leg-item"><span class="leg-color c-l2"></span> L2 Cache (512KB - 4MB)</span>
+              <span class="leg-item"><span class="leg-color c-slc"></span> Shared SLC (8MB)</span>
+              <span class="leg-item"><span class="leg-color c-dram"></span> Unified DRAM (&gt; 16MB)</span>
+            </div>
+          </div>
+
+          <div class="benchmark-stats-box">
+            <div class="bench-stat-card">
+              <div class="stat-label">L1 Cache Latency</div>
+              <div class="stat-value text-green" id="l1LatencyVal">~1.2 ns</div>
+              <div class="stat-sub">128B Cacheline • Zero Wait States</div>
+            </div>
+            <div class="bench-stat-card">
+              <div class="stat-label">L2 Cache Latency</div>
+              <div class="stat-value text-cyan" id="l2LatencyVal">~4.5 ns</div>
+              <div class="stat-sub">Shared Cluster Pool • Bus Transit</div>
+            </div>
+            <div class="bench-stat-card">
+              <div class="stat-label">DRAM Access Latency</div>
+              <div class="stat-value text-purple" id="dramLatencyVal">~88.2 ns</div>
+              <div class="stat-sub">Unified LPDDR5X • Physical Row Miss</div>
+            </div>
+            <div class="bench-stat-card">
+              <div class="stat-label">Memory Wall Factor</div>
+              <div class="stat-value text-amber" id="memoryWallVal">73.5×</div>
+              <div class="stat-sub">DRAM vs L1 Access Penalty</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Panel 7: Silicon Die Topology & Coprocessor Map -->
+      <section class="diagnostic-panel full-width" id="dieTopologyPanel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">🔬</span>
+            <div>
+              <h2>Apple Silicon M4 Microarchitecture & SoC Interconnect</h2>
+              <p>Physical Floorplan: 4 Performance Cores, 6 Efficiency Cores, AMX Matrix Units, 16-Core NPU, & 120 GB/s UMA Bus</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="soc-die-layout">
+          <div class="die-block p-cores-block">
+            <div class="die-block-title">4× Performance Cores</div>
+            <div class="die-specs">8-wide decode • 16 execution ports • AMX Matrix Coprocessor • 192KB L1I / 128KB L1D</div>
+          </div>
+          <div class="die-block e-cores-block">
+            <div class="die-block-title">6× Efficiency Cores</div>
+            <div class="die-specs">3-wide decode • 4MB L2 shared • Ultra-low TDP • Scalable background scheduling</div>
+          </div>
+          <div class="die-block npu-block">
+            <div class="die-block-title">Apple Neural Engine (16-Core)</div>
+            <div class="die-specs">38 TOPS • Dedicated FP16/INT8 Matrix Compute • Transformer Accelerators</div>
+          </div>
+          <div class="die-block gpu-block">
+            <div class="die-block-title">10-Core Metal 3 GPU</div>
+            <div class="die-specs">Dynamic Caching • Hardware Accelerated Ray Tracing • Mesh Shading Pipeline</div>
+          </div>
+          <div class="die-block uma-fabric-block">
+            <div class="die-block-title">Unified Memory Fabric (128-bit LPDDR5X)</div>
+            <div class="die-specs">~120 GB/s Zero-Copy CPU/GPU/NPU Shared Fabric • WKdm Hardware Compression Engine</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="lab-footer">
+      <div class="footer-left">
+        <span>🔬 <strong>Machine Telemetry Lab</strong> • Academic & Engineering System Monitor</span>
+      </div>
+      <div class="footer-right">
+        <span>Machine: <strong id="footerHostname">localhost</strong></span> • 
+        <span>Architecture: <strong>ARM64 Little-Endian</strong></span> • 
+        <span class="status-indicator">● Active Polling</span>
+      </div>
+    </footer>
+    <!-- Research Library Modal Reader -->
+    <div class="modal-overlay hidden" id="articlesModal">
+      <div class="articles-modal-box">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <span class="modal-icon">📚</span>
+            <div>
+              <h2>Computer Architecture Research Library</h2>
+              <p>In-Depth Technical Field Studies, Historical Context & Mathematical Models</p>
+            </div>
+          </div>
+          <button id="closeModalBtn" class="modal-close-btn" title="Close Library">✕</button>
+        </div>
+
+        <div class="modal-body-layout">
+          <!-- Article List Sidebar -->
+          <div class="articles-sidebar" id="articlesNavList">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Article Reader View -->
+          <div class="article-reader-view" id="articleReaderContent">
+            <div class="reader-placeholder">
+              <span class="placeholder-icon">📖</span>
+              <p>Select an article from the left panel to begin reading.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
