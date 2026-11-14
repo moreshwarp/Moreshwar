@@ -1,72 +1,192 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Machine Check · Moreshwar Systems Lab</title>
-<style>
-*{box-sizing:border-box}body#check{margin:0;background:#f6f5ef;color:#172f2a;font:17px/1.55 system-ui}#check main{max-width:900px;margin:auto;padding:32px clamp(16px,5vw,60px) 64px}nav{border-bottom:1px solid #b6c3b9;padding-bottom:18px}a{color:#195647}h1{font:clamp(44px,8vw,78px)/1.05 Georgia;margin:40px 0 12px}h2{font:28px Georgia}button{background:#174e42;color:white;border:0;border-radius:5px;padding:13px 21px;font:bold 1rem system-ui;cursor:pointer}button:disabled{opacity:.65}#status{min-height:1.6em}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}article{background:white;border-top:3px solid #448778;padding:16px}article h3{margin:0}article strong{font-size:1.4rem}svg{display:block;width:100%;height:100px;background:#edf4ef}details{margin-top:24px}summary{cursor:pointer}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #bc5300;outline-offset:3px}
-</style></head><body id="check"><main><nav><a href="../../index.html">Moreshwar Systems Lab</a> / Research tools</nav>
-<h1>Machine Check</h1><p>See how smoothly this tab responds and what resources your browser makes available. Keep this tab visible for five seconds.</p>
-<button type="button" id="run">Run browser check</button><p id="status" role="status">Ready. Your readings stay in this tab.</p><noscript>Enable JavaScript to run the check.</noscript>
-<section id="report" hidden><h2 id="verdict"></h2><p id="finding"></p><svg viewBox="0 0 500 100" preserveAspectRatio="none" role="img" aria-label="Time between animation callbacks over five seconds. Higher points indicate longer waits."><polyline id="trace" stroke="#176555" stroke-width="2" fill="none" vector-effect="non-scaling-stroke"/></svg><p id="scale"></p><div class="grid" id="cards"></div></section>
-<details><summary>What can this page see?</summary><p>This check reads browser timing and available browser features. Total CPU use, other apps, physical disk space, temperature, and OS update history require operating-system access. The check sends no results and keeps no history after the page closes.</p></details>
-</main><script>
-'use strict';
-const get=id=>document.getElementById(id);
-let previous=null;
-function card(title,value,detail){
- const box=document.createElement('article');
- for(const [tag,copy] of [['h3',title],['strong',value],['p',detail]]){
-  const el=document.createElement(tag);el.textContent=copy;box.append(el);
- }
- get('cards').append(box);
-}
-function sample(){
- return new Promise((resolve,reject)=>{
-  let start,last,frame;
-  const values=[];
-  function finish(error){
-   cancelAnimationFrame(frame);clearTimeout(timer);document.removeEventListener('visibilitychange',visibility);
-   if(error)reject(new Error(error));else resolve(values);
-  }
-  function visibility(){if(document.hidden)finish('Check interrupted. Return to this tab and run it again.');}
-  function tick(now){
-   if(start===undefined)start=now;
-   if(last!==undefined)values.push(now-last);
-   last=now;
-   if(now-start>=5000)finish();else frame=requestAnimationFrame(tick);
-  }
-  const timer=setTimeout(()=>finish('Sampling timed out. Keep this tab visible and retry.'),12000);
-  document.addEventListener('visibilitychange',visibility);
-  if(document.hidden)visibility();else frame=requestAnimationFrame(tick);
- });
-}
-function bounded(promise){
- return Promise.race([promise,new Promise(resolve=>setTimeout(()=>resolve(null),900))]).catch(()=>null);
-}
-get('run').onclick=async()=>{
- const button=get('run');button.disabled=true;get('status').textContent='Measuring for five seconds…';get('report').hidden=true;
- try{
-  const values=await sample();
-  if(values.length<2)throw new Error('Too few readings. Try again with this tab visible.');
-  const long=values.filter(v=>v>=100).length;
-  const peak=values.reduce((a,b)=>Math.max(a,b),0);
-  const sorted=[...values].sort((a,b)=>a-b);
-  const typical=sorted[Math.floor(sorted.length/2)];
-  get('verdict').textContent=long>=3?'Repeated pauses during this check':long?'An occasional pause':'This tab responded smoothly';
-  get('finding').textContent=long+' gaps of 100 milliseconds or longer. '+(long?'Repeat the check while your usual work is running. If scrolling also feels slow, try closing one busy tab and compare.':'There were no long pauses during this sample.');
-  const ceiling=Math.max(50,Math.ceil(peak/10)*10);
-  let elapsed=0;const duration=values.reduce((a,b)=>a+b,0);
-  get('trace').setAttribute('points',values.map(v=>{elapsed+=v;return (500*elapsed/duration).toFixed(1)+','+(99-v/ceiling*98).toFixed(1)}).join(' '));
-  get('scale').textContent='Left to right: '+(duration/1000).toFixed(1)+' seconds. Vertical range: 0–'+ceiling+' ms. Typical gap: '+typical.toFixed(1)+' ms. Longest: '+peak.toFixed(1)+' ms.';
-  get('cards').replaceChildren();
-  card('Processor capacity',navigator.hardwareConcurrency?navigator.hardwareConcurrency+' logical CPUs':'Unavailable','The number the browser exposes for parallel work. Current load on each core is private.');
-  card('Memory estimate',navigator.deviceMemory?'About '+navigator.deviceMemory+' GiB':'Unavailable','Some browsers share a rounded capacity estimate. Current memory use is private.');
-  const storage=await bounded(navigator.storage?.estimate?.());
-  card('Site storage',Number.isFinite(storage?.usage)?(storage.usage/1048576).toFixed(2)+' MiB used':'Unavailable','Estimated browser storage used by this website origin. Physical drive space is private.');
-  const battery=await bounded(navigator.getBattery?.());
-  card('Power',battery?Math.round(100*battery.level)+'%':'Unavailable',battery?(battery.charging?'Browser reports charging or connected power.':'Browser reports battery power.'):'This browser did not share a battery reading.');
-  card('Network',navigator.onLine?'Browser reports online':'Browser reports offline','This is a connectivity hint. Speed and traffic from other apps are private.');
-  card('Previous check',previous===null?'First run':previous+' long gaps','Repeat under the same conditions to compare. The previous result lasts until you leave this page.');
-  previous=long;get('report').hidden=false;get('status').textContent='Check complete.';button.textContent='Run again';
- }catch(error){get('status').textContent=error.message;}finally{button.disabled=false;}
-};
-</script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5ef">
+  <meta name="description" content="A browser-based, privacy-first look at machine responsiveness and the resources this browser can report.">
+  <title>Machine Check · Moreshwar Systems Lab</title>
+  <style>
+    :root{color-scheme:light;--paper:#f4f5ef;--surface:#fff;--ink:#192d27;--muted:#677771;--line:#dce3dc;--green:#16745c;--green-dark:#0f4e3e;--mint:#e5f2ec;--gold:#d98b40;--gold-pale:#fbf1e6;--blue:#527fa3;--shadow:0 12px 36px rgba(23,54,43,.07);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-size:15px;line-height:1.55}button{font:inherit}a{color:inherit}button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex="0"]:focus-visible{outline:3px solid #c96e2d;outline-offset:3px}
+    .shell{max-width:1280px;margin:0 auto;padding:24px clamp(16px,4vw,48px) 52px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 0 20px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:13px;font-weight:750;letter-spacing:.02em}.brandmark{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--green-dark);color:white}.brandmark svg{width:19px}.crumb{font-size:12px;color:var(--muted)}.eyebrow{margin:30px 0 8px;color:var(--green);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{font-size:clamp(34px,5vw,56px);letter-spacing:-.055em;line-height:1.04;margin:0;max-width:760px}.lede{font-size:17px;color:#4e6059;max-width:690px;margin:16px 0 0}.intro-row{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:28px}.intro-copy{max-width:760px}.run-button{flex:none;display:flex;align-items:center;gap:10px;border:0;border-radius:12px;background:var(--green-dark);color:white;padding:14px 18px;font-size:14px;font-weight:750;box-shadow:0 6px 18px rgba(15,78,62,.18);cursor:pointer;transition:transform .18s,background .18s}.run-button:hover{background:#17634e;transform:translateY(-1px)}.run-button:disabled{opacity:.68;cursor:wait;transform:none}.run-button svg{width:18px}.run-wrap{display:grid;justify-items:end;gap:7px}.permission-note{font-size:11px;color:var(--muted);text-align:right}.statusline{min-height:22px;color:var(--green-dark);font-size:13px;font-weight:650}
+    .layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.85fr);gap:16px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:21px 22px 0}.panel-title{margin:0;font-size:16px;letter-spacing:-.02em}.panel-sub{margin:4px 0 0;color:var(--muted);font-size:12px}.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:5px 9px;font-size:10px;font-weight:750;color:var(--muted);white-space:nowrap}.dot{width:7px;height:7px;border-radius:50%;background:#9ca9a2}.dot.live{background:#2b9d6e;box-shadow:0 0 0 3px #e5f2ec}.chart-wrap{padding:14px 20px 6px}.chart{display:block;width:100%;height:230px;overflow:visible}.chart text{font-family:inherit;fill:#84928b;font-size:10px}.chart .gridline{stroke:#e8ede8;stroke-width:1}.chart .axis{stroke:#cfd9d1;stroke-width:1}.chart .signal{fill:none;stroke:var(--green);stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}.chart .area{fill:url(#chartFill)}.chart .marker{fill:white;stroke:var(--green);stroke-width:2;vector-effect:non-scaling-stroke}.chart-empty{font-size:13px;fill:#84928b}.chart-key{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 22px 20px;color:var(--muted);font-size:11px}.key-left{display:flex;align-items:center;gap:8px}.key-line{height:2px;width:18px;background:var(--green)}.chart-stats{display:flex;gap:20px}.chart-stats b{color:var(--ink);font-size:12px}.section-label{margin:20px 0 10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+    .machine-panel{padding-bottom:16px}.machine-map{padding:16px 15px 0}.machine-map svg{display:block;width:100%;height:auto;min-height:245px}.machine-map text{font-family:inherit}.map-link{stroke:#cfdcd3;stroke-width:2;stroke-dasharray:4 5;fill:none;transition:stroke .2s,stroke-width .2s}.map-node{cursor:pointer}.map-node rect{fill:#f8faf7;stroke:#dce5dd;stroke-width:1.2;transition:all .2s}.map-node circle.icon-bg{fill:#e8f2ec}.map-node .node-title{fill:#253b32;font-size:11px;font-weight:750}.map-node .node-value{fill:#78867f;font-size:10px}.map-node.active rect,.map-node:hover rect{stroke:var(--green);stroke-width:2;fill:#f0f8f3}.map-node.active circle.icon-bg{fill:#d4eee0}.map-node:focus{outline:none}.map-node:focus rect{stroke:#c96e2d;stroke-width:3}.map-core rect{fill:#123f34}.map-core .core-title{fill:white;font-size:12px;font-weight:800}.map-core .core-note{fill:#bfddd0;font-size:9px}.map-core circle{fill:#2d8969}.node-detail{min-height:74px;margin:0 17px;padding:12px 14px;border-radius:12px;background:#f6f8f5;border:1px solid #e8eee8}.node-detail strong{display:block;font-size:12px}.node-detail p{margin:3px 0 0;color:var(--muted);font-size:11px;line-height:1.5}.map-hint{text-align:center;font-size:10px;color:#87938d;margin:9px 0 0}
+    .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.metric{position:relative;min-height:132px;padding:15px 15px 14px;border:1px solid var(--line);border-radius:14px;background:white;cursor:pointer;transition:border-color .18s,transform .18s}.metric:hover{border-color:#8bb8a0;transform:translateY(-1px)}.metric:focus-visible{outline-offset:2px}.metric-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.metric-icon{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--mint);color:var(--green-dark)}.metric-icon svg{width:15px;height:15px}.metric-state{font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:#718078}.metric-value{font-size:24px;font-weight:760;letter-spacing:-.045em;margin:9px 0 0;line-height:1.15}.metric-name{font-size:12px;font-weight:750;margin:3px 0 0}.metric-detail{font-size:10px;color:var(--muted);margin:3px 0 0;line-height:1.4}.metrics-foot{font-size:10px;color:var(--muted);margin:12px 2px 0}
+    .insight{margin-top:16px;padding:17px 18px;background:#eaf3ee;border:1px solid #d5e7db;border-radius:15px;display:grid;grid-template-columns:32px 1fr;gap:11px}.insight-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:white;color:var(--green-dark);font-weight:800}.insight h3{margin:1px 0 3px;font-size:13px}.insight p{margin:0;color:#53665c;font-size:12px}.insight .small{margin-top:7px;font-size:10px;color:#6c7b72}
+    .lower{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.info-panel{padding:20px 21px}.info-panel h2{margin:0 0 5px;font-size:16px;letter-spacing:-.02em}.info-panel>p{margin:0 0 14px;color:var(--muted);font-size:12px}.read-list{display:grid;gap:9px}.read-row{display:grid;grid-template-columns:115px 1fr;gap:12px;padding:10px 0;border-top:1px solid #edf0ec}.read-row strong{font-size:11px}.read-row span{font-size:11px;color:var(--muted)}.limits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.limit{padding:10px;border-radius:11px;background:#f6f7f4;font-size:10px;color:var(--muted)}.limit b{display:block;color:var(--ink);font-size:11px;margin-bottom:2px}.privacy{display:flex;align-items:flex-start;gap:10px;margin-top:16px;padding:13px 15px;border-radius:13px;background:#fffaf4;border:1px solid #f0dfc9;color:#6e5b43;font-size:11px}.privacy svg{flex:none;width:17px;margin-top:1px}.privacy b{color:#4c3c29}.foot{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);margin-top:22px;padding-top:15px;color:var(--muted);font-size:10px}.foot a{color:var(--green-dark);text-decoration:none}.foot a:hover{text-decoration:underline}
+    @media(max-width:850px){.intro-row{align-items:flex-start;flex-direction:column}.run-wrap{justify-items:start}.permission-note{text-align:left}.layout{grid-template-columns:1fr}.machine-map svg{max-height:320px}.lower{grid-template-columns:1fr}}
+    @media(max-width:540px){.shell{padding-top:16px}.crumb{display:none}.topbar{padding-bottom:14px}.eyebrow{margin-top:24px}.lede{font-size:15px}.run-button{width:100%;justify-content:center}.chart{height:190px}.panel-head{padding:17px 16px 0}.chart-wrap{padding:12px 12px 4px}.chart-key{padding:0 16px 16px;align-items:flex-start;flex-direction:column;gap:7px}.metrics{gap:8px}.metric{padding:12px;min-height:127px}.metric-value{font-size:21px}.machine-map{padding:8px 6px 0}.node-detail{margin:0 12px}.info-panel{padding:17px}.read-row{grid-template-columns:95px 1fr}.limits{grid-template-columns:1fr}.foot{flex-direction:column}.chart-stats{gap:13px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html" aria-label="Moreshwar Systems Lab home"><span class="brandmark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 17V7l5 6 3-4 3 4 5-6v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="7" r="1.3" fill="currentColor"/><circle cx="20" cy="7" r="1.3" fill="currentColor"/></svg></span><span>MORESHWAR SYSTEMS LAB</span></a>
+      <div class="crumb">Research tools&nbsp; / &nbsp;Machine Check</div>
+    </header>
+
+    <p class="eyebrow">A small systems experiment</p>
+    <div class="intro-row">
+      <div class="intro-copy">
+        <h1>See your machine through the browser.</h1>
+        <p class="lede">A short, private check of how this page responds—and a map of the machine signals your browser is allowed to share. It takes about five seconds.</p>
+      </div>
+      <div class="run-wrap">
+        <button class="run-button" id="run" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5.8v12.4L18 12 8 5.8Z" fill="currentColor"/></svg><span id="run-label">Run browser check</span></button>
+        <div class="permission-note">No install. No permission prompt for this check.</div>
+      </div>
+    </div>
+    <div class="statusline" id="status" role="status" aria-live="polite">Ready when you are. Keep this tab visible during the check.</div>
+
+    <div class="layout">
+      <div>
+        <section class="panel" aria-labelledby="response-title">
+          <div class="panel-head">
+            <div><h2 class="panel-title" id="response-title">Browser response over time</h2><p class="panel-sub">Each point shows the wait between two screen updates.</p></div>
+            <span class="tag"><span class="dot" id="sample-dot"></span><span id="sample-state">Not sampled</span></span>
+          </div>
+          <div class="chart-wrap">
+            <svg class="chart" id="chart" viewBox="0 0 720 230" role="img" aria-label="A graph of time between browser animation updates. Run the check to see measured points.">
+              <defs><linearGradient id="chartFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#55a788" stop-opacity=".22"/><stop offset="1" stop-color="#55a788" stop-opacity="0"/></linearGradient></defs>
+              <g aria-hidden="true"><line class="gridline" x1="54" y1="30" x2="700" y2="30"/><line class="gridline" x1="54" y1="75" x2="700" y2="75"/><line class="gridline" x1="54" y1="120" x2="700" y2="120"/><line class="gridline" x1="54" y1="165" x2="700" y2="165"/><line class="axis" x1="54" y1="195" x2="700" y2="195"/><text x="10" y="34">100 ms</text><text x="24" y="79">75</text><text x="24" y="124">50</text><text x="24" y="169">25</text><text x="52" y="216">0 sec</text><text x="666" y="216">5 sec</text><text x="53" y="18">Wait between updates</text></g>
+              <path class="area" id="area" d=""/><polyline class="signal" id="signal" points=""/><g id="markers"></g><text class="chart-empty" id="chart-empty" x="377" y="116" text-anchor="middle">Run the check to draw your response trace</text>
+            </svg>
+          </div>
+          <div class="chart-key"><span class="key-left"><i class="key-line" aria-hidden="true"></i>Time between screen updates</span><span class="chart-stats"><span>Typical <b id="typical">—</b></span><span>Longest <b id="longest">—</b></span><span>Long pauses <b id="pause-count">—</b></span></span></div>
+        </section>
+
+        <section class="panel machine-panel" aria-labelledby="map-title" style="margin-top:16px">
+          <div class="panel-head"><div><h2 class="panel-title" id="map-title">A simple map of the machine</h2><p class="panel-sub">Select a part to see what the reading tells you.</p></div><span class="tag">Browser view</span></div>
+          <div class="machine-map">
+            <svg viewBox="0 0 620 355" role="img" aria-label="Diagram connecting the browser tab to processor, memory, site storage, physical disk, power, and network signals.">
+              <path class="map-link" d="M310 143 143 67M310 143 477 67M310 143 143 225M310 143 477 225M310 143 310 45M310 178 310 284"/>
+              <g class="map-core"><rect x="231" y="112" width="158" height="66" rx="18"/><circle cx="251" cy="135" r="6"/><circle cx="251" cy="155" r="3"/><text class="core-title" x="266" y="139">THIS BROWSER TAB</text><text class="core-note" x="266" y="157">the sensor boundary</text></g>
+              <g class="map-node" data-part="processor" tabindex="0" role="button" aria-label="Processor capacity. Select to learn more." transform="translate(35 30)"><rect width="182" height="72" rx="13"/><circle class="icon-bg" cx="24" cy="25" r="13"/><text x="18" y="29" fill="#17634e" font-size="11" font-weight="800">CPU</text><text class="node-title" x="46" y="27">Processor capacity</text><text class="node-value" id="map-processor" x="46" y="47">Waiting for check</text></g>
+              <g class="map-node" data-part="memory" tabindex="0" role="button" aria-label="Memory estimate. Select to learn more." transform="translate(403 30)"><rect width="182" height="72" rx="13"/><circle class="icon-bg" cx="24" cy="25" r="13"/><text x="16" y="29" fill="#17634e" font-size="10" font-weight="800">RAM</text><text class="node-title" x="46" y="27">Memory estimate</text><text class="node-value" id="map-memory" x="46" y="47">Waiting for check</text></g>
+              <g class="map-node" data-part="storage" tabindex="0" role="button" aria-label="Site storage. Select to learn more." transform="translate(35 190)"><rect width="182" height="72" rx="13"/><circle class="icon-bg" cx="24" cy="25" r="13"/><text x="17" y="29" fill="#17634e" font-size="10" font-weight="800">DISK</text><text class="node-title" x="46" y="27">Site storage</text><text class="node-value" id="map-storage" x="46" y="47">Waiting for check</text></g>
+              <g class="map-node" data-part="power" tabindex="0" role="button" aria-label="Power signal. Select to learn more." transform="translate(403 190)"><rect width="182" height="72" rx="13"/><circle class="icon-bg" cx="24" cy="25" r="13"/><text x="18" y="29" fill="#17634e" font-size="10" font-weight="800">PWR</text><text class="node-title" x="46" y="27">Power signal</text><text class="node-value" id="map-power" x="46" y="47">Waiting for check</text></g>
+              <g class="map-node" data-part="physicalDisk" tabindex="0" role="button" aria-label="Physical disk. Select to learn more." transform="translate(219 278)"><rect width="182" height="58" rx="13"/><circle class="icon-bg" cx="24" cy="25" r="13"/><text x="13" y="29" fill="#17634e" font-size="9" font-weight="800">DRIVE</text><text class="node-title" x="46" y="25">Physical disk</text><text class="node-value" id="map-physicalDisk" x="46" y="41">Not visible to page</text></g>
+              <g class="map-node" data-part="network" tabindex="0" role="button" aria-label="Network connection. Select to learn more." transform="translate(219 -1)"><rect width="182" height="54" rx="13"/><circle class="icon-bg" cx="24" cy="25" r="13"/><text x="17" y="29" fill="#17634e" font-size="10" font-weight="800">NET</text><text class="node-title" x="46" y="25">Network connection</text><text class="node-value" id="map-network" x="46" y="41">Waiting for check</text></g>
+            </svg>
+            <div class="node-detail" id="node-detail" aria-live="polite"><strong>What is this map?</strong><p>The browser is the measuring boundary. It can share a few hints about the device, but it cannot inspect the whole computer.</p></div>
+            <p class="map-hint">Tap or focus a machine part for a plain-English explanation.</p>
+          </div>
+        </section>
+      </div>
+
+      <aside aria-label="Machine readings">
+        <section class="panel" style="padding:20px" aria-labelledby="readings-title">
+          <h2 class="panel-title" id="readings-title">Machine readings</h2><p class="panel-sub" style="margin-bottom:15px">Small clues shared by your browser—not a full hardware scan.</p>
+          <div class="metrics" id="metrics">
+            <article class="metric" tabindex="0" data-part="processor"><div class="metric-top"><span class="metric-icon" aria-hidden="true">▦</span><span class="metric-state" id="state-processor">not read</span></div><p class="metric-value" id="value-processor">—</p><p class="metric-name">Processor capacity</p><p class="metric-detail">Logical processors reported</p></article>
+            <article class="metric" tabindex="0" data-part="memory"><div class="metric-top"><span class="metric-icon" aria-hidden="true">▤</span><span class="metric-state" id="state-memory">not read</span></div><p class="metric-value" id="value-memory">—</p><p class="metric-name">Memory estimate</p><p class="metric-detail">Rounded device estimate</p></article>
+            <article class="metric" tabindex="0" data-part="storage"><div class="metric-top"><span class="metric-icon" aria-hidden="true">▣</span><span class="metric-state" id="state-storage">not read</span></div><p class="metric-value" id="value-storage">—</p><p class="metric-name">Site storage</p><p class="metric-detail">This website's local data</p></article>
+            <article class="metric" tabindex="0" data-part="physicalDisk"><div class="metric-top"><span class="metric-icon" aria-hidden="true">▤</span><span class="metric-state">not exposed</span></div><p class="metric-value">Not visible</p><p class="metric-name">Physical disk</p><p class="metric-detail">Drive space is private to the OS</p></article>
+            <article class="metric" tabindex="0" data-part="power"><div class="metric-top"><span class="metric-icon" aria-hidden="true">ϟ</span><span class="metric-state" id="state-power">not read</span></div><p class="metric-value" id="value-power">—</p><p class="metric-name">Power signal</p><p class="metric-detail" id="detail-power">Battery access varies by browser</p></article>
+            <article class="metric" tabindex="0" data-part="network"><div class="metric-top"><span class="metric-icon" aria-hidden="true">⌁</span><span class="metric-state" id="state-network">not read</span></div><p class="metric-value" id="value-network">—</p><p class="metric-name">Network connection</p><p class="metric-detail">Browser connection hint</p></article>
+            <article class="metric" tabindex="0" data-part="response"><div class="metric-top"><span class="metric-icon" aria-hidden="true">⌁</span><span class="metric-state" id="state-response">not read</span></div><p class="metric-value" id="value-response">—</p><p class="metric-name">Tab responsiveness</p><p class="metric-detail">Wait between screen updates</p></article>
+          </div>
+          <p class="metrics-foot">“Unavailable” means your browser did not share that signal. It does not mean the machine lacks the resource.</p>
+        </section>
+        <section class="insight" aria-live="polite"><div class="insight-mark" aria-hidden="true">i</div><div><h3 id="finding-title">What are we testing?</h3><p id="finding">The check samples screen-update timing for five seconds. Long waits can happen when the browser is busy, the page is hidden, or the computer is under load.</p><p class="small" id="comparison">Run it again under similar conditions to compare. One short sample is a clue, not a diagnosis.</p></div></section>
+      </aside>
+    </div>
+
+    <div class="lower">
+      <section class="panel info-panel" aria-labelledby="read-guide-title"><h2 id="read-guide-title">How to read these signals</h2><p>Every number has a source and a limit. Here is the short version.</p>
+        <div class="read-list">
+          <div class="read-row"><strong>Response time</strong><span>Long gaps mean this tab did not get a screen update on time. It is not a direct CPU-speed test.</span></div>
+          <div class="read-row"><strong>Processor count</strong><span>How many logical processors the browser reports. It does not show current CPU load or exact chip speed.</span></div>
+          <div class="read-row"><strong>Memory</strong><span>A rounded device-memory estimate on supported browsers. It is not live RAM use or total installed RAM.</span></div>
+          <div class="read-row"><strong>Site storage</strong><span>Space used by this website in this browser. It is not free space on your physical drive.</span></div>
+          <div class="read-row"><strong>Power & network</strong><span>Optional browser hints. Battery percent and online status do not measure power draw, Wi‑Fi quality, or internet speed.</span></div>
+        </div>
+      </section>
+      <section class="panel info-panel" aria-labelledby="boundary-title"><h2 id="boundary-title">What stays outside the browser</h2><p>A web page is deliberately fenced in. This tool does not request broader access.</p>
+        <div class="limits"><div class="limit"><b>CPU load & speed</b>Current system-wide use and clock speed</div><div class="limit"><b>Live RAM & drive</b>Used memory and physical free disk space</div><div class="limit"><b>Heat & graphics</b>Temperature, fan, GPU, and battery health</div><div class="limit"><b>Other activity</b>Apps, processes, files, or network traffic</div></div>
+      </section>
+    </div>
+    <div class="privacy"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 19 6v5c0 5-3.2 8.4-7 10-3.8-1.6-7-5-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.6"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>Private by design.</b> Readings stay in this page's memory. Nothing is uploaded, and no check history remains after you close the page. This first version asks for no browser permissions.</span></div>
+    <footer class="foot"><span>Machine Check · A browser-based systems experiment</span><a href="../../index.html">Back to Moreshwar Systems Lab</a></footer>
+  </main>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    let priorPauses = null;
+    const descriptions = {
+      processor:['Processor capacity','The browser-reported count of logical processors. A logical processor is a scheduling unit the operating system makes available to software. This does not reveal current CPU use, clock speed, or the exact processor model.'],
+      memory:['Memory estimate','Some browsers expose a rounded estimate of device memory. It is not a live reading of how much RAM is free or how much this computer has installed.'],
+      storage:['Site storage','The approximate data this website has stored in this browser origin. It tells us about this website’s browser storage—not the free space on the computer’s SSD or hard drive.'],
+      physicalDisk:['Physical disk','The web page cannot inspect total or free SSD or hard-drive capacity. Operating systems keep that information private from ordinary websites. The Site storage value is only this website’s browser data.'],
+      power:['Power signal','Some browsers expose a battery level and whether the device reports charging. This is not a measurement of watts, battery health, or power use by the whole computer.'],
+      network:['Network connection','The browser’s online/offline hint. “Online” means it believes a network is available; it does not prove that the internet works or measure speed, delay, or Wi‑Fi quality.'],
+      response:['Tab responsiveness','The gap between screen-update callbacks while this page is visible. Long gaps can reflect work in the browser or system, but this is not a benchmark of the whole computer.']
+    };
+    function setReading(key,value,state,detail){
+      $('value-'+key).textContent=value;$('state-'+key).textContent=state;
+      const card=document.querySelector('.metric[data-part="'+key+'"]');if(card&&detail)card.querySelector('.metric-detail').textContent=detail;
+      const map=$("map-"+key);if(map)map.textContent=value;
+    }
+    function selectPart(part){
+      const info=descriptions[part];if(!info)return;
+      document.querySelectorAll('.map-node').forEach(node=>node.classList.toggle('active',node.dataset.part===part));
+      $('node-detail').innerHTML='';const title=document.createElement('strong');title.textContent=info[0];const copy=document.createElement('p');copy.textContent=info[1];$('node-detail').append(title,copy);
+    }
+    document.querySelectorAll('[data-part]').forEach(node=>{
+      node.addEventListener('click',()=>selectPart(node.dataset.part));
+      if(node.classList.contains('map-node'))node.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPart(node.dataset.part);}});
+      if(node.classList.contains('metric'))node.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPart(node.dataset.part);}});
+    });
+    function sample(){
+      return new Promise((resolve,reject)=>{
+        let start,last,frame,timer,ended=false;const values=[];
+        const finish=error=>{if(ended)return;ended=true;cancelAnimationFrame(frame);clearTimeout(timer);document.removeEventListener('visibilitychange',visibility);error?reject(new Error(error)):resolve(values);};
+        const visibility=()=>{if(document.hidden)finish('The check paused because this tab became hidden. Return here and run it again.');};
+        const tick=now=>{if(start===undefined)start=now;if(last!==undefined)values.push(now-last);last=now;if(now-start>=5000)finish();else frame=requestAnimationFrame(tick);};
+        timer=setTimeout(()=>finish('The sample timed out. Keep this tab visible and try again.'),12000);
+        document.addEventListener('visibilitychange',visibility);if(document.hidden)visibility();else frame=requestAnimationFrame(tick);
+      });
+    }
+    function draw(values){
+      const sorted=[...values].sort((a,b)=>a-b),median=sorted[Math.floor(sorted.length/2)],peak=Math.max(...values),long=values.filter(v=>v>=100).length;
+      const left=54,right=700,top=30,bottom=195,maxY=Math.max(100,Math.ceil(peak/25)*25),step=(right-left)/(values.length-1);
+      const coords=values.map((v,i)=>[left+i*step,bottom-Math.min(v,maxY)/maxY*(bottom-top)]);
+      $('signal').setAttribute('points',coords.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' '));
+      $('area').setAttribute('d','M '+left+' '+bottom+' L '+coords.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L ')+' L '+right+' '+bottom+' Z');
+      $('markers').replaceChildren();for(let i=0;i<coords.length;i+=Math.max(1,Math.floor(coords.length/28))){const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');circle.setAttribute('class','marker');circle.setAttribute('cx',coords[i][0]);circle.setAttribute('cy',coords[i][1]);circle.setAttribute('r','3.1');$('markers').append(circle);}
+      $('chart-empty').style.display='none';$('typical').textContent=median.toFixed(1)+' ms';$('longest').textContent=peak.toFixed(1)+' ms';$('pause-count').textContent=String(long);
+      $('chart').setAttribute('aria-label','Measured animation callback gaps. Typical '+median.toFixed(1)+' milliseconds, longest '+peak.toFixed(1)+' milliseconds, '+long+' gaps of 100 milliseconds or longer.');
+      return {median,peak,long};
+    }
+    async function bounded(promise){return Promise.race([promise,new Promise(resolve=>setTimeout(()=>resolve(null),900))]).catch(()=>null);}
+    async function runCheck(){
+      const button=$('run');button.disabled=true;$('run-label').textContent='Measuring…';$('status').textContent='Measuring screen-update timing for five seconds. Keep this tab in front.';$('sample-state').textContent='Sampling';$('sample-dot').classList.add('live');
+      try{
+        const values=await sample();if(values.length<2)throw new Error('Too few readings. Try again with this tab visible.');
+        const result=draw(values);
+        const cores=navigator.hardwareConcurrency;
+        setReading('processor',Number.isFinite(cores)?cores+' logical CPUs':'Unavailable',Number.isFinite(cores)?'browser hint':'not shared',Number.isFinite(cores)?'Count shared by the browser':'Your browser did not share a processor count');
+        const memory=navigator.deviceMemory;
+        setReading('memory',Number.isFinite(memory)?'≈ '+memory+' GiB':'Unavailable',Number.isFinite(memory)?'rounded estimate':'not shared',Number.isFinite(memory)?'Rounded estimate; not live use':'Your browser did not share a memory estimate');
+        const storage=await bounded(navigator.storage?.estimate?.());
+        const usage=storage&&Number.isFinite(storage.usage)?storage.usage:null;
+        setReading('storage',usage!==null?(usage/1048576).toFixed(2)+' MiB':'Unavailable',usage!==null?'site-only estimate':'not shared',usage!==null?'Used by this website origin':'Storage estimate unavailable');
+        const battery=await bounded(navigator.getBattery?.());
+        setReading('power',battery?Math.round(100*battery.level)+'%':'Unavailable',battery?'battery hint':'not shared',battery?(battery.charging?'Browser reports charging':'Browser reports battery power'):'Battery detail unavailable in this browser');
+        const online=typeof navigator.onLine==='boolean'?navigator.onLine:null;
+        setReading('network',online===null?'Unavailable':online?'Online':'Offline',online===null?'not shared':'browser hint',online===null?'Network state unavailable':online?'Browser believes a network is available':'Browser reports no network connection');
+        setReading('response',result.median.toFixed(1)+' ms','measured','Typical gap between screen updates');
+        const signalValue=key=>$('value-'+key).textContent;for(const key of ['processor','memory','storage','power','network'])$('map-'+key).textContent=signalValue(key);
+        $('sample-state').textContent='Sample complete';$('status').textContent='Check complete. Readings are held in this page only.';
+        $('finding-title').textContent=result.long>=3?'Several long waits appeared':'A short sample, interpreted carefully';
+        $('finding').textContent=result.long>=3?result.long+' screen-update gaps lasted 100 ms or more. The browser did not get scheduled promptly during those moments. That can have several causes; this alone cannot identify which one.':result.long?'There was '+result.long+' screen-update gap of 100 ms or more. A single short check is noisy, so repeat under the same conditions before drawing a conclusion.':'No screen-update gap reached 100 ms in this sample. That is a good sign for this tab during these five seconds, not a full-machine speed score.';
+        $('comparison').textContent=priorPauses===null?'Run the check again under similar conditions to compare. One short sample is a clue, not a diagnosis.':'Previous sample: '+priorPauses+' long gaps. Current sample: '+result.long+'. Keep conditions similar when comparing.';priorPauses=result.long;
+      }catch(error){$('status').textContent=error.message;$('sample-state').textContent='Not sampled';$('sample-dot').classList.remove('live');}
+      finally{button.disabled=false;$('run-label').textContent='Run again';}
+    }
+    $('run').addEventListener('click',runCheck);
+  </script>
+</body>
+</html>
