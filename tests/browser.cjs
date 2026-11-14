@@ -15,7 +15,7 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
    for(const width of widths){
     const context=await browser.newContext({viewport:{width,height:850},reducedMotion:'reduce'});
     try{
-     for(const route of ['','reading-archive.html','studio.html','articles/fieldnote-queues.html']){
+     for(const route of ['','reading-archive.html','studio.html','articles/fieldnote-queues.html','assets/machine-check/showcase.html']){
       const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
       try{
        const res=await page.goto(new URL(route,base).href,{waitUntil:'load'});
@@ -30,12 +30,12 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     }finally{await context.close()}
    }
   });
-  await check('researcher homepage has exactly four navigational tabs and no portfolio clutter',async()=>{
+  await check('researcher homepage has five navigational tabs including Machine Check',async()=>{
    const page=await browser.newPage({viewport:{width:1440,height:900}});
    try{
     await page.goto(base);
     const labels=await page.locator('.site-navigation a').allTextContents();
-    assert.deepEqual(labels.map(x=>x.trim()),['Home','Research','Writing','About']);
+    assert.deepEqual(labels.map(x=>x.trim()),['Home','Research','Machine Check','Writing','About']);
     assert.equal(await page.locator('.site-header').count(),1);
     assert.equal(await page.locator('main h1').innerText(),'Hello!');
     assert.equal(await page.locator('.main-column').count(),1);
@@ -54,7 +54,25 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     const geom=await page.evaluate(()=>{const a=document.querySelector('.main-column').getBoundingClientRect(),b=document.querySelector('.sidebar').getBoundingClientRect();return{bottom:a.bottom,top:b.top,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}});
     assert.ok(geom.top>=geom.bottom-2,JSON.stringify(geom));
     assert.ok(geom.scroll<=geom.client+2);
-    assert.equal(await page.locator('.site-navigation a:visible').count(),4);
+    assert.equal(await page.locator('.site-navigation a:visible').count(),5);
+   }finally{await page.close()}
+  });
+  await check('Machine Check walkthrough controls respond to play, pause, and replay',async()=>{
+   const page=await browser.newPage({viewport:{width:390,height:850}});
+   try{
+    const response=await page.goto(new URL('assets/machine-check/showcase.html',base).href);
+    assert.equal(response.status(),200);
+    const films=page.locator('.mc-film');
+    assert.equal(await films.count(),2);
+    const first=films.first(),toggle=first.locator('.mc-film-toggle').first();
+    await toggle.click();
+    assert.equal(await toggle.getAttribute('aria-pressed'),'true');
+    assert.equal(await toggle.locator('.mc-button-label').innerText(),'Pause walkthrough');
+    await toggle.click();
+    assert.equal(await toggle.getAttribute('aria-pressed'),'false');
+    assert.equal(await toggle.locator('.mc-button-label').innerText(),'Resume walkthrough');
+    await first.locator('.mc-replay').click();
+    assert.equal(await toggle.getAttribute('aria-pressed'),'true');
    }finally{await page.close()}
   });
   await check('slate-blue light and dark themes have readable contrast',async()=>{

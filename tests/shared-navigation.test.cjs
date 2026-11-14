@@ -1,11 +1,11 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
 const read=p=>fs.readFileSync(p,'utf8');
-test('all primary pages expose the same four top-level links',()=>{
+test('all primary pages expose the same five top-level links',()=>{
  for(const page of ['index.html','studio.html','reading-archive.html']){
   const nav=read(page).match(/<nav class="site-navigation"[\s\S]*?<\/nav>/)?.[0];
   assert.ok(nav,page);
   const links=[...nav.matchAll(/<a href="([^"]+)"/g)].map(m=>m[1]);
-  assert.deepEqual(links,page==='index.html'?['index.html','studio.html','reading-archive.html','#about-profile']:['index.html','studio.html','reading-archive.html','index.html#about-profile'],page);
+  assert.deepEqual(links,page==='index.html'?['index.html','studio.html','assets/machine-check/showcase.html','reading-archive.html','#about-profile']:['index.html','studio.html','assets/machine-check/showcase.html','reading-archive.html','index.html#about-profile'],page);
   assert.equal((nav.match(/aria-current="page"/g)||[]).length,1,page);
  }
 });

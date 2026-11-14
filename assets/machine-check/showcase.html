@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFBFC">
+<title>Machine Check — Moreshwar Systems Lab</title>
+<meta name="description" content="A browser-based systems project with playable explainers on responsiveness sampling and the limits of hardware telemetry in a web page.">
+<link rel="canonical" href="https://moreshwarp.github.io/Moreshwar/assets/machine-check/showcase.html">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../../research-site.css">
+<script defer src="../../research-site.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site-header">
+ <div class="brand-band"><div class="container brand-inner">
+  <a href="../../index.html" class="brand" aria-label="Moreshwar Systems Lab home">Moreshwar <span>Systems Lab</span></a>
+  <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">Dark mode</button>
+ </div></div>
+ <nav class="site-navigation" aria-label="Primary navigation">
+  <div class="container nav-inner">
+   <a href="../../index.html">Home</a>
+   <a href="../../studio.html">Research</a>
+   <a href="showcase.html" aria-current="page">Machine Check</a>
+   <a href="../../reading-archive.html">Writing</a>
+   <a href="../../index.html#about-profile">About</a>
+  </div>
+ </nav>
+</header>
+<main id="content" class="container">
+ <header class="page-heading"><p class="eyebrow">Research project</p><h1>Machine Check</h1><p>A browser-based systems experiment. Learn what a webpage can measure, what it cannot see, and how to interpret a short responsiveness sample.</p></header>
+  <section id="machine-check-project" class="mc-project-showcase" aria-labelledby="mc-project-title">
+   <div class="mc-project-topline">
+    <span class="mc-project-eyebrow">Featured browser systems project</span>
+    <span class="mc-project-status">Live · browser-only</span>
+   </div>
+   <h2 id="mc-project-title">Machine Check: a small window into your machine</h2>
+   <p class="mc-project-lede">A systems experiment that treats the browser as a limited sensor. It measures how this page responds, displays the hints the browser shares, and explains why a website cannot read the whole computer.</p>
+   <div class="mc-project-facts" aria-label="Project facts">
+    <span>5-second responsiveness sample</span><span>Browser APIs, no install</span><span>Privacy boundary explained</span>
+   </div>
+   <div class="mc-project-actions">
+    <a class="mc-primary-link" href="index.html">Open the live dashboard ↗</a>
+    <a class="mc-secondary-link" href="https://github.com/moreshwarp/Moreshwar/tree/main/assets/machine-check" target="_blank" rel="noopener">Read the project source ↗</a>
+   </div>
+   <div class="mc-film-heading">
+    <div><h3>Watch the project walkthroughs</h3><p>Two short, playable motion explainers. Use Play, Pause, or Replay.</p></div>
+    <span class="mc-project-eyebrow">02 walkthroughs · 14 sec each</span>
+   </div>
+   <div class="mc-film-grid">
+    <article class="mc-film" aria-labelledby="mc-film-boundary-title">
+     <div class="mc-film-screen">
+      <svg viewBox="0 0 960 540" role="img" aria-labelledby="mc-film-boundary-title mc-film-boundary-desc">
+       <title id="mc-film-boundary-title">Where the browser's view ends</title>
+       <desc id="mc-film-boundary-desc">An animated diagram shows a browser receiving a few machine hints while detailed operating-system readings remain private.</desc>
+       <text class="mc-mini" x="52" y="58">01 / THE SENSOR BOUNDARY</text>
+       <text class="mc-label" x="52" y="94" style="font-size:24px">A website sees a narrow slice.</text>
+       <path class="mc-line" d="M277 278H372M588 278H682"/>
+       <circle class="mc-pulse" cx="480" cy="280" r="92" fill="none" stroke="#b8f36b" stroke-width="2"/>
+       <rect class="mc-box mc-pop" x="52" y="197" width="225" height="166" rx="18"/>
+       <text class="mc-mini" x="76" y="230">YOUR MACHINE</text>
+       <text class="mc-label" x="76" y="264">Processor</text><text class="mc-small" x="76" y="286">logical-lane hint</text>
+       <text class="mc-label" x="76" y="318">Memory</text><text class="mc-small" x="146" y="318">rounded estimate</text>
+       <rect class="mc-core" x="372" y="210" width="216" height="136" rx="22"/>
+       <text class="mc-mini" x="406" y="251">SAFE WEB ACCESS</text><text class="mc-label" x="406" y="286">BROWSER TAB</text>
+       <text class="mc-small" x="406" y="311">signals, not a full scan</text>
+       <rect class="mc-box mc-pop" x="682" y="197" width="225" height="166" rx="18"/>
+       <text class="mc-mini" x="706" y="230">OS-ONLY DETAILS</text>
+       <text class="mc-label" x="706" y="264">Live CPU use</text><text class="mc-small" x="706" y="286">not shared with this page</text>
+       <text class="mc-label" x="706" y="318">Free disk space</text><text class="mc-small" x="706" y="340">protected by the OS</text>
+       <rect x="52" y="421" width="856" height="1" fill="#405243"/>
+       <text class="mc-small" x="52" y="459">A missing reading means “not shared”—not zero.</text>
+       <text class="mc-mini" x="750" y="459">PRIVACY BY DESIGN</text>
+      </svg>
+     </div>
+     <div class="mc-film-controls">
+      <button class="mc-film-toggle" type="button" aria-pressed="false" aria-label="Play browser boundary walkthrough"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11L13 8 4 2.5Z"/></svg><span class="mc-button-label">Play walkthrough</span></button>
+      <div class="mc-film-progress" role="progressbar" aria-label="Walkthrough progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0"><span></span></div>
+      <button class="mc-film-toggle mc-replay" type="button" aria-label="Replay browser boundary walkthrough"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 1-5.7 4.1H.4L3.7 2.8 7 6.1H4.5A4 4 0 1 0 8 4V2Z"/></svg><span>Replay</span></button>
+      <span class="mc-film-time" aria-live="off">0:00 / 0:14</span>
+     </div>
+     <p class="mc-film-caption">Walkthrough 01 · Why the page can show clues but cannot inspect the entire operating system.</p>
+    </article>
+    <article class="mc-film" aria-labelledby="mc-film-response-title">
+     <div class="mc-film-screen">
+      <svg viewBox="0 0 960 540" role="img" aria-labelledby="mc-film-response-title mc-film-response-desc">
+       <title id="mc-film-response-title">How the five-second response check works</title>
+       <desc id="mc-film-response-desc">An animated chart reveals screen-update timing, a typical interval, and a long pause. It explains that the sample is a clue, not a diagnosis.</desc>
+       <text class="mc-mini" x="52" y="58">02 / MEASURE, THEN INTERPRET</text>
+       <text class="mc-label" x="52" y="94" style="font-size:24px">A short timing trace—not a speed score.</text>
+       <text class="mc-small" x="56" y="154">WAIT BETWEEN SCREEN UPDATES</text>
+       <line class="mc-gridline" x1="90" y1="196" x2="894" y2="196"/><line class="mc-gridline" x1="90" y1="270" x2="894" y2="270"/><line class="mc-gridline" x1="90" y1="344" x2="894" y2="344"/>
+       <text class="mc-small" x="48" y="200">100</text><text class="mc-small" x="63" y="274">50</text><text class="mc-small" x="73" y="348">0</text>
+       <path class="mc-trace" d="M90 314 L146 320 L204 306 L260 315 L316 319 L372 305 L428 317 L484 178 L540 311 L596 320 L652 306 L708 313 L764 318 L820 303 L894 312"/>
+       <circle class="mc-pop" cx="484" cy="178" r="8" fill="#f0c474"/><circle class="mc-pop" cx="484" cy="178" r="18" fill="none" stroke="#f0c474" stroke-width="2"/>
+       <rect class="mc-node mc-pop" x="112" y="394" width="208" height="68" rx="12"/><text class="mc-mini" x="134" y="421">TYPICAL GAP</text><text class="mc-label" x="134" y="446">~16 ms</text>
+       <rect class="mc-node mc-pop" x="376" y="394" width="208" height="68" rx="12"/><text class="mc-mini" x="398" y="421">LONGEST GAP</text><text class="mc-label" x="398" y="446">one pause</text>
+       <rect class="mc-node mc-pop" x="640" y="394" width="208" height="68" rx="12"/><text class="mc-mini" x="662" y="421">CONCLUSION</text><text class="mc-label" x="662" y="446">repeat to compare</text>
+       <text class="mc-small" x="52" y="500">A pause can have several causes. This sample cannot identify which one.</text>
+      </svg>
+     </div>
+     <div class="mc-film-controls">
+      <button class="mc-film-toggle" type="button" aria-pressed="false" aria-label="Play response timing walkthrough"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11L13 8 4 2.5Z"/></svg><span class="mc-button-label">Play walkthrough</span></button>
+      <div class="mc-film-progress" role="progressbar" aria-label="Walkthrough progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0"><span></span></div>
+      <button class="mc-film-toggle mc-replay" type="button" aria-label="Replay response timing walkthrough"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 1-5.7 4.1H.4L3.7 2.8 7 6.1H4.5A4 4 0 1 0 8 4V2Z"/></svg><span>Replay</span></button>
+      <span class="mc-film-time" aria-live="off">0:00 / 0:14</span>
+     </div>
+     <p class="mc-film-caption">Walkthrough 02 · What the five-second graph says, and why one sample is not enough to diagnose a machine.</p>
+    </article>
+   </div>
+   <div class="mc-project-note"><span>i</span><span><b>About these walkthroughs:</b> they are original, browser-native animated explainers. The live dashboard measures your current browser; the walkthrough graphics illustrate the method and do not use your device's readings.</span></div>
+  </section>
+ <p><a href="../../index.html">← Back to the research portfolio</a></p>
+</main>
+</body>
+</html>

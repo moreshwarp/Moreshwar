@@ -29,7 +29,7 @@ test('research pages share one semantic typographic system and four navigation t
     assert.match(html,/id="theme-toggle"/);
     const nav=html.match(/<nav class="site-navigation"[\s\S]*?<\/nav>/);
     assert.ok(nav,'missing navigation in '+file);
-    assert.deepEqual([...nav[0].matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map(m=>m[1]),['Home','Research','Writing','About'],file);
+    assert.deepEqual([...nav[0].matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map(m=>m[1]),['Home','Research','Machine Check','Writing','About'],file);
   }
 });
 test('slate-blue links pass minimum normal-text contrast in both modes',()=>{
