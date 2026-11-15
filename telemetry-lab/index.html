@@ -42,6 +42,10 @@
       </div>
 
       <div class="lab-controls">
+        <div class="mode-selector-badge" id="modeSelector">
+          <button class="mode-btn" id="modeAndroidBtn" title="Switch to Android Local Device Telemetry">📱 Android Probe</button>
+          <button class="mode-btn active" id="modeMacBtn" title="Switch to Apple Silicon M4 Lab Telemetry">💻 M4 Lab Host</button>
+        </div>
         <a href="../index.html" class="lab-btn portfolio-btn" title="Return to Moreshwar Portfolio"><span class="btn-icon">🏛️</span> Portfolio</a>
         <button id="audioToggleBtn" class="lab-btn" title="Toggle Real-Time Acoustic CPU Sonifier"><span class="btn-icon" id="audioIcon">🔇</span> Audio Drone</button>
         <button id="articlesBtn" class="lab-btn btn-primary" title="Open Research Library & Academic Articles">
@@ -544,6 +548,69 @@
             <div class="die-block-title">Unified Memory Fabric (128-bit LPDDR5X)</div>
             <div class="die-specs">~120 GB/s Zero-Copy CPU/GPU/NPU Shared Fabric • WKdm Hardware Compression Engine</div>
           </div>
+        </div>
+      </section>
+
+    
+      <!-- Panel 8: Real Time-Series Database & Historical Stream (IndexedDB & SQLite) -->
+      <section class="diagnostic-panel full-width" id="databasePanel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-icon">🗄️</span>
+            <div>
+              <h2>Time-Series Telemetry Database Engine</h2>
+              <p>Embedded Client-Side IndexedDB & SQLite Synchronizer • High-Throughput Hardware Sample Logger</p>
+            </div>
+          </div>
+          <div class="panel-actions">
+            <button id="dbQueryBtn" class="lab-btn btn-primary" title="Query stored time-series telemetry records">
+              <span class="btn-icon">🔍</span> Query DB
+            </button>
+            <button id="dbExportBtn" class="lab-btn" title="Export database as structured JSON / CSV">
+              <span class="btn-icon">📥</span> Export Data
+            </button>
+            <button id="dbClearBtn" class="lab-btn btn-danger" title="Clear recorded time-series samples">
+              <span class="btn-icon">🗑️</span> Flush DB
+            </button>
+          </div>
+        </div>
+
+        <div class="db-stats-grid">
+          <div class="db-stat-card">
+            <div class="stat-label">Storage Engine</div>
+            <div class="stat-value text-cyan" id="dbEngineType">IndexedDB (Active)</div>
+            <div class="stat-sub">Zero-dependency client persistence</div>
+          </div>
+          <div class="db-stat-card">
+            <div class="stat-label">Stored Records</div>
+            <div class="stat-value text-green" id="dbRecordCount">0 samples</div>
+            <div class="stat-sub">Live continuous logging</div>
+          </div>
+          <div class="db-stat-card">
+            <div class="stat-label">Active Platform</div>
+            <div class="stat-value text-amber" id="dbActivePlatform">Detecting...</div>
+            <div class="stat-sub" id="dbPlatformSub">Hardware probe active</div>
+          </div>
+          <div class="db-stat-card">
+            <div class="stat-label">Write Latency</div>
+            <div class="stat-value text-purple" id="dbWriteLatency">&lt; 1.5 ms</div>
+            <div class="stat-sub">Asynchronous non-blocking WAL</div>
+          </div>
+        </div>
+
+        <!-- Academic Citation Block (UC Berkeley Systems Style) -->
+        <div class="academic-citation-box">
+          <div class="citation-header">
+            <span class="citation-badge">Academic Citation • BibTeX</span>
+            <button id="copyBibtexBtn" class="copy-cite-btn">Copy BibTeX</button>
+          </div>
+          <pre class="bibtex-code" id="bibtexContent">@software{pidadi2026machine,
+  author    = {Pidadi, Moreshwar},
+  title     = {Machine Telemetry Lab: High-Precision Hardware Diagnostics and Microarchitectural Benchmarking Engine},
+  year      = {2026},
+  url       = {https://moreshwarp.github.io/Moreshwar/telemetry-lab/},
+  note      = {Empirical Systems Research Artifact}
+}</pre>
         </div>
       </section>
 

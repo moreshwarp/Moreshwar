@@ -1346,6 +1346,194 @@ If the load L doubles while arrival rate λ is constant, average response time W
     // Initial chart render
     drawBenchmarkChart(benchResults);
 
+
+    // --------------------------------------------------------------------------
+    // 8. Device Detection & Adaptive Mobile Diagnostics (Android / Mac / Desktop)
+    // --------------------------------------------------------------------------
+    const ua = navigator.userAgent || '';
+    const isAndroid = /Android/i.test(ua);
+    const isIOS = /iPhone|iPad|iPod/i.test(ua);
+    const isMobile = isAndroid || isIOS;
+    
+    // WebGL GPU Detection
+    function getGpuRenderer() {
+      try {
+        const c = document.createElement('canvas');
+        const gl = c.getContext('webgl') || c.getContext('experimental-webgl');
+        if (!gl) return 'Standard GPU';
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          return gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Accelerated WebGL';
+        }
+      } catch (e) {}
+      return 'Hardware Graphics';
+    }
+
+    const clientGpu = getGpuRenderer();
+    const clientCores = navigator.hardwareConcurrency || 8;
+    const clientRam = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Dynamic';
+
+    let currentTelemetryMode = isAndroid ? 'client_android' : 'remote_m4';
+
+    function applyPlatformDetection() {
+      const chipModel = document.getElementById('chipModel');
+      const osKernel = document.getElementById('osKernel');
+      const cacheLineMeta = document.getElementById('cacheLineMeta');
+      const dbActivePlatform = document.getElementById('dbActivePlatform');
+      const dbPlatformSub = document.getElementById('dbPlatformSub');
+
+      if (currentTelemetryMode === 'client_android') {
+        if (chipModel) chipModel.textContent = 'Android Client (' + clientCores + ' Cores)';
+        if (osKernel) osKernel.textContent = 'Linux Kernel (Android OS)';
+        if (cacheLineMeta) cacheLineMeta.textContent = 'RAM: ~' + clientRam + ' • GPU: ' + clientGpu.slice(0, 24);
+        if (dbActivePlatform) dbActivePlatform.textContent = 'Android Mobile';
+        if (dbPlatformSub) dbPlatformSub.textContent = clientCores + ' Cores • ' + clientGpu.slice(0, 20);
+      } else {
+        if (chipModel) chipModel.textContent = 'Apple M4 (10 Cores: 4P + 6E)';
+        if (osKernel) osKernel.textContent = 'Darwin Kernel (macOS)';
+        if (cacheLineMeta) cacheLineMeta.textContent = 'Cacheline: 128B • UMA Fabric';
+        if (dbActivePlatform) dbActivePlatform.textContent = 'Apple M4 Lab';
+        if (dbPlatformSub) dbPlatformSub.textContent = 'Darwin XNU • 16GB UMA';
+      }
+    }
+
+    // --------------------------------------------------------------------------
+    // 9. Client-Side Time-Series IndexedDB Engine
+    // --------------------------------------------------------------------------
+    let dbInstance = null;
+    const dbRecordCount = document.getElementById('dbRecordCount');
+    const dbEngineType = document.getElementById('dbEngineType');
+    const dbWriteLatency = document.getElementById('dbWriteLatency');
+    let localRecordCount = 0;
+
+    function initIndexedDB() {
+      return new Promise((resolve, reject) => {
+        try {
+          const request = indexedDB.open('MachineTelemetryDB', 1);
+          request.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains('telemetry_stream')) {
+              const store = db.createObjectStore('telemetry_stream', { keyPath: 'id', autoIncrement: true });
+              store.createIndex('timestamp', 'timestamp', { unique: false });
+              store.createIndex('device', 'device', { unique: false });
+            }
+          };
+          request.onsuccess = (e) => {
+            dbInstance = e.target.result;
+            refreshDbCount();
+            resolve(dbInstance);
+          };
+          request.onerror = (e) => {
+            console.warn('IndexedDB initialization failed:', e);
+            resolve(null);
+          };
+        } catch (err) {
+          console.warn('IndexedDB not supported:', err);
+          resolve(null);
+        }
+      });
+    }
+
+    function recordTelemetryToDB(sample) {
+      if (!dbInstance) return;
+      try {
+        const t0 = performance.now();
+        const tx = dbInstance.transaction('telemetry_stream', 'readwrite');
+        const store = tx.objectStore('telemetry_stream');
+        store.add({
+          timestamp: Date.now(),
+          device: currentTelemetryMode,
+          cpuTotal: sample.cpu ? sample.cpu.total : 0,
+          cores: sample.cpu ? sample.cpu.core_count : clientCores,
+          memUsed: sample.memory ? sample.memory.used_bytes : 0,
+          saturation: sample.saturation ? sample.saturation.ratio : 0
+        });
+        tx.oncomplete = () => {
+          localRecordCount++;
+          if (dbRecordCount) dbRecordCount.textContent = localRecordCount + ' samples';
+          const lat = (performance.now() - t0).toFixed(1);
+          if (dbWriteLatency) dbWriteLatency.textContent = lat + ' ms';
+        };
+      } catch (e) {}
+    }
+
+    function refreshDbCount() {
+      if (!dbInstance) return;
+      try {
+        const tx = dbInstance.transaction('telemetry_stream', 'readonly');
+        const store = tx.objectStore('telemetry_stream');
+        const countReq = store.count();
+        countReq.onsuccess = () => {
+          localRecordCount = countReq.result || 0;
+          if (dbRecordCount) dbRecordCount.textContent = localRecordCount + ' samples';
+        };
+      } catch (e) {}
+    }
+
+    const dbQueryBtn = document.getElementById('dbQueryBtn');
+    const dbExportBtn = document.getElementById('dbExportBtn');
+    const dbClearBtn = document.getElementById('dbClearBtn');
+    const copyBibtexBtn = document.getElementById('copyBibtexBtn');
+
+    if (dbQueryBtn) {
+      dbQueryBtn.addEventListener('click', () => {
+        if (!dbInstance) return alert('Database initializing...');
+        const tx = dbInstance.transaction('telemetry_stream', 'readonly');
+        const store = tx.objectStore('telemetry_stream');
+        const req = store.getAll(null, 10);
+        req.onsuccess = () => {
+          const sampleData = req.result;
+          alert('Queried ' + sampleData.length + ' most recent telemetry records from IndexedDB.\nLatest: ' + (sampleData.length ? JSON.stringify(sampleData[sampleData.length-1]) : 'No records yet'));
+        };
+      });
+    }
+
+    if (dbExportBtn) {
+      dbExportBtn.addEventListener('click', () => {
+        if (!dbInstance) return alert('Database initializing...');
+        const tx = dbInstance.transaction('telemetry_stream', 'readonly');
+        const store = tx.objectStore('telemetry_stream');
+        const req = store.getAll();
+        req.onsuccess = () => {
+          const blob = new Blob([JSON.stringify(req.result, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'machine_telemetry_timeseries_' + Date.now() + '.json';
+          a.click();
+        };
+      });
+    }
+
+    if (dbClearBtn) {
+      dbClearBtn.addEventListener('click', () => {
+        if (!dbInstance) return;
+        if (confirm('Are you sure you want to flush all recorded telemetry samples?')) {
+          const tx = dbInstance.transaction('telemetry_stream', 'readwrite');
+          tx.objectStore('telemetry_stream').clear();
+          tx.oncomplete = () => {
+            localRecordCount = 0;
+            if (dbRecordCount) dbRecordCount.textContent = '0 samples';
+            alert('Telemetry time-series database flushed.');
+          };
+        }
+      });
+    }
+
+    if (copyBibtexBtn) {
+      copyBibtexBtn.addEventListener('click', () => {
+        const text = document.getElementById('bibtexContent').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          copyBibtexBtn.textContent = 'Copied!';
+          setTimeout(() => { copyBibtexBtn.textContent = 'Copy BibTeX'; }, 2000);
+        });
+      });
+    }
+
+    // Initialize platform detection and IndexedDB
+    applyPlatformDetection();
+    initIndexedDB();
+
     // Research Articles Modal Open / Close
     const articlesBtn = document.getElementById('articlesBtn');
     const articlesModal = document.getElementById('articlesModal');

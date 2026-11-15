@@ -21,7 +21,7 @@ function prepareSite(destination = '_site') {
   for (const filename of sourceFiles) {
     fs.copyFileSync(path.join(root, filename), path.join(output, filename));
   }
-  for (const dirname of ['assets', 'articles', 'vendor', 'telemetry-lab', 'curiosity']) {
+  for (const dirname of ['assets', 'articles', 'vendor', 'telemetry-lab']) {
     if (fs.existsSync(path.join(root, dirname))) {
       fs.cpSync(path.join(root, dirname), path.join(output, dirname), {
         recursive: true, force: true
