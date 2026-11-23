@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>Moreshwar Journal — Hybrid Design Review</title><meta name="description" content="Review-only prototype of Moreshwar Research Lab's minimal intellectual magazine homepage."><link rel="stylesheet" href="editorial-design-system.css">
+<style>
+.shell{width:min(var(--max-width),calc(100% - 2*var(--gutter)));margin-inline:auto}
+.review{background:var(--ink);color:var(--surface);padding:10px 0;font-size:12px}
+.review .shell,.issue,.sectionhead,.footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.review a,.sectionhead a,.books a,.research-note a{text-decoration:underline}
+.header-inner{flex-wrap:wrap}.menu{display:none;min-height:44px;padding:8px 14px;background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.issue{padding:16px 0;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px}
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:var(--space-6);align-items:center;padding:var(--space-6) 0;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;color:var(--muted);margin-bottom:16px}
+.hero h1{font:400 clamp(38px,5vw,68px)/1.06 var(--font-editorial);letter-spacing:-.045em;margin:0 0 20px}
+.hero p{font:var(--step-base)/1.65 var(--font-editorial);color:var(--muted);max-width:60ch}
+.read,.sectionhead a,.books a,.research-note a,.footer a{display:inline-flex;align-items:center;min-height:44px}
+.visual{margin:0;padding:28px;background:var(--soft);border:1px solid var(--line)}
+.visual blockquote{font:400 clamp(24px,3vw,38px)/1.25 var(--font-editorial);margin:0 0 20px}
+.visual figcaption{font-size:12px;color:var(--muted)}
+.below{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6);padding:var(--space-6) 0}
+.sectionhead{align-items:baseline;margin-bottom:16px}
+.sectionhead h2{font:400 30px/1.15 var(--font-editorial);margin:0}
+.article{padding:18px 0;border-top:1px solid var(--line)}
+.article h3,.books h3,.research-note h3{font:400 23px/1.25 var(--font-editorial);margin:8px 0}
+.article h3 a{display:block;min-height:44px}
+.article small{color:var(--muted);font-size:12px}
+.books{display:flex;align-items:flex-start;gap:20px;border-top:1px solid var(--line);padding-top:20px}
+.books>div{min-width:0}.books p,.research-note p{font-size:14px;color:var(--muted)}
+.book-visual{position:relative;flex:0 0 106px;aspect-ratio:2/3;background:var(--soft)}
+.book-visual img{display:block;width:100%;height:100%;object-fit:contain}
+.book-fallback{display:none;padding:12px;font:18px/1.2 var(--font-editorial)}
+.book-visual.failed img{display:none}.book-visual.failed .book-fallback{display:block}
+.research-note{border-top:1px solid var(--line);margin-top:28px;padding-top:20px}
+.footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:12px;color:var(--muted)}
+:where(section,main)[id]{scroll-margin-top:90px}
+@media(max-width:760px){
+.menu{display:block}.header-inner{gap:12px;padding-block:8px}
+.journal-nav{display:flex;flex-basis:100%;flex-direction:column;align-items:stretch;gap:0;padding-bottom:8px}
+.journal-nav a{padding:8px 0;white-space:normal}
+.js .journal-nav:not(.open){display:none}
+.hero,.below{grid-template-columns:1fr;gap:24px;padding-block:28px}
+.hero h1{font-size:clamp(36px,9vw,58px)}
+.visual{padding:20px}.sectionhead h2{font-size:27px}
+}
+@media(max-width:360px){.books{flex-direction:column}.book-visual{width:106px;flex-basis:auto}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head><body><a class="mrl-skip" href="#top">Skip to content</a><div class="review"><div class="shell"><span>DESIGN REVIEW ONLY · NOT THE LIVE HOMEPAGE</span><a href="https://moreshwarp.github.io/Moreshwar/">Existing website ↗</a></div></div><header class="mrl-header"><div class="shell mrl-header-inner header-inner">
+<a href="journal-review.html" class="mrl-brand" aria-label="Moreshwar Research Lab journal home">MORESHWAR<span>RESEARCH LAB</span></a>
+<button class="menu" id="menu" type="button" aria-controls="nav" aria-expanded="false">Menu ☰</button>
+<nav class="mrl-nav journal-nav" id="nav" aria-label="Primary navigation">
+<a href="index.html">Home</a><a href="reading-archive.html">Essays</a><a href="index.html#library">Bookshelf</a><a href="index.html#systems-lab">Research</a>
+</nav></div></header><main id="top" class="shell" tabindex="-1"><div class="issue"><span>Ideas / Essays / Research</span><span>An independent journal of curiosity</span></div><section class="hero" aria-labelledby="featured"><div><div class="eyebrow">Featured essay · <time datetime="2026-01-07">7 January 2026</time> · 5 min</div><h1 id="featured">The Secret Link Between “Sounding Good” and “Being Right”</h1><p>A reflection on clear writing and clear thinking, based on Paul Graham’s essay “Good Writing.”</p><a class="read" href="articles/183772820-the-secret-link-between-sounding.html">Read the essay <span aria-hidden="true">↗</span></a></div><figure class="visual"><blockquote>When an argument sounds convincing, how do we check whether it is correct?</blockquote><figcaption>A question to bring to this essay.</figcaption></figure></section><div class="below"><section id="essays"><div class="sectionhead"><h2>Worth your attention</h2><a href="reading-archive.html">All essays ↗</a></div><article class="article"><small>Ideas · Critical thinking</small><h3><a href="articles/182482423-the-lie-we-tell-ourselves-why-good.html">The Lie We Tell Ourselves: Why “Good” Isn't Just an Opinion</a></h3></article><article class="article"><small>Economics · Competition</small><h3><a href="articles/180980837-why-competition-is-for-losers-a-rational.html">Why Competition Is for Losers</a></h3></article><article class="article"><small>Research · Progress</small><h3><a href="articles/178480398-the-engine-of-progress-why-indias.html">The Engine of Progress: Why India's Future Depends on Research</a></h3></article></section><section id="reading"><div class="sectionhead"><h2>On the reading desk</h2><a href="index.html#library">Explore reading ↗</a></div><div class="books"><div class="book-visual"><img src="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9798893310948/the-almanack-of-naval-ravikant-9798893310948_hr.jpg" width="640" height="960" loading="lazy" decoding="async" alt="Cover of The Almanack of Naval Ravikant"><span class="book-fallback">The Almanack of Naval Ravikant<br><small>Cover unavailable</small></span></div><div><div class="eyebrow" style="margin-bottom:12px">Currently reading</div><h3>The Almanack of Naval Ravikant</h3><p>Created and edited by Eric Jorgenson. Illustrations by Jack Butcher. Foreword by Tim Ferriss. Reading in progress, not a completed review.</p><a href="index.html#library">Visit the reading desk ↗</a><br><a href="https://www.simonandschuster.com/books/The-Almanack-of-Naval-Ravikant/Eric-Jorgenson/9798893310948">Publisher &amp; cover source ↗</a></div></div><section class="research-note" aria-labelledby="experiment-title"><div class="eyebrow">Systems notebook · Interactive model</div><h3 id="experiment-title">Why the slowest request wins.</h3><p>How does dependency fan-out change the chance that at least one request is slow? Explore P(any slow) = 1 − (1 − p)ⁿ by changing dependency count and per-request probability.</p><p>This idealized model assumes independent, identical events. It is not measured production traffic or a claim of completed academic research.</p><a href="index.html#systems-lab">Try the distributed latency model ↗</a></section></section></div></main><footer class="shell footer"><span>© Moreshwar Research Lab · Design review concept</span><a href="https://moreshwarp.github.io/Moreshwar/">Return to current live website ↗</a></footer><script>
+document.documentElement.classList.add('js');
+const button=document.getElementById('menu'),nav=document.getElementById('nav');
+function setMenu(open){nav.classList.toggle('open',open);button.setAttribute('aria-expanded',String(open))}
+button.addEventListener('click',()=>setMenu(button.getAttribute('aria-expanded')!=='true'));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&nav.classList.contains('open')){setMenu(false);button.focus()}});
+document.addEventListener('click',event=>{if(!nav.contains(event.target)&&!button.contains(event.target))setMenu(false)});
+const mobile=matchMedia('(max-width:760px)');
+mobile.addEventListener('change',()=>{const restore=nav.contains(document.activeElement);setMenu(false);if(restore&&mobile.matches)button.focus()});
+const cover=document.querySelector('.book-visual img');
+function coverFallback(){cover.parentElement.classList.add('failed')}
+cover.addEventListener('error',coverFallback);
+if(cover.complete&&!cover.naturalWidth)coverFallback();
+</script></body></html>
