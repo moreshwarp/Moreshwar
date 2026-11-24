@@ -8,13 +8,13 @@ const js=fs.readFileSync('lab-home.js','utf8');
 test('homepage states scope honestly and invents no affiliations',()=>{
   assert.match(home,/<h1 id="hello">/);
   assert.match(home,/independent research notebook/);
-  assert.match(home,/not peer-reviewed results/);
+  assert.match(home,/not claims of peer-reviewed discoveries/);
   assert.match(home,/simulated/i,'the hero chart must say it is simulated');
   assert.doesNotMatch(home,/Associate Professor|PhD from|PhD student at|peer-reviewed papers by Moreshwar/);
 });
 
 test('homepage has the main sections and landmarks',()=>{
-  for(const id of ['content','research','experiments','writing','studying','about','about-profile'])assert.ok(home.includes('id="'+id+'"'),id);
+  for(const id of ['content','research-projects','experiments','writing','studying','about','about-profile'])assert.ok(home.includes('id="'+id+'"'),id);
   assert.match(home,/<a class="skip" href="#content">/);
   assert.equal((home.match(/<h1\b/g)||[]).length,1);
   assert.match(home,/<main id="content">/);

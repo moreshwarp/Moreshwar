@@ -22,13 +22,13 @@
 <body>
 <a class="skip" href="#content">Skip to content</a>
 
-<header class="masthead">
+<header class="site-header">
  <div class="wrap masthead-inner">
   <a href="index.html" class="wordmark" aria-label="Moreshwar Systems Lab home"><span class="wordmark-dot" aria-hidden="true"></span>Moreshwar <span>Systems Lab</span></a>
-  <nav class="primary-nav site-navigation" aria-label="Primary navigation">
+  <nav class="site-navigation" aria-label="Primary navigation">
    <a href="index.html" aria-current="page">Home</a>
    <a href="studio.html">Research</a>
-   <a href="assets/machine-check/showcase.html"><span class="nav-long">Machine </span>Check</a>
+   <a href="assets/machine-check/showcase.html">Machine Check</a>
    <a href="reading-archive.html">Writing</a>
    <a href="#about-profile">About</a>
   </nav>
@@ -73,7 +73,7 @@
  </section>
 
  <!-- Research questions -->
- <section class="section wrap" id="research" aria-labelledby="research-title">
+ <section class="section wrap" id="research-projects" aria-labelledby="research-title">
   <header class="section-head">
    <p class="section-index">01</p>
    <div>
@@ -111,7 +111,7 @@
     <h3>Performance diagnosis across the stack</h3>
     <p class="q">When software is slow, is the cause the code, the operating system, memory, or the network?</p>
     <p class="plain">Each layer hides the layers below it. I build small telemetry tools that measure what one layer can see, and that state clearly what it cannot see.</p>
-    <p class="links"><a href="telemetry-lab/index.html">Telemetry Lab</a><a href="assets/machine-check/showcase.html"><span class="nav-long">Machine </span>Check</a></p>
+    <p class="links"><a href="telemetry-lab/index.html">Telemetry Lab</a><a href="assets/machine-check/showcase.html">Machine Check</a></p>
    </article>
 
    <article class="question">
@@ -136,7 +136,7 @@
    <p class="section-index">02</p>
    <div>
     <h2 id="experiments-title">Experiments</h2>
-    <p class="section-intro">Small, working tools. Each one asks a single question and is open about its limits. These are learning projects, not peer-reviewed results.</p>
+    <p class="section-intro">Small, working tools. Each one asks a single question and is open about its limits. These are learning projects, not claims of peer-reviewed discoveries.</p>
    </div>
   </header>
 
@@ -172,7 +172,12 @@
    </article>
   </div>
   <p class="rail-hint" aria-hidden="true">Swipe for more →</p>
-  <p class="more"><a href="studio.html">All research notes and experiments →</a></p>
+  <p class="more studio-links">
+   <a href="studio.html#systems-lab">Research notebook</a>
+   <a href="studio.html#science-ideas">Science ideas</a>
+   <a href="studio.html#inquiry">Open questions</a>
+   <a href="reading-archive.html">Essay archive</a>
+  </p>
  </section>
 
  <!-- Writing -->
@@ -237,7 +242,7 @@
   </header>
   <div class="about-grid" id="about-profile">
    <div class="about-text">
-    <p>I am Moreshwar, a systems software researcher. My interests are operating systems, distributed systems, AI infrastructure, reliability, energy-aware computing and performance diagnosis.</p>
+    <p>I am Moreshwar, a systems software researcher. My interests are systems software, distributed systems, operating systems, AI infrastructure, reliability, energy-aware computing and performance diagnosis.</p>
     <p>Before research, I spent about seven years building web front ends for products used in many countries. That work taught me how real users meet a system: through the slowest request, the confusing error and the page that does not load. Now I study the layers underneath.</p>
     <p>I write for curious readers, not only for specialists. If a note here is wrong or unclear, please tell me. Corrections make the work better.</p>
    </div>

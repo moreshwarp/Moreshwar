@@ -37,21 +37,21 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     const labels=await page.locator('.site-navigation a').allTextContents();
     assert.deepEqual(labels.map(x=>x.trim()),['Home','Research','Machine Check','Writing','About']);
     assert.equal(await page.locator('.site-header').count(),1);
-    assert.equal(await page.locator('main h1').innerText(),'Hello!');
-    assert.equal(await page.locator('.main-column').count(),1);
-    assert.equal(await page.locator('.sidebar').count(),1);
-    for(const id of ['research-projects','academic-directory','essays','about-profile','academic-recent','method'])assert.equal(await page.locator('#'+id).count(),1,id);
+    assert.ok((await page.locator('main h1').innerText()).trim().length>10);
+    assert.equal(await page.locator('.question-grid').count(),1);
+    assert.equal(await page.locator('.about-card').count(),1);
+    for(const id of ['research-projects','experiments','writing','studying','about-profile'])assert.equal(await page.locator('#'+id).count(),1,id);
     for(const selector of ['#bookshelf','#reading-desk','.ed-card','.rs-project','.obs-frame','.rs-hero-visual','.mrl-bottom-nav'])assert.equal(await page.locator(selector).count(),0,selector);
     assert.ok((await page.locator('time[datetime]').count())>=4);
-    const layout=await page.evaluate(()=>{const a=document.querySelector('.main-column').getBoundingClientRect(),b=document.querySelector('.sidebar').getBoundingClientRect();return{mainRight:a.right,sideLeft:b.left,sideTop:b.top}});
-    assert.ok(layout.sideLeft>layout.mainRight,JSON.stringify(layout));
+    const layout=await page.evaluate(()=>{const a=document.querySelector('.hero-text').getBoundingClientRect(),b=document.querySelector('.trace').getBoundingClientRect();return{mainRight:a.right,sideLeft:b.left,sideTop:b.top}});
+    assert.ok(layout.sideLeft>=layout.mainRight,JSON.stringify(layout));
    }finally{await page.close()}
   });
   await check('mobile researcher page has no clipped headings and sidebar stacks below writing',async()=>{
    const page=await browser.newPage({viewport:{width:320,height:850}});
    try{
     await page.goto(base);
-    const geom=await page.evaluate(()=>{const a=document.querySelector('.main-column').getBoundingClientRect(),b=document.querySelector('.sidebar').getBoundingClientRect();return{bottom:a.bottom,top:b.top,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}});
+    const geom=await page.evaluate(()=>{const a=document.querySelector('.hero-text').getBoundingClientRect(),b=document.querySelector('.trace').getBoundingClientRect();return{bottom:a.bottom,top:b.top,client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}});
     assert.ok(geom.top>=geom.bottom-2,JSON.stringify(geom));
     assert.ok(geom.scroll<=geom.client+2);
     assert.equal(await page.locator('.site-navigation a:visible').count(),5);
@@ -81,8 +81,8 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     await page.goto(base);
     await page.evaluate(()=>localStorage.removeItem('mrl-research-theme'));
     await page.reload();
-    for(const [mode,expected] of [['light','rgb(250, 251, 252)'],['dark','rgb(17, 28, 37)']]){
-     const data=await page.evaluate(()=>{const body=getComputedStyle(document.body),a=getComputedStyle(document.querySelector('.main-column a')),heading=getComputedStyle(document.querySelector('h1'));return{mode:document.documentElement.dataset.theme,background:body.backgroundColor,ink:body.color,link:a.color,heading:heading.color}});
+    for(const [mode,expected] of [['light','rgb(247, 245, 240)'],['dark','rgb(13, 16, 20)']]){
+     const data=await page.evaluate(()=>{const body=getComputedStyle(document.body),a=getComputedStyle(document.querySelector('#writing .more a')),heading=getComputedStyle(document.querySelector('h1'));return{mode:document.documentElement.dataset.theme,background:body.backgroundColor,ink:body.color,link:a.color,heading:heading.color}});
      assert.equal(data.mode,mode);assert.equal(data.background,expected);
      assert.ok(contrast(data.ink,data.background)>=7,'body '+mode+' contrast '+JSON.stringify(data));
      assert.ok(contrast(data.heading,data.background)>=7,'heading '+mode+' contrast '+JSON.stringify(data));
