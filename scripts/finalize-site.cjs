@@ -48,7 +48,7 @@ function finalize(dir='_site'){
  const versions={css:fingerprint('article-unified.css'),js:fingerprint('article-unified.js')};
  for(const name of names){const file=path.join(articles,name);const previous=fs.readFileSync(file,'utf8'),current=finalizeHtml(previous,versions);if(current!==previous)fs.writeFileSync(file,current)}
  const stories=path.join(root,'stories.html');
- if(fs.existsSync(stories)){const old=fs.readFileSync(stories,'utf8');const fixed=old.replace(/href=(["'])index\.html#story-of-the-day\1/g,'href="index.html#academic-recent"');if(fixed!==old)fs.writeFileSync(stories,fixed)}
+ if(fs.existsSync(stories)){const old=fs.readFileSync(stories,'utf8');const fixed=old.replace(/href=(["'])index\.html#story-of-the-day\1/g,'href="index.html#writing"');if(fixed!==old)fs.writeFileSync(stories,fixed)}
  for(const asset of ['article-unified.css','article-unified.js'])if(!fs.existsSync(path.join(root,asset)))throw Error('Missing reader asset '+asset);
  console.log('Unified '+names.length+' published articles with academic reading navigation');
  return names.length;

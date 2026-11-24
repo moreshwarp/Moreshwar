@@ -1,118 +1,269 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#FAFBFC">
-<title>Moreshwar Systems Lab — Research Notes and Essays</title>
-<meta name="description" content="Moreshwar's independent research notebook: systems software, distributed systems, experiments, and carefully sourced writing.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0D1014">
+<title>Moreshwar Systems Lab — Systems research notebook</title>
+<meta name="description" content="Moreshwar Pidadi's systems research notebook: how computer systems behave under load, failure and imperfect information. Experiments, fieldnotes and essays.">
 <link rel="canonical" href="https://moreshwarp.github.io/Moreshwar/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Moreshwar Systems Lab — Research Notes and Essays">
-<meta property="og:description" content="Independent computer systems research notes, experiments and essays.">
-<meta property="og:image" content="https://moreshwarp.github.io/Moreshwar/social-preview.png?v=systems-lab-20261104">
-<link rel="stylesheet" href="research-site.css">
-<script defer src="research-site.js"></script>
+<meta property="og:title" content="Moreshwar Systems Lab — Systems research notebook">
+<meta property="og:description" content="Experiments, fieldnotes and essays on systems software, distributed systems and AI infrastructure.">
+<meta property="og:image" content="https://moreshwarp.github.io/Moreshwar/social-preview.png?v=systems-lab-20261125">
+<link rel="preload" href="assets/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>(()=>{try{const s=localStorage.getItem('mrl-research-theme');const t=s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t}catch{}})()</script>
+<link rel="stylesheet" href="lab-home.css">
+<script defer src="lab-home.js"></script>
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
+
 <header class="site-header">
- <div class="brand-band"><div class="container brand-inner">
-  <a href="index.html" class="brand" aria-label="Moreshwar Systems Lab home">Moreshwar <span>Systems Lab</span></a>
-  <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">Dark mode</button>
- </div></div>
- <nav class="site-navigation" aria-label="Primary navigation">
-  <div class="container nav-inner">
+ <div class="wrap masthead-inner">
+  <a href="index.html" class="wordmark" aria-label="Moreshwar Systems Lab home"><span class="wordmark-dot" aria-hidden="true"></span>Moreshwar <span>Systems Lab</span></a>
+  <nav class="site-navigation" aria-label="Primary navigation">
    <a href="index.html" aria-current="page">Home</a>
    <a href="studio.html">Research</a>
-   <a href="assets/machine-check/showcase.html" class="nav-tab-machine-check">Machine Check</a>
+   <a href="assets/machine-check/showcase.html">Machine Check</a>
    <a href="reading-archive.html">Writing</a>
    <a href="#about-profile">About</a>
-  </div>
- </nav>
- <div class="station-banner">
-  <div class="container station-inner">
-   <span class="station-tag">Interactive Stations:</span>
-   <a href="telemetry-lab/index.html" class="station-link">⚡ Machine Telemetry Lab</a>
-   
-  </div>
+  </nav>
+  <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="true">
+   <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+   <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+  </button>
  </div>
 </header>
-<main id="content" class="container layout">
- <article class="main-column">
-  <section class="introduction" aria-labelledby="hello">
-   <h1 id="hello">Hello!</h1>
-   <p>I'm Moreshwar. I am interested in <strong>systems software, distributed computing, reliability, and the methods used to test claims about computer systems.</strong></p>
-   <p>This website is my independent research notebook. It contains questions I am investigating, small educational experiments, and essays that document what I learn. Work in progress is identified as such.</p>
-   <p>My aim is to understand how real systems behave, especially when concurrency, failures and imperfect information make simple explanations unreliable.</p>
-  </section>
-  <section id="research-projects" aria-labelledby="research-heading">
-   <h2 id="research-heading">Research interests and experiments</h2>
-   <p>These are exploratory learning projects, not claims of peer-reviewed discoveries or published benchmarks.</p>
-   <ul class="research-list">
-    <li><a href="telemetry-lab/index.html"><strong>Machine Telemetry Lab</strong></a> — Real-time microarchitectural telemetry, memory wall benchmarks, and in-RAM compression diagnostics.</li>
-    
-    <li><a href="assets/machine-check/showcase.html">Machine Check</a> — Check browser responsiveness and available resources in one click. No installation required.</li>
-    <li><a href="studio.html#systems-lab">Distributed systems and reliability</a> — coordination, queueing, latency, failure behaviour, and consistency models.</li>
-    <li id="method"><a href="studio.html#inquiry">Research methodology</a> — hypotheses, baselines, reproducibility, and testing competing explanations.</li>
-    <li><a href="studio.html#science-ideas">Scientific and mathematical foundations</a> — models, proof, uncertainty, and reasoning about software.</li>
-   </ul>
-   <p><a href="studio.html">Explore the research studio</a></p>
-  </section>
-  <section id="academic-directory" aria-labelledby="academic-recent">
-   <h2 id="academic-recent">Recent writing</h2>
-   <p>Selected dated essays from the published archive.</p>
-   <ul class="dated-list">
-    <li><time datetime="2026-01-07">07 Jan 2026</time><a href="articles/183772820-the-secret-link-between-sounding.html">The Secret Link Between “Sounding Good” and “Being Right”</a></li>
-    <li><time datetime="2025-12-24">24 Dec 2025</time><a href="articles/182482423-the-lie-we-tell-ourselves-why-good.html">The Lie We Tell Ourselves: Why “Good” Is Not Just an Opinion</a></li>
-    <li><time datetime="2025-12-07">07 Dec 2025</time><a href="articles/180980837-why-competition-is-for-losers-a-rational.html">Why Competition Is for Losers: An Analysis of Value and Monopoly</a></li>
-    <li><time datetime="2025-11-10">10 Nov 2025</time><a href="articles/178480398-the-engine-of-progress-why-indias.html">Why India’s Future Depends on Research and a Scientific Mindset</a></li>
-   </ul>
-   <p><a href="reading-archive.html">Complete essay archive</a></p>
-  </section>
-  <section id="paul-graham-reading"><h2>Paul Graham reading notes</h2><p>Independent analyses of ideas about building, research and focused work.</p><p><a href="paul-graham.html">Browse the Paul Graham collection</a></p></section><section id="essays" aria-labelledby="selected-heading">
-   <h2 id="selected-heading">Selected technical writing</h2>
-   <ul class="research-list">
-    <li><a href="articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html">Zero-knowledge proofs</a> — an introduction to proving a claim without revealing the underlying secret.</li>
-    <li><a href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html">Leslie Lamport and distributed computing</a> — why ordering and coordination matter.</li>
-    <li><a href="articles/165015692-chaos-monkey-25-06-02.html">Chaos Monkey and system failures</a> — lessons from resilience testing.</li>
-    <li><a href="articles/fieldnote-queues.html">Queues and latency</a> — educational notes about waiting time and utilization.</li>
-   </ul>
-  </section>
-  <section id="about-profile" aria-labelledby="about-heading">
-   <h2 id="about-heading">About</h2>
-   <p>I use this site to document questions, reason from evidence, and build reproducible examples. Interests include distributed systems, operating systems, concurrency, mathematical foundations and careful technical communication.</p>
-   <p>Writing here reflects independent exploration. It should not be interpreted as a record of formal academic appointments, peer-reviewed publications, or proven scientific breakthroughs.</p>
-   <p>For questions or corrections, visit the <a href="studio.html#contact">contact section</a>.</p>
-  </section>
- </article>
- <aside class="sidebar" aria-label="Research profile and links">
-  <section><h2>Interactive Stations</h2>
-   <p>Live operational systems & telemetry tools:</p>
-   <ul>
-    <li><a href="telemetry-lab/index.html"><strong>Machine Telemetry Lab</strong></a></li>
-    
-    <li><a href="assets/machine-check/index.html">Machine Check</a></li>
-   </ul>
-  </section>
-  <section><h2>Research focus</h2>
-   <p>Systems software and the science of building reliable computer systems.</p>
-   <ul><li>Distributed systems</li><li>Concurrency and consistency</li><li>Reliability and latency</li><li>Formal reasoning and experiments</li></ul>
-  </section>
-  <section><h2>Current work</h2>
-   <p>Maintaining educational notes and experiments on queues, failures and distributed request flows.</p>
-   <p><a href="studio.html#systems-lab">Research notebooks and examples</a></p>
-  </section>
-  <section><h2>Open source</h2>
-   <p>Project source and technical updates are available on <a href="https://github.com/moreshwarp/Moreshwar">GitHub</a>.</p>
-  </section>
-  <section><h2>Browse</h2>
-   <ul><li><a href="reading-archive.html">Essay archive</a></li><li><a href="studio.html">Research studio</a></li><li><a href="studio.html#contact">Contact</a></li></ul>
-  </section>
- </aside>
+
+<main id="content">
+
+ <!-- Hero -->
+ <section class="hero wrap" aria-labelledby="hello">
+  <div class="hero-text">
+   <p class="kicker">Moreshwar Pidadi · Pune, India</p>
+   <h1 id="hello">I study how computer systems behave when things go wrong.</h1>
+   <p class="lede">Load, failure and imperfect information turn simple systems into hard ones. This is my independent research notebook: the questions I am working on, the small experiments I build to test them, and the notes I write to explain what I find.</p>
+   <div class="hero-actions">
+    <a class="button button-primary" href="#experiments">See the experiments</a>
+    <a class="button" href="#writing">Read the notes</a>
+   </div>
+  </div>
+
+  <figure class="trace" aria-labelledby="trace-caption">
+   <div class="trace-head">
+    <span class="trace-label">request latency · simulated</span>
+    <span class="trace-live" aria-hidden="true">live</span>
+   </div>
+   <svg class="trace-plot" id="trace-plot" viewBox="0 0 320 150" preserveAspectRatio="none" role="img" aria-label="A histogram of request times. Most requests are fast, but a long tail of slow requests stretches to the right.">
+    <g id="trace-bars"></g>
+    <line class="trace-mark" id="mark-p50" x1="0" x2="0" y1="8" y2="142"/>
+    <line class="trace-mark trace-mark-tail" id="mark-p99" x1="0" x2="0" y1="8" y2="142"/>
+   </svg>
+   <div class="trace-stats">
+    <div><span>p50</span><strong id="stat-p50">— ms</strong></div>
+    <div><span>p99</span><strong id="stat-p99" class="tail">— ms</strong></div>
+    <div><span>gap</span><strong id="stat-gap">—×</strong></div>
+   </div>
+   <figcaption id="trace-caption">Most requests finish fast. A few are many times slower, and with many requests per page, users meet the slow ones often. <a href="articles/fieldnote-tail-latency.html">Why the tail matters →</a></figcaption>
+  </figure>
+ </section>
+
+ <!-- Research questions -->
+ <section class="section wrap" id="research-projects" aria-labelledby="research-title">
+  <header class="section-head">
+   <p class="section-index">01</p>
+   <div>
+    <h2 id="research-title">Research questions</h2>
+    <p class="section-intro">I start with the question “why does this happen?” before “what should we build?”. Each card says how far I have got with it, so you know what is an experiment and what is still reading.</p>
+   </div>
+  </header>
+
+  <div class="question-grid">
+   <article class="question">
+    <p class="status status-reading">Studying</p>
+    <h3>Reliability of AI infrastructure</h3>
+    <p class="q">When a training job or an inference server fails halfway through, how fast can it recover, and what work is lost?</p>
+    <p class="plain">Large AI jobs run for days on thousands of chips. One failed machine can stop all of them. I am studying checkpointing, failure detection and recovery, and how serving systems handle many multi-step AI-agent requests at once.</p>
+   </article>
+
+   <article class="question">
+    <p class="status status-note">Fieldnotes</p>
+    <h3>Queues and tail latency</h3>
+    <p class="q">Why does the slowest 1% of requests decide how fast a whole system feels?</p>
+    <p class="plain">A page that calls 100 services must wait for the slowest one. Small delays in queues add up, so a system that is fast on average can still feel slow.</p>
+    <p class="links"><a href="articles/fieldnote-tail-latency.html">Tail latency</a><a href="articles/fieldnote-queues.html">Queues</a></p>
+   </article>
+
+   <article class="question">
+    <p class="status status-note">Fieldnote</p>
+    <h3>Consistency in distributed systems</h3>
+    <p class="q">When copies of the same data disagree, what exactly does a user see?</p>
+    <p class="plain">Systems keep many copies of data so they can survive failures. The copies cannot always agree at the same moment. Ordering, clocks and consensus decide what “correct” means.</p>
+    <p class="links"><a href="articles/fieldnote-stale-reads.html">Stale reads</a><a href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html">Lamport and ordering</a></p>
+   </article>
+
+   <article class="question">
+    <p class="status status-live">Experiment</p>
+    <h3>Performance diagnosis across the stack</h3>
+    <p class="q">When software is slow, is the cause the code, the operating system, memory, or the network?</p>
+    <p class="plain">Each layer hides the layers below it. I build small telemetry tools that measure what one layer can see, and that state clearly what it cannot see.</p>
+    <p class="links"><a href="telemetry-lab/index.html">Telemetry Lab</a><a href="assets/machine-check/showcase.html">Machine Check</a></p>
+   </article>
+
+   <article class="question">
+    <p class="status status-reading">Studying</p>
+    <h3>Operating systems and concurrency</h3>
+    <p class="q">How much control should an operating system give to applications, and what breaks when many threads share memory?</p>
+    <p class="plain">I am reading the classic answers, from Exokernel to modern kernels, and working through low-level C++ concurrency to see the problems at first hand.</p>
+   </article>
+
+   <article class="question">
+    <p class="status status-reading">Studying</p>
+    <h3>Energy-aware computing</h3>
+    <p class="q">How much useful work can a system do per unit of energy, and how do we measure it honestly?</p>
+    <p class="plain">Data centres for AI use a lot of power. Scheduling work on GPUs and CPUs with energy in mind is a systems problem as much as a hardware problem.</p>
+   </article>
+  </div>
+ </section>
+
+ <!-- Experiments / case studies -->
+ <section class="section wrap" id="experiments" aria-labelledby="experiments-title">
+  <header class="section-head">
+   <p class="section-index">02</p>
+   <div>
+    <h2 id="experiments-title">Experiments</h2>
+    <p class="section-intro">Small, working tools. Each one asks a single question and is open about its limits. These are learning projects, not claims of peer-reviewed discoveries.</p>
+   </div>
+  </header>
+
+  <div class="case-rail" role="list">
+   <article class="case" role="listitem">
+    <div class="case-top"><p class="status status-live">Live</p><p class="case-tag">Browser · telemetry</p></div>
+    <h3>Machine Telemetry Lab</h3>
+    <dl>
+     <dt>Question</dt><dd>What can live telemetry tell us about the “memory wall”, the gap between how fast a CPU computes and how fast memory feeds it?</dd>
+     <dt>Method</dt><dd>A live dashboard for CPU, memory and storage, with sampling-rate control, snapshot export and researcher notes beside each reading.</dd>
+    </dl>
+    <a class="case-link" href="telemetry-lab/index.html">Open the lab <span aria-hidden="true">→</span></a>
+   </article>
+
+   <article class="case" role="listitem">
+    <div class="case-top"><p class="status status-live">Live</p><p class="case-tag">Browser · privacy boundary</p></div>
+    <h3>Machine Check</h3>
+    <dl>
+     <dt>Question</dt><dd>What can a web page measure about your machine, and what is it not allowed to see?</dd>
+     <dt>Method</dt><dd>A five-second responsiveness sample using only browser APIs. Results are graded good, okay or bad, with a plain explanation of each one.</dd>
+    </dl>
+    <a class="case-link" href="assets/machine-check/showcase.html">Read the case study <span aria-hidden="true">→</span></a>
+   </article>
+
+   <article class="case" role="listitem">
+    <div class="case-top"><p class="status status-note">Fieldnotes</p><p class="case-tag">Distributed systems</p></div>
+    <h3>Three systems fieldnotes</h3>
+    <dl>
+     <dt>Question</dt><dd>Can one concrete example explain a whole idea in distributed systems?</dd>
+     <dt>Method</dt><dd>Short notes, each built around one example: a queue that slows a fast system, one slow request that dominates a page, and one stale read.</dd>
+    </dl>
+    <p class="case-links"><a href="articles/fieldnote-queues.html">Queues</a> · <a href="articles/fieldnote-tail-latency.html">Tail latency</a> · <a href="articles/fieldnote-stale-reads.html">Stale reads</a></p>
+   </article>
+  </div>
+  <p class="rail-hint" aria-hidden="true">Swipe for more →</p>
+  <p class="more studio-links">
+   <a href="studio.html#systems-lab">Research notebook</a>
+   <a href="studio.html#science-ideas">Science ideas</a>
+   <a href="studio.html#inquiry">Open questions</a>
+   <a href="reading-archive.html">Essay archive</a>
+  </p>
+ </section>
+
+ <!-- Writing -->
+ <section class="section wrap" id="writing" aria-labelledby="writing-title">
+  <header class="section-head">
+   <p class="section-index">03</p>
+   <div>
+    <h2 id="writing-title">Writing</h2>
+    <p class="section-intro">Long-form essays, first published on <a href="https://moreshwarpidadi.substack.com/">Substack</a>. I try to explain hard ideas in plain words, with sources.</p>
+   </div>
+  </header>
+
+  <div class="writing-grid">
+   <div>
+    <h3 class="list-title">Systems and computer science</h3>
+    <ol class="post-list">
+     <li><a href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html"><span class="post-title">Leslie Lamport: the ideas behind computers working together</span><time datetime="2025-01-21">Jan 2025</time></a></li>
+     <li><a href="articles/165015680-scryer-netflixs-predictive-auto-scaling-engine-82db2049ca47.html"><span class="post-title">Scryer: Netflix’s predictive auto-scaling engine</span><time datetime="2024-12-29">Dec 2024</time></a></li>
+     <li><a href="articles/165015688-chaos-monkey-the-tool-that-keeps-the-internet-running-smoothly-0d64063d5047.html"><span class="post-title">Chaos Monkey: breaking systems on purpose</span><time datetime="2024-12-28">Dec 2024</time></a></li>
+     <li><a href="articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html"><span class="post-title">Zero-knowledge proofs: proving without revealing</span><time datetime="2025-01-30">Jan 2025</time></a></li>
+     <li><a href="articles/165015690-p-np-biggest-puzzle-in-computer-science-5674ed9a93b9.html"><span class="post-title">P vs NP: the biggest puzzle in computer science</span><time datetime="2025-01-20">Jan 2025</time></a></li>
+    </ol>
+   </div>
+   <div>
+    <h3 class="list-title">Research, ideas and judgement</h3>
+    <ol class="post-list">
+     <li><a href="articles/183772820-the-secret-link-between-sounding.html"><span class="post-title">The secret link between “sounding good” and “being right”</span><time datetime="2026-01-07">Jan 2026</time></a></li>
+     <li><a href="articles/182482423-the-lie-we-tell-ourselves-why-good.html"><span class="post-title">The lie we tell ourselves: why “good” is not just an opinion</span><time datetime="2025-12-24">Dec 2025</time></a></li>
+     <li><a href="articles/180980837-why-competition-is-for-losers-a-rational.html"><span class="post-title">Why competition is for losers: value and monopoly</span><time datetime="2025-12-07">Dec 2025</time></a></li>
+     <li><a href="articles/178480398-the-engine-of-progress-why-indias.html"><span class="post-title">The engine of progress: India and the scientific mindset</span><time datetime="2025-11-10">Nov 2025</time></a></li>
+     <li><a href="paul-graham.html"><span class="post-title">Reading notes on Paul Graham’s essays</span><time>Collection</time></a></li>
+    </ol>
+   </div>
+  </div>
+  <p class="more"><a href="reading-archive.html">All 22 essays →</a></p>
+ </section>
+
+ <!-- Reading desk -->
+ <section class="section wrap" id="studying" aria-labelledby="studying-title">
+  <header class="section-head">
+   <p class="section-index">04</p>
+   <div>
+    <h2 id="studying-title">On the desk</h2>
+    <p class="section-intro">Behind the scenes: what I am reading to build the foundations. Classic papers first, because most new problems are old problems at a larger scale.</p>
+   </div>
+  </header>
+  <ul class="desk">
+   <li><span class="desk-kind">Book</span><span class="desk-title">Operating Systems: Three Easy Pieces</span><span class="desk-by">Arpaci-Dusseau</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">Hints for Computer System Design</span><span class="desk-by">Lampson</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">Time, Clocks, and the Ordering of Events</span><span class="desk-by">Lamport</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">Exokernel: an OS architecture for application-level resource management</span><span class="desk-by">Engler, Kaashoek, O’Toole</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">The Google File System</span><span class="desk-by">Ghemawat, Gobioff, Leung</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">The Tail at Scale</span><span class="desk-by">Dean, Barroso</span></li>
+  </ul>
+ </section>
+
+ <!-- About -->
+ <section class="section wrap about" id="about" aria-labelledby="about-title">
+  <header class="section-head">
+   <p class="section-index">05</p>
+   <div><h2 id="about-title">About</h2></div>
+  </header>
+  <div class="about-grid" id="about-profile">
+   <div class="about-text">
+    <p>I am Moreshwar, a systems software researcher. My interests are systems software, distributed systems, operating systems, AI infrastructure, reliability, energy-aware computing and performance diagnosis.</p>
+    <p>Before research, I spent about seven years building web front ends for products used in many countries. That work taught me how real users meet a system: through the slowest request, the confusing error and the page that does not load. Now I study the layers underneath.</p>
+    <p>I write for curious readers, not only for specialists. If a note here is wrong or unclear, please tell me. Corrections make the work better.</p>
+   </div>
+   <aside class="about-card" aria-label="Contact and links">
+    <p class="about-card-title">Find me</p>
+    <ul>
+     <li><a href="https://github.com/moreshwarp">GitHub</a><span>code and experiments</span></li>
+     <li><a href="https://moreshwarpidadi.substack.com/">Substack</a><span>essays</span></li>
+     <li><a href="studio.html#contact">Contact form</a><span>questions and corrections</span></li>
+    </ul>
+   </aside>
+  </div>
+ </section>
+
 </main>
-<footer class="site-footer"><div class="container"><p>© Moreshwar Systems Lab · Independent research and writing</p><p><a href="index.html">Home</a> · <a href="reading-archive.html">Writing</a> · <a href="studio.html">Research</a></p></div></footer>
+
+<footer class="footer">
+ <div class="wrap footer-inner">
+  <p>© 2026 Moreshwar Systems Lab · Independent research and writing</p>
+  <p><a href="https://github.com/moreshwarp/Moreshwar">Site source on GitHub</a></p>
+ </div>
+</footer>
 </body>
 </html>
