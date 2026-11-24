@@ -4,8 +4,8 @@ test('homepage and companion pages use one stylesheet, one runtime, and a single
  for(const route of ['index.html','studio.html','reading-archive.html']){
   const html=read(route);
   assert.equal((html.match(/rel="stylesheet"/g)||[]).length,1,route);
-  assert.equal((html.match(route==='index.html'?/src="lab-home\.js"/g:/src="research-site\.js"/g)||[]).length,1,route);
-  assert.match(html,route==='index.html'?/href="lab-home\.css"/:/href="research-site\.css"/,route);
+  assert.equal((html.match(/src="lab-site\.js"/g)||[]).length,1,route);
+  assert.match(html,/href="lab-site\.css"/,route);
   assert.doesNotMatch(html,/heritage-unified\.js|shared-navigation\.js|mobile-first\.js/);
   assert.equal((html.match(/class="site-header"/g)||[]).length,1,route);
   assert.equal((html.match(/aria-current="page"/g)||[]).length,1,route);

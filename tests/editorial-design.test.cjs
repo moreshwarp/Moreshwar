@@ -25,7 +25,7 @@ test('research pages share one semantic typographic system and four navigation t
   assert.match(css,/--link:#91D0E2/);
   for(const file of pages){
     const html=read(file);
-    assert.match(html,file==='index.html'?/href="lab-home\.css"/:/href="research-site\.css"/);
+    assert.match(html,/href="lab-site\.css"/);
     assert.match(html,/id="theme-toggle"/);
     const nav=html.match(/<nav class="site-navigation"[\s\S]*?<\/nav>/);
     assert.ok(nav,'missing navigation in '+file);
