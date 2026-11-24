@@ -262,8 +262,25 @@
 <footer class="footer">
  <div class="wrap footer-inner">
   <p>© 2026 Moreshwar Systems Lab · Independent research and writing</p>
-  <p><a href="https://github.com/moreshwarp/Moreshwar">Site source on GitHub</a></p>
+  <p class="kbd-hint"><a href="https://github.com/moreshwarp/Moreshwar">Site source</a> · <span class="build-chip" id="build-chip" hidden><b aria-hidden="true"></b>build <span id="build-sha"></span> · </span><kbd>/</kbd> to search</p>
  </div>
 </footer>
+
+<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Go to">
+ <div class="palette-box">
+  <input type="text" placeholder="Go to…" aria-label="Search pages">
+  <ul role="listbox">
+   <li role="option"><a href="index.html">Home<span>page</span></a></li>
+   <li role="option"><a href="studio.html">Research<span>page</span></a></li>
+   <li role="option"><a href="reading-archive.html">Writing archive<span>page</span></a></li>
+   <li role="option"><a href="paul-graham.html">Paul Graham notes<span>collection</span></a></li>
+   <li role="option"><a href="telemetry-lab/index.html">Machine Telemetry Lab<span>experiment</span></a></li>
+   <li role="option"><a href="assets/machine-check/showcase.html">Machine Check<span>experiment</span></a></li>
+   <li role="option"><a href="studio.html#systems-lab">Queueing model<span>interactive</span></a></li>
+   <li role="option"><a href="#about-profile">About<span>section</span></a></li>
+  </ul>
+  <p class="palette-foot"><span>↑↓ move</span><span>↵ open</span><span>esc close</span></p>
+ </div>
+</div>
 </body>
 </html>

@@ -264,9 +264,14 @@
 
   /* ---------- Build provenance: show the released commit if it was stamped ---------- */
   (() => {
+    // Only shown where the deploy actually stamped the released commit;
+    // claiming "local" on a published page would be untrue.
+    const wrap = document.getElementById('build-chip');
     const chip = document.getElementById('build-sha');
-    if (!chip) return;
+    if (!wrap || !chip) return;
     const sha = document.querySelector('meta[name="mrl-release-sha"]')?.content;
-    chip.textContent = sha ? sha.slice(0, 7) : 'local';
+    if (!/^[0-9a-f]{7,40}$/.test(sha || '')) return;
+    chip.textContent = sha.slice(0, 7);
+    wrap.hidden = false;
   })();
 })();
