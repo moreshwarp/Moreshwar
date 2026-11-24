@@ -2,8 +2,8 @@
 // and keeps their intent: honest claims, working local links, one shared menu, no third-party requests.
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const home=fs.readFileSync('index.html','utf8');
-const css=fs.readFileSync('lab-home.css','utf8');
-const js=fs.readFileSync('lab-home.js','utf8');
+const css=fs.readFileSync('lab-site.css','utf8');
+const js=fs.readFileSync('lab-site.js','utf8');
 
 test('homepage states scope honestly and invents no affiliations',()=>{
   assert.match(home,/<h1 id="hello">/);
@@ -53,6 +53,6 @@ test('theme is shared with other pages, mobile and motion preferences are handle
 });
 
 test('build pipeline publishes the new homepage assets untouched',()=>{
-  assert.match(fs.readFileSync('scripts/prepare-site.cjs','utf8'),/lab-home\.css lab-home\.js/);
-  assert.match(fs.readFileSync('scripts/apply-text-mode.cjs','utf8'),/lab-home\.css/);
+  assert.match(fs.readFileSync('scripts/prepare-site.cjs','utf8'),/lab-site\.css lab-site\.js/);
+  assert.match(fs.readFileSync('scripts/apply-text-mode.cjs','utf8'),/lab-site\.css/);
 });

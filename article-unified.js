@@ -5,10 +5,10 @@ if(!b||!d.querySelector('main'))return;
 b.classList.add('sch-reader');
 const main=d.querySelector('main');if(!main.id)main.id='sch-article-content';
 const header=d.createElement('header');header.className='sch-reader-header';header.innerHTML=
- '<div class="sch-reader-top"><a class="sch-reader-brand" href="../index.html">Moreshwar<small>Research Lab</small></a><a class="sch-reader-source" href="../reading-archive.html">All writing ↗</a></div>'+
+ '<div class="sch-reader-top"><a class="sch-reader-brand mrl-site-brand" href="../index.html">Moreshwar<small>Research Lab</small></a><a class="sch-reader-source mrl-site-action" href="../reading-archive.html">All writing ↗</a></div>'+
  '<nav class="sch-reader-nav" aria-label="Site navigation"><div class="sch-reader-nav-inner">'+
  '<button class="sch-reader-mobile-toggle" type="button" aria-expanded="false" aria-controls="sch-reader-menu">Browse site <span aria-hidden="true">☰</span></button>'+
- '<div class="sch-reader-menu" id="sch-reader-menu"><a href="../index.html">Home</a><a href="../studio.html">Research</a><a href="../reading-archive.html">Writing</a><a href="../index.html#about-profile">About</a></div></div></nav>';
+ '<div class="sch-reader-menu" id="sch-reader-menu"><a class="mrl-site-action" href="../index.html">Home</a><a class="mrl-site-action" href="../studio.html">Research</a><a class="mrl-site-action" href="../reading-archive.html">Writing</a><a class="mrl-site-action" href="../index.html#about-profile">About</a></div></div></nav>';
 const previous=d.querySelector('.site-nav,header.top.shell');if(previous){const shell=previous.closest('.shell');if(previous.matches('.site-nav')&&shell&&shell.children.length===1)shell.remove();else previous.remove()}
 b.insertBefore(header,b.firstChild);
 const skip=d.createElement('a');skip.className='sch-reader-skip';skip.href='#'+main.id;skip.textContent='Skip to article';b.insertBefore(skip,header);

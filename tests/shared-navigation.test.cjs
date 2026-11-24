@@ -13,8 +13,10 @@ test('Writing archive retains 22 entries, keyboard-accessible filters and local 
  const html=read('reading-archive.html');
  assert.equal((html.match(/class="story"/g)||[]).length,22);
  for(const id of ['q','year','count','empty'])assert.ok(html.includes('id="'+id+'"'),id);
- assert.match(html,/addEventListener\('input',filter\)/);
- assert.match(html,/addEventListener\('change',filter\)/);
+ assert.match(html,/src="lab-site\.js"/);
+ const runtime=read('lab-site.js');
+ assert.match(runtime,/addEventListener\('input', ?filter\)/);
+ assert.match(runtime,/addEventListener\('change', ?filter\)/);
  assert.doesNotMatch(html,/href="https:\/\/moreshwarp\.github\.io\/Moreshwar\/articles\//);
 });
 test('articles have home, research, writing and about without a book section',()=>{

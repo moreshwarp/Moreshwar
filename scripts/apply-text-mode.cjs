@@ -21,11 +21,14 @@ function brandPublishedHtml(html){
 function stylePage(html,relative,version=''){
  html=brandPublishedHtml(html);
  // The research homepage is self-contained; do not inject legacy CSS or menus.
- if(['index.html','studio.html','reading-archive.html'].includes(relative) && (html.includes('href="research-site.css"')||html.includes('href="lab-home.css')))return html;
+ if(['index.html','studio.html','reading-archive.html','paul-graham.html','paul-graham-makers-schedule.html','paul-graham-schlep-blindness.html'].includes(relative) && (html.includes('href="research-site.css"')||html.includes('href="lab-site.css')))return html;
  if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
  const article=relative.startsWith('articles/');
  const prefix='../'.repeat(relative.split('/').length-1);
  const extras=['text-first-site.css'];
+ // Reader layer: the owner sets the published default in site-settings.js; a visitor who has
+ // chosen light or dark on the main pages keeps that choice while reading an article.
+ const themeBootstrap='<script>(function(){try{var v=localStorage.getItem("mrl-research-theme");if(v==="light"||v==="dark"){document.documentElement.dataset.theme=v;document.documentElement.style.colorScheme=v;var m=document.querySelector(\'meta[name="theme-color"]\');if(m)m.content=v==="light"?"#F7F5F0":"#0D1014"}}catch(e){}})();<\/script>';
  if(!prefix && !html.includes('shared-navigation.js'))extras.push('shared-navigation.css','shared-navigation.js');
  let output=html;
  for(const asset of extras){
@@ -35,6 +38,7 @@ function stylePage(html,relative,version=''){
   const tag=asset.endsWith('.css')?'<link rel="stylesheet" href="'+url+'">':'<script defer src="'+address+'"></script>';
   output=output.replace(/<\/head>/i,tag+'\n</head>');
  }
+ if(!output.includes('mrl-research-theme'))output=output.replace(/<\/head>/i,themeBootstrap+'\n</head>');
  output=output.replace(/<body\b([^>]*)>/i,(full,attr)=>{
    const additions=['mrl-text-first',...(article?['mrl-article-page']:[])];
    if(/\bclass\s*=\s*["']/.test(attr)){

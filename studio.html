@@ -1,123 +1,276 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#FAFBFC">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0D1014">
 <title>Research — Moreshwar Systems Lab</title>
-<meta name="description" content="Systems research interests, reproducible educational fieldnotes and research methodology.">
+<meta name="description" content="Questions, working notes and interactive models about systems software, distributed systems, queueing and reliability.">
 <link rel="canonical" href="https://moreshwarp.github.io/Moreshwar/studio.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Research — Moreshwar Systems Lab">
-<meta property="og:description" content="Systems research interests, reproducible educational fieldnotes and research methodology.">
-<meta property="og:url" content="https://moreshwarp.github.io/Moreshwar/studio.html">
-<meta property="og:image" content="https://moreshwarp.github.io/Moreshwar/social-preview.png?v=systems-lab-20261104">
-<link rel="stylesheet" href="research-site.css">
-<script defer src="research-site.js"></script>
+<script>(()=>{try{const s=localStorage.getItem('mrl-research-theme');const t=s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t}catch{}})()</script>
+<link rel="stylesheet" href="lab-site.css">
+<script defer src="lab-site.js"></script>
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
+
 <header class="site-header">
- <div class="brand-band"><div class="container brand-inner">
-  <a href="index.html" class="brand" aria-label="Moreshwar Systems Lab home">Moreshwar <span>Systems Lab</span></a>
-  <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">Dark mode</button>
- </div></div>
- <nav class="site-navigation" aria-label="Primary navigation">
-  <div class="container nav-inner">
+ <div class="wrap masthead-inner">
+  <a href="index.html" class="wordmark" aria-label="Moreshwar Systems Lab home"><span class="wordmark-dot" aria-hidden="true"></span>Moreshwar <span>Systems Lab</span></a>
+  <nav class="site-navigation" aria-label="Primary navigation">
    <a href="index.html">Home</a>
    <a href="studio.html" aria-current="page">Research</a>
-   <a href="assets/machine-check/showcase.html" class="nav-tab-machine-check">Machine Check</a>
+   <a href="assets/machine-check/showcase.html">Machine Check</a>
    <a href="reading-archive.html">Writing</a>
    <a href="index.html#about-profile">About</a>
-  </div>
- </nav>
- <div class="station-banner">
-  <div class="container station-inner">
-   <span class="station-tag">Interactive Stations:</span>
-   <a href="telemetry-lab/index.html" class="station-link">⚡ Machine Telemetry Lab</a>
-   
-  </div>
+  </nav>
+  <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="true">
+   <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+   <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+  </button>
  </div>
 </header>
-<main id="content" class="container layout">
-<article class="main-column" id="main-content">
 
-<section class="introduction">
-<h1>Research</h1>
-<p>Questions, working notes, and small experiments about systems software, distributed computing, reliability, and scientific reasoning.</p>
-<p>These are independent educational investigations, not peer-reviewed publications or validated production benchmarks. Each note separates assumptions, observations, and open questions.</p>
-</section>
-<section id="topics">
-<h2>Areas of inquiry</h2>
-<ul class="research-list">
-<li><a href="#systems-lab">Systems and reliability</a> — concurrency, queues, failures, and consistency.</li>
-<li><a href="#inquiry">Research method</a> — hypotheses, measurements, baselines, and reproducibility.</li>
-<li><a href="#science-ideas">Scientific foundations</a> — formal reasoning, mathematics, and uncertainty.</li>
-</ul>
-</section>
-<section id="systems-lab">
- <p class="section-label">Research notes / systems software</p>
- <h2 id="systems-title">Systems and reliability</h2>
- <p>Systems that look fast in isolation can behave differently under concurrency, queueing and failures. These educational notes explain the model, assumptions and open questions. They are not production benchmarks.</p>
- <ul class="research-list">
-  <li><a href="articles/fieldnote-tail-latency.html">Tail latency and request fan-out</a> — why slow dependencies affect user-visible response time</li>
-  <li><a href="articles/fieldnote-stale-reads.html">Stale reads and consistency</a> — how replicas and asynchronous updates affect observations</li>
-  <li><a href="articles/fieldnote-queues.html">Queues and utilization</a> — why high utilization can increase waiting time</li>
- </ul>
-</section>
-<section id="inquiry">
- <p class="section-label">Research notes / methodology</p>
- <h2 id="inquiry-title">From a question to a test</h2>
- <p>Start with a falsifiable hypothesis. Identify assumptions, choose a measurable outcome, compare against a baseline, and disclose uncertainty. A plausible explanation is not evidence by itself.</p>
- <ol class="research-list"><li>State the question and competing explanations</li><li>Choose what can be measured</li><li>Design a small reproducible experiment</li><li>Report limitations alongside the result</li></ol>
- <p><a href="index.html#research-projects">Research approach on the homepage</a></p>
-</section>
-<section id="science-ideas">
- <p class="section-label">Research notes / scientific thinking</p>
- <h2 id="science-title">Science and ideas</h2>
- <p>Explore the mathematical and conceptual foundations behind trustworthy software. These references connect systems questions with reasoning, probability and formal methods.</p>
- <ul class="research-list">
-  <li><a href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html">Distributed systems and Leslie Lamport</a></li>
-  <li><a href="articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html">Zero-knowledge proofs</a></li>
-  
- </ul>
-</section>
-<section id="stories">
-<h2>Research fieldnotes</h2>
-<p>Short explanations and reproducible thought experiments. These notes are educational works in progress.</p>
-<ul class="research-list">
-<li><a href="articles/fieldnote-queues.html">Why queues increase latency</a></li>
-<li><a href="articles/fieldnote-tail-latency.html">Tail latency and request fan-out</a></li>
-<li><a href="articles/fieldnote-stale-reads.html">Stale reads in distributed systems</a></li>
-</ul>
-</section>
-<section id="essays">
-<h2>Related writing</h2>
-<ul class="research-list">
-<li><a href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html">Leslie Lamport and distributed computing</a></li>
-<li><a href="articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html">Zero-knowledge proofs</a></li>
-<li><a href="reading-archive.html">Browse all published writing</a></li>
-</ul>
-</section>
-<section id="contact">
- <p class="section-label">Research notes / correspondence</p>
- <h2 id="contact-title">Contact</h2>
- <p>For research questions, corrections, and collaboration enquiries, write to <a href="mailto:moreshwarpidadi@gmail.com?subject=Moreshwar%20Research%20Lab">moreshwarpidadi@gmail.com</a>. Include the article or experiment you are referring to.</p>
-</section>
-</article>
-<aside class="sidebar" aria-label="Research context and links">
+<main id="content">
 
-<section><h2>Research focus</h2><p>Systems software, distributed computing, concurrency, reliability, and careful evaluation of evidence.</p></section>
-<section><h2>How to read these notes</h2><p>Models simplify real systems. Verify assumptions, check which results are measured, and note where evidence is missing.</p></section>
-<section><h2>Navigation</h2><ul>
-<li><a href="index.html">Homepage</a></li>
-<li><a href="reading-archive.html">Writing archive</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul></section>
-</aside>
+ <section class="page-head wrap">
+  <p class="kicker">Research</p>
+  <h1>Research</h1>
+  <p class="lede">Questions I am working on, the reasoning behind them, and small models you can operate yourself. Reading about a system is one thing. Moving a slider until it breaks is another.</p>
+  <p class="page-note">These are independent educational investigations, not peer-reviewed publications or production benchmarks. Each note separates what is assumed, what is measured and what is still open.</p>
+ </section>
+
+ <!-- Interactive models -->
+ <section class="section wrap" id="systems-lab" aria-labelledby="systems-title">
+  <header class="section-head">
+   <p class="section-index">01</p>
+   <div>
+    <h2 id="systems-title">Systems and reliability</h2>
+    <p class="section-intro">Two results sit behind most “why is it slow?” questions. Both are easier to feel than to read. The models below run in your browser, with the formula stated so you can check the arithmetic.</p>
+   </div>
+  </header>
+
+  <!-- Queueing -->
+  <div class="model" id="queue-model">
+   <div class="model-head">
+    <h3>Why a server at 90% busy feels broken</h3>
+    <p class="model-tag">model · M/M/1 queue</p>
+   </div>
+   <p class="model-why">A road at half capacity flows. The same road at 95% capacity crawls, with no crash and no roadworks. Servers behave the same way. Waiting time does not rise in a straight line as a machine gets busier — it bends upward, then runs away.</p>
+
+   <div class="model-controls">
+    <div class="ctrl">
+     <label for="q-util">How busy the server is <output id="q-util-out" for="q-util">75%</output></label>
+     <input type="range" id="q-util" min="5" max="97" value="75" step="1">
+    </div>
+    <div class="ctrl">
+     <label for="q-service">Time to handle one request <output id="q-service-out" for="q-service">20 ms</output></label>
+     <input type="range" id="q-service" min="5" max="100" value="20" step="5">
+    </div>
+   </div>
+
+   <svg class="model-plot" viewBox="0 0 320 170" preserveAspectRatio="none" role="img" aria-label="Waiting time against how busy the server is. The line is nearly flat while the server is lightly loaded, then rises steeply as it approaches fully busy.">
+    <path class="area" d=""></path>
+    <path class="curve" d=""></path>
+    <circle class="now" cx="0" cy="0" r="4"></circle>
+   </svg>
+
+   <div class="readout">
+    <div><span>Waiting in queue</span><strong id="q-wait">— ms</strong></div>
+    <div><span>Total time seen by user</span><strong id="q-total">— ms</strong></div>
+    <div><span>Slower than an idle server</span><strong id="q-amp">—×</strong></div>
+   </div>
+
+   <p class="model-takeaway">Push the first slider past 90%. <b>The work per request never changed — only how often the server was already busy when the next request arrived.</b> This is why capacity planning targets roughly 70%, and why “the CPU is only at 85%” is not reassuring.</p>
+   <p class="limits"><b>What this cannot show</b> — it assumes requests arrive at random and take exponentially distributed time, one server, no priorities. Real systems have bursts, retries and several queues in a row, all of which make it worse rather than better.</p>
+  </div>
+
+  <!-- Fan-out -->
+  <div class="model" id="fanout-model">
+   <div class="model-head">
+    <h3>Why one rare slow call becomes everyone's problem</h3>
+    <p class="model-tag">model · tail amplification</p>
+   </div>
+   <p class="model-why">Suppose a single service is slow only 1% of the time. That sounds harmless. But one page usually needs many services at once, and the page is not ready until the slowest one answers. The rare event stops being rare once you need many answers.</p>
+
+   <div class="model-controls">
+    <div class="ctrl">
+     <label for="f-n">Services one page calls <output id="f-n-out" for="f-n">100 calls</output></label>
+     <input type="range" id="f-n" min="1" max="100" value="100" step="1">
+    </div>
+    <div class="ctrl">
+     <label for="f-p">Chance each one is slow <output id="f-p-out" for="f-p">1.0%</output></label>
+     <input type="range" id="f-p" min="1" max="100" value="1" step="1">
+    </div>
+   </div>
+
+   <svg class="model-plot" viewBox="0 0 320 170" preserveAspectRatio="none" role="img" aria-label="The chance a page waits for at least one slow call, rising as the number of calls increases.">
+    <g id="f-bars"></g>
+   </svg>
+
+   <div class="readout">
+    <div><span>Page waits for a slow call</span><strong id="f-risk">—%</strong></div>
+    <div><span>Page is entirely fast</span><strong id="f-clean">—%</strong></div>
+   </div>
+
+   <p class="model-takeaway">With 100 calls and a 1-in-100 chance each, the page is slow about <b>63% of the time</b>. The formula is 1 − (1 − p)<sup>n</sup>. <b>Nothing is broken, and almost every user waits anyway.</b> This is why teams track the 99th percentile rather than the average.</p>
+   <p class="limits"><b>What this cannot show</b> — it assumes the calls are independent and all must finish. Shared causes, such as one overloaded database behind all of them, make real systems correlate and perform worse than this.</p>
+  </div>
+
+  <h3 class="list-title" style="margin-top:34px">Fieldnotes behind these models</h3>
+  <div class="note-list">
+   <a class="note" href="articles/fieldnote-tail-latency.html"><strong>Why the slowest request can dominate a fast system</strong><p>The fan-out problem written out, with the arithmetic and what to do about it.</p></a>
+   <a class="note" href="articles/fieldnote-queues.html"><strong>Why queues make fast systems feel slow</strong><p>Where waiting time comes from when nothing is actually failing.</p></a>
+   <a class="note" href="articles/fieldnote-stale-reads.html"><strong>What a stale read teaches us about distributed systems</strong><p>Why two copies of the same data can disagree, and what a user sees when they do.</p></a>
+  </div>
+ </section>
+
+ <!-- Method -->
+ <section class="section wrap" id="inquiry" aria-labelledby="inquiry-title">
+  <header class="section-head">
+   <p class="section-index">02</p>
+   <div>
+    <h2 id="inquiry-title">From a question to a test</h2>
+    <p class="section-intro">A plausible explanation is not evidence. This is the sequence I try to hold myself to, and the reason each experiment on this site states its limits beside its result.</p>
+   </div>
+  </header>
+  <ol class="method-steps">
+   <li>State the question, and the competing explanations that would also fit what I have seen.</li>
+   <li>Decide what can actually be measured, and what would have to be assumed instead.</li>
+   <li>Pick a baseline. A number with nothing to compare it against is not a finding.</li>
+   <li>Build the smallest experiment that could separate the explanations, and make it repeatable.</li>
+   <li>Report what the result cannot tell us, in the same place as the result.</li>
+  </ol>
+  <p class="page-note" style="margin-top:26px">The last step is the one that is usually skipped, and it is the one that decides whether the work is research or decoration.</p>
+ </section>
+
+ <!-- Science ideas -->
+ <section class="section wrap" id="science-ideas" aria-labelledby="science-title">
+  <header class="section-head">
+   <p class="section-index">03</p>
+   <div>
+    <h2 id="science-title">Science and ideas</h2>
+    <p class="section-intro">The reasoning underneath the engineering: ordering, proof and uncertainty. Longer essays, written for readers who are not specialists.</p>
+   </div>
+  </header>
+  <div class="note-list">
+   <a class="note" href="articles/165015687-leslie-lamport-genius-behind-computers-working-together-fe1d2415aee8.html"><strong>Leslie Lamport and the ordering of events</strong><p>Why computers that cannot share a clock still need to agree on what happened first.</p></a>
+   <a class="note" href="articles/165015685-zero-knowledge-proof-zkp-the-magic-of-proving-without-revealing-9e41181e918e.html"><strong>Zero-knowledge proofs</strong><p>How you can prove that you know something without revealing what it is.</p></a>
+   <a class="note" href="articles/165015690-p-np-biggest-puzzle-in-computer-science-5674ed9a93b9.html"><strong>P versus NP</strong><p>The open question about which problems are genuinely hard, and why it matters beyond theory.</p></a>
+  </div>
+ </section>
+
+ <!-- Experiments -->
+ <section class="section wrap" id="topics" aria-labelledby="topics-title">
+  <header class="section-head">
+   <p class="section-index">04</p>
+   <div>
+    <h2 id="topics-title">Running experiments</h2>
+    <p class="section-intro">Tools that measure something real, each honest about the boundary of what a browser is allowed to see.</p>
+   </div>
+  </header>
+  <div class="case-rail" role="list">
+   <article class="case" role="listitem">
+    <div class="case-top"><p class="status status-live">Live</p><p class="case-tag">Browser · telemetry</p></div>
+    <h3>Machine Telemetry Lab</h3>
+    <dl>
+     <dt>Question</dt><dd>What can live telemetry show about the gap between how fast a processor computes and how fast memory can feed it?</dd>
+     <dt>Method</dt><dd>Live CPU, memory and storage readings with adjustable sampling, snapshot export, and a note beside each figure.</dd>
+    </dl>
+    <a class="case-link" href="telemetry-lab/index.html">Open the lab <span aria-hidden="true">→</span></a>
+   </article>
+   <article class="case" role="listitem">
+    <div class="case-top"><p class="status status-live">Live</p><p class="case-tag">Browser · privacy boundary</p></div>
+    <h3>Machine Check</h3>
+    <dl>
+     <dt>Question</dt><dd>What can a web page measure about your machine, and what is it deliberately not allowed to see?</dd>
+     <dt>Method</dt><dd>A five-second responsiveness sample using browser APIs only, graded good, okay or bad, with the privacy boundary explained.</dd>
+    </dl>
+    <a class="case-link" href="assets/machine-check/showcase.html">Read the case study <span aria-hidden="true">→</span></a>
+   </article>
+   <article class="case" role="listitem">
+    <div class="case-top"><p class="status status-note">Writing</p><p class="case-tag">Essays</p></div>
+    <h3>The written archive</h3>
+    <dl>
+     <dt>Question</dt><dd>Can a hard idea in systems or science be explained without diluting it?</dd>
+     <dt>Method</dt><dd>Twenty-two essays, each built around one concrete example, with sources named.</dd>
+    </dl>
+    <a class="case-link" href="reading-archive.html">Browse the archive <span aria-hidden="true">→</span></a>
+   </article>
+  </div>
+  <p class="rail-hint" aria-hidden="true">Swipe for more →</p>
+ </section>
+
+ <!-- Stories / reading -->
+ <section class="section wrap" id="stories" aria-labelledby="stories-title">
+  <header class="section-head">
+   <p class="section-index">05</p>
+   <div>
+    <h2 id="stories-title">What I am reading</h2>
+    <p class="section-intro">Most new problems in systems are old problems at a larger scale, so I read the original papers rather than summaries of them.</p>
+   </div>
+  </header>
+  <ul class="desk">
+   <li><span class="desk-kind">Book</span><span class="desk-title">Operating Systems: Three Easy Pieces</span><span class="desk-by">Arpaci-Dusseau</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">Hints for Computer System Design</span><span class="desk-by">Lampson</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">Time, Clocks, and the Ordering of Events</span><span class="desk-by">Lamport</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">The Tail at Scale</span><span class="desk-by">Dean, Barroso</span></li>
+   <li><span class="desk-kind">Paper</span><span class="desk-title">Exokernel: application-level resource management</span><span class="desk-by">Engler, Kaashoek, O'Toole</span></li>
+   <li><span class="desk-kind">Notes</span><span class="desk-title">Reading notes on Paul Graham's essays</span><span class="desk-by"><a href="paul-graham.html">Open the collection</a></span></li>
+  </ul>
+ </section>
+
+ <!-- Contact -->
+ <section class="section wrap" id="contact" aria-labelledby="contact-title">
+  <header class="section-head">
+   <p class="section-index">06</p>
+   <div>
+    <h2 id="contact-title">Corrections and questions</h2>
+    <p class="section-intro">If something here is wrong, unclear, or missing a source, I would rather hear it than not. Corrections are how the work improves.</p>
+   </div>
+  </header>
+  <div class="about-grid">
+   <div class="about-text">
+    <p>I read everything that arrives. If you are pointing at a specific claim, quoting the sentence helps me find it quickly.</p>
+   </div>
+   <aside class="about-card" aria-label="Contact and links">
+    <p class="about-card-title">Get in touch</p>
+    <ul>
+     <li><a href="mailto:moreshwarpidadi@gmail.com?subject=Moreshwar%20Systems%20Lab">Email</a><span>questions, corrections</span></li>
+     <li><a href="https://github.com/moreshwarp">GitHub</a><span>code and experiments</span></li>
+     <li><a href="https://moreshwarpidadi.substack.com/">Substack</a><span>essays</span></li>
+    </ul>
+   </aside>
+  </div>
+ </section>
+
 </main>
-<footer class="site-footer"><div class="container"><p>© Moreshwar Systems Lab · Independent research and writing</p><p><a href="index.html">Home</a> · <a href="reading-archive.html">Writing</a> · <a href="studio.html">Research</a></p></div></footer>
+
+<footer class="footer">
+ <div class="wrap footer-inner">
+  <p>© 2026 Moreshwar Systems Lab · Independent research and writing</p>
+  <p class="kbd-hint"><span class="build-chip"><b aria-hidden="true"></b>build <span id="build-sha">local</span></span> · <kbd>/</kbd> to search</p>
+ </div>
+</footer>
+
+<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Go to">
+ <div class="palette-box">
+  <input type="text" placeholder="Go to…" aria-label="Search pages">
+  <ul role="listbox">
+   <li role="option"><a href="index.html">Home<span>page</span></a></li>
+   <li role="option"><a href="studio.html">Research<span>page</span></a></li>
+   <li role="option"><a href="reading-archive.html">Writing archive<span>page</span></a></li>
+   <li role="option"><a href="paul-graham.html">Paul Graham notes<span>collection</span></a></li>
+   <li role="option"><a href="telemetry-lab/index.html">Machine Telemetry Lab<span>experiment</span></a></li>
+   <li role="option"><a href="assets/machine-check/showcase.html">Machine Check<span>experiment</span></a></li>
+   <li role="option"><a href="studio.html#systems-lab">Queueing model<span>interactive</span></a></li>
+   <li role="option"><a href="studio.html#inquiry">Research method<span>section</span></a></li>
+   <li role="option"><a href="index.html#about-profile">About<span>section</span></a></li>
+  </ul>
+  <p class="palette-foot"><span>↑↓ move</span><span>↵ open</span><span>esc close</span></p>
+ </div>
+</div>
 </body>
 </html>
