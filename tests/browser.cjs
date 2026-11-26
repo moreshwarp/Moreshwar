@@ -126,6 +126,46 @@ const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.m
     assert.ok(await page.locator('a[href="../index.html"]').count()>0);
    }finally{await page.close()}
   });
+  await check('no text is squeezed into an unreadably narrow column on a phone',async()=>{
+   // Regression guard: a grid list item whose content is split across grid cells can push
+   // prose into a tiny marker column, which renders one word per line on a real phone.
+   const context=await browser.newContext({viewport:{width:393,height:850},isMobile:true,hasTouch:true,deviceScaleFactor:2.75});
+   try{
+    for(const route of ['','studio.html','reading-archive.html','paul-graham.html','memory-lab/index.html','articles/fieldnote-queues.html']){
+     const page=await context.newPage();
+     try{
+      await page.goto(new URL(route,base).href,{waitUntil:'load'});
+      await page.locator('main').first().waitFor({state:'visible'});
+      const squeezed=await page.evaluate(()=>{
+       // Text split across grid cells lands in an anonymous box with no element of its own,
+       // so measuring widths misses it. Instead compare the rendered height against the
+       // height this much text should need at this width.
+       const bad=[];
+       document.querySelectorAll('li,p,dd,dt,td,blockquote').forEach(el=>{
+        if(el.children.length>2)return;
+        const text=(el.textContent||'').replace(/\s+/g,' ').trim();
+        if(text.length<80)return;
+        const box=el.getBoundingClientRect();
+        if(!box.width||!box.height)return;
+        const style=getComputedStyle(el);
+        if(style.visibility==='hidden'||style.display==='none')return;
+        if(/pre/.test(style.whiteSpace))return;
+        const lineHeight=parseFloat(style.lineHeight)||parseFloat(style.fontSize)*1.4;
+        const charWidth=parseFloat(style.fontSize)*0.5;          // rough but stable
+        const perLine=Math.max(1,box.width/charWidth);
+        const expected=Math.ceil(text.length/perLine);
+        const actual=box.height/lineHeight;
+        if(actual>expected*2.2+1)
+         bad.push(el.tagName+'.'+(el.className||'')+' w='+Math.round(box.width)+
+                  ' lines='+Math.round(actual)+' expected~'+expected);
+       });
+       return [...new Set(bad)];
+      });
+      assert.deepEqual(squeezed,[],route+' squeezed text: '+squeezed.join(' | '));
+     }finally{await page.close()}
+    }
+   }finally{await context.close()}
+  });
   await check('Studio research destinations remain accessible after homepage redesign',async()=>{
    const page=await browser.newPage({viewport:{width:390,height:850}});
    try{
