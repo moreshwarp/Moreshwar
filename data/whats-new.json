@@ -1,0 +1,18 @@
+{
+  "comment": "Newest first. Anything dated within `freshDays` is flashed as new across the site.",
+  "freshDays": 21,
+  "entries": [
+    {
+      "date": "2026-11-26",
+      "title": "Memory Wall Lab",
+      "href": "memory-lab/index.html",
+      "note": "Measures the memory hierarchy of your own machine and shows where each cache runs out."
+    },
+    {
+      "date": "2026-11-25",
+      "title": "Interactive research models",
+      "href": "studio.html#systems-lab",
+      "note": "Queueing and tail-amplification models you can operate yourself."
+    }
+  ]
+}

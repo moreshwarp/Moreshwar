@@ -262,6 +262,61 @@
       el.addEventListener('click', () => show(true)));
   })();
 
+  /* ---------- "New" flash ----------
+     Anything carrying data-added within the freshness window gets a New badge, and the
+     newest entry in data/whats-new.json is announced in the strip where a page has one.
+     The site root is derived from the stylesheet link, so this works from subfolders too. */
+  (() => {
+    const FRESH_FALLBACK = 21;
+    const days = (iso) => (Date.now() - Date.parse(iso + 'T00:00:00Z')) / 86400000;
+
+    function badge(el) {
+      if (el.querySelector('.new-flag')) return;
+      const flag = document.createElement('span');
+      flag.className = 'new-flag';
+      flag.textContent = 'New';
+      el.appendChild(flag);
+    }
+
+    function markFresh(window) {
+      document.querySelectorAll('[data-added]').forEach(el => {
+        const age = days(el.dataset.added);
+        if (age >= 0 && age <= window) badge(el);
+      });
+    }
+
+    markFresh(FRESH_FALLBACK);
+
+    const link = document.querySelector('link[rel="stylesheet"][href*="lab-site.css"]');
+    if (!link) return;
+    const root = link.getAttribute('href').replace(/lab-site\.css.*$/, '');
+    fetch(root + 'data/whats-new.json', { cache: 'no-cache' })
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        if (!data || !Array.isArray(data.entries) || !data.entries.length) return;
+        const window = Number(data.freshDays) || FRESH_FALLBACK;
+        markFresh(window);
+        const strip = document.getElementById('whats-new');
+        if (!strip) return;
+        const latest = [...data.entries].sort((a, b) => b.date.localeCompare(a.date))[0];
+        if (days(latest.date) > window) return;
+        strip.textContent = '';
+        const label = document.createElement('span');
+        label.className = 'wn-label'; label.textContent = 'New';
+        const a = document.createElement('a');
+        a.href = root + latest.href; a.textContent = latest.title;
+        const note = document.createElement('span');
+        note.className = 'wn-note'; note.textContent = latest.note || '';
+        const when = document.createElement('time');
+        when.dateTime = latest.date;
+        when.textContent = new Date(latest.date + 'T00:00:00Z')
+          .toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+        strip.append(label, a, note, when);
+        strip.hidden = false;
+      })
+      .catch(() => {});
+  })();
+
   /* ---------- Build provenance: show the released commit if it was stamped ---------- */
   (() => {
     // Only shown where the deploy actually stamped the released commit;

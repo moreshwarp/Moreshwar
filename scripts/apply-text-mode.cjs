@@ -21,7 +21,9 @@ function brandPublishedHtml(html){
 function stylePage(html,relative,version=''){
  html=brandPublishedHtml(html);
  // The research homepage is self-contained; do not inject legacy CSS or menus.
- if(['index.html','studio.html','reading-archive.html','paul-graham.html','paul-graham-makers-schedule.html','paul-graham-schlep-blindness.html'].includes(relative) && (html.includes('href="research-site.css"')||html.includes('href="lab-site.css')))return html;
+ // Pages that already ship the Systems Lab shell style themselves; the text-first reader
+ // layer would fight their own stylesheet, so they are published as authored.
+ if(html.includes('href="research-site.css"')||/href="(\.\.\/)?lab-site\.css/.test(html))return html;
  if(!/<\/head>/i.test(html)||!/<body\b/i.test(html))throw Error('Incomplete HTML shell: '+relative);
  const article=relative.startsWith('articles/');
  const prefix='../'.repeat(relative.split('/').length-1);

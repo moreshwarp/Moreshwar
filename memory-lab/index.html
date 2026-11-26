@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0D1014">
+<title>Memory Wall Lab — Moreshwar Systems Lab</title>
+<meta name="description" content="An experiment that measures the memory hierarchy of your own machine from inside the browser, using dependent-load pointer chasing, and shows where each cache runs out.">
+<link rel="canonical" href="https://moreshwarp.github.io/Moreshwar/memory-lab/index.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<script>(()=>{try{const s=localStorage.getItem('mrl-research-theme');const t=s==='light'||s==='dark'?s:(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t}catch{}})()</script>
+<link rel="stylesheet" href="../lab-site.css">
+<script defer src="../lab-site.js"></script>
+<script defer src="lab.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+
+<header class="site-header">
+ <div class="wrap masthead-inner">
+  <a href="../index.html" class="wordmark" aria-label="Moreshwar Systems Lab home"><span class="wordmark-dot" aria-hidden="true"></span>Moreshwar <span>Systems Lab</span></a>
+  <nav class="site-navigation" aria-label="Primary navigation">
+   <a href="../index.html">Home</a>
+   <a href="../studio.html" aria-current="page">Research</a>
+   <a href="../assets/machine-check/showcase.html">Machine Check</a>
+   <a href="../reading-archive.html">Writing</a>
+   <a href="../index.html#about-profile">About</a>
+  </nav>
+  <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="true">
+   <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+   <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+  </button>
+ </div>
+</header>
+
+<main id="content">
+ <section class="page-head wrap">
+  <p class="kicker" data-added="2026-11-26">Experiment · measured, not simulated</p>
+  <h1>The Memory Wall, measured on your machine</h1>
+  <p class="lede">A processor can do arithmetic far faster than memory can deliver data to work on. That gap is called the memory wall, and caches exist to hide it. This page measures the gap on the machine you are reading this on, and shows you where each cache runs out.</p>
+  <p class="page-note">Nothing here is simulated and nothing is sent anywhere. The measurement runs in your browser, in a background thread, and the numbers stay on your device unless you choose to export them.</p>
+ </section>
+
+ <section class="section wrap" id="run-it" aria-labelledby="run-title">
+  <header class="section-head">
+   <p class="section-index">01</p>
+   <div>
+    <h2 id="run-title">Run it</h2>
+    <p class="section-intro">Takes about ten to thirty seconds. Close heavy tabs first if you can — a busy machine blurs the steps. On a laptop, mains power gives steadier results than battery.</p>
+   </div>
+  </header>
+
+  <div class="model" id="bench">
+   <div class="model-head">
+    <h3>Dependent-load latency against working-set size</h3>
+    <p class="model-tag" id="env">reading machine details…</p>
+   </div>
+
+   <div class="model-controls">
+    <div class="ctrl">
+     <label for="maxsize">Largest working set <output id="maxsize-out" for="maxsize">64 MB</output></label>
+     <input type="range" id="maxsize" min="8" max="256" value="64" step="8">
+    </div>
+    <div class="ctrl">
+     <label for="repeats">Repeats per size <output id="repeats-out" for="repeats">3×</output></label>
+     <input type="range" id="repeats" min="1" max="7" value="3" step="1">
+    </div>
+   </div>
+
+   <p class="bench-actions">
+    <button type="button" class="button button-primary" id="run">Run the measurement</button>
+    <button type="button" class="button" id="export">Export the readings</button>
+   </p>
+
+   <div id="progress" hidden>
+    <div class="track" role="progressbar" aria-label="Measurement progress"><span id="bar"></span></div>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+   </div>
+
+   <div id="results" hidden>
+    <svg id="plot" viewBox="0 0 640 300" role="img" aria-label="Latency per memory access against working-set size. The line is low and flat while the data fits in cache, and steps up each time the working set outgrows a level."></svg>
+    <div class="readout">
+     <div><span>Fastest access</span><strong id="r-fast">—</strong></div>
+     <div><span>Slowest access</span><strong id="r-slow">—</strong></div>
+     <div><span>The wall</span><strong id="r-ratio" class="warn">—</strong></div>
+     <div><span>Clock resolution</span><strong id="r-clock">—</strong></div>
+    </div>
+    <h3 class="list-title" style="margin-top:26px">What the steps suggest</h3>
+    <ul class="edges" id="edges"></ul>
+    <details class="raw">
+     <summary>All readings</summary>
+     <table id="table"><thead><tr><th>Working set</th><th>Best</th><th>Median</th><th>Loads timed</th></tr></thead><tbody></tbody></table>
+    </details>
+   </div>
+  </div>
+ </section>
+
+ <section class="section wrap" id="method" aria-labelledby="method-title">
+  <header class="section-head">
+   <p class="section-index">02</p>
+   <div>
+    <h2 id="method-title">How it works</h2>
+    <p class="section-intro">The method matters more than the numbers, so here it is in full.</p>
+   </div>
+  </header>
+  <ol class="method-steps">
+   <li><b>Make the processor wait.</b> The test walks a loop of addresses where each step's address is the value read in the previous step. Because the next address is unknown until the current read finishes, the processor cannot run the reads in parallel. What we time is therefore the latency of one access, not how much data can be streamed per second.</li>
+   <li><b>Defeat the prefetcher.</b> Modern processors guess what you will read next and fetch it early. The loop visits one cache line at a time in random order, so there is no pattern to guess, and the guesser stops helping.</li>
+   <li><b>Grow the working set.</b> The same walk is repeated over larger and larger regions. While the region fits in a level of cache, accesses are fast. Once it no longer fits, most accesses fall through to the next level and the average time steps up.</li>
+   <li><b>Work around a deliberately blunt clock.</b> Browsers coarsen their timers to make side-channel attacks harder, so a single access cannot be timed at all. Instead we time millions of accesses and divide. The page reports the clock resolution it found so you can judge the result.</li>
+   <li><b>Take the best run, not the average.</b> Interrupts and other processes can only make a reading slower, never faster, so the minimum of several runs is the closest estimate to the true latency.</li>
+  </ol>
+ </section>
+
+ <section class="section wrap" id="limits" aria-labelledby="limits-title">
+  <header class="section-head">
+   <p class="section-index">03</p>
+   <div>
+    <h2 id="limits-title">What this cannot tell you</h2>
+    <p class="section-intro">A result without its limits is not a measurement, it is a claim.</p>
+   </div>
+  </header>
+  <div class="about-text">
+   <p><b>The absolute numbers are upper bounds.</b> Every access carries JavaScript's own overhead — bounds checking and loop work — on top of the hardware latency. Expect the figures to sit above what a C program would report. The <i>shape</i> of the curve, and the ratio between its ends, is the finding.</p>
+   <p><b>The steps are inferred, not read.</b> A browser cannot ask the operating system how large your caches are. When the curve steps up at 8 MB, that is evidence of a cache boundary near 8 MB; it is not a reading of a specification.</p>
+   <p><b>Address translation is mixed in.</b> At larger working sets the processor also starts missing in its translation buffers, the small caches that map program addresses onto physical memory. Part of the final rise belongs to that, not to the data caches.</p>
+   <p><b>The machine is not under our control.</b> Phones and laptops move work between fast and efficient cores and change clock speed as they warm up. Other tabs compete. Running twice and comparing is more informative than trusting one run.</p>
+   <p><b>Nothing here is private to you.</b> The readings never leave the page. Timing behaviour of this kind is also why browsers blunted their clocks in the first place, and the coarse clock you see reported is that defence working as intended.</p>
+  </div>
+ </section>
+
+ <section class="section wrap" id="why" aria-labelledby="why-title">
+  <header class="section-head">
+   <p class="section-index">04</p>
+   <div><h2 id="why-title">Why this matters</h2></div>
+  </header>
+  <div class="about-text">
+   <p>If the ratio between your fastest and slowest access is around fifty, then a program that walks memory carelessly can be dozens of times slower than the same program walking it in order — with identical logic and identical hardware. No profiler flag will show that as a bug.</p>
+   <p>This is why data layout keeps appearing in systems work that looks unrelated to it: why databases store columns together, why schedulers try to keep a task on the core whose cache already holds its data, and why serving large machine-learning models is so often a memory problem rather than an arithmetic one.</p>
+   <p class="more"><a href="../studio.html#systems-lab">See the queueing and tail-latency models →</a></p>
+  </div>
+ </section>
+</main>
+
+<footer class="footer">
+ <div class="wrap footer-inner">
+  <p>© 2026 Moreshwar Systems Lab · Independent research and writing</p>
+  <p class="kbd-hint"><span class="build-chip" id="build-chip" hidden><b aria-hidden="true"></b>build <span id="build-sha"></span> · </span><kbd>/</kbd> to search</p>
+ </div>
+</footer>
+
+<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Go to">
+ <div class="palette-box">
+  <input type="text" placeholder="Go to…" aria-label="Search pages">
+  <ul role="listbox">
+   <li role="option"><a href="../index.html">Home<span>page</span></a></li>
+   <li role="option"><a href="../studio.html">Research<span>page</span></a></li>
+   <li role="option"><a href="index.html">Memory Wall Lab<span>experiment</span></a></li>
+   <li role="option"><a href="../reading-archive.html">Writing archive<span>page</span></a></li>
+   <li role="option"><a href="../paul-graham.html">Paul Graham notes<span>collection</span></a></li>
+   <li role="option"><a href="../telemetry-lab/index.html">Machine Telemetry Lab<span>experiment</span></a></li>
+   <li role="option"><a href="../assets/machine-check/showcase.html">Machine Check<span>experiment</span></a></li>
+   <li role="option"><a href="../index.html#about-profile">About<span>section</span></a></li>
+  </ul>
+  <p class="palette-foot"><span>↑↓ move</span><span>↵ open</span><span>esc close</span></p>
+ </div>
+</div>
+</body>
+</html>

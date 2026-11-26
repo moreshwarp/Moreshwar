@@ -319,3 +319,56 @@ kbd{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 
 
 /* The hidden attribute must win over component display rules (archive filtering). */
 [hidden]{display:none!important}
+
+/* ============================================================
+   MEMORY WALL LAB
+   ============================================================ */
+.bench-actions{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 16px}
+.bench-actions .button{flex:0 1 auto}
+.bench-actions .button[disabled]{opacity:.6;cursor:progress}
+.track{height:6px;border-radius:4px;background:var(--bar);overflow:hidden}
+.track>span{display:block;height:100%;width:0;background:var(--accent);transition:width .25s ease}
+.status{margin-top:9px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+#plot{display:block;width:100%;height:auto;margin:6px 0 18px}
+#plot .grid{stroke:var(--line);stroke-width:1}
+#plot .grid-v{stroke-dasharray:2 5}
+#plot .tick{fill:var(--faint);font-family:var(--mono);font-size:10px}
+#plot .curve{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round}
+#plot .dot{fill:var(--accent)}
+#plot .edge{stroke:var(--tail);stroke-width:1.2;stroke-dasharray:4 4}
+#plot .edge-label{fill:var(--tail);font-family:var(--mono);font-size:10px}
+.edges{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:10px}
+.edges li{border-left:2px solid var(--accent);padding:10px 14px;background:var(--surface);border-radius:0 9px 9px 0;font-size:14.5px;color:var(--muted)}
+.edges li b{color:var(--ink);font-weight:500}
+.raw{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+.raw summary{cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.raw summary:hover{color:var(--ink)}
+.raw table{width:100%;border-collapse:collapse;margin-top:14px;font-family:var(--mono);font-size:12.5px}
+.raw th{text-align:left;font-weight:500;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;font-size:10.5px;padding:7px 8px;border-bottom:1px solid var(--line-strong)}
+.raw td{padding:7px 8px;border-bottom:1px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums}
+.raw tr td:first-child{color:var(--ink)}
+
+/* ============================================================
+   "NEW" FLASH — anything added recently announces itself
+   ============================================================ */
+.new-flag{display:inline-flex;align-items:center;gap:5px;margin-left:8px;padding:2px 8px;border-radius:999px;
+  background:color-mix(in srgb,var(--accent) 18%,transparent);border:1px solid color-mix(in srgb,var(--accent) 50%,transparent);
+  color:var(--accent);font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;vertical-align:middle}
+.new-flag::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;animation:flash 1.9s ease-in-out infinite}
+@keyframes flash{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.7)}}
+.whats-new{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 auto 30px;padding:12px 16px;
+  border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));border-radius:11px;background:var(--surface);font-size:14.5px}
+.whats-new .wn-label{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:6px}
+.whats-new .wn-label::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:flash 1.9s ease-in-out infinite}
+.whats-new a{color:var(--ink);font-weight:500}
+.whats-new .wn-note{color:var(--muted)}
+.whats-new time{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+@media (max-width:640px){
+  .whats-new{gap:7px;padding:11px 13px;font-size:14px}
+  .whats-new time{margin-left:0;width:100%}
+  .bench-actions .button{flex:1 1 100%;justify-content:center}
+  .raw table{font-size:11.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  .new-flag::before,.whats-new .wn-label::before{animation:none}
+}
