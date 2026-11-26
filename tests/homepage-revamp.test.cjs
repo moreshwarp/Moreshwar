@@ -54,5 +54,7 @@ test('theme is shared with other pages, mobile and motion preferences are handle
 
 test('build pipeline publishes the new homepage assets untouched',()=>{
   assert.match(fs.readFileSync('scripts/prepare-site.cjs','utf8'),/lab-site\.css lab-site\.js/);
-  assert.match(fs.readFileSync('scripts/apply-text-mode.cjs','utf8'),/lab-site\.css/);
+  // The reader layer skips any page that already ships the Systems Lab stylesheet,
+  // whether it sits at the root or in a subfolder such as memory-lab/.
+  assert.match(fs.readFileSync('scripts/apply-text-mode.cjs','utf8'),/lab-site\\\.css/);
 });

@@ -42,6 +42,8 @@
 <main id="content">
 
  <!-- Hero -->
+ <p class="whats-new wrap" id="whats-new" hidden></p>
+
  <section class="hero wrap" aria-labelledby="hello">
   <div class="hero-text">
    <p class="kicker">Moreshwar Pidadi · Pune, India</p>
@@ -141,6 +143,16 @@
   </header>
 
   <div class="case-rail" role="list">
+   <article class="case" role="listitem">
+    <div class="case-top"><p class="status status-live" data-added="2026-11-26">Live</p><p class="case-tag">Browser · measured</p></div>
+    <h3>Memory Wall Lab</h3>
+    <dl>
+     <dt>Question</dt><dd>How much slower is memory than cache on the machine you are reading this on, and where does each cache run out?</dd>
+     <dt>Method</dt><dd>Dependent-load pointer chasing over growing working sets, timed around a deliberately coarse browser clock. Readings are exportable.</dd>
+    </dl>
+    <a class="case-link" href="memory-lab/index.html">Measure your machine <span aria-hidden="true">→</span></a>
+   </article>
+
    <article class="case" role="listitem">
     <div class="case-top"><p class="status status-live">Live</p><p class="case-tag">Browser · telemetry</p></div>
     <h3>Machine Telemetry Lab</h3>
@@ -274,6 +286,7 @@
    <li role="option"><a href="studio.html">Research<span>page</span></a></li>
    <li role="option"><a href="reading-archive.html">Writing archive<span>page</span></a></li>
    <li role="option"><a href="paul-graham.html">Paul Graham notes<span>collection</span></a></li>
+   <li role="option"><a href="memory-lab/index.html">Memory Wall Lab<span>experiment</span></a></li>
    <li role="option"><a href="telemetry-lab/index.html">Machine Telemetry Lab<span>experiment</span></a></li>
    <li role="option"><a href="assets/machine-check/showcase.html">Machine Check<span>experiment</span></a></li>
    <li role="option"><a href="studio.html#systems-lab">Queueing model<span>interactive</span></a></li>
